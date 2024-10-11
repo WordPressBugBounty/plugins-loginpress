@@ -5,7 +5,7 @@ Contributors: WPBrigade, hiddenpearls, AbdulWahab610
 Donate link: https://loginpress.pro/pricing/?utm_source=loginpress-lite
 Author URI: https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=author-url-link
 Tags: wp-login, login, login customizer, custom login, wordpress login,
-Stable tag: 3.2.0
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -222,6 +222,13 @@ Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricin
 23. Custom Login page (Company theme) Example #23 with Captcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
 
 == Changelog ==
+
+= 3.2.1 – 2024-10-11 =
+* Security Fix: Resolved the specific opt-out consent issue.
+* Bugfix: Updated the login `Custom Password` email body content.
+* Bugfix: Addressed the login Customizer issue related to subdirectory installations.
+* Bugfix: Corrected the reset email URL link for usernames containing spaces.
+* Enhancement: Refactored and optimized the code for better performance.
 
 = 3.2.0 – 2024-09-11 =
 * Security Fix: Fixed Opt-out and Opt-in consent.
@@ -766,5 +773,5 @@ Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricin
 
 == Upgrade Notice ==
 
-= 3.2.0 =
+= 3.2.1 =
 * Upgrade this WordPress login Plugin now.

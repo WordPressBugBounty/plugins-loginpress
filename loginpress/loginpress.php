@@ -3,7 +3,7 @@
 * Plugin Name: LoginPress
 * Plugin URI: https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-header&utm_campaign=pro-upgrade&utm_content=plugin-uri
 * Description: LoginPress is the best <code>wp-login</code> Login Page Customizer plugin by <a href="https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=plugins&utm_campaign=wpbrigade-home&utm_content=WPBrigade-text-link">WPBrigade</a> which allows you to completely change the layout of login, register and forgot password forms.
-* Version: 3.2.0
+* Version: 3.2.1
 * Author: LoginPress
 * Author URI: https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-header&utm_campaign=pro-upgrade&utm_content=author-uri
 * Text Domain: loginpress
@@ -58,7 +58,7 @@ if ( ! class_exists( 'LoginPress' ) ) :
 		/**
 		* @var string
 		*/
-		public $version = '3.2.0';
+		public $version = '3.2.1';
 
 		/**
 		* @var The single instance of the class
@@ -157,15 +157,15 @@ if ( ! class_exists( 'LoginPress' ) ) :
 		*/
 		private function _hooks() {
 
-			add_action( 'admin_menu',             array( $this, 'register_options_page' ) );
-			add_action( 'plugins_loaded',         array( $this, 'textdomain' ) );
-			add_filter( 'plugin_row_meta',        array( $this, '_row_meta'), 10, 2 );
-			add_action( 'admin_enqueue_scripts',  array( $this, '_admin_scripts' ) );
-			add_action( 'admin_footer',           array( $this, 'add_deactivate_modal' ) );
-			add_action( 'plugin_action_links', 	  array( $this, 'loginpress_action_links' ), 10, 2 );
-			add_action( 'admin_init',             array( $this, 'redirect_optin' ) );
-			add_filter( 'auth_cookie_expiration', array( $this, '_change_auth_cookie_expiration' ), 10, 3 );
-            add_action( 'wp_wpb_sdk_after_uninstall', array( $this, 'plugin_uninstallation' ) );
+			add_action( 'admin_menu',                 array( $this, 'register_options_page' ) );
+			add_action( 'plugins_loaded',             array( $this, 'textdomain' ) );
+			add_filter( 'plugin_row_meta',            array( $this, '_row_meta'), 10, 2 );
+			add_action( 'admin_enqueue_scripts',      array( $this, '_admin_scripts' ) );
+			add_action( 'admin_footer',               array( $this, 'add_deactivate_modal' ) );
+			add_action( 'plugin_action_links', 	      array( $this, 'loginpress_action_links' ), 10, 2 );
+			add_action( 'admin_init',                 array( $this, 'redirect_optin' ) );
+			add_filter( 'auth_cookie_expiration',     array( $this, '_change_auth_cookie_expiration' ), 10, 3 );
+			add_action( 'wp_wpb_sdk_after_uninstall', array( $this, 'plugin_uninstallation' ) );
 			//add_filter( 'plugins_api',            array( $this, 'get_addon_info_' ) , 100, 3 );
 			if ( is_multisite() ) {
 				add_action( 'admin_init', array( $this, 'redirect_loginpress_edit_page' ) );
@@ -579,10 +579,10 @@ if ( ! class_exists( 'LoginPress' ) ) :
 
                 // Determine the opt-in state and whether all options are false
                 $is_optin = 'yes' == get_option('_loginpress_optin');
-                $all_options_false = !$communication && !$diagnostic_info && !$extensions;
+                $all_options_false = $communication === false && $diagnostic_info === false && $extensions === false;
 
                 // Build the settings link based on the option states
-                if ($communication || $diagnostic_info || $extensions) {
+				if ($communication || $diagnostic_info || $extensions) {
                     $settings_link .= sprintf(
                         esc_html__(' | %1$s Opt Out %2$s ', 'loginpress'),
                         '<a class="opt-out" href="' . admin_url('admin.php?page=loginpress-settings') . '">', '</a>'
@@ -590,7 +590,8 @@ if ( ! class_exists( 'LoginPress' ) ) :
                 } else {
                     if ($is_optin) {
                         if ($all_options_false) {
-                            // If opted in but all options are false, update the SDK data
+                            // Case 1: Old users without any settings (meaning all options are false)
+							// Ensure old users remain fully opted in by setting all options to true.
                             $sdk_data = json_encode([
                                 'communication' => '1',
                                 'diagnostic_info' => '1',
@@ -598,25 +599,30 @@ if ( ! class_exists( 'LoginPress' ) ) :
                                 'user_skip' => '0',
                             ]);
                             update_option('wpb_sdk_loginpress', $sdk_data);
+							$settings_link .= sprintf(
+								esc_html__(' | %1$s Opt Out %2$s ', 'loginpress'),
+								'<a class="opt-out" href="' . admin_url('admin.php?page=loginpress-settings') . '">', '</a>'
+							);
                         } else {
                             // If opted in and not all options are false, update the opt-in state
                             update_option('_loginpress_optin', 'no');
+							// Display opt-in link
+							$settings_link .= sprintf(
+							esc_html__(' | %1$s Opt In %2$s ', 'loginpress'),
+							'<a href="' . admin_url('admin.php?page=loginpress-optin&redirect-page=loginpress-settings') . '">', '</a>'
+							);
                         }
 
-                        // Display opt-out link
-                        $settings_link .= sprintf(
-                            esc_html__(' | %1$s Opt Out %2$s ', 'loginpress'),
-                            '<a class="opt-out" href="' . admin_url('admin.php?page=loginpress-settings') . '">', '</a>'
-                        );
+                     // Display opt-out link
                     } else {
-                        // Display opt-in link
-                        $settings_link .= sprintf(
-                            esc_html__(' | %1$s Opt In %2$s ', 'loginpress'),
-                            '<a href="' . admin_url('admin.php?page=loginpress-optin&redirect-page=loginpress-settings') . '">', '</a>'
-                        );
+						$settings_link .= sprintf(
+							esc_html__(' | %1$s Opt In %2$s ', 'loginpress'),
+							'<a href="' . admin_url('admin.php?page=loginpress-optin&redirect-page=loginpress-settings') . '">', '</a>'
+						);
+
                     }
                 }
-
+				
                 // Add the settings link to the array
                 array_unshift($links, $settings_link);
 

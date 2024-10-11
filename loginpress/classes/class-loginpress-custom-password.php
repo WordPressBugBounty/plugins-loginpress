@@ -4,7 +4,7 @@
  * 
  * @package LoginPress
  * @since 1.0.22
- * @version 3.0.0
+ * @version 3.2.1
  */
 if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 
@@ -13,7 +13,7 @@ if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 	 * LoginPress Custom Passwords class.
 	 * 
 	 * @since 1.0.22
-	 * @version 1.4.5
+	 * @version 3.2.1
 	 */
 	class LoginPress_Custom_Password {
 		/**
@@ -32,10 +32,10 @@ if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 		public function _hooks() {
 
 			add_action( 'register_form',                  array( $this, 'loginpress_reg_password_fields' ) );
-			add_filter( 'random_password',                array( $this, 'loginpress_set_password' ) );
+			// add_filter( 'random_password',                array( $this, 'loginpress_set_password' ) );
 			add_action( 'register_new_user',              array( $this, 'loginpress_default_password_nag' ) );
 			add_filter( 'registration_errors',            array( $this, 'loginpress_reg_pass_errors' ), 10, 3 );
-			add_filter( 'wp_new_user_notification_email', array( $this, 'loginpress_new_user_email_notification' ) );
+			add_filter( 'wp_new_user_notification_email', array( $this, 'loginpress_new_user_email_notification' ), 11 );
 		}
 
 		/**
@@ -108,14 +108,14 @@ if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 		 * @version 3.0.0
 		 * @return string Password Choose by User.
 		 */
-		public function loginpress_set_password( $password ) {
+		// public function loginpress_set_password( $password ) {
 
-			// Make sure password field isn't empty.
-			if ( isset( $_POST['user_pass'] ) && ! empty( $_POST['user_pass'] ) ) {
-				$password = $_POST['user_pass'];
-			}
-			return esc_html( $password );
-		}
+		// 	// Make sure password field isn't empty.
+		// 	if ( isset( $_POST['user_pass'] ) && ! empty( $_POST['user_pass'] ) ) {
+		// 		$password = $_POST['user_pass'];
+		// 	}
+		// 	return esc_html( $password );
+		// }
 
 		/**
 		 * Sets the value of default password nag.
@@ -128,6 +128,10 @@ if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 
 			// False => User not using WordPress default password.
 			update_user_meta( $user_id, 'default_password_nag', false );
+			if ( isset( $_POST['user_pass'] ) && ! empty( $_POST['user_pass'] ) ) {
+				$password = $_POST['user_pass'];
+				wp_set_password( $password, $user_id );
+			}
 		}
 
 		/**
@@ -140,7 +144,8 @@ if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 		 */
 		function loginpress_new_user_email_notification( $email ) {
 
-			$email['message'] .= "\r\n" . __( 'If you have already set your own password, you may disregard this email and use the password you have already set.', 'loginpress' );
+			$email['message']  = "\r\n" . __( 'You have already set your own password, use the password you have already set to login.', 'loginpress' );
+			$email['message'] .= "\r\n\r\n" . wp_login_url() . "\r\n";
 
 			return $email;
 		}
