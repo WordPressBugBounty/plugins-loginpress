@@ -95,7 +95,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 						<?php
 						if ( isset( $this->addons_array ) && ! empty( $this->addons_array ) ) {
 							foreach ( $this->addons_array as $addon ) {
-								$this->addon_card_free( $addon );
+								$this->addon_card( $addon );
 							}
 						}
 						?>
@@ -287,36 +287,46 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 
 			// For Testing
 			// delete_transient( 'loginpress_api_addons' );
-
 			// Get the transient where the addons are stored on-site.
 			$data = get_transient( 'loginpress_api_addons' );
-
 			// If we already have data, return it.
 			if ( ! empty( $data ) ) {
 				return $data;
-			}
-
-			// Make sure this matches the exact URL from your site.
-			$url = 'https://wpbrigade.com/wp-json/wpbrigade/v1/plugins?addons=loginpress-pro-add-ons';
-
-			// Get data from the remote URL.
-			$response = wp_remote_get( $url, array( 'timeout' => 20 ) );
-
-			if ( ! is_wp_error( $response ) ) {
-
-				// Decode the data that we got.
-				$data = json_decode( wp_remote_retrieve_body( $response ) );
-
-				if ( ! empty( $data ) && is_array( $data ) ) {
-
-					// Store the data for a week.
+			}else{
+				$json_data = file_get_contents( plugin_dir_path( __FILE__ ) . '../js/loginpress_addons.json' );
+    
+				// Decode the JSON into an associative array
+				$data = json_decode( $json_data );
+				if ( ! empty( $data )  && is_array( $data ) ) {
 					set_transient( 'loginpress_api_addons', $data, 7 * DAY_IN_SECONDS );
-
 					return $data;
+				} else {
+					return array( 'error_message' => __( 'Something went wrong in loading the Add-Ons, Try again later!', 'loginpress' ) );
 				}
 			}
+			
 
-			return false;
+			// Make sure this matches the exact URL from your site.
+			// $url = 'https://wpbrigade.com/wp-json/wpbrigade/v1/plugins?addons=loginpress-pro-add-ons';
+
+			// Get data from the remote URL.
+			// $response = wp_remote_get( $url, array( 'timeout' => 20 ) );
+
+			// if ( ! is_wp_error( $response ) ) {
+
+			// Decode the data that we got.
+			// 	$data = json_decode( wp_remote_retrieve_body( $response ) );
+
+			// 	if ( ! empty( $data ) && is_array( $data ) ) {
+
+			 		// Store the data for a week.
+			// 		set_transient( 'loginpress_api_addons', $data, 7 * DAY_IN_SECONDS );
+
+			// 		return $data;
+			// 	}
+			// }
+
+			return array( 'error_message' => __( 'Something went wrong in loading the Add-Ons, Try again later!', 'loginpress' ) );
 		}
 
 		/**
@@ -369,7 +379,8 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 
 			if ( $addon['is_free'] ) {
 				$this->check_free_addon_status( $addon );
-			} elseif ( $this->license_life( $slug ) ) {
+			} //elseif ( $this->license_life( $slug ) ) {
+			else{	
 				if ( true === $addon['is_active'] ) {
 					?>
 
@@ -388,12 +399,13 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 
 					<?php
 					}
-			} else {
-				?>
-					<p><a target="_blank" href="https://wpbrigade.com/wordpress/plugins/loginpress-pro/?utm_source=loginpress-lite&utm_medium=addons-coming-soon&utm_campaign=pro-upgrade" class="button-primary"><?php esc_html_e( 'UPGRADE NOW', 'loginpress' ); ?></a></p>
-				<?php
-
-			}
+				// } else {
+				 	?>
+				 		<!-- <p><a target="_blank" href="https://wpbrigade.com/wordpress/plugins/loginpress-pro/?utm_source=loginpress-lite&utm_medium=addons-coming-soon&utm_campaign=pro-upgrade" class="button-primary"><?php // esc_html_e( 'UPGRADE NOW', 'loginpress' ); ?></a></p> -->
+				 	<?php
+	
+				// }
+			} 
 		}
 
 		/**

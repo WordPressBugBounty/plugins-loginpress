@@ -635,6 +635,21 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 				</div>
 			</div>
 			<?php
+			if ( class_exists( 'LoginPress_Pro' ) ) {
+				if ( !LoginPress_Pro::is_activated() ) {
+					?>
+					<div class="wrap">
+						<div class="loginpress-license-notice">
+							<strong><?php echo esc_html__( 'Please activate your license key.', 'loginpress' ); ?></strong> 
+							<br>
+							<?php echo esc_html__( 'Validating the license key is mandatory to use automatic updates and receive plugin support.', 'loginpress' ); ?>
+						</div>
+					</div>
+					<?php
+				}
+			}
+			 ?>
+			<?php
 		}
 	}
 endif;

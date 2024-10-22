@@ -14,6 +14,16 @@
 .loginpress_page_loginpress-settings #normal-sortables {
 	padding-top: 20px;
 }
+.loginpress-license-notice {
+	background-color: #f8d7da;
+	color: #721c24;
+	border: 1px solid #f5c6cb;
+	padding: 15px;
+	border-radius: 5px;
+	margin-top: 20px;
+	margin-right: 18px;
+	font-family: Arial, sans-serif;
+}
 
 #loginpress_setting .recaptcha_type,
 #loginpress_setting .site_key,
