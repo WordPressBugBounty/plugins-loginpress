@@ -76,15 +76,18 @@
              */
             $document.on('touch click', '.loginpress-partial.customize-partial-edit-shortcut', function(e) {
 
-                var $el 		= $(this),
-                    $event 		= $el.children().data('customizer-event'),
-                    $title 		= ' .accordion-section-title',
-                    $panel 		= '#accordion-panel-loginpress_panel' + $title,
-                    $section 	= '#accordion-section-' + $event + $title,
-                    $customizer = parent.document;
-
+                var $el 		 = $(this),
+                    $event 		 = $el.children().data('customizer-event'),
+                    $title 		 = ' .accordion-section-title',
+                    $title_btn   = ' .accordion-section-title button',
+                    $panel 		 = '#accordion-panel-loginpress_panel' + $title_btn,
+                    $section 	 = '#accordion-section-' + $event + $title_btn,
+                    $customizer  = parent.document;
+                    if($($panel, $customizer).length == 0){
+                        $panel 	 = '#accordion-panel-loginpress_panel' + $title;
+                        $section = '#accordion-section-' + $event + $title;
+                    }
                 if (!$el.hasClass("active")) {
-
                     $($panel, $customizer).trigger('click');
                     $($section, $customizer).trigger('click');
                 }

@@ -271,6 +271,9 @@ function loginpress_box_shadow( $shadow, $opacity, $default_shadow = 0, $inset =
 *{
 	box-sizing: border-box;
 }
+.login .button-primary {
+    float: none;
+}
 .login .privacy-policy-page-link {
     text-align: center;
     width: 100%;
@@ -525,7 +528,8 @@ body.login {
 	<?php endif; ?>
 }
 
-.login h1 a {
+.login h1 a,
+.login .wp-login-logo a {
 	<?php $loginpress_logo_img = apply_filters( 'loginpress_form_logo', $loginpress_logo_img ); ?>
 	<?php if ( ! empty( $loginpress_logo_img ) ) : ?>
 	background-image: url( <?php echo $loginpress_logo_img; ?> ) <?php echo loginpress_important(); ?>;
@@ -547,6 +551,21 @@ body.login {
 	<?php endif; ?>
 
 }
+/**
+ * WordPress 6.7 campatibility
+ * @since 3.3.0 
+ * @version 3.3.0 
+*/
+.login h1 a,
+.login .wp-login-logo a{
+	background-repeat: no-repeat;
+    background-position: center;
+    text-indent: 100%;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-inline: auto;
+}
 <?php if ( ! empty( $loginpress_logo_img ) ) : ?>
 	.login h1 a.bb-login-title:has(.bs-cs-login-title), .login.bb-login #login>h1>a {
 		text-indent: -1000px;
@@ -559,6 +578,7 @@ body.login {
 		height: 84px;
 	}
 <?php endif; ?>
+.wp-core-ui #login .wp-generate-pw,
 .wp-core-ui #login  .button-primary,
 body.wp-core-ui #login .two-factor-email-resend .button{
 	<?php if ( ! empty( $loginpress_btn_bg ) ) : ?>
@@ -605,7 +625,7 @@ body .language-switcher{
 	color: <?php echo $loginpress_btn_hover_color; ?>;
 	<?php endif; ?>
 }
-.wp-core-ui #login .button-primary, body.wp-core-ui #login .two-factor-email-resend .button, .wp-core-ui #login .wp-generate-pw{
+body .wp-core-ui #login .button-primary, body.wp-core-ui #login .two-factor-email-resend .button, .wp-core-ui #login .wp-generate-pw{
 	min-width: fit-content;
 	box-shadow: <?php echo loginpress_box_shadow( $loginpress_login_button_shadow, $loginpress_login_button_shadow_opacity ); ?>
   /* box-shadow: none; */
@@ -629,7 +649,7 @@ body .language-switcher{
 		margin-bottom: 6px;
 		margin-top: 10px;
 	<?php endif; ?>
-	font: inherit;
+	font-family: inherit;
 	<?php if ( ! empty( $loginpress_login_button_text_size ) ) : ?>
 	font-size: <?php echo $loginpress_login_button_text_size . 'px !important;'; ?>;
 	<?php endif; ?>
@@ -638,6 +658,7 @@ body .language-switcher{
 	<?php endif; ?>
 }
 #loginform,
+#registerform,
 body.login .wishlistmember-loginform div#login form#loginform {
 	<?php $loginpress_form_background_img = apply_filters( 'loginpress_login_form_background_image', $loginpress_form_background_img ); ?>
 	<?php if ( ! empty( $loginpress_form_display_bg ) && true == $loginpress_form_display_bg ) : ?>
@@ -645,6 +666,8 @@ body.login .wishlistmember-loginform div#login form#loginform {
 	<?php endif; ?>
 	<?php if ( ! empty( $loginpress_form_background_img ) ) : ?>
 	background-image: url(<?php echo $loginpress_form_background_img; ?>);
+	background-size: cover;
+	background-position: center;
 	<?php endif; ?>
 	<?php if ( true != $loginpress_form_display_bg && ! empty( $loginpress_form_background_clr ) ) : ?>
 	background-color: <?php echo $loginpress_form_background_clr; ?>;
@@ -659,7 +682,6 @@ body.login .wishlistmember-loginform div#login form#loginform {
 	border: <?php echo $loginpress_form_border; ?>;
 	<?php endif; ?>
 }
-
 #loginform input[type="text"], #loginform input[type="password"]{
 <?php if ( ! empty( $loginpress_login_textfield_radius ) ) : ?>
 border-radius: <?php echo $loginpress_login_textfield_radius . 'px;'; ?>;
@@ -781,6 +803,7 @@ body.login form.shake{
     padding-left: 20px;
 }
 <?php if( $loginpress_theme_tem === 'minimalist' ) : ?>
+#resetpassform,
 #lostpasswordform {
 	<?php if ( true != $loginpress_form_display_bg && ! empty( $loginpress_form_background_clr ) ) : ?>
 	background-color: <?php echo $loginpress_form_background_clr; ?>;
@@ -800,6 +823,12 @@ body.login form.shake{
 	<?php endif; ?>
 }
 <?php else: ?>
+.login-action-rp form,
+.login-action-lostpassword form{
+	background-color: transparent;
+}
+.login-action-checkemail #login,
+.login-action-rp #login,
 .login-action-lostpassword #login {
 	<?php if ( true != $loginpress_form_display_bg && ! empty( $loginpress_form_background_clr ) ) : ?>
 	background-color: <?php echo $loginpress_form_background_clr; ?>;
@@ -887,7 +916,7 @@ body.login form.shake{
 	font-size: <?php echo $loginpress_remember_me_font_size . 'px;'; ?>;
 	<?php endif; ?>
 }
-
+.wp-core-ui #login .wp-generate-pw,
 .login p input[type="submit"],
 .wp-core-ui.login .button-group.button-large .button, .wp-core-ui.login .button.button-large, .wp-core-ui.login .button-primary,
 .wp-core-ui #login .button-primary{

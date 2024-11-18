@@ -338,6 +338,9 @@ class LoginPress_Entities {
 
 		include LOGINPRESS_ROOT_PATH . 'include/customizer-validation.php';
 
+		include LOGINPRESS_ROOT_PATH . 'classes/controls/spacing-contols.php'; // Adjust path as necessary
+
+
 		if ( ! has_action( 'loginpress_pro_add_template' ) ) :
 			include LOGINPRESS_ROOT_PATH . 'classes/class-loginpress-promo.php';
 		endif;
@@ -977,7 +980,24 @@ class LoginPress_Entities {
 		$this->loginpress_range_setting( $wp_customize, $form_range_control, $form_range_default, $form_range_label, $form_range_attrs, $form_range_unit, 'section_form', 2, 25 );
 		$this->loginpress_range_setting( $wp_customize, $form_range_control, $form_range_default, $form_range_label, $form_range_attrs, $form_range_unit, 'section_form', 3, 30 );
 		$this->loginpress_range_setting( $wp_customize, $form_range_control, $form_range_default, $form_range_label, $form_range_attrs, $form_range_unit, 'section_form', 4, 35 );
+		// Add settings for padding and margin
+		$wp_customize->add_setting( 'loginpress_customization[padding]', array(
+			'default'           => array( 'top' => 0, 'left' => 0, 'right' => 0, 'bottom' => 0, 'unit' => 'px', 'lock' => 0 ),
+			'type'              => 'option',
+			'capability'        => 'manage_options',
+			'transport'         => 'postMessage',
+			'sanitize_callback' => 'sanitize_text_field', // Update with appropriate sanitization function
+		) );
 
+		$wp_customize->add_control( new LoginPress_Spacing_Control( $wp_customize, 'loginpress_customization-customize_form_padding_controls', array(
+			'label'      => __( 'Padding', 'loginpress' ),
+			'description'=> __( 'Set the padding values.', 'loginpress' ),
+			'section'    => 'section_form',
+			'settings'   => 'loginpress_customization[padding]',
+			'is_margin' => false, // For padding
+			'priority'	  => 40,
+			'loginpresstarget' => 'customize-control-loginpress_customization-customize_form_padding',
+		) ) );
 		$form_padding = 0;
 		while ( $form_padding < 2 ) :
 
@@ -1002,6 +1022,26 @@ class LoginPress_Entities {
 		$this->loginpress_hr_setting( $wp_customize, $close_control, 'section_form', 3, 41 );
 
 		$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'section_form', 0, 45 );
+		// Add settings for margin
+		$wp_customize->add_setting( 'loginpress_customization[margin]', array(
+			'default'           => array( 'top' => 0, 'left' => 0, 'right' => 0, 'bottom' => 0, 'unit' => 'px', 'lock' => 0 ),
+			'type'              => 'option',
+			'capability'        => 'manage_options',
+			'transport'         => 'postMessage',
+			'sanitize_callback' => 'sanitize_text_field', // Update with appropriate sanitization function
+		) );
+
+		// Add control for margin
+		$wp_customize->add_control( new LoginPress_Spacing_Control( $wp_customize, 'loginpress_customization-customize_form_margin', array(
+			'label'      => __( 'Margin', 'loginpress' ),
+			'description'=> __( 'Set the margin values.', 'loginpress' ),
+			'section'    => 'section_form',
+			'settings'   => 'loginpress_customization[margin]',
+			'is_margin'  => true, // For margin
+			'priority'	  => 49, // Adjust priority as needed
+			'loginpresstarget' => 'customize-control-loginpress_customization-textfield_margin',
+		) ) );
+
 
 		$this->loginpress_color_setting( $wp_customize, $form_color_control, $form_color_label, 'section_form', 1, 50 );
 		$this->loginpress_color_setting( $wp_customize, $form_color_control, $form_color_label, 'section_form', 2, 55 );

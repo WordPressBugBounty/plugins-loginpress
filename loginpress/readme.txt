@@ -1,11 +1,11 @@
 === LoginPress | wp-login Custom Login Page Customizer ===
 Requires at least: 4.0
-Tested up to: 6.6
+Tested up to: 6.7
 Contributors: WPBrigade, hiddenpearls, AbdulWahab610
 Donate link: https://loginpress.pro/pricing/?utm_source=loginpress-lite
 Author URI: https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=author-url-link
 Tags: wp-login, login, login customizer, custom login, wordpress login,
-Stable tag: 3.2.2
+Stable tag: 3.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -222,6 +222,11 @@ Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricin
 23. Custom Login page (Company theme) Example #23 with Captcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
 
 == Changelog ==
+
+= 3.3.0 – 2024-11-18 =
+* Bugfix: Apply Customized style on the Password Reset page.
+* Enhancement: Created a new Control in customizer for handling Padding/Margin for the login form.
+* Compatibility: Compatible with WordPress 6.7
 
 = 3.2.2 – 2024-10-22 =
 * Bugfix: Optimized LoginPress Pro Add-ons server response.
@@ -777,5 +782,5 @@ Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricin
 
 == Upgrade Notice ==
 
-= 3.2.2 =
+= 3.3.0 =
 * Upgrade this WordPress login Plugin now.

@@ -28,6 +28,147 @@
 	}
 	var formbg;
 	var get_theme;
+// Wait until the customizer is ready
+wp.customize.bind('ready', function() {
+    var highestValue = 0;
+    var value = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        unit: 'px',
+        lock: 0
+    }
+
+    // Helper function to update the hidden input
+    function updateSpacingControl(settingName, value) {
+        // Create a string that combines all the values with the unit
+        if (
+			!isNaN(value.top) &&
+			!isNaN(value.right) &&
+			!isNaN(value.bottom) &&
+			!isNaN(value.left) &&
+			value.unit !== undefined
+		) {
+			var combinedValue = `${value.top}${value.unit} ${value.right}${value.unit} ${value.bottom}${value.unit} ${value.left}${value.unit}`;
+			wp.customize(settingName).set(combinedValue);
+		} else {
+			wp.customize(settingName).set('0px 0px 0px 0px');
+		}
+		
+		    
+        // Set the combined value in the Customizer
+    }
+
+    // Centralized function to handle value updates
+    function updateValues($controlWrapper, settingName, type, inputvalue=false) {
+        // Get the current values from the inputs
+        var top = parseFloat($controlWrapper.find('input[id*="_top"]').val()) || 0;
+        var left = parseFloat($controlWrapper.find('input[id*="_left"]').val()) || 0;
+        var right = parseFloat($controlWrapper.find('input[id*="_right"]').val()) || 0;
+        var bottom = parseFloat($controlWrapper.find('input[id*="_bottom"]').val()) || 0;
+        var unit = $controlWrapper.find('select[id*="_unit"]').val() || 'px';
+        var lock = $controlWrapper.find('input[type="checkbox"][id*="_lock"]').is(':checked') ? 1 : 0;
+
+        // Update the value object
+        value = {
+            top: top,
+            left: left,
+            right: right,
+            bottom: bottom,
+            unit: unit,
+            lock: lock
+        };
+		top = isNaN(top) ? 0 : top;
+        left = isNaN(left) ? 0 : left;
+        right = isNaN(right) ? 0 : right;
+        bottom = isNaN(bottom) ? 0 : bottom;
+
+        // If lock is enabled, sync all fields to the highest value
+		if(type){
+			highestValue = Math.max(parseFloat(top) || 0, parseFloat(left) || 0, parseFloat(right) || 0, parseFloat(bottom) || 0);
+            if (highestValue) {
+                value.top = value.left = value.right = value.bottom = highestValue;
+				highestValue = isNaN(highestValue) ? 0 : highestValue;
+                $controlWrapper.find('input[type="number"]').each(function() {
+                    $(this).val(highestValue);  // Set the highest value to all related inputs
+                });
+            }
+		}else{
+			
+			if (lock === 1) {
+				value.top = value.left = value.right = value.bottom = inputvalue;
+				inputvalue = isNaN(inputvalue) ? 0 : inputvalue;
+				$controlWrapper.find('input[type="number"]').each(function() {
+					$(this).val(inputvalue);
+				});
+				
+			}
+		}
+
+        // Update the setting in the Customizer
+        updateSpacingControl(settingName, value);
+    }
+
+    // Handle updates for a specific control
+    function bindControlEvents($controlWrapper, settingName) {
+        // Listen for input changes in individual padding/margin fields
+        $controlWrapper.find('input[type="number"]').on('input change keyup', function() {
+			// Get the current input value
+			var inputVal = $(this).val();
+
+			// Allow only numbers and one decimal point
+			var sanitizedVal = inputVal.replace(/^(0|[1-9]\d*)(\.\d{0,1})?$/g, '$&'); // Match numbers with an optional decimal point
+		
+			// Set the sanitized value back to the input
+			$(this).val(sanitizedVal);
+            updateValues($controlWrapper, settingName, false, parseFloat($(this).val()));
+        });
+
+        // Handle changes in the unit dropdown
+        $controlWrapper.find('select[id*="_unit"]').on('change', function() {
+            updateValues($controlWrapper, settingName, true);
+        });
+
+        // Handle the lock toggle
+        $controlWrapper.find('input[type="checkbox"][id*="_lock"]').on('change', function() {
+            updateValues($controlWrapper, settingName, true);
+        });
+    }
+
+    // Bind control events for padding
+    bindControlEvents($('.customize-control-loginpress-spacing [data-loginpresstarget="customize-control-loginpress_customization-customize_form_padding"]'), 'loginpress_customization[customize_form_padding]');
+
+    // Bind control events for margin
+    bindControlEvents($('.customize-control-loginpress-spacing [data-loginpresstarget="customize-control-loginpress_customization-textfield_margin"]'), 'loginpress_customization[textfield_margin]');
+	// Function to update padding inputs based on margin input
+    function updatePaddingFromMargin($marginControlWrapper, marginControlTarget) {
+        // Get the value of the margin input
+        var marginValue = $marginControlWrapper.find('input[type="text"]').val() || '';
+		var unitValue = $marginControlWrapper.find('input[type="text"]').val().match(/[a-zA-Z%]+/) || ['px']; // Get the unit (defaults to 'px' if not found)
+        var values = marginValue.split(' ');
+
+        // Ensure we have 4 values and set default to '0' if not
+        var top = values[0] ? parseFloat(values[0]) || 0 : 0;
+        var right = values[1] ? parseFloat(values[1]) || 0 : 0;
+        var bottom = values[2] ? parseFloat(values[2]) || 0 : 0;
+        var left = values[3] ? parseFloat(values[3]) || 0 : 0;
+		top = isNaN(top) ? 0 : top;
+        left = isNaN(left) ? 0 : left;
+        right = isNaN(right) ? 0 : right;
+        bottom = isNaN(bottom) ? 0 : bottom;
+        
+        // Update the corresponding padding inputs
+        $('.customize-control-loginpress-spacing [data-loginpresstarget="'+marginControlTarget+'"] input[type="number"][id*="_top"]').val(top);
+        $('.customize-control-loginpress-spacing [data-loginpresstarget="'+marginControlTarget+'"] input[type="number"][id*="_right"]').val(right);
+        $('.customize-control-loginpress-spacing [data-loginpresstarget="'+marginControlTarget+'"] input[type="number"][id*="_bottom"]').val(bottom);
+        $('.customize-control-loginpress-spacing [data-loginpresstarget="'+marginControlTarget+'"] input[type="number"][id*="_left"]').val(left);
+        $('.customize-control-loginpress-spacing [data-loginpresstarget="'+marginControlTarget+'"] select[id*="_unit"]').val(unitValue);
+    }
+	updatePaddingFromMargin($('#customize-control-loginpress_customization-customize_form_padding'), 'customize-control-loginpress_customization-customize_form_padding');
+	updatePaddingFromMargin($('#customize-control-loginpress_customization-textfield_margin'), 'customize-control-loginpress_customization-textfield_margin');
+});
+
 
 	jQuery(document).ready(function($) {
 
@@ -131,6 +272,7 @@
 						target = "#lostpasswordform";
 					}
 				}
+				console.log(target)
 				if ( loginPressVal == '' ) {
 					loginpress_find( target ).css( property, em );
 				} else {

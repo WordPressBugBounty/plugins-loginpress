@@ -411,6 +411,7 @@ function free_minimalist_presets() {
 		.login .button.wp-hide-pw{
 			height: 48px;
 		}
+		.wp-core-ui #login .wp-generate-pw,
 		.login input[type="submit"], .wp-core-ui #login .button-primary{
 			padding: 12px 15px;
 			background: #F6366A;

@@ -142,6 +142,7 @@ function first_presets() {
 			padding-left: 0;
 			text-align : center;
 		}
+		body .wp-core-ui #login .wp-generate-pw,
 		.login input[type="submit"],
 		body.wp-core-ui.login .two-factor-email-resend .button,
 		.wp-core-ui #login .button-primary {
