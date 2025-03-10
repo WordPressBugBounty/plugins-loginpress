@@ -63,6 +63,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 						echo esc_html__( 'You have a lifetime license, it will never expire.', 'loginpress' );
 					} else {
 						echo '<div class="main_notice_msg">' . sprintf(
+							// translators: License key validity
 							esc_html__( 'Your (%2$s) license key is valid until %1$s.', 'loginpress' ),
 							'<strong>' . date_i18n( get_option( 'date_format' ), strtotime( $expiration_date, current_time( 'timestamp' ) ) ) . '</strong>',
 							LoginPress_Pro::get_license_type()
@@ -84,9 +85,11 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 					$license_data    = LoginPress_Pro::get_registration_data();
 
 					if ( isset( $license_data['license_data']['error'] ) && 'expired' === $license_data['license_data']['error'] ) {
-						echo '<div class="main_notice_msg">' . sprintf( esc_html__( 'Your license key has been expired on %1$s.', 'loginpress' ), date_i18n( get_option( 'date_format' ), strtotime( $expiration_date, current_time( 'timestamp' ) ) ) ) . '</div>';
+						echo '<div class="main_notice_msg">' . sprintf( 
+							// translators: License expiration
+							esc_html__( 'Your license key has been expired on %1$s.', 'loginpress' ), date_i18n( get_option( 'date_format' ), strtotime( $expiration_date, current_time( 'timestamp' ) ) ) ) . '</div>';
 					} else {
-						echo '<div class="main_notice_msg">' . sprintf( esc_html__( 'You need to activate your license to use the following add-ons.', 'loginpress' ) ) . '</div>';
+						// echo '<div class="main_notice_msg">' . sprintf( esc_html__( 'You need to activate your license to use the following add-ons.', 'loginpress' ) ) . '</div>';
 
 					}
 
@@ -161,8 +164,10 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 		function ajax_responce( $text, $slug ) {
 
 			if ( $this->license_life( $slug ) ) {
-				$message = __( $text . ' Something Wrong.', 'loginpress' );
+				// translators: Something wrong
+				$message = sprintf( __( '%s Something Wrong.', 'loginpress' ), $text );
 			} else {
+				// translators: Invalid license key
 				$message = __( 'Your License Key isn\'t valid', 'loginpress' );
 			}
 
@@ -173,14 +178,16 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 					<circle class="loader-path" cx="50" cy="50" r="18" fill="none" stroke="#d8d8d8" stroke-width="1" />
 				</svg>
 				</div>
-				<p>' . __( 'Activating ' . $text . '...', 'loginpress' ) . '</p>
+				<p>' . // translators: Activating the plugin
+				 sprintf( esc_html__( 'Activating %s...', 'loginpress' ), esc_html( $text ) ) . '</p>
 				</div>';
 			$html .= '<div id="loginpressActivatedAddon' . $slug . '" class="loginpress-install activated" style="display:none">
 				<svg class="circular-loader2" viewBox="25 25 50 50" >
 					<circle class="loader-path2" cx="50" cy="50" r="18" fill="none" stroke="#00c853" stroke-width="1" />
 				</svg>
 				<div class="checkmark draw"></div>
-				<p>' . __( $text . ' Activated.', 'loginpress' ) . '</p>
+				<p>' . // translators: Plugin activated
+			sprintf( esc_html__( '%s Activated.', 'loginpress' ), esc_html( $text ) ) . '</p>
 				</div>';
 			$html .= '<div id="loginpressUninstallingAddon' . $slug . '" class="loginpress-uninstalling activated" style="display:none">
 				<div class="loginpress-logo-container">
@@ -189,14 +196,16 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 					<circle class="loader-path" cx="50" cy="50" r="18" fill="none" stroke="#d8d8d8" stroke-width="1" />
 					</svg>
 				</div>
-				<p>' . __( 'Deactivating ' . $text . '...', 'loginpress' ) . '</p>
+				<p>' . // translators: Deactivating the plugin
+			 		sprintf( esc_html__( 'Deactivating %s...', 'loginpress' ), esc_html( $text ) ) . '</p>
 				</div>';
 			$html .= '<div id="loginpressDeactivatedAddon' . $slug . '" class="loginpress-uninstall activated" style="display:none">
 				<svg class="circular-loader2" viewBox="25 25 50 50" >
 					<circle class="loader-path2" cx="50" cy="50" r="18" fill="none" stroke="#ff0000" stroke-width="1" />
 				</svg>
 				<div class="checkmark draw"></div>
-				<p>' . __( $text . ' Deactivated.', 'loginpress' ) . '</p>
+				<p>' . // translators: Plugin deactivated
+					sprintf( esc_html__( '%s Deactivated.', 'loginpress' ), esc_html( $text ) ) . '</p>
 				</div>';
 			$html .= '<div id="loginpressWrongAddon' . $slug . '" class="loginpress-wrong activated" style="display:none">
 				<svg class="checkmark_login" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -292,19 +301,18 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 			// If we already have data, return it.
 			if ( ! empty( $data ) ) {
 				return $data;
-			}else{
+			} else {
 				$json_data = file_get_contents( plugin_dir_path( __FILE__ ) . '../js/loginpress_addons.json' );
-    
+
 				// Decode the JSON into an associative array
 				$data = json_decode( $json_data );
-				if ( ! empty( $data )  && is_array( $data ) ) {
+				if ( ! empty( $data ) && is_array( $data ) ) {
 					set_transient( 'loginpress_api_addons', $data, 7 * DAY_IN_SECONDS );
 					return $data;
 				} else {
 					return array( 'error_message' => __( 'Something went wrong in loading the Add-Ons, Try again later!', 'loginpress' ) );
 				}
 			}
-			
 
 			// Make sure this matches the exact URL from your site.
 			// $url = 'https://wpbrigade.com/wp-json/wpbrigade/v1/plugins?addons=loginpress-pro-add-ons';
@@ -315,15 +323,15 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 			// if ( ! is_wp_error( $response ) ) {
 
 			// Decode the data that we got.
-			// 	$data = json_decode( wp_remote_retrieve_body( $response ) );
+			// $data = json_decode( wp_remote_retrieve_body( $response ) );
 
-			// 	if ( ! empty( $data ) && is_array( $data ) ) {
+			// if ( ! empty( $data ) && is_array( $data ) ) {
 
-			 		// Store the data for a week.
-			// 		set_transient( 'loginpress_api_addons', $data, 7 * DAY_IN_SECONDS );
+					// Store the data for a week.
+			// set_transient( 'loginpress_api_addons', $data, 7 * DAY_IN_SECONDS );
 
-			// 		return $data;
-			// 	}
+			// return $data;
+			// }
 			// }
 
 			return array( 'error_message' => __( 'Something went wrong in loading the Add-Ons, Try again later!', 'loginpress' ) );
@@ -380,7 +388,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 			if ( $addon['is_free'] ) {
 				$this->check_free_addon_status( $addon );
 			} //elseif ( $this->license_life( $slug ) ) {
-			else{	
+			else {
 				if ( true === $addon['is_active'] ) {
 					?>
 
@@ -399,13 +407,13 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 
 					<?php
 					}
-				// } else {
-				 	?>
-				 		<!-- <p><a target="_blank" href="https://wpbrigade.com/wordpress/plugins/loginpress-pro/?utm_source=loginpress-lite&utm_medium=addons-coming-soon&utm_campaign=pro-upgrade" class="button-primary"><?php // esc_html_e( 'UPGRADE NOW', 'loginpress' ); ?></a></p> -->
-				 	<?php
-	
-				// }
-			} 
+					// } else {
+					?>
+						<!-- <p><a target="_blank" href="https://wpbrigade.com/wordpress/plugins/loginpress-pro/?utm_source=loginpress-lite&utm_medium=addons-coming-soon&utm_campaign=pro-upgrade" class="button-primary"><?php // esc_html_e( 'UPGRADE NOW', 'loginpress' ); ?></a></p> -->
+					<?php
+
+					// }
+			}
 		}
 
 		/**
@@ -909,8 +917,8 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 					border-width: 9px;
 				}
 				.loginpress-extension input[type=checkbox].loginpress-radio:checked + .loginpress-radio-btn{
-					background: #5C7697;
-					border-color: #5C7697;
+					background: #07003B;
+					border-color: #07003B;
 				}
 				</style>
 

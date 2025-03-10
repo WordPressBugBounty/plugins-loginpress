@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 * Handling all the AJAX calls in LoginPress.
 *
 * @since 1.0.19
-* @version 3.0.5
+* @version 4.0.0
 * @class LoginPress_AJAX
 */
 
@@ -22,7 +22,7 @@ if ( ! class_exists( 'LoginPress_AJAX' ) ) :
 		* * * * * * * * * */
 		public function __construct() {
 
-			$this::init();
+			$this->init();
 		}
 
 		public function init() {
@@ -123,7 +123,7 @@ if ( ! class_exists( 'LoginPress_AJAX' ) ) :
 			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die( 'No cheating, huh!' );
 			}
-			if ( defined('LOGINPRESS_PRO_VERSION') && version_compare( LOGINPRESS_PRO_VERSION, '3.0.0', '>=' ) ) {
+			if ( defined( 'LOGINPRESS_PRO_VERSION' ) && version_compare( LOGINPRESS_PRO_VERSION, '3.0.0', '>=' ) ) {
 
 				$addons = get_option( 'loginpress_pro_addons' );
 
@@ -163,7 +163,7 @@ if ( ! class_exists( 'LoginPress_AJAX' ) ) :
 		 * @version 3.0.0
 		 */
 		public function import() {
-
+			$img_error = false;
 			check_ajax_referer( 'loginpress-import-nonce', 'security' );
 
 			if ( ! current_user_can( 'manage_options' ) ) {
@@ -204,9 +204,12 @@ if ( ! class_exists( 'LoginPress_AJAX' ) ) :
 									$file             = array();
 									$file['name']     = basename( $value );
 									$file['tmp_name'] = download_url( $value ); // Downloads a url to a local temporary file.
-
 									if ( is_wp_error( $file['tmp_name'] ) ) {
-										@unlink( $file['tmp_name'] );
+										$error_message = $file['tmp_name']->get_error_message(); // Get the error message
+										// Optionally log the error message for debugging
+										error_log( 'Could not download image from remote source: ' . $error_message );
+										$img_error = true;
+										// @unlink( $file['tmp_name'] );
 										// return new WP_Error( 'lpimgurl', 'Could not download image from remote source' );
 									} else {
 										$id                 = media_handle_sideload( $file, 0 ); // Handles a sideloaded file.
@@ -254,9 +257,59 @@ if ( ! class_exists( 'LoginPress_AJAX' ) ) :
 						update_option( 'customize_presets_settings', $array );
 
 					}
+					// loginpress_limit_login_attempts
+					if ( 'loginpress_limit_login_attempts' == $object ) {
+
+						update_option( 'loginpress_limit_login_attempts', $array );
+
+					}
+					if ( 'loginpress_limit_login_details' == $object ) {
+						global $wpdb;
+						$table_name = $wpdb->prefix . 'loginpress_limit_login_details';
+
+						// Validate data structure before proceeding
+						if ( isset( $array ) && is_array( $array ) ) {
+							foreach ( $array as $record ) {
+								// Insert each record into the database
+								$result = $wpdb->insert(
+									$table_name,
+									array(
+										'ip'        => $record['ip'],
+										'username'  => $record['username'],
+										'datentime' => $record['datentime'],
+										'gateway'   => $record['gateway'],
+										'whitelist' => $record['whitelist'],
+										'blacklist' => $record['blacklist'],
+									),
+									array(
+										'%s', // ip (string)
+										'%s', // username (string)
+										'%d', // datentime (integer)
+										'%s', // gateway (string)
+										'%d', // whitelist (integer)
+										'%d',  // blacklist (integer)
+									)
+								);
+
+								// Log any errors that occur during insertion
+								if ( false === $result ) {
+									error_log( 'Failed to insert record: ' . print_r( $record, true ) );
+									error_log( $wpdb->last_error );
+								}
+							}
+						}
+					}
 				} // endforeach.
 			} else {
 				echo 'error';
+			}
+			if ( $img_error == true ) {
+				wp_send_json_success(
+					array(
+						'status'  => 'error',
+						'message' => 'Could not download image from remote source.',
+					)
+				);
 			}
 			wp_die();
 		}
@@ -276,13 +329,44 @@ if ( ! class_exists( 'LoginPress_AJAX' ) ) :
 				wp_die( 'No cheating, huh!' );
 			}
 
-			$loginpress_db            = array();
-			$loginpress_setting_opt   = array();
-			$loginpress_customization = get_option( 'loginpress_customization' );
-			$loginpress_setting       = get_option( 'loginpress_setting' );
-			$loginpress_preset        = get_option( 'customize_presets_settings' );
-			$loginpress_setting_fetch = array( 'captcha_enable', 'captcha_language', 'captcha_theme', 'recaptcha_type', 'secret_key', 'secret_key_v2_invisible', 'secret_key_v3', 'site_key', 'site_key_v2_invisible', 'site_key_v3', 'good_score', 'enable_repatcha' );
+			$loginpress_db                   = array();
+			$loginpress_setting_opt          = array();
+			$loginpress_customization        = get_option( 'loginpress_customization' );
+			$loginpress_setting              = get_option( 'loginpress_setting' );
+			$loginpress_preset               = get_option( 'customize_presets_settings' );
+			$loginpress_setting_fetch        = array( 'captcha_enable', 'captcha_language', 'captcha_theme', 'recaptcha_type', 'secret_key', 'secret_key_v2_invisible', 'secret_key_v3', 'site_key', 'site_key_v2_invisible', 'site_key_v3', 'good_score', 'enable_repatcha' );
+			$loginpress_limit_login_attempts = false;
+			$loginpress_limit_login_details  = false;
+			if ( class_exists( 'LoginPress_Pro' ) ) {
 
+				if ( LoginPress_Pro::is_activated() ) {
+					$loginpress_limit_login_attempts = get_option( 'loginpress_limit_login_attempts' );
+					global $wpdb;
+					$table_name = $wpdb->prefix . 'loginpress_limit_login_details';
+					// Check if the table exists
+					$table_exists = $wpdb->get_var(
+						$wpdb->prepare(
+							'SHOW TABLES LIKE %s',
+							$table_name
+						)
+					);
+
+					if ( $table_exists ) {
+						// Get result from the table where IPs are blacklisted or whitelisted
+						$loginpress_limit_login_details = $wpdb->get_results(
+							"SELECT * FROM `$table_name` WHERE `whitelist` = 1 OR `blacklist` = 1"
+						);
+
+						// Handle your results
+						if ( ! empty( $loginpress_limit_login_details ) ) {
+							// Process your data here
+						}
+					} else {
+						// Log or handle the case where the table doesn't exist
+						error_log( "Table $table_name does not exist." );
+					}
+				}
+			}
 			if ( $loginpress_customization ) {
 
 				$loginpress_db['loginpress_customization'] = $loginpress_customization;
@@ -301,6 +385,15 @@ if ( ! class_exists( 'LoginPress_AJAX' ) ) :
 			if ( $loginpress_preset ) {
 
 				$loginpress_db['customize_presets_settings'] = $loginpress_preset;
+			}
+
+			if ( $loginpress_limit_login_attempts ) {
+
+				$loginpress_db['loginpress_limit_login_attempts'] = $loginpress_limit_login_attempts;
+			}
+			if ( $loginpress_limit_login_details ) {
+
+				$loginpress_db['loginpress_limit_login_details'] = $loginpress_limit_login_details;
 			}
 
 			$loginpress_db = json_encode( $loginpress_db );
@@ -403,26 +496,26 @@ if ( ! class_exists( 'LoginPress_AJAX' ) ) :
 		 */
 		function optout_yes() {
 
-			if( ! current_user_can( 'manage_options' ) || ! check_ajax_referer( 'loginpress-optout-nonce', 'optout_nonce' ) ){
-				wp_die( '<p>' . __( 'Sorry, you are not allowed to edit this item.' ) . '</p>', 403 );
+			if ( ! current_user_can( 'manage_options' ) || ! check_ajax_referer( 'loginpress-optout-nonce', 'optout_nonce' ) ) {
+				wp_die( '<p>' . __( 'Sorry, you are not allowed to edit this item.', 'loginpress' ) . '</p>', 403 );
 			}
 
-            // Get the current option and decode it as an associative array
-            $sdk_data = json_decode(get_option('wpb_sdk_loginpress'), true);
+			// Get the current option and decode it as an associative array
+			$sdk_data = json_decode( get_option( 'wpb_sdk_loginpress' ), true );
 
-            // If there is no current option, initialize an empty array
-            if (!$sdk_data) {
-                $sdk_data = array();
-            }
+			// If there is no current option, initialize an empty array
+			if ( ! $sdk_data ) {
+				$sdk_data = array();
+			}
 
-            $setting_name = $_POST['setting_name'];  // e.g., communication, diagnostic_info, extensions
-            $setting_value = $_POST['setting_value'];  // The new value to be updated
+			$setting_name  = $_POST['setting_name'];  // e.g., communication, diagnostic_info, extensions
+			$setting_value = $_POST['setting_value'];  // The new value to be updated
 
-            // Update the specific setting in the array
-            $sdk_data[$setting_name] = $setting_value;
+			// Update the specific setting in the array
+			$sdk_data[ $setting_name ] = $setting_value;
 
-            // Encode the array back into a JSON string and update the option
-            update_option('wpb_sdk_loginpress', json_encode($sdk_data));
+			// Encode the array back into a JSON string and update the option
+			update_option( 'wpb_sdk_loginpress', json_encode( $sdk_data ) );
 
 			wp_die();
 		}
@@ -468,10 +561,10 @@ if ( ! class_exists( 'LoginPress_AJAX' ) ) :
 
 			wp_die();
 		}
-		/**	
-		 * YouTube Video URL.	
-		 *	
-		 * @return void	
+		/**
+		 * YouTube Video URL.
+		 *
+		 * @return void
 		 */
 		static function youtube_video_url() {
 			check_ajax_referer( 'loginpress-attachment-nonce', 'security' );

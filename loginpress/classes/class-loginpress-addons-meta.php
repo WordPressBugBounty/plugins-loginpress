@@ -75,18 +75,18 @@ if ( ! class_exists( 'LoginPress_Addons_Meta' ) ) :
 					'is_active'  => false,
 				),
 				// 'protect-content'      => array(
-				// 	'title'      => __( 'Protect Content', 'loginpress' ),
-				// 	'short_desc' => __( 'Protected Contents', 'loginpress' ),
-				// 	'slug'       => 'protect-content',
-				// 	'is_free'    => false,
-				// 	'is_active'  => false,
+				// 'title'      => __( 'Protect Content', 'loginpress' ),
+				// 'short_desc' => __( 'Protected Contents', 'loginpress' ),
+				// 'slug'       => 'protect-content',
+				// 'is_free'    => false,
+				// 'is_active'  => false,
 				// ),
 				// 'custom-fields'        => array(
-				// 	'title'      => __( 'Custom Registration Fields', 'loginpress' ),
-				// 	'short_desc' => __( 'Custom Registration Fields', 'loginpress' ),
-				// 	'slug'       => 'custom-fields',
-				// 	'is_free'    => false,
-				// 	'is_active'  => false,
+				// 'title'      => __( 'Custom Registration Fields', 'loginpress' ),
+				// 'short_desc' => __( 'Custom Registration Fields', 'loginpress' ),
+				// 'slug'       => 'custom-fields',
+				// 'is_free'    => false,
+				// 'is_active'  => false,
 				// ),
 			);
 
@@ -137,12 +137,12 @@ if ( ! class_exists( 'LoginPress_Addons_Meta' ) ) :
 					'excerpt' => __( 'This LoginPress add-on lets you change the login page URL to anything you want. It will give a hard time to spammers who keep hitting to your login page. This is helpful for Brute force attacks. One caution to use this add-on is you need to remember the custom login url after you change it. We have an option to email your custom login url so you remember it.', 'loginpress' ),
 				),
 				// 'protect-content'      => array(
-				// 	'title'   => 'Protect Content',
-				// 	'excerpt' => __( 'Protect Content add-on allows you to protect your page/post/CPT specific content.', 'loginpress' ),
+				// 'title'   => 'Protect Content',
+				// 'excerpt' => __( 'Protect Content add-on allows you to protect your page/post/CPT specific content.', 'loginpress' ),
 				// ),
 				// 'custom-fields'        => array(
-				// 	'title'   => 'Custom Registration Fields',
-				// 	'excerpt' => __( 'This addon lets you create custom fields like text,radio button, checkboxes even an image.', 'loginpress' ),
+				// 'title'   => 'Custom Registration Fields',
+				// 'excerpt' => __( 'This addon lets you create custom fields like text,radio button, checkboxes even an image.', 'loginpress' ),
 				// ),
 			);
 			return $addons_details_array;

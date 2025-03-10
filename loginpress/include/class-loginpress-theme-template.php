@@ -5,10 +5,10 @@
  * @since 1.1.3
  */
 
- // Exit if accessed directly.
- if ( ! defined( 'ABSPATH' ) ) {
- 	exit;
- }
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 
@@ -19,12 +19,14 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 
 		/**
 		 * A reference to an instance of this class.
+		 *
 		 * @var string
 		 */
 		private static $instance;
 
 		/**
 		 * The array of templates that this plugin tracks.
+		 *
 		 * @var string
 		 */
 		protected $templates;
@@ -58,21 +60,19 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 			}
 
 			// Add a filter to the save post to inject out template into the page cache.
-			add_filter(	'wp_insert_post_data', array( $this, 'register_project_templates' ) );
+			add_filter( 'wp_insert_post_data', array( $this, 'register_project_templates' ) );
 
 			// Add a filter to the template include to determine if the page has our template assigned and return it's path.
-			add_filter( 'template_include', array( $this, 'view_project_template') );
+			add_filter( 'template_include', array( $this, 'view_project_template' ) );
 
 			// Add templates.
 			$this->templates = array(
 				'template-loginpress.php' => 'LoginPress',
 			);
-
 		}
 
 		/**
 		 * Adds our template to the page dropdown for v4.7+
-		 *
 		 */
 		public function add_new_template( $posts_templates ) {
 
@@ -97,7 +97,7 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 			}
 
 			// New cache, therefore remove the old one
-			wp_cache_delete( $cache_key , 'themes');
+			wp_cache_delete( $cache_key, 'themes' );
 
 			// Now add our template to the list of templates by merging our templates
 			// with the existing templates array from the cache.
@@ -108,7 +108,6 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 			wp_cache_add( $cache_key, $templates, 'themes', 1800 );
 
 			return $atts;
-
 		}
 
 		/**
@@ -129,7 +128,7 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 				return $template;
 			}
 
-			$file = plugin_dir_path( __FILE__ ). get_post_meta( $post->ID, '_wp_page_template', true );
+			$file = plugin_dir_path( __FILE__ ) . get_post_meta( $post->ID, '_wp_page_template', true );
 
 			// Just to be safe, we check if the file exist first
 			if ( file_exists( $file ) ) {
@@ -140,7 +139,6 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 
 			// Return template
 			return $template;
-
 		}
 	}
 endif;

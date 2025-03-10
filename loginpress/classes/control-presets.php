@@ -1,12 +1,12 @@
 <?php
 
 /**
-* Class for Presets.
-*
-* @since  1.0.9
-* @version 1.5.12
-* @access public
-*/
+ * Class for Presets.
+ *
+ * @since  1.0.9
+ * @version 1.5.12
+ * @access public
+ */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,21 +21,21 @@ if ( ! class_exists( 'WP_Customize_Control' ) ) {
 class LoginPress_Presets extends WP_Customize_Control {
 
 	/**
-	* The type of customize control being rendered.
-	*
-	* @since  1.0.9
-	* @access public
-	* @var    string
-	*/
+	 * The type of customize control being rendered.
+	 *
+	 * @since  1.0.9
+	 * @access public
+	 * @var    string
+	 */
 	public $type = 'checkbox-multiple';
 
 	/**
-	* Enqueue scripts/styles.
-	*
-	* @since  1.0.9
-	* @access public
-	* @return void
-	*/
+	 * Enqueue scripts/styles.
+	 *
+	 * @since  1.0.9
+	 * @access public
+	 * @return void
+	 */
 	public function enqueue() {
 
 		// wp_enqueue_script( 'jt-customize-controls', plugins_url(  '/customize-controls.js' , __FILE__  ), array( 'jquery' ) );
@@ -43,20 +43,20 @@ class LoginPress_Presets extends WP_Customize_Control {
 	}
 
 	/**
-	* Displays the control content.
-	*
-	* @access public
-	*
-	* @since  1.0.9
-	* @version 3.0.8
-	* @return void
-	*/
+	 * Displays the control content.
+	 *
+	 * @access public
+	 *
+	 * @since  1.0.9
+	 * @version 3.0.8
+	 * @return void
+	 */
 	public function render_content() {
 
-
-		if ( empty( $this->choices ) )
+		if ( empty( $this->choices ) ) {
 			return;
-		
+		}
+
 		$name = 'loginpress_preset-' . $this->id; ?>
 
 		<span class="customize-control-title">
@@ -70,16 +70,16 @@ class LoginPress_Presets extends WP_Customize_Control {
 
 			<?php foreach ( $this->choices as $val ) : ?>
 
-				<?php $_disbaled       = isset( $val['pro'] ) ? 'disabled' : ''; ?>
-				<?php $_disbaled_link  = isset( $val['link'] ) ? 'disabled' : ''; ?>
+				<?php $_disbaled = isset( $val['pro'] ) ? 'disabled' : ''; ?>
+				<?php $_disbaled_link = isset( $val['link'] ) ? 'disabled' : ''; ?>
 				<?php $disable_for_pro = $_disbaled === 'disabled' ? $_disbaled : $_disbaled_link; ?>
 				<div class="loginpress_thumbnail">
-					<input <?php echo $disable_for_pro; ?> class="image-select" type="radio" value="<?php echo esc_attr( $val['id'] ); ?>" id="<?php echo $this->id . $val['id']; ?>" name="<?php echo esc_attr( $name ); ?>" <?php  checked( $this->value(), $val['id'] ); ?> />
+					<input <?php echo $disable_for_pro; ?> class="image-select" type="radio" value="<?php echo esc_attr( $val['id'] ); ?>" id="<?php echo $this->id . $val['id']; ?>" name="<?php echo esc_attr( $name ); ?>" <?php checked( $this->value(), $val['id'] ); ?> />
 					<label for="<?php echo $this->id . $val['id']; ?>">
 						<div class="loginpress_thumbnail_img">
 							<img src="<?php echo $val['thumbnail']; ?>" alt="<?php echo esc_attr( $val['id'] ); ?>" title="<?php echo esc_attr( $val['id'] ); ?>">
 						</div> <!--  .img -->
-						<h3><?php echo $val['name'] ?></h3>
+						<h3><?php echo $val['name']; ?></h3>
 					</label>
 					<?php if ( isset( $val['pro'] ) ) : ?>
 						<?php $utm_content = str_replace( ' ', '+', str_replace( ' #2', '#2', $val['name'] ) ) . '+Template'; ?>
@@ -96,8 +96,8 @@ class LoginPress_Presets extends WP_Customize_Control {
 			<?php endforeach; ?>
 		</div>
 
-		<input name='presets_hidden' type="hidden" <?php $this->link(); ?> value="<?php echo  $this->value(); ?>" />
-		<?php 
+		<input name='presets_hidden' type="hidden" <?php $this->link(); ?> value="<?php echo $this->value(); ?>" />
+		<?php
 	}
 }
 
@@ -111,7 +111,8 @@ if ( ! function_exists( 'loginpress_presets_control_css' ) ) {
 	 *
 	 * @return void
 	 */
-	function loginpress_presets_control_css() { ?>
+	function loginpress_presets_control_css() {
+		?>
 	
 		<style>
 			#customize-theme-controls #accordion-section-customize_presets .accordion-section-title{

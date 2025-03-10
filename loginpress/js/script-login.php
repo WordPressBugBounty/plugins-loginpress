@@ -2,19 +2,18 @@
 
 /**
  * script-login.php is created for adding JS code in login page footer.
+ *
  * @since 1.2.2
  * @version 1.2.3
  */
-
 function loginpress_custom_js( $loginpress_key ) {
 
-	$loginpress_array  = (array) get_option( 'loginpress_customization' );
+	$loginpress_array = (array) get_option( 'loginpress_customization' );
 	if ( array_key_exists( $loginpress_key, $loginpress_array ) ) {
 
 		if ( 'loginpress_custom_js' == $loginpress_key ) {
 			return $loginpress_array[ $loginpress_key ];
 		}
-
 	}
 }
 
@@ -25,7 +24,7 @@ $loginpress_custom_js = loginpress_custom_js( 'loginpress_custom_js' );
 
 if ( ! empty( $loginpress_custom_js ) ) { ?>
 	<script>
-	  	<?php echo $loginpress_custom_js; ?>
+		<?php echo $loginpress_custom_js; ?>
 	</script>
 <?php } ?>
 

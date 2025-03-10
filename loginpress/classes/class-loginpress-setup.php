@@ -5,7 +5,7 @@
  * @since 1.0.9
  * @version 3.0.0
  */
-if ( ! class_exists( 'LoginPress_Settings' ) ):
+if ( ! class_exists( 'LoginPress_Settings' ) ) :
 
 	class LoginPress_Settings {
 
@@ -18,11 +18,13 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 		 */
 		function __construct() {
 
-			include_once( LOGINPRESS_ROOT_PATH . '/classes/class-loginpress-settings-api.php' );
-			$this->settings_api = new LoginPress_Settings_API;
+			include_once LOGINPRESS_ROOT_PATH . '/classes/class-loginpress-settings-api.php';
+			$this->settings_api = new LoginPress_Settings_API();
 
 			add_action( 'admin_init', array( $this, 'loginpress_setting_init' ) );
 			add_action( 'admin_menu', array( $this, 'loginpress_setting_menu' ) );
+			add_action( 'admin_notices', array( $this, 'loginpress_show_custom_dashboard_popup' ) );
+			add_action( 'wp_ajax_dismiss_notification', array( $this, 'loginpress_handle_notification_dismiss' ) );
 		}
 
 		/**
@@ -32,14 +34,14 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 		 */
 		function loginpress_setting_init() {
 
-			//set the settings.
+			// set the settings.
 			$this->settings_api->set_sections( $this->get_settings_sections() );
 			$this->settings_api->set_fields( $this->get_settings_fields() );
 
-			//initialize settings.
+			// initialize settings.
 			$this->settings_api->admin_init();
 
-			//reset settings.
+			// reset settings.
 			$this->load_default_settings();
 		}
 
@@ -53,7 +55,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 			$_loginpress_Setting = get_option( 'loginpress_setting' );
 			if ( isset( $_loginpress_Setting['reset_settings'] ) && 'on' == $_loginpress_Setting['reset_settings'] ) {
 
-				$loginpress_last_reset = array( 'last_reset_on' => date('Y-m-d') );
+				$loginpress_last_reset = array( 'last_reset_on' => date( 'Y-m-d' ) );
 				update_option( 'loginpress_customization', $loginpress_last_reset );
 				update_option( 'customize_presets_settings', 'minimalist' );
 				$_loginpress_Setting['reset_settings'] = 'off';
@@ -69,8 +71,8 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 		 */
 		function settings_reset_message() {
 
-			$class = 'notice notice-success';
-			$message = __( 'Default Settings Restored', 'loginpress' );
+			$class   = 'message success';
+			$message = __( 'Default Settings Restored.', 'loginpress' );
 
 			printf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message );
 		}
@@ -90,7 +92,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 				return;
 			}
 
-			add_action('admin_head', 'loginpressicon'); // admin_head is a hook loginpressicon is a function we are adding it to the hook
+			add_action( 'admin_head', 'loginpressicon' ); // admin_head is a hook loginpressicon is a function we are adding it to the hook
 
 			// LoginPress Dashicon
 			function loginpressicon() {
@@ -102,11 +104,11 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 				echo "<style>
 				@font-face {
 					font-family: 'loginpress';
-					src:  url('".$eot."');
-					src:  url('".$eotie."') format('embedded-opentype'),
-					url('".$ttf."') format('truetype'),
-					url('".$woff."') format('woff'),
-					url('".$svg."') format('svg');
+					src:  url('" . $eot . "');
+					src:  url('" . $eotie . "') format('embedded-opentype'),
+					url('" . $ttf . "') format('truetype'),
+					url('" . $woff . "') format('woff'),
+					url('" . $svg . "') format('svg');
 					font-weight: normal;
 					font-style: normal;
 				}
@@ -134,11 +136,11 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 			}
 
 			// Create LoginPress Parent Page.
-			add_menu_page( 
+			add_menu_page(
 				__( 'LoginPress', 'loginpress' ),
 				'LoginPress',
 				'manage_options',
-				"loginpress-settings",
+				'loginpress-settings',
 				array( $this, 'plugin_page' ),
 				false,
 				50
@@ -150,7 +152,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 				__( 'Settings', 'loginpress' ),
 				__( 'Settings', 'loginpress' ),
 				'manage_options',
-				"loginpress-settings",
+				'loginpress-settings',
 				array( $this, 'plugin_page' )
 			);
 
@@ -160,7 +162,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 				__( 'Customizer', 'loginpress' ),
 				__( 'Customizer', 'loginpress' ),
 				'manage_options',
-				"loginpress",
+				'loginpress',
 				'__return_null'
 			);
 
@@ -170,7 +172,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 				__( 'Help', 'loginpress' ),
 				__( 'Help', 'loginpress' ),
 				'manage_options',
-				"loginpress-help",
+				'loginpress-help',
 				array( $this, 'loginpress_help_page' )
 			);
 
@@ -180,7 +182,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 				__( 'Import/Export LoginPress Settings', 'loginpress' ),
 				__( 'Import / Export', 'loginpress' ),
 				'manage_options',
-				"loginpress-import-export",
+				'loginpress-import-export',
 				array( $this, 'loginpress_import_export_page' )
 			);
 
@@ -190,10 +192,9 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 				__( 'Add-Ons', 'loginpress' ),
 				__( 'Add-Ons', 'loginpress' ),
 				'manage_options',
-				"loginpress-addons",
+				'loginpress-addons',
 				array( $this, 'loginpress_addons_page' )
 			);
-
 		}
 
 		/**
@@ -216,10 +217,12 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 			 */
 			$loginpress_general_tab = array(
 				array(
-					'id'    => 'loginpress_setting',
-					'title' => __( 'Settings', 'loginpress' ),
-					'sub-title' => __( 'Login Page Setting', 'loginpress' ),
-					'desc'  => sprintf( __( '%3$sEverything else is customizable through %1$sWordPress Customizer%2$s.%4$s', 'loginpress' ), '<a href="' . admin_url( 'admin.php?page=loginpress' ) . '">', '</a>', '<p>', '</p>' ),
+					'id'         => 'loginpress_setting',
+					'title'      => __( 'Settings', 'loginpress' ),
+					'sub-title'  => __( 'Login Page Setting', 'loginpress' ),
+					'desc'       => sprintf( 
+						// translators: Wordpress customizer
+						__( '%3$sEverything else is customizable through %1$sWordPress Customizer%2$s.%4$s', 'loginpress' ), '<a href="' . admin_url( 'admin.php?page=loginpress' ) . '">', '</a>', '<p>', '</p>' ),
 					'video_link' => 'GMAwsHomJlE',
 
 				),
@@ -250,17 +253,29 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 		 */
 		function get_settings_fields() {
 
+			$apply_strength_options = array(
+				'register' => __( 'Register Form', 'loginpress' ),
+				'reset'    => __( 'Password Reset Form', 'loginpress' ),
+			);
+
+			if ( class_exists( 'woocommerce' ) ) {
+
+				$woo_strength_options   = array(
+					'wc_forms' => __( 'WooCommerce Reset Form', 'loginpress' ),
+				);
+				$apply_strength_options = array_merge( $apply_strength_options, $woo_strength_options );
+			}
 			/**
 			 * @param array $_free_fields array of free fields.
 			 * @var array
 			 */
 			$_free_fields = array(
 				array(
-					'name'  			=> 'enable_password_reset',
-					'label' 			=> __( 'Force Password Reset', 'loginpress' ),
-					'desc'  			=> __( 'Enable to enforce password reset after certain duration.', 'loginpress' ),
-					'extra_desc'  		=> __( 'Enable to enforce password reset after certain duration.', 'loginpress' ),
-					'type'  			=> 'checkbox'
+					'name'       => 'enable_password_reset',
+					'label'      => __( 'Force Password Reset', 'loginpress' ),
+					'desc'       => __( 'Enable to enforce password reset after certain duration.', 'loginpress' ),
+					'extra_desc' => __( 'Enable to enforce password reset after certain duration.', 'loginpress' ),
+					'type'       => 'checkbox',
 				),
 				array(
 					'name'              => 'loginpress_password_reset_time_limit',
@@ -268,57 +283,98 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 					'desc'              => __( 'Set the duration in days after which the user will be forced to change password again. e.g 10.', 'loginpress' ),
 					'placeholder'       => __( '10', 'loginpress' ),
 					'min'               => 0,
-					'max'            	=> $this->change_force_time_limit( 500 ),
+					'max'               => $this->change_force_time_limit( 500 ),
 					'step'              => '1',
 					'type'              => 'number',
 					'default'           => 0,
-					'sanitize_callback' => 'absint'
+					'sanitize_callback' => 'absint',
 				),
 				array(
-					'name'              => 'roles_for_password_reset',
-					'label'             => __( 'Password Reset For', 'loginpress' ),
-					'desc'              => __( 'Choose the roles for password reset forcefully to secure the site\'s security.', 'loginpress' ),
-					'type'              => 'multicheck',
-					'options'           => $this->get_all_roles(),
+					'name'    => 'roles_for_password_reset',
+					'label'   => __( 'Password Reset For', 'loginpress' ),
+					'desc'    => __( 'Choose the roles for password reset forcefully to secure the site\'s security.', 'loginpress' ),
+					'type'    => 'multicheck',
+					'options' => $this->get_all_roles(),
 				),
 				array(
 					'name'              => 'session_expiration',
 					'label'             => __( 'Session Expire', 'loginpress' ),
-					
 
-					'desc'              => sprintf( __( 'Set the session expiration time in minutes. e.g: 10', 'loginpress' ) ), //<br /> When you set the time, here you need to set the expiration cookies. for this, you just need to logout at least one time. After login again, it should be working fine.<br />For removing the session expiration just pass empty value in “Expiration” field and save it. Now clear the expiration cookies by logout at least one time.
+					'desc'              => sprintf( __( 'Set the session expiration time in minutes. e.g: 10', 'loginpress' ) ), // <br /> When you set the time, here you need to set the expiration cookies. for this, you just need to logout at least one time. After login again, it should be working fine.<br />For removing the session expiration just pass empty value in “Expiration” field and save it. Now clear the expiration cookies by logout at least one time.
 					'placeholder'       => __( '10', 'loginpress' ),
 					'min'               => 0,
 					// 'max'            => 100,
 					'step'              => '1',
 					'type'              => 'number',
 					'default'           => 'Title',
-					'sanitize_callback' => 'absint'
+					'sanitize_callback' => 'absint',
 				),
 				// array(
-				//   'name'  => 'enable_privacy_policy',
-				//   'label' => __( 'Enable Privacy Policy', 'loginpress' ),
-				//   'desc'  => __( 'Enable Privacy Policy checkbox on registration page.', 'loginpress' ),
-				//   'type'  => 'checkbox'
+				// 'name'  => 'enable_privacy_policy',
+				// 'label' => __( 'Enable Privacy Policy', 'loginpress' ),
+				// 'desc'  => __( 'Enable Privacy Policy checkbox on registration page.', 'loginpress' ),
+				// 'type'  => 'checkbox'
 				// ),
 				// array(
-				//   'name'  => 'privacy_policy',
-				//   'label' => __( 'Privacy & Policy', 'loginpress' ),
-				//   'desc'  => __( 'Right down the privacy and policy description.', 'loginpress' ),
-				//   'type'  => 'wysiwyg',
-				//   'default' => __( sprintf( __( '%1$sPrivacy Policy%2$s.', 'loginpress' ), '<a href="' . admin_url( 'admin.php?page=loginpress-settings' ) . '">', '</a>' ) )
+				// 'name'  => 'privacy_policy',
+				// 'label' => __( 'Privacy & Policy', 'loginpress' ),
+				// 'desc'  => __( 'Right down the privacy and policy description.', 'loginpress' ),
+				// 'type'  => 'wysiwyg',
+				// 'default' => __( sprintf( __( '%1$sPrivacy Policy%2$s.', 'loginpress' ), '<a href="' . admin_url( 'admin.php?page=loginpress-settings' ) . '">', '</a>' ) )
 				// ),
 				array(
 					'name'  => 'auto_remember_me',
 					'label' => __( 'Auto Remember Me', 'loginpress' ),
-					'desc'  => sprintf( __( 'Enable to keep the %1$sRemember Me%2$s option always checked on the Login Page.', 'loginpress' ), '<a href="' . esc_url( 'https://loginpress.pro/doc/enable-the-auto-remember-me-checkbox?utm_source=loginpress-lite&utm_medium=settings&utm_campaign=user-guide&utm_content=Auto+Remember+Me+Documentation' ) . '" target="_blank">', '</a>' ),
-					'type'  => 'checkbox'
+					'desc'  => sprintf( 
+						// translators: Auto Remember Me
+						__( 'Enable to keep the %1$sRemember Me%2$s option always checked on the Login Page.', 'loginpress' ), '<a href="' . esc_url( 'https://loginpress.pro/doc/enable-the-auto-remember-me-checkbox?utm_source=loginpress-lite&utm_medium=settings&utm_campaign=user-guide&utm_content=Auto+Remember+Me+Documentation' ) . '" target="_blank">', '</a>' ),
+					'type'  => 'checkbox',
 				),
 				array(
 					'name'  => 'enable_reg_pass_field',
 					'label' => __( 'Custom Password Fields', 'loginpress' ),
-					'desc'  => sprintf( __( 'Enable to add %1$sCustom Password Fields%2$s to the Registration Form.', 'loginpress' ), '<a href="' . esc_url( 'https://loginpress.pro/doc/custom-password-fields-on-the-registration-form/?utm_source=loginpress-lite&utm_medium=settings&utm_campaign=user-guide&utm_content=Custom+Password+Fields+Documentation' ) . '" target="_blank">', '</a>' ),
-					'type'  => 'checkbox'
+					'desc'  => sprintf( 
+						// translators: Custom Password Fields
+						__( 'Enable to add %1$sCustom Password Fields%2$s to the Registration Form.', 'loginpress' ), '<a href="' . esc_url( 'https://loginpress.pro/doc/custom-password-fields-on-the-registration-form/?utm_source=loginpress-lite&utm_medium=settings&utm_campaign=user-guide&utm_content=Custom+Password+Fields+Documentation' ) . '" target="_blank">', '</a>' ),
+					'type'  => 'checkbox',
+				),
+				array(
+					'name'  => 'enable_pass_strength',
+					'label' => __( 'Enable Password Strength', 'loginpress' ),
+					'desc'  => __( 'To Enable password strength setting on password field.', 'loginpress' ),
+					'type'  => 'checkbox',
+				),
+				array(
+					'name'              => 'minimum_pass_char',
+					'label'             => __( 'Minimum Password Strength', 'loginpress' ),
+					'desc'              => __( 'Set the minimum password length. e.g: 8', 'loginpress' ),
+					'placeholder'       => __( '8', 'loginpress' ),
+					'min'               => 8,
+					'default'           => 8,
+					'type'              => 'number',
+					'sanitize_callback' => 'absint',
+				),
+				array(
+					'name'    => 'pass_strength',
+					'label'   => __( 'Password Strength Options', 'loginpress' ),
+					'type'    => 'multicheck',
+					'options' => array(
+						'lower_upper_char_must' => __( '[a-z | A-Z] At least one lower & upper case character.', 'loginpress' ),
+						'special_char_must'     => __( '[ @,#,$,% etc ] At least one special character.', 'loginpress' ),
+						'integer_no_must'       => __( '[0-9] At least one integer number.', 'loginpress' ),
+					),
+				),
+				array(
+					'name'  => 'password_strength_meter',
+					'label' => __( 'Password Strength Meter', 'loginpress' ),
+					'desc'  => __( 'Enable to show password strength meter.', 'loginpress' ),
+					'type'  => 'checkbox',
+				),
+				array(
+					'name'    => 'enable_pass_strength_forms',
+					'label'   => __( 'Enable Password Strength on', 'loginpress' ),
+					'type'    => 'multicheck',
+					'options' => $apply_strength_options,
 				),
 				array(
 					'name'    => 'login_order',
@@ -329,37 +385,41 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 					'options' => array(
 						'default'  => __( 'Both Username Or Email Address', 'loginpress' ),
 						'username' => __( 'Only Username', 'loginpress' ),
-						'email'    => __( 'Only Email Address', 'loginpress' )
-					)
+						'email'    => __( 'Only Email Address', 'loginpress' ),
+					),
 				),
 				array(
 					'name'  => 'enable_pci_compliance',
 					'label' => __( 'Enable PCI Compliance', 'loginpress' ),
-					'desc'  => sprintf( __( 'Enable to add %1$sPCI Compliance%2$s to WordPress Login Forms.', 'loginpress' ), '<a href="' . esc_url( 'https://loginpress.pro/doc/wordpress-login-page-pci-compliance/?utm_source=loginpress-lite&utm_medium=settings&utm_campaign=user-guide&utm_content=PCI+Compliance+Documentation' ) . '" target="_blank">', '</a>' ),
-					'type'  => 'checkbox'
+					'desc'  => sprintf( 
+						// translators: Enable PCI Compliance
+						__( 'Enable to add %1$sPCI Compliance%2$s to WordPress Login Forms.', 'loginpress' ), '<a href="' . esc_url( 'https://loginpress.pro/doc/wordpress-login-page-pci-compliance/?utm_source=loginpress-lite&utm_medium=settings&utm_campaign=user-guide&utm_content=PCI+Compliance+Documentation' ) . '" target="_blank">', '</a>' ),
+					'type'  => 'checkbox',
 				),
 				// array(
-				//   'name'  => 'login_with_email',
-				//   'label' => __( 'Login with Email', 'loginpress' ),
-				//   'desc'  => __( 'Force user to login with Email Only Instead Username.', 'loginpress' ),
-				//   'type'  => 'checkbox'
+				// 'name'  => 'login_with_email',
+				// 'label' => __( 'Login with Email', 'loginpress' ),
+				// 'desc'  => __( 'Force user to login with Email Only Instead Username.', 'loginpress' ),
+				// 'type'  => 'checkbox'
 				// ),
 				array(
 					'name'  => 'reset_settings',
 					'label' => __( 'Reset customizer settings', 'loginpress' ),
-					'desc'  => sprintf( __( 'Enable to reset customizer settings.%1$sNote: All your customization will be reverted back to the LoginPress default theme.%2$s', 'loginpress' ), '<span class="loginpress-settings-span">', '</span>' ),
-					'type'  => 'checkbox'
+					'desc'  => sprintf( 
+						// translators: Reset customizer settings
+						__( 'Enable to reset customizer settings.%1$sNote: All your customization will be reverted back to the LoginPress default theme.%2$s', 'loginpress' ), '<span class="loginpress-settings-span">', '</span>' ),
+					'type'  => 'checkbox',
 				),
 			);
 
 			// Hide Advertisement in version 1.1.3
 			// if ( ! has_action( 'loginpress_pro_add_template' ) ) {
-			//   array_unshift( $_free_fields , array(
-			//     'name'  => 'enable_recaptcha_promo',
-			//     'label' => __( 'Enable reCAPTCHA', 'loginpress' ),
-			//     'desc'  => __( 'Enable LoginPress reCaptcha', 'loginpress' ),
-			//     'type'  => 'checkbox'
-			//   ) );
+			// array_unshift( $_free_fields , array(
+			// 'name'  => 'enable_recaptcha_promo',
+			// 'label' => __( 'Enable reCAPTCHA', 'loginpress' ),
+			// 'desc'  => __( 'Enable LoginPress reCaptcha', 'loginpress' ),
+			// 'type'  => 'checkbox'
+			// ) );
 			// }
 
 			/**
@@ -391,8 +451,9 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 
 		/**
 		 * get all roles for force rest password after six months in settings section
+		 *
 		 * @since 3.0.0
-		 * 
+		 *
 		 * @return array
 		 */
 		function get_all_roles() {
@@ -400,7 +461,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 			global $wp_roles;
 			$loginpress_force_reset_roles = array();
 
-			foreach( $wp_roles->roles as $role => $val ) {
+			foreach ( $wp_roles->roles as $role => $val ) {
 
 				$loginpress_force_reset_roles[ $val['name'] ] = sanitize_text_field( $val['name'] );
 			}
@@ -409,6 +470,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 
 		/**
 		 * Main settings page content.
+		 *
 		 * @since 1.0.19
 		 * @version 3.0.0
 		 */
@@ -430,66 +492,77 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 
 		/**
 		 * [loginpress_help_page callback function for sub-page Help]
+		 *
 		 * @since 1.0.19
 		 * @version 3.0.8
 		 */
-		function loginpress_help_page(){
+		function loginpress_help_page() {
 
-			echo LoginPress_Settings::loginpress_admin_page_header();
+			echo self::loginpress_admin_page_header();
 			include LOGINPRESS_DIR_PATH . 'classes/class-loginpress-log.php';
 
-			$html = '<div class="loginpress-help-page">';
+			$html  = '<div class="loginpress-help-page">';
 			$html .= '<h2>' . esc_html__( 'Help & Troubleshooting', 'loginpress' ) . '</h2>';
-			$html .="<p>";
-			$html .= sprintf( __( 'Free plugin support is available on the %1$s plugin support forums%2$s.', 'loginpress' ), '<a href="https://wordpress.org/support/plugin/loginpress" target="_blank">', '</a>' );
-			$html .="<br />";
+			$html .= '<p>';
+			$html .= sprintf( 
+				// translators: Plugin support forum
+				__( 'For assistance with the free plugin, visit the %1$s plugin support forums%2$s.', 'loginpress' ), '<a href="https://wordpress.org/support/plugin/loginpress" target="_blank">', '</a>' );
+			$html .= '<br />';
 
 			if ( ! class_exists( 'LoginPress_Pro' ) ) {
-				$html .= sprintf( __( 'For premium features, add-ons and priority email support, %1$s upgrade to pro%2$s.', 'loginpress' ), '<a href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&utm_medium=help-page&utm_campaign=pro-upgrade&utm_content=upgrade-text-link" target="_blank">', '</a>' );
+				$html .= sprintf( 
+					// translators: Upgrade to Pro
+					__( 'For premium features, add-ons, or priority email support, %1$s upgrade to pro%2$s.', 'loginpress' ), '<a href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&utm_medium=help-page&utm_campaign=pro-upgrade&utm_content=upgrade-text-link" target="_blank">', '</a>' );
 			} else {
-				$html .= sprintf( __( 'For premium features, add-ons and priority email support, Please submit a question %1$shere%2$s!', 'loginpress' ), '<a href="https://loginpress.pro/contact/" target="_blank">','</a>' );
+				$html .= sprintf( 
+					// translators: Submit query through support page
+					__( 'For premium features, add-ons, or priority email support, submit your query through %1$sour support page%2$s!', 'loginpress' ), '<a href="https://loginpress.pro/contact/" target="_blank">', '</a>' );
 			}
 
-			$html .="<br />";
-			$html .= sprintf( __( 'Found a bug or have a feature request? Please submit an issue %1$shere%2$s!', 'loginpress' ), '<a href="https://loginpress.pro/contact/" target="_blank">','</a>' );
-			$html .="</p>";
+			$html .= '<br />';
+			$html .= sprintf( 
+				// translators: Issue submission form
+				__( 'f you’ve found a bug or have a feature request, let us know via our %1$sissue submission form%2$s!', 'loginpress' ), '<a href="https://loginpress.pro/contact/" target="_blank">', '</a>' );
+			$html .= '</p>';
 			$html .= '<pre><textarea rows="25" cols="75" readonly="readonly">';
 			$html .= LoginPress_Log_Info::get_sysinfo();
 			$html .= '</textarea></pre>';
-			$html .= '<input type="button" class="button loginpress-log-file" value="' . __( 'Download Log File', 'loginpress' ) . '"/>';
-			$html .= '<span class="log-file-sniper"><img src="'. admin_url( 'images/wpspin_light.gif' ) .'" /></span>';
-			$html .= '<span class="log-file-text">' . __( 'LoginPress Log File Downloaded Successfully!' ) . '</span>';
+			$html .= '<button type="button" class="button loginpress-log-file"><span class="dashicons dashicons-download"></span> ' . __( 'Download Log File', 'loginpress' ) . '</button>';
+			$html .= '<span class="log-file-sniper"><img src="' . admin_url( 'images/wpspin_light.gif' ) . '" /></span>';
+			$html .= '<span class="log-file-text">' . __( 'LoginPress Log File Downloaded Successfully!', 'loginpress' ) . '</span>';
 			$html .= '</div>';
 			echo $html;
 		}
 
 		/**
 		 * [loginpress_import_export_page callback function for sub-page Import / Export]
+		 *
 		 * @since 1.0.19
 		 * @version 3.0.0
 		 */
-		function loginpress_import_export_page(){
+		function loginpress_import_export_page() {
 
-			echo LoginPress_Settings::loginpress_admin_page_header();
+			echo self::loginpress_admin_page_header();
 			include LOGINPRESS_DIR_PATH . 'include/loginpress-import-export.php';
 		}
 
 		/**
 		 * [loginpress_addons_page callback function for sub-page Add-ons]
+		 *
 		 * @since 1.0.19
 		 * @version 3.0.0
 		 */
 		function loginpress_addons_page() {
 
-			echo LoginPress_Settings::loginpress_admin_page_header();
-			$active_plugins = get_option('active_plugins');
+			echo self::loginpress_admin_page_header();
+			$active_plugins = get_option( 'active_plugins' );
 
 			if ( in_array( 'loginpress-pro/loginpress-pro.php', $active_plugins ) && version_compare( LOGINPRESS_PRO_VERSION, '3.0.0', '<' ) ) {
 				include LOGINPRESS_DIR_PATH . 'classes/class-loginpress-deprecated-addons.php';
 			} else {
 				include LOGINPRESS_DIR_PATH . 'classes/class-loginpress-addons.php';
 			}
-			$obj_loginpress_addons	= new LoginPress_Addons();
+			$obj_loginpress_addons = new LoginPress_Addons();
 			$obj_loginpress_addons->_addon_html();
 		}
 
@@ -499,11 +572,11 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 		 * @return array page names with key value pairs
 		 */
 		function get_pages() {
-			$pages = get_pages();
+			$pages         = get_pages();
 			$pages_options = array();
 			if ( $pages ) {
-				foreach ($pages as $page) {
-					$pages_options[$page->ID] = $page->post_title;
+				foreach ( $pages as $page ) {
+					$pages_options[ $page->ID ] = $page->post_title;
 				}
 			}
 
@@ -512,47 +585,51 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 
 		/**
 		 * loginpress_woocommerce_lostpasword_url [merge a woocommerce lostpassword url field with the last element of array.]
+		 *
 		 * @param  array $fields_list
 		 * @since 1.1.7
 		 * @return array
 		 */
 		function loginpress_woocommerce_lostpasword_url( $fields_list ) {
 
-			$array_elements   = array_slice( $fields_list, 0, -1 ); //slice a last element of array.
-			$last_element     = end( $fields_list ); // last element of array.
-			$lostpassword_url = array(
+			$array_elements    = array_slice( $fields_list, 0, -1 ); // slice a last element of array.
+			$last_element      = end( $fields_list ); // last element of array.
+			$lostpassword_url  = array(
 				'name'  => 'lostpassword_url',
 				'label' => __( 'Lost Password URL', 'loginpress' ),
 				'desc'  => __( 'Use WordPress default lost password URL instead of WooCommerce custom lost password URL.', 'loginpress' ),
-				'type'  => 'checkbox'
+				'type'  => 'checkbox',
 			);
 			$last_two_elements = array_merge( array( $lostpassword_url, $last_element ) ); // merge last 2 elements of array.
 			return array_merge( $array_elements, $last_two_elements ); // merge an array and return.
 		}
 
 		/**
-		* loginpress_language_switcher [merge a language switcher in the settings element of array.]
-		*
-		* @param  array $fields_list The free fields of LoginPress.
-		* @since 1.5.11
-		* @return array the total fields including the added field of language switcher
-		*/
+		 * loginpress_language_switcher [merge a language switcher in the settings element of array.]
+		 *
+		 * @param  array $fields_list The free fields of LoginPress.
+		 * @since 1.5.11
+		 * @return array the total fields including the added field of language switcher
+		 */
 		function loginpress_language_switcher( $fields_list ) {
 
-			$array_elements   = array_slice( $fields_list, 0, -1 ); //slice a last element of array.
-			$last_element     = end( $fields_list ); // last element of array.
-			$switcher_option  = array(
+			$array_elements      = array_slice( $fields_list, 0, -1 ); // slice a last element of array.
+			$last_element        = end( $fields_list ); // last element of array.
+			$switcher_option     = array(
 				'name'  => 'enable_language_switcher',
 				'label' => __( 'Language Switcher', 'loginpress' ),
-				'desc'  => sprintf( __( 'Enable to remove %1$sLanguage Switcher Dropdown%2$s on Login Forms.', 'loginpress' ), '<i>', '</i>' ),
-				'type'  => 'checkbox'
+				'desc'  => sprintf( 
+					// translators: Custom Password Fields
+					__( 'Enable to remove %1$sLanguage Switcher Dropdown%2$s on Login Forms.', 'loginpress' ), '<i>', '</i>' ),
+				'type'  => 'checkbox',
 			);
-			$lang_switch_element = array_merge( array( $switcher_option , $last_element ) ); // merge last 2 elements of array.
+			$lang_switch_element = array_merge( array( $switcher_option, $last_element ) ); // merge last 2 elements of array.
 			return array_merge( $array_elements, $lang_switch_element ); // merge an array and return.
 		}
 
 		/**
 		 * loginpress_uninstallation_filed [merge a uninstall loginpress field with array of element.]
+		 *
 		 * @param  array $fields_list
 		 * @since 1.1.9
 		 * @return array
@@ -564,18 +641,35 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 				$loginpress_page_check = __( 'and LoginPress page', 'loginpress' );
 			}
 
-			$loginpress_db_check = array( array(
-				'name'  => 'loginpress_uninstall',
-				'label' => __( 'Remove Settings On Uninstall', 'loginpress' ),
-				'desc'  => sprintf( esc_html__( 'Enable to remove all custom settings made %1$s by LoginPress upon uninstall.' ), $loginpress_page_check ),
-				'type'  => 'checkbox'
-			) );
-			
+			$loginpress_db_check = array(
+				array(
+					'name'  => 'loginpress_uninstall',
+					'label' => __( 'Remove Settings On Uninstall', 'loginpress' ),
+					'desc'  => sprintf( 
+						// translators: Remove Settings on Uninstall
+						esc_html__( 'Enable to remove all custom settings made %1$s by LoginPress upon uninstall.' , 'loginpress'), $loginpress_page_check ),
+					'type'  => 'checkbox',
+				),
+			);
+
+			if ( class_exists( 'LoginPress_Pro' ) ) {
+				// Add the Pro uninstall setting
+				$loginpress_db_check[] = array(
+					'name'  => 'loginpress_pro_uninstall',
+					'label' => __( 'Remove Settings On Uninstall For Pro', 'loginpress' ),
+					'desc'  => sprintf( 
+						// translators: Remove Settings on Uninstall For Pro
+						esc_html__( 'Enable to remove all custom settings made %1$s by LoginPress-Pro upon uninstall.', 'loginpress' ), $loginpress_page_check ),
+					'type'  => 'checkbox',
+				);
+			}
+
 			return array_merge( $fields_list, $loginpress_db_check ); // merge an array and return.
 		}
 
 		/**
 		 * loginpress_uninstallation_tool [Pass return true in loginpress_multisite_uninstallation_tool filter's callback for enable uninsatalltion control on each site.]
+		 *
 		 * @param  array $_free_fields
 		 * @since 1.1.9
 		 * @return array
@@ -595,6 +689,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 
 		/**
 		 * Filter to increase days for force reset password in settings
+		 *
 		 * @param  int $days
 		 * @since 3.0.0
 		 * @return int $days
@@ -616,10 +711,12 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 		public static function loginpress_admin_page_header() {
 
 			if ( ! has_action( 'loginpress_pro_add_template' ) ) {
-				$button_text = '<a href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&utm_medium=top-banner&utm_campaign=pro-upgrade&utm_content=Upgrade+to+Pro+CTA" class="loginpress-pro-cta" target="_blank"><span class="dashicons dashicons-star-filled"></span>' . sprintf( __( 'Upgrade%1$s to Pro%2$s', 'loginpress' ), '<span>', '</span>' ) . '</a>';
+				$button_text        = '<a href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&utm_medium=top-banner&utm_campaign=pro-upgrade&utm_content=Upgrade+to+Pro+CTA" class="loginpress-pro-cta" target="_blank"><span class="dashicons dashicons-star-filled"></span>' . sprintf( 
+				// translators: Upgrade to Pro link
+				__( 'Upgrade%1$s to Pro%2$s', 'loginpress' ), '<span>', '</span>' ) . '</a>';
 				$documentation_link = 'https://loginpress.pro/documentation/?utm_source=loginpress-lite&utm_medium=top-banner&utm_campaign=pro-upgrade&utm_content=Documentation+CTA';
 			} else {
-				$button_text = '<a href="https://loginpress.pro/contact?utm_source=loginpress-pro&utm_medium=top-banner&utm_campaign=customer-support&utm_content=Support+CTA" class="loginpress-pro-cta" target="_blank">' . esc_html__( 'Support', 'loginpress' ) . '</a>';
+				$button_text        = '<a href="https://loginpress.pro/contact?utm_source=loginpress-pro&utm_medium=top-banner&utm_campaign=customer-support&utm_content=Support+CTA" class="loginpress-pro-cta" target="_blank">' . esc_html__( 'Support', 'loginpress' ) . '</a>';
 				$documentation_link = 'https://loginpress.pro/contact?utm_source=loginpress-pro&utm_medium=top-banner&utm_campaign=user-guide&utm_content=Documentation+CTA';
 			}
 			?>
@@ -636,20 +733,49 @@ if ( ! class_exists( 'LoginPress_Settings' ) ):
 			</div>
 			<?php
 			if ( class_exists( 'LoginPress_Pro' ) ) {
-				if ( !LoginPress_Pro::is_activated() ) {
+				if ( ! LoginPress_Pro::is_activated() ) {
 					?>
 					<div class="wrap">
 						<div class="loginpress-license-notice">
 							<strong><?php echo esc_html__( 'Please activate your license key.', 'loginpress' ); ?></strong> 
-							<br>
 							<?php echo esc_html__( 'Validating the license key is mandatory to use automatic updates and receive plugin support.', 'loginpress' ); ?>
 						</div>
 					</div>
 					<?php
 				}
 			}
-			 ?>
+			?>
 			<?php
+		}
+
+
+
+		function loginpress_show_custom_dashboard_popup() {
+			// Check if the message should be shown
+			$dismissed_until = get_transient( 'loginpress_pro_pop_up' );
+
+			if ( $dismissed_until || class_exists( 'LoginPress_Pro' ) ) {
+				return; // Do not show the notification if it's still dismissed
+			}
+			if ( isset( $_GET['page'] ) && strpos( $_GET['page'], 'loginpress' ) === 0 ) {
+				// Output the dismissible notification
+				?>
+				<div class="loginpress-notification-bar" >
+					<p>You're using LoginPress Free. To unlock more features consider <a href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&utm_medium=top-popup&utm_campaign=pro-upgrade&utm_content=upgrading+to+pro" target="_blank">upgrading to Pro </a></p>
+					<span class="loginpress-notification-close"></span>
+				</div>
+				<?php
+			}
+		}
+
+		function loginpress_handle_notification_dismiss() {
+			check_ajax_referer( 'loginpress-log-nonce', 'security' );
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_die( 'No cheating, huh!' );
+			}
+			// Handle AJAX request for dismissal
+			set_transient( 'loginpress_pro_pop_up', true, 0 );
+			wp_send_json_success();
 		}
 	}
 endif;

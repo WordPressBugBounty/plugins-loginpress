@@ -1,15 +1,19 @@
 <?php
 /**
  * Default template stylesheet.
+ *
  * @since 1.0.0
  * @version 3.0.6
  * @return string style.
  */
 function first_presets() {
 
-  	ob_start();
-  	if ( version_compare( $GLOBALS['wp_version'], '5.3', '>=' ) ) : ?>
-    	<style media="screen"  id="loginpress-style-wp-5-3">
+	ob_start();
+	if ( version_compare( $GLOBALS['wp_version'], '5.3', '>=' ) ) : ?>
+		<style media="screen"  id="loginpress-style-wp-5-3">
+			body .social-networks a svg {
+				position: absolute;
+			}
 			.login .privacy-policy-page-link>a.privacy-policy-link{
 				color: inherit;
 				text-decoration: none;
@@ -66,8 +70,14 @@ function first_presets() {
 			.login-action-confirm_admin_email #backtoblog a {
 				color: #008ec2 !important;
 			}
-    	</style>
-  	<?php else: ?>
+			.dashicons-hidden:before {
+				color: #000000;
+			}
+			.dashicons-hidden:hover::before {
+				color: #008ec2;
+			}
+		</style>
+	<?php else : ?>
 		<style>
 			input[type=checkbox]:checked:before {
 				content: '\f147';
@@ -75,8 +85,8 @@ function first_presets() {
 				color: #1e8cbe;
 			}
 		</style>
-  	<?php endif; ?>
-  	<style media="screen" id="loginpress-style">
+	<?php endif; ?>
+		<style media="screen" id="loginpress-style">
 
 		/*************************************************************
 		* Plugin:      LoginPress - Customizing the WordPress Login.*
@@ -142,14 +152,14 @@ function first_presets() {
 			padding-left: 0;
 			text-align : center;
 		}
-		body .wp-core-ui #login .wp-generate-pw,
+		.wp-core-ui #login .wp-generate-pw,
 		.login input[type="submit"],
 		body.wp-core-ui.login .two-factor-email-resend .button,
 		.wp-core-ui #login .button-primary {
 			background: #008ec2;
 			color: #fff;
 			margin: 7px 0 7px;
-			height: 46px;
+			min-height: 46px;
 			-webkit-border-radius: 5px;
 			-moz-border-radius: 5px;
 			-ms-border-radius: 5px;
@@ -163,6 +173,13 @@ function first_presets() {
 			height: 46px;
 			line-height: 0;
 			background: #008ec2;
+			color: #008ec2;
+		}
+		
+		.wp-core-ui #login .wp-generate-pw{
+			background: #008ec233;
+			color: #008ec2;
+			border-color: #008ec2;
 		}
 		.wp-core-ui.login  .two-factor-email-resend .button{
 			color: #444;
@@ -369,6 +386,12 @@ function first_presets() {
 			transform: translate(0);
 			pointer-events: none;
 		}
+		input[type=checkbox],input[type=checkbox]:checked{
+			border-color: #008ec2 !important;
+		}
+		input[type=checkbox]:hover{
+			border-color: #C3C4C7 !important;
+		}
 		@media screen and (max-width: 767px) {
 			#login{
 				width: 300px;
@@ -387,9 +410,9 @@ function first_presets() {
 				padding: 3px;
 			}
 		}
-    </style>
+	</style>
 
-  	<?php
-  	$content = ob_get_clean();
-  	return $content;
+	<?php
+	$content = ob_get_clean();
+	return $content;
 }

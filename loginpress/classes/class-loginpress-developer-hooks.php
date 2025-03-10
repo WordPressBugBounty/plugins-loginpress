@@ -27,7 +27,7 @@ if ( ! class_exists( 'LoginPress_Developer_Hooks' ) ) {
 		 *
 		 * @return void
 		 */
-		public function _hooks(){
+		public function _hooks() {
 
 			add_filter( 'loginpress_remember_me', array( $this, 'loginpress_remember_me_callback' ), 10, 1 );
 		}
@@ -82,12 +82,10 @@ if ( ! class_exists( 'LoginPress_Developer_Hooks' ) ) {
 		 */
 		function remove_forgetmenot_class( $content ) {
 
-			$content = preg_replace( '/<p class="forgetmenot">(.*)<\/p>/', '', $content);
+			$content = preg_replace( '/<p class="forgetmenot">(.*)<\/p>/', '', $content );
 			return $content;
 		}
-
 	}
 
 }
 $loginpress_developer_hooks = new LoginPress_Developer_Hooks();
-?>

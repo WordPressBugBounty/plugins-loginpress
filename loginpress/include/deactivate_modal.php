@@ -1,30 +1,31 @@
 <?php
 /**
  * LoginPress deactivation Content.
+ *
  * @package LoginPress
  * @version 1.1.14
  */
 
 $loginpress_deactivate_nonce = wp_create_nonce( 'loginpress-deactivate-nonce' ); ?>
 <style>
-    .loginpress-hidden{
-      	overflow: hidden;
-    }
+	.loginpress-hidden{
+			overflow: hidden;
+	}
 
-    .loginpress-popup-overlay .loginpress-internal-message{
+	.loginpress-popup-overlay .loginpress-internal-message{
 		margin: 3px 0 3px 22px;
 		display: none;
-    }
+	}
 
-    .loginpress-reason-input{
+	.loginpress-reason-input{
 		margin: 3px 0 3px 28px;
 		display: none;
-    }
+	}
 
-    .loginpress-reason-input input[type="text"]{
+	.loginpress-reason-input input[type="text"]{
 		width: 100%;
 		display: block;
-    }
+	}
 
 	.loginpress-popup-overlay{
 		background: rgba(0,0,0, .8);
@@ -296,7 +297,7 @@ $loginpress_deactivate_nonce = wp_create_nonce( 'loginpress-deactivate-nonce' );
 							<span>
 							<input type="radio" name="loginpress-selected-reason" value="pro">
 							</span>
-							<span><?php _e( " I upgraded to LoginPress Pro", 'loginpress' ); ?></span>
+							<span><?php _e( ' I upgraded to LoginPress Pro', 'loginpress' ); ?></span>
 						</label>
 						<div class="loginpress-pro-message"><?php _e( 'No need to deactivate this LoginPress Core version. Pro version works as an add-on with Core version.', 'loginpress' ); ?></div>
 					</li>
@@ -369,20 +370,20 @@ $loginpress_deactivate_nonce = wp_create_nonce( 'loginpress-deactivate-nonce' );
 			</div>
 			<div class="loginpress-popup-footer">
 				<label class="loginpress-anonymous"><input type="checkbox" /><?php _e( 'Anonymous feedback', 'loginpress' ); ?></label>
-				<input type="button" class="button button-secondary button-skip loginpress-popup-skip-feedback" value="<?php _e( 'Skip & Deactivate', 'loginpress'); ?>" >
+				<input type="button" class="button button-secondary button-skip loginpress-popup-skip-feedback" value="<?php _e( 'Skip & Deactivate', 'loginpress' ); ?>" >
 				<div class="action-btns">
 					<span class="loginpress-spinner"><img src="<?php echo admin_url( '/images/spinner.gif' ); ?>" alt=""></span>
-					<input type="submit" class="button button-secondary button-deactivate loginpress-popup-allow-deactivate" value="<?php _e( 'Submit & Deactivate', 'loginpress'); ?>" disabled="disabled">
+					<input type="submit" class="button button-secondary button-deactivate loginpress-popup-allow-deactivate" value="<?php _e( 'Submit & Deactivate', 'loginpress' ); ?>" disabled="disabled">
 					<a href="#" class="button button-primary loginpress-popup-button-close"><?php _e( 'Cancel', 'loginpress' ); ?></a>
 				</div>
 			</div>
 		</form>
-    </div>
+	</div>
 </div>
 <script>
-    (function( $ ) {
+	(function( $ ) {
 
-      	$(function() {
+			$(function() {
 
 			var pluginSlug = 'loginpress';
 
@@ -477,7 +478,7 @@ $loginpress_deactivate_nonce = wp_create_nonce( 'loginpress-deactivate-nonce' );
 				$('.message.error-message').hide();
 				$('.loginpress-pro-message').hide();
 			}
-        });
+		});
 
-    })( jQuery ); // This invokes the function above and allows us to use '$' in place of 'jQuery' in our code.
+	})( jQuery ); // This invokes the function above and allows us to use '$' in place of 'jQuery' in our code.
 </script>

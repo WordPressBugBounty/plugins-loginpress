@@ -5,7 +5,7 @@ Contributors: WPBrigade, hiddenpearls, AbdulWahab610
 Donate link: https://loginpress.pro/pricing/?utm_source=loginpress-lite
 Author URI: https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=author-url-link
 Tags: wp-login, login, login customizer, custom login, wordpress login,
-Stable tag: 3.3.1
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -223,6 +223,19 @@ Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricin
 
 == Changelog ==
 
+= 4.0.0 – 2025-03-10 =
+* Bugfix: Force reset password email issue for newly register users.
+* New Feature: Dashboard UI/UX Refresh - Introducing a sleek new dashboard design for LoginPress pages.
+* New Feature: Password Strength Meter - Added a new feature to enhance security and user guidance.
+* New Feature: Mobile Background - Introduced a new control in customizer to change background image for mobile devices.
+* Enhancement: Improved RTL styling for all strings within the plugin settings.
+* Enhancement: Style the "Generate New Password" CTA based on select template.
+* Enhancement: Color Customization - Eye-icon & Remember me checkbox color are now syncs with the button color settings.
+* Enhancement: Import/Export Improvements - Enhanced functionality for smoother data handling.
+* Enhancement: Uninstallation Optimization - Improved the uninstallation process for better cleanup and efficiency.
+* Enhancement: Language File Updates - Updated language files for Arabic, Dutch, Espanol, Polish, Portuguese, urdu, Chinese and French to ensure better translations and localization.
+* Compatibility: Customizer Conflict with [LoftLoader](https://wordpress.org/plugins/loftloader/) plugin.
+
 = 3.3.1 – 2025-01-03 =
 * Bugfix: PHP Warning for translation hook.
 * Enhancement: Optimize hook calls for LoginPress Pro.
@@ -340,5 +353,5 @@ For more detail on changelog visit [LoginPress.Pro](https://loginpress.pro/chang
 
 == Upgrade Notice ==
 
-= 3.3.1 =
-* Upgrade this WordPress login Plugin now.
+= 4.0.0 =
+* LoginPress 4.0 is packed with enhancements, new features, and performance improvements for a seamless login experience! Upgrade now.

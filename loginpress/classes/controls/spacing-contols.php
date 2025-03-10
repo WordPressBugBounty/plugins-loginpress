@@ -98,7 +98,12 @@ class LoginPress_Spacing_Control extends WP_Customize_Control {
 					$value = implode( ',', $value );
 				}
 				?>
-				<input type="checkbox" id="<?php echo $lock_id; ?>" value="<?php echo esc_attr( $value ); ?>" <?php $this->link(); checked( $value ); ?>>
+				<input type="checkbox" id="<?php echo $lock_id; ?>" value="<?php echo esc_attr( $value ); ?>" 
+														<?php
+														$this->link();
+														checked( $value );
+														?>
+				>
 				<span class="dashicons dashicons-editor-unlink"></span>
 			</div>
 		</div>

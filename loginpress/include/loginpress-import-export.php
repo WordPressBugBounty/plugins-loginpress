@@ -1,17 +1,18 @@
 <?php
 /**
  * LoginPress Import Export Page Content.
+ *
  * @package LoginPress
  * @since 1.0.19
  * @version 1.1.14
  */
 
-$loginpress_import_nonce = wp_create_nonce('loginpress-import-nonce');
-$loginpress_export_nonce = wp_create_nonce('loginpress-export-nonce');
+$loginpress_import_nonce = wp_create_nonce( 'loginpress-import-nonce' );
+$loginpress_export_nonce = wp_create_nonce( 'loginpress-export-nonce' );
 ?>
 <div class="loginpress-import-export-page">
 	<h2><?php esc_html_e( 'Import/Export LoginPress Settings', 'loginpress' ); ?></h2>
-	<div class=""><?php esc_html_e( "Import/Export your LoginPress Settings for/from other sites. This will export/import all the settings including Customizer settings as well.", 'loginpress' ); ?></div>
+	<div class=""><?php esc_html_e( 'Import/Export your LoginPress Settings for/from other sites. This will export/import all the settings including Customizer settings as well.', 'loginpress' ); ?></div>
 	<table class="form-table">
 		<tbody>
 			<tr class="import_setting">
@@ -41,7 +42,7 @@ $loginpress_export_nonce = wp_create_nonce('loginpress-export-nonce');
 						<img src="<?php echo admin_url( 'images/wpspin_light.gif' ); ?>">
 					</span>
 					<span class="export-text"><?php esc_html_e( 'LoginPress Settings Exported Successfully!', 'loginpress' ); ?></span>
-					<p class="description"><?php esc_html_e( 'Export LoginPress Settings.', 'loginpress' ) ?></p>
+					<p class="description"><?php esc_html_e( 'Export LoginPress Settings.', 'loginpress' ); ?></p>
 				</td>
 			</tr>
 		</tbody>

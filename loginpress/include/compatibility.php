@@ -10,7 +10,6 @@
 
 /**
  * Run a compatibility check on 1.0.21 and change the settings.
- *
  */
 add_action( 'init', 'loginpress_upgrade_1_0_22', 1 );
 
@@ -31,7 +30,6 @@ function loginpress_upgrade_3_0_3() {
 	if ( empty( $loginpress_customizer ) ) {
 		update_option( 'customize_presets_settings', 'minimalist', true );
 	}
-
 }
 
 /**
@@ -45,16 +43,16 @@ function loginpress_upgrade_3_0_3() {
 function loginpress_upgrade_1_0_22() {
 
 	$loginpress_setting = get_option( 'loginpress_setting' );
-	$login_with_email = isset( $loginpress_setting['login_with_email'] ) ? $loginpress_setting['login_with_email'] : '';
+	$login_with_email   = isset( $loginpress_setting['login_with_email'] ) ? $loginpress_setting['login_with_email'] : '';
 
 	if ( isset( $loginpress_setting['login_with_email'] ) ) {
 
-		if( 'on' == $login_with_email ) {
+		if ( 'on' == $login_with_email ) {
 
 			$loginpress_setting['login_order'] = 'email';
 			unset( $loginpress_setting['login_with_email'] );
 			update_option( 'loginpress_setting', $loginpress_setting );
-		} else if ( 'off' == $login_with_email ) {
+		} elseif ( 'off' == $login_with_email ) {
 
 			$loginpress_setting['login_order'] = 'default';
 			unset( $loginpress_setting['login_with_email'] );
@@ -69,17 +67,18 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 	 * LoginPress compatibility Class is used to make LoginPress compatible with other plugins.
 	 * Remove conflict.
 	 * Add CSS Support.
+	 *
 	 * @since 1.0.3
 	 * @version 1.3.2
 	 */
 	class LoginPress_Compatibility {
 
 		/**
-		* Variable that Check for LoginPress Key.
-		*
-		* @var string
-		* @since 1.3.2
-		*/
+		 * Variable that Check for LoginPress Key.
+		 *
+		 * @var string
+		 * @since 1.3.2
+		 */
 		public $loginpress_key;
 
 		public function __construct() {
@@ -90,14 +89,14 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 		public function dependencies() {
 
 			add_action( 'wp_print_scripts', array( $this, 'dequeue_conflicted_script' ), 100 );
-			add_action( 'login_headerurl',  array( $this, 'remove_conflicted_action' ) );
-			add_action( 'init',             array( $this, 'enqueue_loginpress_compatibility_script') );
+			add_action( 'login_headerurl', array( $this, 'remove_conflicted_action' ) );
+			add_action( 'init', array( $this, 'enqueue_loginpress_compatibility_script' ) );
 
 			/*************************************
 				WebArx Compatibility Fix // v1.2.3
-			*************************************/
-			add_action( 'plugins_loaded',   array( $this, 'plugins_loaded_remove_action' ), 10 );
-			add_action( 'init',             array( $this, 'loginpress_webarx_compatibility' ), 9 );
+			*/
+			add_action( 'plugins_loaded', array( $this, 'plugins_loaded_remove_action' ), 10 );
+			add_action( 'init', array( $this, 'loginpress_webarx_compatibility' ), 9 );
 
 			/**
 			 * Login page Compatibility Fix.
@@ -124,7 +123,6 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 			 * BuddyBoss theme Compatibility with login page Fix.
 			 *
 			 * @since 3.0.9
-			 * 
 			 */
 			add_action( 'login_head', array( $this, 'lp_remove_filter_buddyboss' ) );
 
@@ -133,9 +131,8 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 			 *
 			 * @version 3.0.8
 			 */
-			add_filter( 'whl_logged_in_redirect', array( $this, 'wps_hide_login_compatibility'), 10, 3 );
-			add_filter( 'wps_hide_login_before_redirect', array( $this,  'wps_hide_login_redirect' ) );
-
+			add_filter( 'whl_logged_in_redirect', array( $this, 'wps_hide_login_compatibility' ), 10, 3 );
+			add_filter( 'wps_hide_login_before_redirect', array( $this, 'wps_hide_login_redirect' ) );
 		}
 
 		/**
@@ -167,7 +164,7 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 			 * @since 1.7.2
 			 */
 			$loginpress_setting = get_option( 'loginpress_setting' );
-			$pci_compliance 	  = isset( $loginpress_setting['enable_pci_compliance'] ) ? $loginpress_setting['enable_pci_compliance'] : 'off';
+			$pci_compliance     = isset( $loginpress_setting['enable_pci_compliance'] ) ? $loginpress_setting['enable_pci_compliance'] : 'off';
 
 			if ( $pci_compliance !== 'off' ) {
 
@@ -232,10 +229,10 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 		public function loginpress_webarx_compatibility() {
 			if ( class_exists( 'Webarx' ) ) {
 				$this->init_remove_action();
-				add_filter( 'wp_redirect',      array( $this, 'wp_redirect_remove_filter' ), 9 );
-				add_filter( 'site_url',         array( $this, 'site_url_remove_filter' ), 9 );
+				add_filter( 'wp_redirect', array( $this, 'wp_redirect_remove_filter' ), 9 );
+				add_filter( 'site_url', array( $this, 'site_url_remove_filter' ), 9 );
 				add_filter( 'network_site_url', array( $this, 'network_site_url_remove_filter' ), 9 );
-				add_action( 'wp_loaded',        array( $this, 'wp_loaded_remove_action' ), 9 );
+				add_action( 'wp_loaded', array( $this, 'wp_loaded_remove_action' ), 9 );
 			}
 		}
 
@@ -272,18 +269,18 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 		 * @since 1.2.3
 		 * @version 3.1.1
 		 */
-		public function site_url_remove_filter($url) {
+		public function site_url_remove_filter( $url ) {
 			if ( ! function_exists( 'is_user_logged_in' ) ) {
 				return $url;
 			}
 			$webarx_login   = get_option( 'webarx_mv_wp_login' );
 			$user_logged_in = is_user_logged_in();
 			if ( ( isset( $user_logged_in ) && true === $user_logged_in ) && ( isset( $webarx_login ) && '1' === $webarx_login ) ) {
-				remove_filter('site_url', array( webarx()->hide_login, 'site_url' ) ) ;
+				remove_filter( 'site_url', array( webarx()->hide_login, 'site_url' ) );
 			}
 			return $url;
 		}
-		
+
 		/**
 		 * WebArx Compatibility Fix for multi-site URL removal.
 		 *
@@ -301,7 +298,7 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 			$user_logged_in = is_user_logged_in();
 
 			if ( ( isset( $user_logged_in ) && true === $user_logged_in ) && ( isset( $webarx_login ) && '1' === $webarx_login ) ) {
-				remove_filter('network_site_url', array( webarx()->hide_login, 'network_site_url' ) ) ;
+				remove_filter( 'network_site_url', array( webarx()->hide_login, 'network_site_url' ) );
 			}
 			return $url;
 		}
@@ -309,7 +306,7 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 		/**
 		 * WebArx Compatibility Fix for multi-site URL removal.
 		 *
-		 * @since 1.2.3 
+		 * @since 1.2.3
 		 */
 		public function plugins_loaded_remove_action() {
 			if ( class_exists( 'Webarx' ) ) {
@@ -322,7 +319,7 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 				$user_logged_in = is_user_logged_in();
 
 				if ( ( isset( $user_logged_in ) && true === $user_logged_in ) && ( isset( $webarx_login ) && '1' === $webarx_login ) ) {
-					remove_action( 'plugins_loaded', array( webarx()->hide_login, 'plugins_loaded' ), 9999 ) ;
+					remove_action( 'plugins_loaded', array( webarx()->hide_login, 'plugins_loaded' ), 9999 );
 				}
 			}
 		}
@@ -361,7 +358,7 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 			$user_logged_in = is_user_logged_in();
 
 			if ( ( isset( $user_logged_in ) && true === $user_logged_in ) && ( isset( $webarx_login ) && '1' === $webarx_login ) ) {
-				remove_action( 'init', array( webarx()->hide_login, 'denyRequestsToWpLogin' ) ) ;
+				remove_action( 'init', array( webarx()->hide_login, 'denyRequestsToWpLogin' ) );
 			}
 		}
 
@@ -373,18 +370,21 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 		 * @since 1.4.0
 		 */
 		public function aiowps_login_init_remove_action() {
-			if ( ! is_customize_preview() )
+			if ( ! is_customize_preview() ) {
 				return;
+			}
 
-			if ( ! class_exists( 'AIO_WP_Security' ) )
+			if ( ! class_exists( 'AIO_WP_Security' ) ) {
 				return;
+			}
 
 			global $aio_wp_security;
 
-			if( ! is_a( $aio_wp_security, 'AIO_WP_Security' ) )
+			if ( ! is_a( $aio_wp_security, 'AIO_WP_Security' ) ) {
 				return;
+			}
 
-			if( remove_action( 'wp_loaded', array( $aio_wp_security, 'aiowps_wp_loaded_handler' ) ) ) {
+			if ( remove_action( 'wp_loaded', array( $aio_wp_security, 'aiowps_wp_loaded_handler' ) ) ) {
 				add_filter( 'option_aio_wp_security_configs', array( $this, 'aiowps_filter_options' ) );
 			}
 		}
@@ -414,6 +414,7 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 			 * Head URL & Title on logo as well.
 			 *
 			 * so that it is after the script was enqueued.
+			 *
 			 * @since 1.0.3
 			 * @version 1.3.2
 			 */
@@ -436,6 +437,7 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 			 *
 			 * Hooked to the wp_print_scripts action, with a late priority (100),
 			 * so that it is after the script was enqueued.
+			 *
 			 * @since 1.0.3
 			 */
 			if ( class_exists( 'ET_Divi_100_Custom_Login_Page_Config' ) ) {
@@ -471,8 +473,8 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 		 */
 		public function enqueue_loginpress_script() {
 
-			include( LOGINPRESS_DIR_PATH . 'css/style-presets.php' );
-			include( LOGINPRESS_DIR_PATH . 'css/style-login.php' );
+			include LOGINPRESS_DIR_PATH . 'css/style-presets.php';
+			include LOGINPRESS_DIR_PATH . 'css/style-login.php';
 		}
 
 		/**
@@ -524,8 +526,8 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 			if ( ! headers_sent() ) {
 				// Create these variables to overcome couple PHP Warnings in customizer while calling wp-login.php
 				$user_login = $user->user_login;
-				$error = $user->error;
-				
+				$error      = $user->error;
+
 				require_once ABSPATH . 'wp-login.php';
 				die();
 			}
@@ -534,4 +536,4 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 	}
 endif;
 
-new LoginPress_Compatibility;
+new LoginPress_Compatibility();

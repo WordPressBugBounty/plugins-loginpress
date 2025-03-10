@@ -1,6 +1,7 @@
 <?php
 /**
  * Get the Template and implement it's design.
+ *
  * @since  1.0.9
  * @version 3.0.5
  */

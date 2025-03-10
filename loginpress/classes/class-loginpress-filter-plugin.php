@@ -4,7 +4,6 @@
  *
  * @since 1.0.19
  * @version 3.0.0
- * 
  */
 if ( ! class_exists( 'LoginPress_Filter_API' ) ) :
 
@@ -42,17 +41,19 @@ if ( ! class_exists( 'LoginPress_Filter_API' ) ) :
 						$link,
 						'button',
 						esc_url( $plugin['buy-now'] ),
-						esc_attr( sprintf( __( 'Buy %s now', 'loginpress' ), $plugin['name'] ) ),
+						esc_attr( sprintf( 
+							// translators: Buy now
+							__( 'Buy %s now', 'loginpress' ), $plugin['name'] ) ),
 						esc_html__( 'Buy Now', 'loginpress' )
 					);
 				}
 
 				// $links[] = sprintf(
-				//   $link,
-				//   'thickbox open-plugin-details-modal',
-				//   esc_url( $plugin['buy-now'] . '#TB_iframe=true&width=600&height=550' ),
-				//   esc_attr( sprintf( __( 'More information about %s', 'loginpress' ), $plugin['name'] ) ),
-				//   esc_html__( 'More Details', 'loginpress' )
+				// $link,
+				// 'thickbox open-plugin-details-modal',
+				// esc_url( $plugin['buy-now'] . '#TB_iframe=true&width=600&height=550' ),
+				// esc_attr( sprintf( __( 'More information about %s', 'loginpress' ), $plugin['name'] ) ),
+				// esc_html__( 'More Details', 'loginpress' )
 				// );
 			}
 
@@ -91,7 +92,7 @@ if ( ! class_exists( 'LoginPress_Filter_API' ) ) :
 
 				// if the product is already installed, skip it
 				if ( $product['is_activated'] || $product['is_installed'] ) {
-				  continue;
+					continue;
 				}
 
 				// if the product is already in the results, skip it
@@ -101,7 +102,7 @@ if ( ! class_exists( 'LoginPress_Filter_API' ) ) :
 
 				$products_to_inject[] = $product;
 
-				$count++;
+				++$count;
 
 				// no of products to show
 				if ( 3 === $count ) {
@@ -184,7 +185,7 @@ if ( ! class_exists( 'LoginPress_Filter_API' ) ) :
 		 */
 		function get_products() {
 			$products = array(
-				'wp-analytify' => array(
+				'wp-analytify'             => array(
 					'title'           => __( 'Analytify', 'loginpress' ),
 					'slug'            => 'wp-analytify',
 					'link'            => 'https://analytify.io/',
@@ -195,7 +196,7 @@ if ( ! class_exists( 'LoginPress_Filter_API' ) ) :
 					'num_ratings'     => 75,
 					'last_updated'    => '2017-07-06 7:07pm GMT',
 					'description'     => __( 'Analytify is reshaping Google Analytics in WordPress. See Social Media, Keywords, Realtime, Country, Mobile and Browsers Statistics under pages and posts.', 'loginpress' ),
-        		),
+				),
 				'related-posts-thumbnails' => array(
 					'title'           => __( 'Related Posts', 'loginpress' ),
 					'slug'            => 'related-posts-thumbnails',
@@ -208,7 +209,7 @@ if ( ! class_exists( 'LoginPress_Filter_API' ) ) :
 					'last_updated'    => '2017-06-14 8:37pm GMT',
 					'description'     => __( 'Related Post Thumbnails plugin is for those who want the showcase of their related posts after the post detail. The plugin allows customizing thumbnail sizes, display settings, and type of relations. The plugin is using original WordPress taxonomy. It returns generated HTML, that is essential for page load speed of blogs that use many Javascript widgets.', 'loginpress' ),
 				),
-				'loginpress-pro' => array(
+				'loginpress-pro'           => array(
 					'title'           => __( 'LoginPress Pro', 'loginpress' ),
 					'slug'            => 'loginpress-pro',
 					'link'            => 'https://wpbrigade.com/wordpress/plugins/loginpress/',

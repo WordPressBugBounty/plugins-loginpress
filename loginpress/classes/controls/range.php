@@ -1,10 +1,10 @@
 <?php
 /**
-* Class for Range Control.
-*
-* @since  1.0.23
-* @access public
-*/
+ * Class for Range Control.
+ *
+ * @since  1.0.23
+ * @access public
+ */
 class LoginPress_Range_Control extends WP_Customize_Control {
 
 	/**
@@ -62,7 +62,12 @@ class LoginPress_Range_Control extends WP_Customize_Control {
 			<div class="loginpress-range-slider"  style="width:100%; display:flex;flex-direction: row;justify-content: flex-start;">
 				<span  style="width:100%; flex: 1 0 0; vertical-align: middle;">
 					<span class="loginpress-range-slider_reset"><a type="button" value="reset" class="loginpress-range-reset"></a></span>
-					<input class="loginpress-range-slider_range" data-default-value="<?php echo esc_html( $this->default ); ?>" type="range" value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->input_attrs(); $this->link(); ?>>
+					<input class="loginpress-range-slider_range" data-default-value="<?php echo esc_html( $this->default ); ?>" type="range" value="<?php echo esc_attr( $this->value() ); ?>" 
+																								<?php
+																								$this->input_attrs();
+																								$this->link();
+																								?>
+					>
 					<input type="text" class="loginpress-range-slider_val" value="<?php echo esc_attr( $this->value() ); ?>" />
 					<span><?php echo $this->unit; ?></span>
 				</span>

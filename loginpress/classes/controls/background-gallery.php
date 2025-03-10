@@ -70,7 +70,12 @@ class LoginPress_Background_Gallery_Control extends WP_Customize_Control {
 		<div id="loginpress-gallery" class="gallery">
 			<?php foreach ( $this->choices as $value ) : ?>
 				<div class="loginpress_gallery_thumbnails">
-					<input id="<?php echo $this->id . esc_attr( $value['id'] ); ?>" class="image-select" type="radio" value="<?php echo esc_attr( $value['id'] ); ?>" name="<?php echo esc_attr( $name ); ?>" <?php $this->link(); checked( $this->value(), $value['id'] ); ?> />
+					<input id="<?php echo $this->id . esc_attr( $value['id'] ); ?>" class="image-select" type="radio" value="<?php echo esc_attr( $value['id'] ); ?>" name="<?php echo esc_attr( $name ); ?>" 
+											<?php
+											$this->link();
+											checked( $this->value(), $value['id'] );
+											?>
+					/>
 					<label for="<?php echo $this->id . esc_attr( $value['id'] ); ?>">
 						<div class="gallery_thumbnail_img">
 							<img src="<?php echo $value['thumbnail']; ?>" alt="<?php echo esc_attr( $value['id'] ); ?>" title="<?php echo esc_attr( $value['id'] ); ?>">

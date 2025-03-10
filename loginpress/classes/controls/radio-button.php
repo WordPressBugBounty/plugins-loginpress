@@ -63,7 +63,7 @@ class LoginPress_Radio_Control extends WP_Customize_Control {
 			background: #0085ba;
 		}
 		';
-		wp_add_inline_style( 'loginpress-radio-control-css' , $css );
+		wp_add_inline_style( 'loginpress-radio-control-css', $css );
 	}
 
 	/**
@@ -79,9 +79,17 @@ class LoginPress_Radio_Control extends WP_Customize_Control {
 		<label>
 			<div style="display:flex;flex-direction: row;justify-content: flex-start;">
 				<span class="customize-control-title" style="flex: 2 0 0; vertical-align: middle;"><?php echo esc_html( $this->label ); ?></span>
-				<?php if ( true == $this->loader ) : ?><span class="customize-radio-control-loader"><img src="<?php echo admin_url( 'images/loading.gif' ); ?>" alt="loader"></span><?php endif; ?>
-				<input id="cb<?php echo $this->instance_number ?>" type="checkbox" class="loginpress-radio loginpress-radio-<?php echo $this->type?>" value="<?php echo esc_attr( $this->value() ); ?>" <?php $this->link(); checked( $this->value() ); ?> />
-				<label for="cb<?php echo $this->instance_number ?>" class="loginpress-radio-btn"></label>
+				<?php
+				if ( true == $this->loader ) :
+					?>
+					<span class="customize-radio-control-loader"><img src="<?php echo admin_url( 'images/loading.gif' ); ?>" alt="loader"></span><?php endif; ?>
+				<input id="cb<?php echo $this->instance_number; ?>" type="checkbox" class="loginpress-radio loginpress-radio-<?php echo $this->type; ?>" value="<?php echo esc_attr( $this->value() ); ?>" 
+										<?php
+										$this->link();
+										checked( $this->value() );
+										?>
+				/>
+				<label for="cb<?php echo $this->instance_number; ?>" class="loginpress-radio-btn"></label>
 			</div>
 			<?php if ( ! empty( $this->description ) ) : ?>
 				<span class="description customize-control-description"><?php echo $this->description; ?></span>

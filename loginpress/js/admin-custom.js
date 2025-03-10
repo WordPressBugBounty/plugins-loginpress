@@ -251,6 +251,49 @@
 			loginPressForceChangePasswordSettings();
 		} );
 
+		/**
+		 * This function is used to show/hide the password strength settings section and 
+		 * all of its sub fields based on the enable registration password field setting.
+		 * 
+		 * @since 4.0.0
+		 */
+		function LoginpressEnablePasswordStregth() {
+
+			if ( $('#wpb-loginpress_setting\\[enable_reg_pass_field\\]').is(":checked") ) {
+				$('tr.enable_pass_strength').show();
+
+				function LoginpressPasswordStrengthSettings() {
+					if ( $('#wpb-loginpress_setting\\[enable_pass_strength\\]').is(":checked") ) {
+						$('tr.minimum_pass_char').show();
+						$('tr.pass_strength').show();
+						$('tr.password_strength_meter').show();
+						$('tr.enable_pass_strength_forms').show();
+					} else{
+						$('tr.minimum_pass_char').hide();
+						$('tr.pass_strength').hide();
+						$('tr.password_strength_meter').hide();
+						$('tr.enable_pass_strength_forms').hide();
+					}
+				}
+				$("#wpb-loginpress_setting\\[enable_pass_strength\\]").on('click', function() {
+					LoginpressPasswordStrengthSettings();
+				} );
+				LoginpressPasswordStrengthSettings();
+				
+			} else{
+				$('tr.enable_pass_strength').hide();
+				$('tr.minimum_pass_char').hide();
+				$('tr.pass_strength').hide();
+				$('tr.password_strength_meter').hide();
+				$('tr.enable_pass_strength_forms').hide();
+			}
+			
+			
+		}
+		$("#wpb-loginpress_setting\\[enable_reg_pass_field\\]").on('click', function() {
+			LoginpressEnablePasswordStregth();
+		} );
+
     	$(window).on('load', function() {
 
 			$('#loginpress_login_redirect_roles th.loginpress_user_id').text(loginpress_script.localize_translations[0]);
@@ -268,6 +311,7 @@
 			}
 
 			loginPressForceChangePasswordSettings();
+			LoginpressEnablePasswordStregth();
 
 		}); // Window on load.
 
@@ -395,7 +439,18 @@
 						$(".import_setting .wrong-import").html(
 						"JSON File is not Valid.");
 					} else {
-						$(".import_setting .import-text").show();
+						if(response == ''){
+							$(".import_setting .import-text").show();
+						}
+						else if (response.data.status === 'error') {
+							// Add an error message in red to the .import-text element
+							$(".import_setting .import-text")
+								.html(function (index, currentContent) {
+									return currentContent + ' <span style="color: red;">Images could not be imported.</span>';
+								})
+								.show();
+						} 
+						
 						setTimeout(function() {
 							$(".import_setting .import-text").fadeOut();
 							// $(".import_setting .wrong-import").html("");
@@ -409,6 +464,13 @@
 	 });
 	 $(document).ready(function () {
 		//run the select code for all selects
+		if($('[name="loginpress_captcha_settings[captchas_type]"]').length >0){
+			const urlParams = new URLSearchParams(window.location.search);
+			const captchaType = urlParams.get('captcha_type');
+			if(captchaType){
+				$('[name="loginpress_captcha_settings[captchas_type]"]').val(captchaType);
+			}
+		}
 		generate_select('select:not(.gfield_select)'); 
 		$(".tabs-toggle").on("click", function(){
 			$(this).toggleClass("active").next(".loginpress-tabs-wrapper").slideToggle();
@@ -418,9 +480,26 @@
 				$(this).closest(".loginpress-tabs-wrapper").slideUp();
 				$(".tabs-toggle").removeClass("active");
 			}
-		})
-	})
+		});
+		$('.loginpress-notification-close').on('click', function(){
 
+			$(this).closest('.loginpress-notification-bar').hide();
+			// Send AJAX request to mark it as dismissed
+			$.post(ajaxurl, {
+				action: 'dismiss_notification',
+				security: loginpress_script.help_nonce
+			});
+
+		});
+		$('.loginpress-notification-bar').addClass('loginpress-notification-loaded');
+	})
+	$(window).on('load scroll', function(){
+		if($(window).scrollTop() > 10){
+			$('.loginpress-notification-bar').addClass('loginpress-notification-scrolled');
+		}else{
+			$('.loginpress-notification-bar').removeClass('loginpress-notification-scrolled');
+		}
+	});
 	 function generate_select(selector) {
         $(selector).each(function() {
 

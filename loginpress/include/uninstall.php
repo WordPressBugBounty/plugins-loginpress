@@ -26,6 +26,19 @@ $loginpress_uninstall_options = array(
 	'loginpress_friday_sale_active_time',
 	'loginpress_friday_sale_dismiss',
 	'loginpress_friday_21_sale_dismiss',
+	'_transient_timeout_loginpress_rdn_fetch_notifications',
+	'_transient_loginpress_rdn_fetch_notifications',
+	'loginpress_pro_intro_dismiss',
+	'loginpress_premium',
+	'loginpress_autologin',
+	'loginpress_hidelogin',
+	'loginpress_limit_login_attempts',
+	'loginpress_login_redirects',
+	'loginpress_social_logins',
+	'wpb_sdk_module_id',
+	'wpb_sdk_loginpress',
+	'wpb_sdk_module_slug',
+	'_transient_loginpress_pro_pop_up',
 );
 
 if ( ! is_multisite() ) {
@@ -34,11 +47,8 @@ if ( ! is_multisite() ) {
 
 	// Delete all plugin Options.
 	foreach ( $loginpress_uninstall_options as $option ) {
-		if ( get_option( $option ) ) {
-			delete_option( $option );
-		}
+		delete_option( $option );
 	}
-
 } else {
 
 	global $wpdb;
@@ -52,17 +62,15 @@ if ( ! is_multisite() ) {
 		loginpress_force_reset_password_remove();
 
 		// Pull the LoginPress page from options.
-		$loginpress             = new LoginPress();
-		$loginpress_page        = $loginpress->get_loginpress_page();
-		$loginpress_page_id     = $loginpress_page->ID;
+		$loginpress         = new LoginPress();
+		$loginpress_page    = $loginpress->get_loginpress_page();
+		$loginpress_page_id = $loginpress_page->ID;
 
 		wp_trash_post( $loginpress_page_id );
 
 		// Delete all plugin Options.
 		foreach ( $loginpress_uninstall_options as $option ) {
-			if ( get_option( $option ) ) {
-				delete_option( $option );
-			}
+			delete_option( $option );
 		}
 
 		restore_current_blog();
@@ -81,13 +89,13 @@ function loginpress_force_reset_password_remove() {
 	$args = array(
 		'meta_query' => array(
 			array(
-				'key'     => 'loginpress_password_reset_limit',
+				'key' => 'loginpress_password_reset_limit',
 			),
 		),
-		'fields' => 'ID',
+		'fields'     => 'ID',
 	);
 
-	$blog_users = get_users($args);
+	$blog_users = get_users( $args );
 
 	if ( $blog_users ) {
 		foreach ( $blog_users as $users ) {

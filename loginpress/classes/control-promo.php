@@ -1,12 +1,12 @@
 <?php
 
 /**
-* Class for Promotion.
-*
-* @since  1.0.17
-* @version 1.5.12
-* @access public
-*/
+ * Class for Promotion.
+ *
+ * @since  1.0.17
+ * @version 1.5.12
+ * @access public
+ */
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,61 +21,62 @@ if ( ! class_exists( 'WP_Customize_Control' ) ) {
 class LoginPress_Promo extends WP_Customize_Control {
 
 	/**
-	* The type of customize control being rendered.
-	*
-	* @since  1.0.17
-	* @access public
-	* @var    string
-	*/
+	 * The type of customize control being rendered.
+	 *
+	 * @since  1.0.17
+	 * @access public
+	 * @var    string
+	 */
 	public $type = 'promotion';
 
 	/**
-	* The type of customize control being rendered.
-	*
-	* @since  1.0.17
-	* @access public
-	* @var    string
-	*/
+	 * The type of customize control being rendered.
+	 *
+	 * @since  1.0.17
+	 * @access public
+	 * @var    string
+	 */
 	public $thumbnail;
 
 	/**
-	* Promotion text for <the>  Controller</the>.
-	*
-	* @since  1.0.17
-	* @access public
-	* @var    string
-	*/
+	 * Promotion text for <the>  Controller</the>.
+	 *
+	 * @since  1.0.17
+	 * @access public
+	 * @var    string
+	 */
 	public $promo_text;
 
 	/**
-	* Promotion link for the Controller
-	*
-	* @since  1.0.17
-	* @access public
-	* @var    string
-	*/
+	 * Promotion link for the Controller
+	 *
+	 * @since  1.0.17
+	 * @access public
+	 * @var    string
+	 */
 	public $link;
 
 	/**
-	* Enqueue scripts/styles.
-	*
-	* @since  1.0.17
-	* @access public
-	* @return void
-	*/
+	 * Enqueue scripts/styles.
+	 *
+	 * @since  1.0.17
+	 * @access public
+	 * @return void
+	 */
 	public function enqueue() {
 		// wp_enqueue_script( 'jt-customize-controls', plugins_url(  '/customize-controls.js' , __FILE__  ), array( 'jquery' ) );
 		// wp_enqueue_script( 'jquery-ui-button' );
 	}
 
 	/**
-	* Displays the control content.
-	*
-	* @since  1.0.17
-	* @access public
-	* @return void
-	*/
-	public function render_content() { ?>
+	 * Displays the control content.
+	 *
+	 * @since  1.0.17
+	 * @access public
+	 * @return void
+	 */
+	public function render_content() {
+		?>
 
 		<span class="customize-control-title">
 			<?php echo esc_attr( $this->label ); ?>
@@ -86,7 +87,7 @@ class LoginPress_Promo extends WP_Customize_Control {
 		<div id="input_<?php echo $this->id; ?>" class="image">
 
 			<div class="loginpress_promo_thumbnail">
-				<a href="<?php echo esc_url( $this->link );?>" target="_blank">
+				<a href="<?php echo esc_url( $this->link ); ?>" target="_blank">
 					<div class="customizer-promo-overlay">
 						<span class="customizer-promo-text"><?php echo esc_html( $this->promo_text ); ?></span>
 					</div>
@@ -98,14 +99,14 @@ class LoginPress_Promo extends WP_Customize_Control {
 	}
 }
 
-if ( !function_exists( 'loginpress_promo_control_css' ) ) {
+if ( ! function_exists( 'loginpress_promo_control_css' ) ) {
 	/**
 	 * Add Customizer css for LoginPress Promo Control.
 	 *
 	 * @return void
 	 */
 	function loginpress_promo_control_css() {
-	?>
+		?>
 	<style>
 	.loginpress_promo_thumbnail a{
 		display: inline-block;
@@ -160,7 +161,7 @@ if ( !function_exists( 'loginpress_promo_control_css' ) ) {
 		transform: scale(1);
 		}
 	</style>
-	<?php
+		<?php
 	}
 }
 add_action( 'customize_controls_print_styles', 'loginpress_promo_control_css' );

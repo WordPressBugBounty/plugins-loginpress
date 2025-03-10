@@ -3,6 +3,7 @@
  * Customizer: Sanitization Callbacks
  *
  * This file demonstrates how to define sanitization callback functions for various data types.
+ *
  * @since 1.1.16
  *
  * @version 1.6.1
@@ -18,7 +19,7 @@
  * @return bool Whether the checkbox is checked.
  */
 function loginpress_sanitize_checkbox( $checked ) {
-	
+
 	// Boolean check.
 	return ( ( isset( $checked ) && true == $checked ) ? true : false );
 }
@@ -77,24 +78,24 @@ function loginpress_sanitize_image( $image, $setting ) {
 	 *
 	 * The array includes image mime types that are included in wp_get_mime_types()
 	 */
-    $mimes = array(
-        'jpg|jpeg|jpe' => 'image/jpeg',
-        'gif'          => 'image/gif',
-        'png'          => 'image/png',
-        'bmp'          => 'image/bmp',
-        'tif|tiff'     => 'image/tiff',
-        'ico'          => 'image/x-icon',
-    );
+	$mimes = array(
+		'jpg|jpeg|jpe' => 'image/jpeg',
+		'gif'          => 'image/gif',
+		'png'          => 'image/png',
+		'bmp'          => 'image/bmp',
+		'tif|tiff'     => 'image/tiff',
+		'ico'          => 'image/x-icon',
+	);
 
 	// Allowed svg mime type in version 1.2.2
-	$allowed_mime   = get_allowed_mime_types();
+	$allowed_mime = get_allowed_mime_types();
 
 	/**
 	 * Filter the list of mime types that are allowed for uploads.
 	 *
 	 * @since 1.6.1
 	 */
-	$extra_mimes    = array(
+	$extra_mimes = array(
 		'svg'  => 'image/svg+xml', // Allowed svg mime type in version 1.2.2
 		'webp' => 'image/webp',   // Allowed webp mime type in version 1.6.1
 	);
@@ -141,14 +142,14 @@ function loginpress_image_content_type( $image, $mimes, $setting ) {
 	$headers           = get_headers( $image, 1 );
 	$content_type      = false;
 	$file_type         = false;
-	$content_types_can = ['Content-Type', 'content-type'];
+	$content_types_can = array( 'Content-Type', 'content-type' );
 	foreach ( $content_types_can as $type ) {
-		if ( isset( $headers[$type] ) && !empty( $headers[$type] ) ) {
-			$content_type = $headers[$type];
+		if ( isset( $headers[ $type ] ) && ! empty( $headers[ $type ] ) ) {
+			$content_type = $headers[ $type ];
 			break;
 		}
 	}
-	
+
 	if ( $content_type ) {
 
 		$file_type = $content_type ? in_array( $content_type, $mimes ) : false;
@@ -164,5 +165,5 @@ function loginpress_image_content_type( $image, $mimes, $setting ) {
 	}
 
 	// If $image has a valid mime_type, return it; otherwise, return the default.
-    return ( $file_type ? $image : $setting->default );
+	return ( $file_type ? $image : $setting->default );
 }

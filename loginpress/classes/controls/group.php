@@ -40,11 +40,11 @@ class LoginPress_Group_Control extends WP_Customize_Control {
 
 	/**
 	 * Displays the control content.
-	*
-	* @since  1.0.17
-	* @access public
-	* @return void
-	*/
+	 *
+	 * @since  1.0.17
+	 * @access public
+	 * @return void
+	 */
 	public function render_content() {
 		?>
 
@@ -52,10 +52,10 @@ class LoginPress_Group_Control extends WP_Customize_Control {
 			<h3 class="loginpress-group-heading"><?php echo esc_attr( $this->label ); ?></h3>
 			<div class="loginpress-group-info">
 				<p>
-					<span class="loginpress-group-badge badges"><?php esc_html_e( 'Info:', 'loginpress' ) ?></span><?php echo esc_html( $this->info_text ); ?>
+					<span class="loginpress-group-badge badges"><?php esc_html_e( 'Info:', 'loginpress' ); ?></span><?php echo esc_html( $this->info_text ); ?>
 				</p>
 			</div>
 		</div>
-		<?php 
+		<?php
 	}
 }

@@ -28,7 +28,6 @@ class LoginPress_Misc_Control extends WP_Customize_Control {
 
 		// wp_enqueue_script( 'loginpress-miscellaneous-control-js', LOGINPRESS_DIR_URL . 'js/controls/loginpress-miscellaneous-control.js', array( 'jquery' ), LOGINPRESS_VERSION, true );
 		// wp_enqueue_style( 'loginpress-miscellaneous-control-css', LOGINPRESS_DIR_URL . 'css/controls/loginpress-miscellaneous-control.css', array(), LOGINPRESS_VERSION );
-
 	}
 
 	/**
@@ -42,8 +41,7 @@ class LoginPress_Misc_Control extends WP_Customize_Control {
 
 		switch ( $this->type ) {
 			default:
-
-			case 'hr' :
+			case 'hr':
 				echo '<hr />';
 				break;
 		}

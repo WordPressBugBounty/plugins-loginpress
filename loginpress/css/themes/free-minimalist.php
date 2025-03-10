@@ -1,14 +1,18 @@
 <?php
 /**
  * New Default template stylesheet.
+ *
  * @version 3.0.6
  * @return string style.
  */
 function free_minimalist_presets() {
 
-  	ob_start();
-  	if ( version_compare( $GLOBALS['wp_version'], '5.3', '>=' ) ) : ?>
-    	<style media="screen"  id="loginpress-style-wp-5-3">
+	ob_start();
+	if ( version_compare( $GLOBALS['wp_version'], '5.3', '>=' ) ) : ?>
+		<style media="screen"  id="loginpress-style-wp-5-3">
+			body .social-networks a svg {
+				position: absolute;
+			}
 			.login .privacy-policy-page-link>a.privacy-policy-link{
 				color: inherit;
 				text-decoration: none;
@@ -67,12 +71,23 @@ function free_minimalist_presets() {
 			.login-action-confirm_admin_email #backtoblog a {
 				color: #008ec2 !important;
 			}
-			input[type=checkbox]:focus, input[type=checkbox]:checked{
-				border-color: #F6366A;
+			input[type=checkbox],input[type=checkbox]:checked{
+				border-color: #F6366A !important;
 			}
-			
-    	</style>
-  	<?php else: ?>
+			input[type=checkbox]:hover{
+				border-color: #C3C4C7 !important;
+			}
+			.dashicons-visibility:before {
+				color: #F6366A;
+			}
+			.dashicons-hidden:before {
+				color: #000000;
+			}
+			.dashicons-hidden:hover::before {
+				color: #F6366A;
+			}
+		</style>
+	<?php else : ?>
 		<style>
 			input[type=checkbox]:checked:before {
 				content: '\f147';
@@ -80,8 +95,8 @@ function free_minimalist_presets() {
 				color: #1e8cbe;
 			}
 		</style>
-  	<?php endif; ?>
-  	<style media="screen" id="loginpress-style">
+	<?php endif; ?>
+		<style media="screen" id="loginpress-style">
 
 		/*************************************************************
 		* Plugin:      LoginPress - Customizing the WordPress Login.*
@@ -131,15 +146,11 @@ function free_minimalist_presets() {
 		.login form .input, .login input[type="text"]{
 			height: 48px;
 			background: #fff;
-			-webkit-border-radius: 5px;
-			-moz-border-radius: 5px;
-			-ms-border-radius: 5px;
-			border-radius: 5px;
 			margin-bottom: 18px;
 			font: normal 15px Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
 			color: #7f7f7f;
 			border-color: #bdbdbd;
-			padding-left: 27px;
+			padding-left: 15px;
 			font-weight: normal;
 		}
 		#jetpack_protect_answer{
@@ -147,10 +158,11 @@ function free_minimalist_presets() {
 			text-align : center;
 		}
 		.login input[type="submit"],
+		.wp-core-ui #login .wp-generate-pw,
 		body.wp-core-ui.login .two-factor-email-resend .button,
 		.wp-core-ui #login .button-primary {
 			margin: 7px 0 7px;
-			height: 46px;
+			min-height: 46px;
 			-webkit-border-radius: 5px;
 			-moz-border-radius: 5px;
 			-ms-border-radius: 5px;
@@ -158,6 +170,7 @@ function free_minimalist_presets() {
 			font: normal 15px Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
 			color: #fff;
 			width: 100%;
+			line-height: 1.33333333;
 		}
 		.wp-core-ui.login .button-group.button-large .button,
 		.wp-core-ui.login .button.button-large, .wp-core-ui.login .button-primary{
@@ -395,7 +408,6 @@ function free_minimalist_presets() {
 			box-shadow: none;
 			border: 1px solid #C3C4C7;
 		background: #FFF;
-			border-radius: 0;
 			padding-left: 15px;
 			margin-bottom: 20px;
 			margin-right: 0;
@@ -418,6 +430,11 @@ function free_minimalist_presets() {
 			border-color: #F6366A;
 			margin: 20px 0 0;
 		}
+		.wp-core-ui #login .wp-generate-pw{
+			background: #F6366A33;
+			border-color: #F6366A;
+			color: #F6366A;
+		}
 		.login form{
 			background: #FFF;
 			padding: 30px 25px;
@@ -431,28 +448,13 @@ function free_minimalist_presets() {
 		.social-networks.block{
 			padding-bottom: 0;
 		}
-		.social-networks.block a > div{
-			background: none;
-			padding: 12px 10px 12px 10px;
-			border: 1px solid #C3C4C7;
-			background: #FFF;
-			font-size: 14px;
-			color: #000;
-			height: 44px;
-			display: flex;
-			align-content: center;
-			line-height: 19px;
-			justify-content: center;
-			gap: 10px;
-		}
 		#loginform .user-pass-fields{
 			margin: 0;
 		}
 		.social-networks a svg{
 			position: static;
-			order: -1;
-			width: auto;
-			height: auto;
+			min-width: 20px;
+			height: 20px;
 		}
 		.login #nav{
 			padding: 0;
@@ -501,7 +503,7 @@ function free_minimalist_presets() {
 				padding: 3px;
 			}
 		}
-    </style>
+	</style>
 	
 	
 	<script>
@@ -519,7 +521,7 @@ function free_minimalist_presets() {
 			}
 		});
 	</script>
-  	<?php
-  	$content = ob_get_clean();
-  	return $content;
+	<?php
+	$content = ob_get_clean();
+	return $content;
 }
