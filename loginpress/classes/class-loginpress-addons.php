@@ -21,7 +21,8 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 		 */
 		function __construct() {
 			$this->includes();
-			$this->addons_array_construct();
+			//add_action( 'init', array( $this, 'addons_array_construct' ),0 );
+			// $this->addons_array_construct();
 			$this->plugins_list = get_plugins();
 			$this->addons_array = get_option( 'loginpress_pro_addons' );
 		}

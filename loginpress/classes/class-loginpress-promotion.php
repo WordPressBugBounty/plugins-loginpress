@@ -75,6 +75,12 @@ if ( ! class_exists( 'LoginPress_Promotion_tabs' ) ) :
 					'desc'      => $this->_tabs_description( 'loginpress-social-login' ),
 				),
 				array(
+					'id'        => 'loginpress_integration_settings',
+					'title'     => __( 'Integrations', 'loginpress' ),
+					'sub-title' => __( 'All Plugin Integrations', 'loginpress' ),
+					'desc'      => $this->_tabs_description( 'loginpress-integration' ),
+				),
+				array(
 					'id'    => 'loginpress_premium',
 					'title' => sprintf( 
 						// translators: Upgrade to Pro
@@ -95,7 +101,6 @@ if ( ! class_exists( 'LoginPress_Promotion_tabs' ) ) :
 		public function _tabs_description( $slug, $button = true ) {
 
 			$desc = '';
-
 			if ( 'loginpress-hide-login' === $slug ) {
 
 				$desc .= '<p class="loginpress-addon-promotion-desc prom-content">' . esc_html__( 'This LoginPress add-on lets you change the login page URL to anything you want. It will give a hard time to spammers who keep hitting to your login page. This is helpful for Brute force attacks. One caution to use this add-on is you need to remember the custom login url after you change it. We have an option to email your custom login url so you remember it.', 'loginpress' ) . '</p>' . $this->_addon_video( 'How Hide Login Works', 'FSE2BH_biZg' ) . $this->upgrade_now( 'utm_source=loginpress-lite&utm_medium=hide-login-settings&utm_campaign=pro-upgrade&utm_content=UPGRADE+NOW+CTA', $button );
@@ -114,7 +119,84 @@ if ( ! class_exists( 'LoginPress_Promotion_tabs' ) ) :
 			} elseif ( 'loginpress-captcha' === $slug ) {
 
 				$desc .= '<p class="loginpress-addon-promotion-desc prom-content">' . esc_html__( 'The LoginPress CAPTCHA feature lets you easily integrate different types of CAPTCHA services into your login and registration forms. CAPTCHA types offered include Google reCAPTCHA, hCAPTCHA, and other widely used CAPTCHA services. This feature helps prevent spam, bot attacks, and authorized access, ensuring a more secure user experience.', 'loginpress' ) . $this->_addon_video( 'How To Use LoginPress With Google reCaptcha V2', '26dUFdX2srU' ) . '</p>' . $this->upgrade_now( 'utm_source=loginpress-lite&utm_medium=auto-login-settings&utm_campaign=pro-upgrade&utm_content=UPGRADE+NOW+CTA', $button );
+			} elseif ( 'loginpress-integration' === $slug ) {
+				$desc .= '<p class="loginpress-addon-promotion-desc prom-content">' . esc_html__(
+					'LoginPress integrates with the most popular WordPress plugins to enhance your login experience. Our Social Login, CAPTCHA and Limit Login Attempts features among others are easily integrated into these platforms, helping you streamline user access and enhance security.',
+					'loginpress'
+				) . '</p>';
+			
+				$integrations = array(
+					array(
+						'key'        => 'woocommerce',
+						'img'        => 'woocommerce.svg',
+						'alt'        => __( 'WooCommerce', 'loginpress' ),
+						'title'      => __( 'WooCommerce', 'loginpress' ),
+						'desc'       => __( 'Quick, secure logins for your WooCommerce store.', 'loginpress' ),
+						'dataTarget' => '.enable_captcha_woo, .enable_social_woo',
+					),
+					array(
+						'key'        => 'edd',
+						'img'        => 'edd.svg',
+						'alt'        => __( 'Easy Digital Downloads', 'loginpress' ),
+						'title'      => __( 'Easy Digital Downloads', 'loginpress' ),
+						'desc'       => __( 'Secure digital purchases with login enhancements.', 'loginpress' ),
+						'dataTarget' => '.enable_captcha_edd, .enable_social_login_links_edd',
+					),
+					array(
+						'key'        => 'buddypress',
+						'img'        => 'buddypress.svg',
+						'alt'        => __( 'BuddyPress', 'loginpress' ),
+						'title'      => __( 'BuddyPress', 'loginpress' ),
+						'desc'       => __( 'Boost community logins with social and captcha support.', 'loginpress' ),
+						'dataTarget' => '.enable_captcha_bp, .enable_social_login_links_bp',
+					),
+					array(
+						'key'        => 'buddyboss',
+						'img'        => 'buddyboss.svg',
+						'alt'        => __( 'BuddyBoss', 'loginpress' ),
+						'title'      => __( 'BuddyBoss', 'loginpress' ),
+						'desc'       => __( 'Hassle-free login experience for your BuddyBoss community.', 'loginpress' ),
+						'dataTarget' => '.enable_captcha_bb, .enable_social_login_links_bb',
+					),
+					array(
+						'key'        => 'lifterlms',
+						'img'        => 'lifterlms.svg',
+						'alt'        => __( 'LifterLMS', 'loginpress' ),
+						'title'      => __( 'LifterLMS', 'loginpress' ),
+						'desc'       => __( 'Let students log in easily and securely.', 'loginpress' ),
+						'dataTarget' => '.enable_captcha_llms, .enable_social_login_links_lifterlms',
+					),
+					array(
+						'key'        => 'learndash',
+						'img'        => 'learndash.svg',
+						'alt'        => __( 'LearnDash', 'loginpress' ),
+						'title'      => __( 'LearnDash', 'loginpress' ),
+						'desc'       => __( 'Simplify learning access with our login tools.', 'loginpress' ),
+						'dataTarget' => '.enable_captcha_ld, .enable_social_ld',
+					),
+				);
+			
+				$desc .= '<div id="loginpress-integration-management">
+					<div id="integration-cards-container" class="loginpress-integration-container" style="display: flex; flex-wrap: wrap;">';
+			
+				foreach ( $integrations as $integration ) {
+					$desc .= '<div class="loginpress-integration-card" data-integration="' . esc_attr( $integration['key'] ) . '" data-target="' . esc_attr( $integration['dataTarget'] ) . '">
+						<div class="loginpress-integration-head">
+							<img src="' . esc_url( LOGINPRESS_DIR_URL . 'img/' . $integration['img'] ) . '" alt="' . esc_attr( $integration['alt'] ) . '">
+						</div>
+						<div class="loginpress-integration-body">
+							<h3>' . esc_html( $integration['title'] ) . '</h3>
+							<p>' . esc_html( $integration['desc'] ) . '</p>
+						</div>
+						<div class="loginpress-integration-foot">
+							<span class="loginpress-integration-comingsoon">' . esc_html__( 'Coming soon', 'loginpress' ) . '</span>
+						</div>
+					</div>';
+				}
+			
+				$desc .= '</div></div>';
 			}
+			
 			return $desc;
 		}
 

@@ -1,11 +1,11 @@
 === LoginPress | wp-login Custom Login Page Customizer ===
 Requires at least: 4.0
-Tested up to: 6.7
+Tested up to: 6.8
 Contributors: WPBrigade, hiddenpearls, AbdulWahab610
 Donate link: https://loginpress.pro/pricing/?utm_source=loginpress-lite
 Author URI: https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=author-url-link
 Tags: wp-login, login, login customizer, custom login, wordpress login,
-Stable tag: 4.0.0
+Stable tag: 4.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -223,6 +223,12 @@ Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricin
 
 == Changelog ==
 
+= 4.0.1 – 2025-04-18 =
+* Bugfix: Resolved CSS conflict in review notification.
+* Bugfix: Resolved an issue where background videos were not auto-playing as expected.
+* Bugfix: Translation issue fixed concerning WordPress 6.8
+* Compatibility: Compatible with WordPress 6.8
+
 = 4.0.0 – 2025-03-10 =
 * Bugfix: Force reset password email issue for newly register users.
 * New Feature: Dashboard UI/UX Refresh - Introducing a sleek new dashboard design for LoginPress pages.
@@ -353,5 +359,5 @@ For more detail on changelog visit [LoginPress.Pro](https://loginpress.pro/chang
 
 == Upgrade Notice ==
 
-= 4.0.0 =
+= 4.0.1 =
 * LoginPress 4.0 is packed with enhancements, new features, and performance improvements for a seamless login experience! Upgrade now.

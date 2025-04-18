@@ -639,9 +639,6 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			if ( time() <= $time ) {
 				return '<strong class="loginpress-new-tag">New</strong>';
 			}
-
-			// Return nothing if the time has passed
-			return '<strong class="loginpress-new-tag">New</strong>';
 		}
 
 		/**

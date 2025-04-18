@@ -14,7 +14,13 @@ if ( ! class_exists( 'LoginPress_Addons_Meta' ) ) :
 		 * Class Constructor.
 		 */
 		function __construct() {
-			$this->addons_options_array();
+			// add_action( 'init', array( $this, 'addons_options_array' ) ,0);
+			if ( ! get_option( 'loginpress_pro_addons' ) ) {
+				$this->addons_options_array();
+			} else {
+				add_action( 'init', array( $this, 'addons_options_array' ) );
+			}
+			
 		}
 
 		/**

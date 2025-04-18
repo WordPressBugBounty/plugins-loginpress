@@ -4,12 +4,7 @@
 	border-radius: 3px;
 	margin: 20px 20px 0 0;
 	border-left: 4px solid transparent;
-}
-
-.loginpress-review-notice:after{
-	content: '';
-	display: table;
-	clear: both;
+	overflow: hidden;
 }
 
 .loginpress-review-thumbnail{

@@ -563,6 +563,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ) :
 				include LOGINPRESS_DIR_PATH . 'classes/class-loginpress-addons.php';
 			}
 			$obj_loginpress_addons = new LoginPress_Addons();
+			$obj_loginpress_addons->addons_array_construct();
 			$obj_loginpress_addons->_addon_html();
 		}
 
@@ -761,7 +762,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ) :
 				// Output the dismissible notification
 				?>
 				<div class="loginpress-notification-bar" >
-					<p>You're using LoginPress Free. To unlock more features consider <a href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&utm_medium=top-popup&utm_campaign=pro-upgrade&utm_content=upgrading+to+pro" target="_blank">upgrading to Pro </a></p>
+					<p>You're using LoginPress Free. To unlock more features consider <a href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&utm_medium=top-popup&utm_campaign=pro-upgrade&utm_content=upgrading+to+pro" target="_blank">upgrading to LoginPress Pro </a></p>
 					<span class="loginpress-notification-close"></span>
 				</div>
 				<?php

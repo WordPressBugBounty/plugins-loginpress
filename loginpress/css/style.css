@@ -1101,11 +1101,24 @@ h3 {
     background-position: -149px -62px;
 }
 
+
 .toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list:hover #loginpress_social_logins-tab:after, 
 .toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_social_logins-tab.nav-tab-active:after, 
 .loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list:hover #loginpress_social_logins-tab:after, 
 .loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_social_logins-tab.nav-tab-active:after{
     background-position: -180px -62px;
+}
+
+.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_integration_settings-tab:after, 
+.loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_integration_settings-tab:after{
+    background-position: -149px -120px;
+}
+
+.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list:hover #loginpress_integration_settings-tab:after, 
+.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_integration_settings-tab.nav-tab-active:after, 
+.loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list:hover #loginpress_integration_settings-tab:after, 
+.loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_integration_settings-tab.nav-tab-active:after{
+    background-position: -180px -120px;
 }
 
 .toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_pro_license-tab:after, 
@@ -1122,14 +1135,14 @@ h3 {
 
 .toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_captcha_settings-tab:after, 
 .loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_captcha_settings-tab:after {
-	background-position: -150px -92px;
+	background-position: -150px -90px;
 }
 
 .toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list:hover #loginpress_captcha_settings-tab:after, 
 .toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_captcha_settings-tab.nav-tab-active:after, 
 .loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list:hover #loginpress_captcha_settings-tab:after, 
 .loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_captcha_settings-tab.nav-tab-active:after{
-    background-position: -181px -93px;
+    background-position: -181px -91px;
 }
 
 .toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list span,
@@ -2997,7 +3010,7 @@ tr.enable_pass_strength_forms {
 	.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-settings, 
 	.loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-settings, 
 	.loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper{
-		width: 100%;
+		width: calc(100% - 20px);
 	}
 
 	.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-settings,  
@@ -3019,10 +3032,13 @@ tr.enable_pass_strength_forms {
 	.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list .nav-tab, 
 	.loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list .nav-tab{
 		background-color: rgb(255 255 255 / 50%);
-		padding: 55px 15px 15px 15px;
+		padding: 55px 5px 15px 5px;
 		min-height: auto;
 		width: 100%;
 		text-align: center;
+	}
+	#loginpress-admin-setting{
+		padding-right: 30px;
 	}
 
 	.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .nav-tab:after, 
@@ -3173,6 +3189,9 @@ tr.enable_pass_strength_forms {
 	.loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting{
 		flex-direction: column;
 		padding: 0;
+	}
+	body.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting{
+		padding-right: 20px;
 	}
 
 	.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper, 
@@ -3364,6 +3383,17 @@ tr.enable_pass_strength_forms {
 	.loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list:hover #loginpress_hidelogin-tab:after, 
 	.loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_hidelogin-tab.nav-tab-active:after {
 		background-position: -85px -21px;
+	}
+
+	.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_integration_settings-tab:after, .loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_integration_settings-tab:after {
+		background-position: -102px -82px;
+	}
+
+	.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list:hover #loginpress_integration_settings-tab:after, 
+	.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_integration_settings-tab.nav-tab-active:after, 
+	.loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list:hover #loginpress_integration_settings-tab:after, 
+	.loginpress_page_loginpress-license #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_integration_settings-tab.nav-tab-active:after {
+		background-position: -123px -82px;
 	}
 
 	.toplevel_page_loginpress-settings #wpbody-content .loginpress-admin-setting .loginpress-tabs-wrapper .settings-tabs-list #loginpress_limit_login_attempts-tab:after, 
@@ -3587,4 +3617,96 @@ tr.enable_pass_strength_forms {
 }
 .loginpress-notification-close:hover{
     opacity: .8;
+}
+.loginpress-integration-card{
+	width: calc(33.3333% - 20px);
+	  background: #E9EFFF;
+	  min-height: 214px;
+	  padding: 22px;
+	  border-radius: 4px;
+	  overflow: hidden;
+	  position: relative;
+	  display: flex;
+	  flex-direction: column;
+  }
+  .loginpress-integration-container{
+	  gap: 30px;
+	  padding-bottom: 30px;
+  }
+  .loginpress-integration-head{
+	  min-height: 42px;
+	  display: flex;
+	  align-items: center;
+  }
+  .loginpress-integration-head img{
+	  max-height: 42px;
+	  max-width: 42px;
+	  vertical-align: middle;
+  }
+  .loginpress-integration-body{
+	  margin-block: 17px 15px;
+  }
+  
+  .loginpress-integration-body h3{
+	  font-weight: 600;
+	  font-size: 16px;
+	  line-height: 26.88px;
+	  color: #07003B;
+	  margin: 0 0 4px;
+  }
+  
+  #wpcontent .loginpress-integration-body p{
+	  font-weight: 400;
+	  font-size: 14px;
+	  line-height: 18px;
+	  color: #454D5F;
+	  width: 100% !important;
+  }
+  
+  
+  .loginpress-integration-button,
+  .loginpress-integration-comingsoon{
+	border-radius: 4px;
+	padding-top: 7px;
+	padding-right: 10px;
+	padding-bottom: 7px;
+	padding-left: 10px;
+	display: inline-block;
+		background: #3C50E0;
+		color: #fff;
+		font-family: Poppins;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 100%;
+	cursor: pointer;
+	border: 1px solid #3C50E0;
+	}
+	.loginpress-integration-comingsoon{
+		cursor: default;
+	}
+	.loginpress-integration-foot{
+		margin-top: auto;
+	}
+	.loginpress-integration-button:hover{
+		background: #fff;
+		color: #3C50E0;
+	}
+@media (max-width: 767px) {
+	.loginpress-integration-container{
+		flex-wrap: wrap;
+		gap: 30px;
+	}
+	.loginpress-integration-card{
+		width: calc(50% - 15px);
+		padding: 15px;
+	}
+}
+@media (max-width: 480px) {
+	.loginpress-integration-container{
+		flex-wrap: wrap;
+		gap: 15px;
+	}
+	.loginpress-integration-card{
+		width: 100%;
+	}
 }

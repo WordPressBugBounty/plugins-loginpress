@@ -1586,46 +1586,50 @@ if ( version_compare( $GLOBALS['wp_version'], '5.9', '>=' ) && ! empty( get_avai
 		}, false );
 	<?php endif; ?>
 		<?php if ( ( isset( $loginpress_bg_video_medium ) && $loginpress_bg_video_medium == 'youtube' && ! empty( $loginpress_bg_yt_video_id ) ) ) { ?>
-			// 2. This code loads the IFrame Player API code asynchronously.
-// 	var tag = document.createElement('script');
-//   tag.src = "https://www.youtube.com/player_api";
-//   var firstScriptTag = document.getElementsByTagName('script')[0];
-//   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		document.addEventListener( 'DOMContentLoaded', function(){
+			// 1. Dynamically load the YouTube API script
+			// Dynamically load the YouTube API script
+			var tag = document.createElement('script');
+			tag.src = "https://www.youtube.com/player_api";
+			var firstScriptTag = document.getElementsByTagName('script')[0];
+			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-	// 3. This function creates an <iframe> (and YouTube player)
-	//    after the API code downloads.
-	var player;
-	window.onYouTubePlayerAPIReady = function() {
-	player = new YT.Player('loginpress_video-background-wrapper', {
-		width: '100%',
-		height: '100%',
-		videoId: '<?php echo $loginpress_bg_yt_video_id; ?>',
-		events: {
-		'onReady': onPlayerReady,
-		'onStateChange': onPlayerStateChange
-		}
-	});
-	}
+			var player;
+			// Ensure that the API script is loaded and the player is initialized
+			YT.ready(function() {
+				var playerElement = document.getElementById('loginpress_video-background-wrapper');
+				if (playerElement) {
+					player = new YT.Player('loginpress_video-background-wrapper', {
+					width: '100%',
+					height: '100%',
+					videoId: '<?php echo $loginpress_bg_yt_video_id; ?>',
+					playerVars: {
+					origin: window.location.protocol + '//' + window.location.hostname
+					},
+					events: {
+					'onReady': onPlayerReady,
+					'onStateChange': onPlayerStateChange
+					}
+					});
+				} else {
+				}
+			});
 
-	// 4. The API will call this function when the video player is ready.
-	function onPlayerReady(event) {
-	//   console.log('payer is ready')
-	event.target.playVideo();
-	player.mute(); // comment out if you don't want the auto played video muted
-	}
+			// Function to handle player readiness
+			function onPlayerReady(event) {
+				event.target.playVideo();  // Start the video automatically
+				event.target.mute();  // Optionally mute the video
+			}
 
-	// 5. The API calls this function when the player's state changes.
-	//    The function indicates that when playing a video (state=1),
-	//    the player should play for six seconds and then stop.
-	function onPlayerStateChange(event) {
-	if (event.data == YT.PlayerState.ENDED) {
-		player.seekTo(0);
-		player.playVideo();
-	}
-	}
-	function stopVideo() {
-	player.stopVideo();
-	}
+			// Function to handle player state changes
+			function onPlayerStateChange(event) {
+				if (event.data == YT.PlayerState.ENDED) {
+					player.seekTo(0);  // Restart the video
+					player.playVideo();
+				}
+			}
+		}, false);
+
 			<?php } ?>
 	</script>
 	<?php endif; ?>
