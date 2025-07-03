@@ -1,137 +1,138 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Custom Login Page Brigade\n"
-"POT-Creation-Date: 2025-03-03 12:03+0500\n"
-"PO-Revision-Date: 2025-03-05 00:20+0500\n"
+"POT-Creation-Date: 2025-07-02 17:57+0500\n"
+"PO-Revision-Date: 2025-07-02 18:00+0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && "
-"n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
-"X-Generator: Poedit 3.5\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: ../classes/class-loginpress-addons-meta.php:29
+#: ../classes/class-loginpress-addons-meta.php:35
 msgid "Login Logout Menu"
 msgstr "تسجيل الدخول - قائمة الخروج"
 
-#: ../classes/class-loginpress-addons-meta.php:30
+#: ../classes/class-loginpress-addons-meta.php:36
 msgid "Login Logout Menu Section"
 msgstr "قسم قائمة تسجيل الدخول تسجيل الخروج"
 
-#: ../classes/class-loginpress-addons-meta.php:36
+#: ../classes/class-loginpress-addons-meta.php:42
 #: ../classes/class-loginpress-promotion.php:49
 msgid "Auto Login"
 msgstr "تسجيل الدخول التلقائي"
 
-#: ../classes/class-loginpress-addons-meta.php:37
+#: ../classes/class-loginpress-addons-meta.php:43
 #: ../classes/class-loginpress-promotion.php:50
 msgid "No More Manual Login"
 msgstr "لا مزيد من تسجيل الدخول اليدوي"
 
-#: ../classes/class-loginpress-addons-meta.php:43
+#: ../classes/class-loginpress-addons-meta.php:49
 #: ../classes/class-loginpress-promotion.php:67
 msgid "Login Redirects"
 msgstr "عمليات إعادة توجيه تسجيل الدخول"
 
-#: ../classes/class-loginpress-addons-meta.php:44
+#: ../classes/class-loginpress-addons-meta.php:50
 #: ../classes/class-loginpress-promotion.php:68
 msgid "Automatically redirects the login"
 msgstr "يعيد توجيه تسجيل الدخول تلقائيا"
 
-#: ../classes/class-loginpress-addons-meta.php:50
+#: ../classes/class-loginpress-addons-meta.php:56
 #: ../classes/class-loginpress-promotion.php:61
 msgid "Limit Login Attempts"
 msgstr "الحد من محاولات تسجيل الدخول"
 
-#: ../classes/class-loginpress-addons-meta.php:51
+#: ../classes/class-loginpress-addons-meta.php:57
 #: ../classes/class-loginpress-promotion.php:62
 msgid "Limits for login attempts"
 msgstr "حدود محاولات تسجيل الدخول"
 
-#: ../classes/class-loginpress-addons-meta.php:57
+#: ../classes/class-loginpress-addons-meta.php:63
 #: ../classes/class-loginpress-promotion.php:55
 msgid "Hide Login"
 msgstr "إخفاء تسجيل الدخول"
 
-#: ../classes/class-loginpress-addons-meta.php:58
+#: ../classes/class-loginpress-addons-meta.php:64
 #: ../classes/class-loginpress-promotion.php:56
 msgid "Hide your login page"
 msgstr "إخفاء صفحة تسجيل الدخول الخاصة بك"
 
-#: ../classes/class-loginpress-addons-meta.php:64
+#: ../classes/class-loginpress-addons-meta.php:70
 #: ../classes/class-loginpress-promotion.php:73
 msgid "Social Login"
 msgstr "دخول بمواقع التواصل"
 
-#: ../classes/class-loginpress-addons-meta.php:65
+#: ../classes/class-loginpress-addons-meta.php:71
 #: ../classes/class-loginpress-promotion.php:74
 msgid "Third Party login access"
 msgstr "الوصول إلى تسجيل الدخول من طرف ثالث"
 
-#: ../classes/class-loginpress-addons-meta.php:71
+#: ../classes/class-loginpress-addons-meta.php:77
 msgid "Login Widget"
 msgstr "القطعة تسجيل الدخول"
 
-#: ../classes/class-loginpress-addons-meta.php:72
+#: ../classes/class-loginpress-addons-meta.php:78
 msgid "Creates a login widget"
 msgstr "يخلق القطعة تسجيل الدخول"
 
-#: ../classes/class-loginpress-addons-meta.php:113
+#: ../classes/class-loginpress-addons-meta.php:119
 #: ../include/loginpress-static-addons.php:108
 msgid ""
 "Login Logout Menu is a handy plugin which allows you to add login, logout, "
 "register and profile menu items in your selected menu."
 msgstr ""
-"قائمة تسجيل الخروج لتسجيل الدخول هي مكون إضافي مفيد يسمح لك بإضافة عناصر قائمة "
-"تسجيل الدخول والخروج والتسجيل والملف الشخصي في القائمة المحددة."
+"قائمة تسجيل الخروج لتسجيل الدخول هي مكون إضافي مفيد يسمح لك بإضافة عناصر "
+"قائمة تسجيل الدخول والخروج والتسجيل والملف الشخصي في القائمة المحددة."
 
-#: ../classes/class-loginpress-addons-meta.php:117
+#: ../classes/class-loginpress-addons-meta.php:123
 msgid ""
 "Redirects users based on their roles. This is helpful, If you have an editor "
-"and want to redirect him to his editor stats page. Restrict your subscribers, "
-"guests or even customers to certain pages instead of wp-admin. This add-on has "
-"a cool UX/UI to manage all the login redirects you have created on your site."
+"and want to redirect him to his editor stats page. Restrict your "
+"subscribers, guests or even customers to certain pages instead of wp-admin. "
+"This add-on has a cool UX/UI to manage all the login redirects you have "
+"created on your site."
 msgstr ""
 "يعيد توجيه المستخدمين بناءً على أدوارهم. وهذا مفيد، إذا كان لديك محرر وتريد "
-"إعادة توجيهه إلى صفحة إحصائيات المحرر الخاصة به. قم بتقييد المشتركين أو الضيوف "
-"أو حتى العملاء في صفحات معينة بدلاً من wp-admin. تحتوي هذه الوظيفة الإضافية على "
-"واجهة مستخدم/UX/UI رائعة لإدارة جميع عمليات إعادة توجيه تسجيل الدخول التي قمت "
-"بإنشائها على موقعك."
+"إعادة توجيهه إلى صفحة إحصائيات المحرر الخاصة به. قم بتقييد المشتركين أو "
+"الضيوف أو حتى العملاء في صفحات معينة بدلاً من wp-admin. تحتوي هذه الوظيفة "
+"الإضافية على واجهة مستخدم/UX/UI رائعة لإدارة جميع عمليات إعادة توجيه تسجيل "
+"الدخول التي قمت بإنشائها على موقعك."
 
-#: ../classes/class-loginpress-addons-meta.php:121
+#: ../classes/class-loginpress-addons-meta.php:127
 msgid ""
 "Social login from LoginPress is an add-on which provides facility your users "
 "to log in and Register via Facebook, Google, and Twitter. This add-on will "
-"eliminate the Spam and Bot registrations. This add-on will help your users to "
-"hassle-free registrations/logins on your site."
+"eliminate the Spam and Bot registrations. This add-on will help your users "
+"to hassle-free registrations/logins on your site."
 msgstr ""
 "تسجيل الدخول الاجتماعي من LoginPress هو وظيفة إضافية توفر للمستخدمين إمكانية "
 "تسجيل الدخول والتسجيل عبر Facebook وGoogle وTwitter. ستؤدي هذه الوظيفة "
 "الإضافية إلى إزالة تسجيلات البريد العشوائي والروبوتات. ستساعد هذه الوظيفة "
-"الإضافية المستخدمين على إجراء عمليات تسجيل/تسجيلات خالية من المتاعب على موقعك."
+"الإضافية المستخدمين على إجراء عمليات تسجيل/تسجيلات خالية من المتاعب على "
+"موقعك."
 
-#: ../classes/class-loginpress-addons-meta.php:125
+#: ../classes/class-loginpress-addons-meta.php:131
 msgid ""
-"This LoginPress add-on is a widget you can use into your blog sidebar. It uses "
-"an Ajax way to login via the sidebar. You may need to know HTML/CSS to give it "
-"style according to your site even we have styled it in general."
+"This LoginPress add-on is a widget you can use into your blog sidebar. It "
+"uses an Ajax way to login via the sidebar. You may need to know HTML/CSS to "
+"give it style according to your site even we have styled it in general."
 msgstr ""
 "تعد الوظيفة الإضافية LoginPress هذه أداة يمكنك استخدامها في الشريط الجانبي "
 "لمدونتك. يستخدم طريقة Ajax لتسجيل الدخول عبر الشريط الجانبي. قد تحتاج إلى "
 "معرفة HTML/CSS لإضفاء طابع مناسب على موقعك حتى لو قمنا بتصميمه بشكل عام."
 
-#: ../classes/class-loginpress-addons-meta.php:129
-#: ../classes/class-loginpress-promotion.php:104
+#: ../classes/class-loginpress-addons-meta.php:135
+#: ../classes/class-loginpress-promotion.php:109
 msgid ""
 "Everybody needs a control of their Login page. This will help you to track "
 "your login attempts by each user. You can limit the login attempts for each "
@@ -139,112 +140,112 @@ msgid ""
 "website. This add-on acts as a sheild to these hacking attacks and gives you "
 "control to set the time between each login attempts."
 msgstr ""
-"يحتاج الجميع إلى التحكم في صفحة تسجيل الدخول الخاصة بهم. سيساعدك هذا على تتبع "
-"محاولات تسجيل الدخول الخاصة بك من قبل كل مستخدم. يمكنك الحد من محاولات تسجيل "
-"الدخول لكل مستخدم. هجمات القوة الغاشمة هي الطريقة الأكثر شيوعا للوصول إلى موقع "
-"الويب الخاص بك. تعمل هذه الوظيفة الإضافية كدليل على هجمات القرصنة هذه وتمنحك "
-"التحكم في ضبط الوقت بين كل محاولة تسجيل دخول."
+"يحتاج الجميع إلى التحكم في صفحة تسجيل الدخول الخاصة بهم. سيساعدك هذا على "
+"تتبع محاولات تسجيل الدخول الخاصة بك من قبل كل مستخدم. يمكنك الحد من محاولات "
+"تسجيل الدخول لكل مستخدم. هجمات القوة الغاشمة هي الطريقة الأكثر شيوعا للوصول "
+"إلى موقع الويب الخاص بك. تعمل هذه الوظيفة الإضافية كدليل على هجمات القرصنة "
+"هذه وتمنحك التحكم في ضبط الوقت بين كل محاولة تسجيل دخول."
 
-#: ../classes/class-loginpress-addons-meta.php:133
+#: ../classes/class-loginpress-addons-meta.php:139
 msgid ""
 "This LoginPress add-on lets you (Administrator) generates a unique URL for "
 "your certain users who you dont want to provide a password to login to your "
 "site. This Pro add-on gives you a list of all the users who you have given "
-"auto-generated login links. You can disable someones access and delete certain "
-"users."
+"auto-generated login links. You can disable someones access and delete "
+"certain users."
 msgstr ""
 "تتيح لك وظيفة LoginPress الإضافية هذه (المسؤول) إنشاء عنوان URL فريد "
 "للمستخدمين المحددين الذين لا تريد تقديم كلمة مرور لتسجيل الدخول إلى موقعك. "
 "تمنحك هذه الوظيفة الإضافية Pro قائمة بجميع المستخدمين الذين قدمت لهم روابط "
 "تسجيل دخول تم إنشاؤها تلقائيًا. يمكنك تعطيل وصول شخص ما وحذف مستخدمين معينين."
 
-#: ../classes/class-loginpress-addons-meta.php:137
-#: ../classes/class-loginpress-promotion.php:101
+#: ../classes/class-loginpress-addons-meta.php:143
+#: ../classes/class-loginpress-promotion.php:106
 msgid ""
 "This LoginPress add-on lets you change the login page URL to anything you "
 "want. It will give a hard time to spammers who keep hitting to your login "
-"page. This is helpful for Brute force attacks. One caution to use this add-on "
-"is you need to remember the custom login url after you change it. We have an "
-"option to email your custom login url so you remember it."
+"page. This is helpful for Brute force attacks. One caution to use this add-"
+"on is you need to remember the custom login url after you change it. We have "
+"an option to email your custom login url so you remember it."
 msgstr ""
-"تتيح لك الوظيفة الإضافية LoginPress هذه تغيير عنوان URL لصفحة تسجيل الدخول إلى "
-"أي شيء تريده. سيعطي وقتا عصيبا لمرسلي البريد العشوائي الذين يستمرون في الوصول "
-"إلى صفحة تسجيل الدخول الخاصة بك. هذا مفيد لهجمات القوة الغاشمة. أحد التحذيرات "
-"لاستخدام هذه الوظيفة الإضافية هو أنك بحاجة إلى تذكر عنوان url المخصص لتسجيل "
-"الدخول بعد تغييره. لدينا خيار لإرسال عنوان url المخصص لتسجيل الدخول عبر البريد "
-"الإلكتروني حتى تتذكره."
+"تتيح لك الوظيفة الإضافية LoginPress هذه تغيير عنوان URL لصفحة تسجيل الدخول "
+"إلى أي شيء تريده. سيعطي وقتا عصيبا لمرسلي البريد العشوائي الذين يستمرون في "
+"الوصول إلى صفحة تسجيل الدخول الخاصة بك. هذا مفيد لهجمات القوة الغاشمة. أحد "
+"التحذيرات لاستخدام هذه الوظيفة الإضافية هو أنك بحاجة إلى تذكر عنوان url "
+"المخصص لتسجيل الدخول بعد تغييره. لدينا خيار لإرسال عنوان url المخصص لتسجيل "
+"الدخول عبر البريد الإلكتروني حتى تتذكره."
 
-#: ../classes/class-loginpress-addons.php:63
+#: ../classes/class-loginpress-addons.php:64
 #: ../classes/class-loginpress-deprecated-addons.php:491
 msgid "You have a lifetime license, it will never expire."
 msgstr "شما پروانه زندگی دارید ، دیگر منقضی نمی شود."
 
-#: ../classes/class-loginpress-addons.php:67
+#: ../classes/class-loginpress-addons.php:68
 #: ../classes/class-loginpress-deprecated-addons.php:495
 #, php-format
 msgid "Your (%2$s) license key is valid until %1$s."
 msgstr "مفتاح الترخيص (%2$s) الخاص بك صالح حتى %1$s."
 
-#: ../classes/class-loginpress-addons.php:90
+#: ../classes/class-loginpress-addons.php:91
 #, php-format
 msgid "Your license key has been expired on %1$s."
 msgstr "لقد انتهت صلاحية مفتاح الترخيص الخاص بك في %1$s."
 
-#: ../classes/class-loginpress-addons.php:109
+#: ../classes/class-loginpress-addons.php:110
 #: ../classes/class-loginpress-deprecated-addons.php:546
 msgid "You need to upgrade to LoginPress Pro to access these add-ons."
 msgstr "برای دسترسی به این افزونه ها باید به LoginPress Pro ارتقا دهید."
 
-#: ../classes/class-loginpress-addons.php:168
+#: ../classes/class-loginpress-addons.php:169
 #: ../classes/class-loginpress-deprecated-addons.php:181
 #, php-format
 msgid "%s Something Wrong."
 msgstr "%s هناك خطأ ما."
 
-#: ../classes/class-loginpress-addons.php:171
+#: ../classes/class-loginpress-addons.php:172
 msgid "Your License Key isn't valid"
 msgstr "مفتاح الترخيص الخاص بك غير صالح"
 
-#: ../classes/class-loginpress-addons.php:182
+#: ../classes/class-loginpress-addons.php:183
 #: ../classes/class-loginpress-deprecated-addons.php:143
 #, php-format
 msgid "Activating %s..."
 msgstr "جارٍ تنشيط %s..."
 
-#: ../classes/class-loginpress-addons.php:190
+#: ../classes/class-loginpress-addons.php:191
 #: ../classes/class-loginpress-deprecated-addons.php:152
 #, php-format
 msgid "%s Activated."
 msgstr "تم تنشيط %s."
 
-#: ../classes/class-loginpress-addons.php:200
+#: ../classes/class-loginpress-addons.php:201
 #: ../classes/class-loginpress-deprecated-addons.php:163
 #, php-format
 msgid "Deactivating %s..."
 msgstr "جارٍ إلغاء تنشيط %s..."
 
-#: ../classes/class-loginpress-addons.php:208
+#: ../classes/class-loginpress-addons.php:209
 #: ../classes/class-loginpress-deprecated-addons.php:172
 #, php-format
 msgid "%s Deactivated."
 msgstr "تم إلغاء تنشيط %s."
 
-#: ../classes/class-loginpress-addons.php:313
-#: ../classes/class-loginpress-addons.php:337
+#: ../classes/class-loginpress-addons.php:314
+#: ../classes/class-loginpress-addons.php:338
 #: ../classes/class-loginpress-deprecated-addons.php:56
 #: ../classes/class-loginpress-deprecated-addons.php:80
 msgid "Something went wrong in loading the Add-Ons, Try again later!"
 msgstr "حدث خطأ ما في تحميل الوظائف الإضافية ، حاول مرة أخرى لاحقا!"
 
-#: ../classes/class-loginpress-addons.php:457
+#: ../classes/class-loginpress-addons.php:458
 #: ../classes/class-loginpress-deprecated-addons.php:270
 #: ../classes/class-loginpress-deprecated-addons.php:405
 #: ../classes/class-loginpress-deprecated-addons.php:460
-#: ../classes/class-loginpress-promotion.php:147
+#: ../classes/class-loginpress-promotion.php:237
 msgid "UPGRADE NOW"
 msgstr "الترقية الآن"
 
-#: ../classes/class-loginpress-addons.php:926
+#: ../classes/class-loginpress-addons.php:927
 #: ../classes/class-loginpress-deprecated-addons.php:1046
 msgid "Extend the functionality of LoginPress with these awesome Add-ons"
 msgstr "قابلیت های LoginPress را با این افزونه های عالی گسترش دهید"
@@ -253,34 +254,34 @@ msgstr "قابلیت های LoginPress را با این افزونه های عا
 msgid "Sorry, you are not allowed to edit this item."
 msgstr "عذرًا، غير مسموح لك بتعديل هذا العنصر."
 
-#: ../classes/class-loginpress-custom-password.php:64
+#: ../classes/class-loginpress-custom-password.php:66
 #: ../include/customizer-strings.php:166 ../include/template-loginpress.php:648
 msgid "Password"
 msgstr "كلمة المرور"
 
-#: ../classes/class-loginpress-custom-password.php:73
+#: ../classes/class-loginpress-custom-password.php:75
 msgid "Confirm Password"
 msgstr "تأكيد كلمة المرور"
 
-#: ../classes/class-loginpress-custom-password.php:111
+#: ../classes/class-loginpress-custom-password.php:114
 #, php-format
 msgid "%1$sError:%2$s Please enter your password twice."
 msgstr "%1$s خطأ:%2$s الرجاء إدخال كلمة المرور الخاصة بك مرتين."
 
-#: ../classes/class-loginpress-custom-password.php:119
+#: ../classes/class-loginpress-custom-password.php:123
 #, php-format
-msgid "%1$sError:%2$s Passwords don't match."
-msgstr "%1$s خطأ:%2$s كلمات المرور غير متطابقة."
+msgid "%1$sError:%2$s Passwords doesn't match."
+msgstr "%1$sError:%2$s كلمات المرور غير متطابقة."
 
-#: ../classes/class-loginpress-custom-password.php:125
+#: ../classes/class-loginpress-custom-password.php:129
 #, php-format
 msgid "Error: %s"
 msgstr "الخطأ: %s"
 
-#: ../classes/class-loginpress-custom-password.php:180
+#: ../classes/class-loginpress-custom-password.php:184
 msgid ""
-"You have already set your own password, use the password you have already set "
-"to login."
+"You have already set your own password, use the password you have already "
+"set to login."
 msgstr ""
 "لقد قمت بالفعل بتعيين كلمة المرور الخاصة بك، استخدم كلمة المرور التي قمت "
 "بتعيينها بالفعل لتسجيل الدخول."
@@ -320,9 +321,9 @@ msgid ""
 "Keywords, Realtime, Country, Mobile and Browsers Statistics under pages and "
 "posts."
 msgstr ""
-"تقوم Analytify بإعادة تشكيل Google Analytics في WordPress. راجع إحصائيات وسائل "
-"التواصل الاجتماعي والكلمات الرئيسية والوقت الفعلي والبلد والجوال والمتصفحات "
-"ضمن الصفحات والمنشورات."
+"تقوم Analytify بإعادة تشكيل Google Analytics في WordPress. راجع إحصائيات "
+"وسائل التواصل الاجتماعي والكلمات الرئيسية والوقت الفعلي والبلد والجوال "
+"والمتصفحات ضمن الصفحات والمنشورات."
 
 #: ../classes/class-loginpress-filter-plugin.php:201
 msgid "Related Posts"
@@ -333,14 +334,14 @@ msgid ""
 "Related Post Thumbnails plugin is for those who want the showcase of their "
 "related posts after the post detail. The plugin allows customizing thumbnail "
 "sizes, display settings, and type of relations. The plugin is using original "
-"WordPress taxonomy. It returns generated HTML, that is essential for page load "
-"speed of blogs that use many Javascript widgets."
+"WordPress taxonomy. It returns generated HTML, that is essential for page "
+"load speed of blogs that use many Javascript widgets."
 msgstr ""
-"المكون الإضافي للصور المصغرة للمنشورات ذات الصلة مخصص لأولئك الذين يريدون عرض "
-"مشاركاتهم ذات الصلة بعد تفاصيل المنشور. يسمح المكون الإضافي بتخصيص أحجام الصور "
-"المصغرة وإعدادات العرض ونوع العلاقات. يستخدم المكون الإضافي تصنيف WordPress "
-"الأصلي. يقوم بإرجاع HTML الذي تم إنشاؤه ، وهو أمر ضروري لسرعة تحميل الصفحة "
-"للمدونات التي تستخدم العديد من أدوات جافا سكريبت."
+"المكون الإضافي للصور المصغرة للمنشورات ذات الصلة مخصص لأولئك الذين يريدون "
+"عرض مشاركاتهم ذات الصلة بعد تفاصيل المنشور. يسمح المكون الإضافي بتخصيص أحجام "
+"الصور المصغرة وإعدادات العرض ونوع العلاقات. يستخدم المكون الإضافي تصنيف "
+"WordPress الأصلي. يقوم بإرجاع HTML الذي تم إنشاؤه ، وهو أمر ضروري لسرعة "
+"تحميل الصفحة للمدونات التي تستخدم العديد من أدوات جافا سكريبت."
 
 #: ../classes/class-loginpress-filter-plugin.php:213
 msgid "LoginPress Pro"
@@ -349,14 +350,15 @@ msgstr "لوجين بريس برو"
 #: ../classes/class-loginpress-filter-plugin.php:223
 msgid ""
 "LoginPress Plugin by WPBrigade holds a lot of customization fields to change "
-"the layout of the login page of WordPress. You can modify the look and feel of "
-"login page completely even the login error messages, forgot error messages, "
-"registration error messages, forget password hint message and many more."
+"the layout of the login page of WordPress. You can modify the look and feel "
+"of login page completely even the login error messages, forgot error "
+"messages, registration error messages, forget password hint message and many "
+"more."
 msgstr ""
 "يحتوي LoginPress Plugin by WPBrigade على الكثير من حقول التخصيص لتغيير تخطيط "
-"صفحة تسجيل الدخول إلى WordPress. يمكنك تعديل شكل ومظهر صفحة تسجيل الدخول تماما "
-"حتى رسائل خطأ تسجيل الدخول ورسائل الخطأ المنسية ورسائل خطأ التسجيل ونسيان "
-"رسالة تلميح كلمة المرور وغيرها الكثير."
+"صفحة تسجيل الدخول إلى WordPress. يمكنك تعديل شكل ومظهر صفحة تسجيل الدخول "
+"تماما حتى رسائل خطأ تسجيل الدخول ورسائل الخطأ المنسية ورسائل خطأ التسجيل "
+"ونسيان رسالة تلميح كلمة المرور وغيرها الكثير."
 
 #: ../classes/class-loginpress-force-reset-pass.php:195
 msgid "Year"
@@ -484,66 +486,67 @@ msgstr "خصم ثابت ٪50"
 #, php-format
 msgid ""
 "<strong>Biggest Winter Deal</strong> in the WordPress Universe! Get "
-"<strong>LoginPress Pro and all Premium Add-ons</strong> with <strong>20%% OFF</"
-"strong> [Limited Availability].<a href=\"https://loginpress.pro/pricing/?"
-"utm_source=loginpress-lite&utm_medium=freepluginbanner-"
-"button&utm_campaign=early20\" target=\"_blank\" style=\"text-decoration: none;"
-"\"><span class=\"dashicons dashicons-smiley\" style=\"margin-left: 10px;\"></"
-"span> Grab The Deal</a>\n"
-"  \t\t\t\t\t<a href=\"%1$s\" style=\"text-decoration: none; margin-left: 10px;"
-"\"><span class=\"dashicons dashicons-dismiss\"></span> I'm good with free "
-"version</a>"
+"<strong>LoginPress Pro and all Premium Add-ons</strong> with <strong>20%% "
+"OFF</strong> [Limited Availability].<a href=\"https://loginpress.pro/"
+"pricing/?utm_source=loginpress-lite&utm_medium=freepluginbanner-"
+"button&utm_campaign=early20\" target=\"_blank\" style=\"text-decoration: "
+"none;\"><span class=\"dashicons dashicons-smiley\" style=\"margin-left: 10px;"
+"\"></span> Grab The Deal</a>\n"
+"  \t\t\t\t\t<a href=\"%1$s\" style=\"text-decoration: none; margin-left: "
+"10px;\"><span class=\"dashicons dashicons-dismiss\"></span> I'm good with "
+"free version</a>"
 msgstr ""
 
 #: ../classes/class-loginpress-notifications.php:386
 #, php-format
 msgid ""
 "<strong>Biggest Summer Deal</strong> in the WordPress Universe! Get "
-"<strong>LoginPress Pro and all Premium Add-ons</strong> with <strong>20%% OFF</"
-"strong> [Limited Availability].<a href=\"https://loginpress.pro/pricing/?"
-"utm_source=loginpress-lite&utm_medium=freepluginbanner-"
-"button&utm_campaign=early20\" target=\"_blank\" style=\"text-decoration: none;"
-"\"><span class=\"dashicons dashicons-smiley\" style=\"margin-left: 10px;\"></"
-"span> Grab The Deal</a>\n"
+"<strong>LoginPress Pro and all Premium Add-ons</strong> with <strong>20%% "
+"OFF</strong> [Limited Availability].<a href=\"https://loginpress.pro/"
+"pricing/?utm_source=loginpress-lite&utm_medium=freepluginbanner-"
+"button&utm_campaign=early20\" target=\"_blank\" style=\"text-decoration: "
+"none;\"><span class=\"dashicons dashicons-smiley\" style=\"margin-left: 10px;"
+"\"></span> Grab The Deal</a>\n"
 "\t\t\t\t\t<a href=\"%1$s\" style=\"text-decoration: none; margin-left: 10px;"
 "\"><span class=\"dashicons dashicons-dismiss\"></span> I'm good with free "
 "version</a>"
 msgstr ""
 
-#: ../classes/class-loginpress-pass-strength.php:107
+#: ../classes/class-loginpress-pass-strength.php:117
 #, php-format
 msgid "Password must be at least %d characters long."
 msgstr "يجب أن تتكون كلمة المرور من %d حرفًا على الأقل."
 
-#: ../classes/class-loginpress-pass-strength.php:114
+#: ../classes/class-loginpress-pass-strength.php:125
 msgid "Password must contain at least one both upper and lower case letters."
 msgstr "يجب أن تحتوي كلمة المرور على حرف واحد كبير وصغير على الأقل."
 
-#: ../classes/class-loginpress-pass-strength.php:119
+#: ../classes/class-loginpress-pass-strength.php:130
 msgid "Password must contain at least one special character."
 msgstr "يجب أن تحتوي كلمة المرور على حرف خاص واحد على الأقل."
 
-#: ../classes/class-loginpress-pass-strength.php:124
+#: ../classes/class-loginpress-pass-strength.php:135
 msgid "Password must contain at least one integer number."
 msgstr "يجب أن تحتوي كلمة المرور على رقم صحيح واحد على الأقل."
 
-#: ../classes/class-loginpress-pass-strength.php:169
+#: ../classes/class-loginpress-pass-strength.php:212
 msgid "Require upper and lower case letters."
 msgstr "تتطلب الحروف الكبيرة والصغيرة."
 
-#: ../classes/class-loginpress-pass-strength.php:170
+#: ../classes/class-loginpress-pass-strength.php:213
 msgid "Require special characters like ! \" ? $ % ^ & *"
 msgstr "تتطلب أحرف خاصة مثل ! \" ؟ $ % ^ & *"
 
-#: ../classes/class-loginpress-pass-strength.php:171
+#: ../classes/class-loginpress-pass-strength.php:214
 msgid "Require numbers."
 msgstr "تتطلب الأرقام."
 
-#: ../classes/class-loginpress-pass-strength.php:175
+#: ../classes/class-loginpress-pass-strength.php:218
 #, php-format
 msgid ""
 "Hint: The password should be at least %1$d characters long. %2$s %3$s %4$s "
-msgstr "تلميح: يجب أن تتكون كلمة المرور من %1$d حرفًا على الأقل. %2$s %3$s %4$s "
+msgstr ""
+"تلميح: يجب أن تتكون كلمة المرور من %1$d حرفًا على الأقل. %2$s %3$s %4$s "
 
 #: ../classes/class-loginpress-promo.php:16
 msgid "Google Fonts"
@@ -566,24 +569,32 @@ msgstr "Captchas"
 msgid "CAPTCHA Protection Settings"
 msgstr "إعدادات حماية CAPTCHA"
 
-#: ../classes/class-loginpress-promotion.php:81
+#: ../classes/class-loginpress-promotion.php:79
+msgid "Integrations"
+msgstr "التكامل"
+
+#: ../classes/class-loginpress-promotion.php:80
+msgid "All Plugin Integrations"
+msgstr "جميع تكاملات المكونات الإضافية"
+
+#: ../classes/class-loginpress-promotion.php:87
 #, php-format
 msgid "Upgrade to Pro%1$s for More Features%2$s"
 msgstr "قم بالترقية إلى Pro%1$s لمزيد من الميزات%2$s"
 
-#: ../classes/class-loginpress-promotion.php:107
+#: ../classes/class-loginpress-promotion.php:112
 msgid ""
 "Social login from LoginPress is an add-on which provides facility your users "
 "to login and Register via Facebook, Google and Twitter. This add-on will "
-"eliminate the Spam and Bot registrations. This add-on will help your users to "
-"hassle free registrations/logins on your site."
+"eliminate the Spam and Bot registrations. This add-on will help your users "
+"to hassle free registrations/logins on your site."
 msgstr ""
 "تسجيل الدخول الاجتماعي من LoginPress هو إضافة توفر تسهيلات للمستخدمين لتسجيل "
 "الدخول والتسجيل عبر Facebook و Google و Twitter. ستقضي هذه الوظيفة الإضافية "
 "على تسجيلات البريد العشوائي والروبوت. ستساعد هذه الوظيفة الإضافية المستخدمين "
 "على إجراء عمليات تسجيل / تسجيل دخول مجانية على موقعك."
 
-#: ../classes/class-loginpress-promotion.php:110
+#: ../classes/class-loginpress-promotion.php:115
 msgid ""
 "Redirect users based on their roles and specific usernames. This is helpful, "
 "If you have an editor and want to redirect him to his editor stats page. "
@@ -593,47 +604,128 @@ msgid ""
 msgstr ""
 "إعادة توجيه المستخدمين استنادا إلى أدوارهم وأسماء المستخدمين المحددة. هذا "
 "مفيد ، إذا كان لديك محرر وتريد إعادة توجيهه إلى صفحة إحصائيات المحرر الخاصة "
-"به. تقييد المشتركين أو الضيوف أو حتى العملاء على صفحات معينة بدلا من wp-admin. "
-"تحتوي هذه الوظيفة الإضافية على UX / UI رائع لإدارة جميع عمليات إعادة توجيه "
-"تسجيل الدخول التي أنشأتها على موقعك."
+"به. تقييد المشتركين أو الضيوف أو حتى العملاء على صفحات معينة بدلا من wp-"
+"admin. تحتوي هذه الوظيفة الإضافية على UX / UI رائع لإدارة جميع عمليات إعادة "
+"توجيه تسجيل الدخول التي أنشأتها على موقعك."
 
-#: ../classes/class-loginpress-promotion.php:113
+#: ../classes/class-loginpress-promotion.php:118
 msgid ""
-"This LoginPress add-on lets you (Adminstrator) generates a unique URL for your "
-"certain users who you don't want to provide a password to login into your "
-"site. This Pro add-on gives you a list of all the users who you have given "
-"auto generated login links. You can disable someones access and delete certain "
-"users."
+"This LoginPress add-on lets you (Adminstrator) generates a unique URL for "
+"your certain users who you don't want to provide a password to login into "
+"your site. This Pro add-on gives you a list of all the users who you have "
+"given auto generated login links. You can disable someones access and delete "
+"certain users."
 msgstr ""
 "تتيح لك الوظيفة الإضافية LoginPress هذه (المسؤول) إنشاء عنوان URL فريد لبعض "
 "المستخدمين الذين لا تريد تقديم كلمة مرور لتسجيل الدخول إلى موقعك. تمنحك هذه "
 "الوظيفة الإضافية Pro قائمة بجميع المستخدمين الذين أعطيتهم روابط تسجيل الدخول "
 "التي تم إنشاؤها تلقائيا. يمكنك تعطيل وصول شخص ما وحذف مستخدمين معينين."
 
-#: ../classes/class-loginpress-promotion.php:116
+#: ../classes/class-loginpress-promotion.php:121
 msgid ""
 "The LoginPress CAPTCHA feature lets you easily integrate different types of "
-"CAPTCHA services into your login and registration forms. CAPTCHA types offered "
-"include Google reCAPTCHA, hCAPTCHA, and other widely used CAPTCHA services. "
-"This feature helps prevent spam, bot attacks, and authorized access, ensuring "
-"a more secure user experience."
+"CAPTCHA services into your login and registration forms. CAPTCHA types "
+"offered include Google reCAPTCHA, hCAPTCHA, and other widely used CAPTCHA "
+"services. This feature helps prevent spam, bot attacks, and authorized "
+"access, ensuring a more secure user experience."
 msgstr ""
 "تتيح لك ميزة LoginPress CAPTCHA إمكانية دمج أنواع مختلفة من خدمات CAPTCHA "
-"بسهولة في نماذج تسجيل الدخول والتسجيل الخاصة بك. تتضمن أنواع CAPTCHA المتوفرة "
-"Google reCAPTCHA وhCAPTCHA وخدمات CAPTCHA الأخرى المستخدمة على نطاق واسع. "
-"تساعد هذه الميزة على منع البريد العشوائي وهجمات الروبوت والوصول المصرح به، مما "
-"يضمن تجربة مستخدم أكثر أمانًا."
+"بسهولة في نماذج تسجيل الدخول والتسجيل الخاصة بك. تتضمن أنواع CAPTCHA "
+"المتوفرة Google reCAPTCHA وhCAPTCHA وخدمات CAPTCHA الأخرى المستخدمة على نطاق "
+"واسع. تساعد هذه الميزة على منع البريد العشوائي وهجمات الروبوت والوصول المصرح "
+"به، مما يضمن تجربة مستخدم أكثر أمانًا."
 
-#: ../classes/class-loginpress-promotion.php:130
+#: ../classes/class-loginpress-promotion.php:124
+msgid ""
+"LoginPress integrates with the most popular WordPress plugins to enhance "
+"your login experience. Our Social Login, CAPTCHA and Limit Login Attempts "
+"features among others are easily integrated into these platforms, helping "
+"you streamline user access and enhance security."
+msgstr ""
+"يتكامل LoginPress مع أشهر إضافات ووردبريس لتحسين تجربة تسجيل الدخول. ميزات "
+"تسجيل الدخول الاجتماعي، وCAPTCHA، والحد من محاولات تسجيل الدخول، وغيرها، "
+"مدمجة بسهولة في هذه المنصات، مما يساعدك على تبسيط وصول المستخدم وتعزيز "
+"الأمان."
+
+#: ../classes/class-loginpress-promotion.php:132
+#: ../classes/class-loginpress-promotion.php:133
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: ../classes/class-loginpress-promotion.php:134
+msgid "Quick, secure logins for your WooCommerce store."
+msgstr "تسجيل دخول سريع وآمن لمتجر WooCommerce الخاص بك."
+
+#: ../classes/class-loginpress-promotion.php:141
+#: ../classes/class-loginpress-promotion.php:142
+msgid "Easy Digital Downloads"
+msgstr "Easy Digital Downloads"
+
+#: ../classes/class-loginpress-promotion.php:143
+msgid "Secure digital purchases with login enhancements."
+msgstr "مشتريات رقمية آمنة مع تحسينات تسجيل الدخول."
+
+#: ../classes/class-loginpress-promotion.php:150
+#: ../classes/class-loginpress-promotion.php:151
+msgid "BuddyPress"
+msgstr "BuddyPress"
+
+#: ../classes/class-loginpress-promotion.php:152
+msgid "Boost community logins with social and captcha support."
+msgstr ""
+"قم بتعزيز تسجيلات الدخول المجتمعية باستخدام الدعم الاجتماعي ودعم CAPTCHA."
+
+#: ../classes/class-loginpress-promotion.php:159
+#: ../classes/class-loginpress-promotion.php:160
+msgid "BuddyBoss"
+msgstr "BuddyBoss"
+
+#: ../classes/class-loginpress-promotion.php:161
+msgid "Hassle-free login experience for your BuddyBoss community."
+msgstr "تجربة تسجيل دخول خالية من المتاعب لمجتمع BuddyBoss الخاص بك."
+
+#: ../classes/class-loginpress-promotion.php:168
+#: ../classes/class-loginpress-promotion.php:169
+msgid "LifterLMS"
+msgstr "LifterLMS"
+
+#: ../classes/class-loginpress-promotion.php:170
+msgid "Let students log in easily and securely."
+msgstr "السماح للطلاب بتسجيل الدخول بسهولة وأمان."
+
+#: ../classes/class-loginpress-promotion.php:177
+#: ../classes/class-loginpress-promotion.php:178
+msgid "LearnDash"
+msgstr "LearnDash"
+
+#: ../classes/class-loginpress-promotion.php:179
+msgid "Simplify learning access with our login tools."
+msgstr "قم بتبسيط الوصول إلى التعلم باستخدام أدوات تسجيل الدخول الخاصة بنا."
+
+#: ../classes/class-loginpress-promotion.php:199
+#, fuzzy
+#| msgid "Upgrade"
+msgid "Upgrade Now"
+msgstr "ترقية"
+
+#: ../classes/class-loginpress-promotion.php:220
 #, php-format
 msgid "Video: %s"
 msgstr "الفيديو: %s"
 
-#: ../classes/class-loginpress-settings-api.php:122
+#: ../classes/class-loginpress-settings-api.php:138
 msgid "How to Setup"
 msgstr "كيفية الإعداد"
 
-#: ../classes/class-loginpress-settings-api.php:425 ../custom.php:1007
+#: ../classes/class-loginpress-settings-api.php:308
+msgid "Activate Social Login addon to use following settings."
+msgstr "قم بتفعيل إضافة تسجيل الدخول الاجتماعي لاستخدام الإعدادات التالية."
+
+#: ../classes/class-loginpress-settings-api.php:337
+msgid "Please enable Captcha first."
+msgstr "يرجى تفعيل Captcha أولاً."
+
+#: ../classes/class-loginpress-settings-api.php:471 ../custom.php:1007
 msgid "Choose File"
 msgstr "اختر ملف"
 
@@ -642,7 +734,7 @@ msgid "Default Settings Restored."
 msgstr "تمت استعادة الإعدادات الافتراضية."
 
 #: ../classes/class-loginpress-setup.php:140 ../custom.php:389
-#: ../loginpress.php:387
+#: ../loginpress.php:388
 msgid "LoginPress"
 msgstr "تسجيل الدخولالصحافة"
 
@@ -677,14 +769,17 @@ msgid "Add-Ons"
 msgstr "إضافات"
 
 #: ../classes/class-loginpress-setup.php:222
-msgid "Login Page Setting"
+#, fuzzy
+#| msgid "Login Page Setting"
+msgid "Login Page Settings"
 msgstr "اعدادات صفحة تسجيل الدخول"
 
 #: ../classes/class-loginpress-setup.php:225
 #, php-format
 msgid ""
 "%3$sEverything else is customizable through %1$sWordPress Customizer%2$s.%4$s"
-msgstr "%3$s كل شيء آخر قابل للتخصيص من خلال %1$sWordPress Customizer%2$s. %4$s"
+msgstr ""
+"%3$s كل شيء آخر قابل للتخصيص من خلال %1$sWordPress Customizer%2$s. %4$s"
 
 #: ../classes/class-loginpress-setup.php:257
 msgid "Register Form"
@@ -748,7 +843,8 @@ msgstr "تذكرني تلقائيا"
 #: ../classes/class-loginpress-setup.php:330
 #, php-format
 msgid ""
-"Enable to keep the %1$sRemember Me%2$s option always checked on the Login Page."
+"Enable to keep the %1$sRemember Me%2$s option always checked on the Login "
+"Page."
 msgstr "قم بتمكين إبقاء خيار %1$sتذكرني%2$s محددا دائما في صفحة تسجيل الدخول."
 
 #: ../classes/class-loginpress-setup.php:335
@@ -832,7 +928,8 @@ msgstr "تمكين توافق PCI"
 #: ../classes/class-loginpress-setup.php:396
 #, php-format
 msgid "Enable to add %1$sPCI Compliance%2$s to WordPress Login Forms."
-msgstr "قم بتمكين إضافة %1$sامتثال PCI%2$s إلى نماذج تسجيل الدخول إلى WordPress."
+msgstr ""
+"قم بتمكين إضافة %1$sامتثال PCI%2$s إلى نماذج تسجيل الدخول إلى WordPress."
 
 #: ../classes/class-loginpress-setup.php:407
 msgid "Reset customizer settings"
@@ -858,7 +955,8 @@ msgstr "المساعدة واستكشاف الأخطاء وإصلاحها"
 #: ../classes/class-loginpress-setup.php:509
 #, php-format
 msgid ""
-"For assistance with the free plugin, visit the %1$s plugin support forums%2$s."
+"For assistance with the free plugin, visit the %1$s plugin support "
+"forums%2$s."
 msgstr ""
 "للحصول على مساعدة بشأن المكون الإضافي المجاني، تفضل %1$s بزيارة منتديات دعم "
 "المكون الإضافي %2$s."
@@ -884,8 +982,8 @@ msgstr ""
 #: ../classes/class-loginpress-setup.php:525
 #, php-format
 msgid ""
-"f you’ve found a bug or have a feature request, let us know via our %1$sissue "
-"submission form%2$s!"
+"f you’ve found a bug or have a feature request, let us know via our "
+"%1$sissue submission form%2$s!"
 msgstr ""
 "إذا وجدت خطأ أو كان لديك طلب ميزة، فأخبرنا بذلك عبر نموذج إرسال المشكلة %1$s "
 "الخاص بنا%2$s!"
@@ -898,11 +996,11 @@ msgstr "تحميل ملف السجل"
 msgid "LoginPress Log File Downloaded Successfully!"
 msgstr "تم تنزيل ملف سجل LoginPress بنجاح!"
 
-#: ../classes/class-loginpress-setup.php:599
+#: ../classes/class-loginpress-setup.php:600
 msgid "Lost Password URL"
 msgstr "عنوان كلمة السر المفقودة"
 
-#: ../classes/class-loginpress-setup.php:600
+#: ../classes/class-loginpress-setup.php:601
 msgid ""
 "Use WordPress default lost password URL instead of WooCommerce custom lost "
 "password URL."
@@ -910,62 +1008,62 @@ msgstr ""
 "استخدم عنوان URL الافتراضي لكلمة المرور المفقودة في WordPress بدلا من عنوان "
 "URL المخصص لكلمة المرور المفقودة من WooCommerce."
 
-#: ../classes/class-loginpress-setup.php:620
+#: ../classes/class-loginpress-setup.php:621
 msgid "Language Switcher"
 msgstr "محول اللغة"
 
-#: ../classes/class-loginpress-setup.php:623
+#: ../classes/class-loginpress-setup.php:624
 #, php-format
 msgid "Enable to remove %1$sLanguage Switcher Dropdown%2$s on Login Forms."
 msgstr "تمكين إزالة القائمة المنسدلة %1$sمحول اللغة%2$s في نماذج تسجيل الدخول."
 
-#: ../classes/class-loginpress-setup.php:641
+#: ../classes/class-loginpress-setup.php:642
 msgid "and LoginPress page"
 msgstr "وصفحة تسجيل الدخول"
 
-#: ../classes/class-loginpress-setup.php:647
+#: ../classes/class-loginpress-setup.php:648
 msgid "Remove Settings On Uninstall"
 msgstr "إزالة الإعدادات عند إلغاء التثبيت"
 
-#: ../classes/class-loginpress-setup.php:650
+#: ../classes/class-loginpress-setup.php:651
 #, php-format
 msgid ""
 "Enable to remove all custom settings made %1$s by LoginPress upon uninstall."
 msgstr ""
-"قم بتمكين إزالة جميع الإعدادات المخصصة التي تم إجراؤها %1$s بواسطة LoginPress "
-"عند إلغاء التثبيت."
+"قم بتمكين إزالة جميع الإعدادات المخصصة التي تم إجراؤها %1$s بواسطة "
+"LoginPress عند إلغاء التثبيت."
 
-#: ../classes/class-loginpress-setup.php:659
+#: ../classes/class-loginpress-setup.php:660
 msgid "Remove Settings On Uninstall For Pro"
 msgstr "إزالة الإعدادات عند إلغاء التثبيت لـ Pro"
 
-#: ../classes/class-loginpress-setup.php:662
+#: ../classes/class-loginpress-setup.php:663
 #, php-format
 msgid ""
 "Enable to remove all custom settings made %1$s by LoginPress-Pro upon "
 "uninstall."
 msgstr ""
-"تمكين إزالة جميع الإعدادات المخصصة التي تم إجراؤها %1$s بواسطة LoginPress-Pro "
-"عند إلغاء التثبيت."
+"تمكين إزالة جميع الإعدادات المخصصة التي تم إجراؤها %1$s بواسطة LoginPress-"
+"Pro عند إلغاء التثبيت."
 
-#: ../classes/class-loginpress-setup.php:716
+#: ../classes/class-loginpress-setup.php:717
 #, php-format
 msgid "Upgrade%1$s to Pro%2$s"
 msgstr "الترقية%1$s إلى Pro%2$s"
 
-#: ../classes/class-loginpress-setup.php:719
+#: ../classes/class-loginpress-setup.php:720
 msgid "Support"
 msgstr "الدعم"
 
-#: ../classes/class-loginpress-setup.php:730
+#: ../classes/class-loginpress-setup.php:731
 msgid "Documentation"
 msgstr "الوثائق"
 
-#: ../classes/class-loginpress-setup.php:740
+#: ../classes/class-loginpress-setup.php:741
 msgid "Please activate your license key."
 msgstr "يرجى تفعيل مفتاح الترخيص الخاص بك."
 
-#: ../classes/class-loginpress-setup.php:741
+#: ../classes/class-loginpress-setup.php:742
 msgid ""
 "Validating the license key is mandatory to use automatic updates and receive "
 "plugin support."
@@ -1397,8 +1495,8 @@ msgid ""
 "Show some Love. Please help others learn about this free plugin by placing "
 "small link in footer. Thank you very much!"
 msgstr ""
-"أظهر بعض الحب. يرجى مساعدة الآخرين في التعرف على هذا المكون الإضافي المجاني عن "
-"طريق وضع رابط صغير في التذييل. شكرا جزيلا!"
+"أظهر بعض الحب. يرجى مساعدة الآخرين في التعرف على هذا المكون الإضافي المجاني "
+"عن طريق وضع رابط صغير في التذييل. شكرا جزيلا!"
 
 #: ../custom.php:2296
 msgid "Love Position:"
@@ -1456,14 +1554,16 @@ msgstr "%1$s خطأ:%2$s الرجاء كتابة عنوان البريد الإ�
 #: ../custom.php:2610 ../include/customizer-strings.php:279
 #, php-format
 msgid ""
-"%1$sError:%2$s This username is already registered. Please choose another one."
+"%1$sError:%2$s This username is already registered. Please choose another "
+"one."
 msgstr "%1$s خطأ:%2$s اسم المستخدم هذا مسجل بالفعل. الرجاء اختيار واحد آخر."
 
 #: ../custom.php:2614 ../include/customizer-strings.php:282
 #, php-format
 msgid ""
 "%1$sError:%2$s This email is already registered, please choose another one."
-msgstr "%1$s خطأ:%2$s هذا البريد الإلكتروني مسجل بالفعل ، يرجى اختيار بريد آخر."
+msgstr ""
+"%1$s خطأ:%2$s هذا البريد الإلكتروني مسجل بالفعل ، يرجى اختيار بريد آخر."
 
 #: ../custom.php:2618 ../include/customizer-strings.php:291
 #, php-format
@@ -1484,7 +1584,8 @@ msgid "Email Address"
 msgstr "البريد الالكتروني"
 
 #: ../custom.php:2754 ../include/customizer-strings.php:166
-#: ../include/template-loginpress.php:508 ../include/template-loginpress.php:644
+#: ../include/template-loginpress.php:508
+#: ../include/template-loginpress.php:644
 msgid "Username or Email Address"
 msgstr "الإسم أو البرید الإلکتروني"
 
@@ -1591,13 +1692,15 @@ msgstr "صفحة تسجيل الدخول ميتا"
 
 #: ../include/customizer-strings.php:52
 msgid ""
-"This section helps you to easily Customize the login form input field elements."
+"This section helps you to easily Customize the login form input field "
+"elements."
 msgstr "يساعدك هذا القسم على تخصيص عناصر حقل إدخال نموذج تسجيل الدخول بسهولة."
 
 #: ../include/customizer-strings.php:53
 msgid ""
 "This section helps you to easily Customize the login form input field labels."
-msgstr "يساعدك هذا القسم على تخصيص تسميات حقول إدخال نموذج تسجيل الدخول بسهولة."
+msgstr ""
+"يساعدك هذا القسم على تخصيص تسميات حقول إدخال نموذج تسجيل الدخول بسهولة."
 
 #: ../include/customizer-strings.php:54
 msgid ""
@@ -1609,8 +1712,8 @@ msgstr ""
 
 #: ../include/customizer-strings.php:55
 msgid ""
-" Customize the \"Lost your password\" and \"Register\" text section under the "
-"form."
+" Customize the \"Lost your password\" and \"Register\" text section under "
+"the form."
 msgstr ""
 " قم بتخصيص قسم النص \"فقدت كلمة المرور الخاصة بك\" و \"تسجيل\" أسفل النموذج."
 
@@ -1620,9 +1723,11 @@ msgstr "قم بتخصيص قسم النص \"الرجوع إلى\" ضمن الن�
 
 #: ../include/customizer-strings.php:57
 msgid ""
-"Customize the copyright note and branding sections at the footer of login page."
+"Customize the copyright note and branding sections at the footer of login "
+"page."
 msgstr ""
-"قم بتخصيص ملاحظة حقوق النشر وأقسام العلامة التجارية في تذييل صفحة تسجيل الدخول."
+"قم بتخصيص ملاحظة حقوق النشر وأقسام العلامة التجارية في تذييل صفحة تسجيل "
+"الدخول."
 
 #: ../include/customizer-strings.php:58
 msgid "Customize the background Image."
@@ -1864,8 +1969,8 @@ msgid ""
 "No need to deactivate this LoginPress Core version. Pro version works as an "
 "add-on with Core version."
 msgstr ""
-"لا حاجة لإلغاء تنشيط إصدار LoginPress Core هذا. يعمل الإصدار المحترف كإضافة مع "
-"الإصدار الأساسي."
+"لا حاجة لإلغاء تنشيط إصدار LoginPress Core هذا. يعمل الإصدار المحترف كإضافة "
+"مع الإصدار الأساسي."
 
 #: ../include/deactivate_modal.php:309
 #: ../lib/wpb-sdk/views/wpb-sdk-deactivate-form.php:118
@@ -1931,11 +2036,11 @@ msgstr "إلغاء"
 
 #: ../include/loginpress-import-export.php:15
 msgid ""
-"Import/Export your LoginPress Settings for/from other sites. This will export/"
-"import all the settings including Customizer settings as well."
+"Import/Export your LoginPress Settings for/from other sites. This will "
+"export/import all the settings including Customizer settings as well."
 msgstr ""
-"استيراد / تصدير إعدادات LoginPress الخاصة بك ل / من مواقع أخرى. سيؤدي هذا إلى "
-"تصدير / استيراد جميع الإعدادات بما في ذلك إعدادات أداة التخصيص أيضا."
+"استيراد / تصدير إعدادات LoginPress الخاصة بك ل / من مواقع أخرى. سيؤدي هذا "
+"إلى تصدير / استيراد جميع الإعدادات بما في ذلك إعدادات أداة التخصيص أيضا."
 
 #: ../include/loginpress-import-export.php:20
 msgid "Import Settings:"
@@ -1977,9 +2082,9 @@ msgstr "مرحبا بكم في لوجين برس"
 #, php-format
 msgid ""
 "%1$s Hey %2$s,  %4$s If you opt-in some data about your installation of "
-"LoginPress will be sent to WPBrigade.com (This doesn't include stats)%4$s and "
-"You will receive new feature updates, security notifications etc %5$sNo Spam, "
-"I promise.%6$s %4$s%4$s Help us %7$sImprove LoginPress%8$s %4$s %4$s "
+"LoginPress will be sent to WPBrigade.com (This doesn't include stats)%4$s "
+"and You will receive new feature updates, security notifications etc %5$sNo "
+"Spam, I promise.%6$s %4$s%4$s Help us %7$sImprove LoginPress%8$s %4$s %4$s "
 msgstr ""
 "%1$s مرحبا %2$s ، %4$s إذا قمت بالاشتراك ، إرسال بعض البيانات حول تثبيت "
 "LoginPress إلى WPBrigade.com (هذا لا يشمل الإحصائيات) %4$s وستتلقى تحديثات "
@@ -2008,8 +2113,8 @@ msgid ""
 "make sure this plugin always stays compatible with the most popular plugins "
 "and themes."
 msgstr ""
-"عنوان URL لموقعك ، إصدار WordPress و PHP ، المكونات الإضافية والسمات. تتيح لنا "
-"هذه البيانات التأكد من بقاء هذا المكون الإضافي متوافقا دائما مع المكونات "
+"عنوان URL لموقعك ، إصدار WordPress و PHP ، المكونات الإضافية والسمات. تتيح "
+"لنا هذه البيانات التأكد من بقاء هذا المكون الإضافي متوافقا دائما مع المكونات "
 "الإضافية والسمات الأكثر شيوعا."
 
 #: ../include/loginpress-optin-form.php:466
@@ -2082,17 +2187,18 @@ msgstr "كلمة مرور مفقودة"
 
 #: ../include/template-loginpress.php:496
 msgid ""
-"Please enter your username or email address. You will receive a link to create "
-"a new password via email."
+"Please enter your username or email address. You will receive a link to "
+"create a new password via email."
 msgstr ""
-"الرجاء إدخال اسم المستخدم أو عنوان البريد الإلكتروني. ستتلقى رابطا لإنشاء كلمة "
-"مرور جديدة عبر البريد الإلكتروني."
+"الرجاء إدخال اسم المستخدم أو عنوان البريد الإلكتروني. ستتلقى رابطا لإنشاء "
+"كلمة مرور جديدة عبر البريد الإلكتروني."
 
 #: ../include/template-loginpress.php:520
 msgid "Get New Password"
 msgstr "احصل على كلمة مرور جديدة"
 
-#: ../include/template-loginpress.php:527 ../include/template-loginpress.php:615
+#: ../include/template-loginpress.php:527
+#: ../include/template-loginpress.php:615
 #: ../include/template-loginpress.php:677
 msgid "Register"
 msgstr "تسجيل"
@@ -2113,7 +2219,8 @@ msgstr "بريد إلكتروني"
 msgid "Registration confirmation will be emailed to you."
 msgstr "سيتم إرسال تأكيد التسجيل إليك بالبريد الإلكتروني."
 
-#: ../include/template-loginpress.php:638 ../include/template-loginpress.php:668
+#: ../include/template-loginpress.php:638
+#: ../include/template-loginpress.php:668
 msgid "Log In"
 msgstr "تسجيل الدخول"
 
@@ -2150,42 +2257,45 @@ msgstr "ما هو اسم البرنامج المساعد؟"
 msgid "Would you like to share what's other reason?"
 msgstr "هل ترغب في مشاركة ما هو السبب الآخر؟"
 
-#: ../loginpress.php:385
+#: ../loginpress.php:386
 msgid "Activate"
 msgstr "تفعيل"
 
-#: ../loginpress.php:468
+#: ../loginpress.php:513
 msgctxt "Login Redirect Roles"
 msgid "Name"
 msgstr "الاسم"
 
-#: ../loginpress.php:502
+#: ../loginpress.php:547
 msgid "Vote!"
 msgstr "صوت!"
 
-#: ../loginpress.php:505
+#: ../loginpress.php:550
 msgid "Rate"
 msgstr "التقييم"
 
-#: ../loginpress.php:587
+#: ../loginpress.php:632
 #, php-format
 msgid "%1$s Settings %2$s | %3$s Customize %4$s"
 msgstr "%1$s الإعدادات %2$s | %3$s تخصيص %4$s"
 
-#: ../loginpress.php:610 ../loginpress.php:629
+#: ../loginpress.php:655 ../loginpress.php:674
 #, php-format
 msgid " | %1$s Opt Out %2$s "
 msgstr " | %1$s إلغاء الاشتراك %2$s "
 
-#: ../loginpress.php:639 ../loginpress.php:649
+#: ../loginpress.php:684 ../loginpress.php:694
 #, php-format
 msgid " | %1$s Opt In %2$s "
 msgstr " | %1$s الاشتراك %2$s "
 
-#: ../loginpress.php:662
+#: ../loginpress.php:707
 #, php-format
 msgid "%1$s %3$s Upgrade Pro %4$s %2$s"
 msgstr "‫%1$s %3$s ترقية برو ‫%4$s %2$s"
+
+#~ msgid "Coming soon"
+#~ msgstr "قريباً"
 
 #~ msgid "Getting Started Video"
 #~ msgstr "فيديو بدء الاستخدام"

@@ -219,7 +219,7 @@ if ( ! class_exists( 'LoginPress_Settings' ) ) :
 				array(
 					'id'         => 'loginpress_setting',
 					'title'      => __( 'Settings', 'loginpress' ),
-					'sub-title'  => __( 'Login Page Setting', 'loginpress' ),
+					'sub-title'  => __( 'Login Page Settings', 'loginpress' ),
 					'desc'       => sprintf( 
 						// translators: Wordpress customizer
 						__( '%3$sEverything else is customizable through %1$sWordPress Customizer%2$s.%4$s', 'loginpress' ), '<a href="' . admin_url( 'admin.php?page=loginpress' ) . '">', '</a>', '<p>', '</p>' ),

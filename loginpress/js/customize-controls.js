@@ -987,37 +987,37 @@ var wp_logo_height = '84';
 		} else if ( 'default2' == customizer_bg ) {
 			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress/img/bg2.jpg)';
 		} else if ( 'default3' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg3.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg3.jpg)';
 		} else if ( 'default4' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg4.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg4.jpg)';
 		} else if ( 'default5' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg5.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg5.jpg)';
 		} else if ( 'default6' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg6.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg6.jpg)';
 		} else if ( 'default7' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg7.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg7.jpg)';
 		} else if ( 'default8' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg8.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg8.jpg)';
 		} else if ( 'default9' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg9.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg9.jpg)';
 		} else if ( 'default10' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg10.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg10.jpg)';
 		} else if ( 'default11' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg11.png)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg11.png)';
 		} else if ( 'default12' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg12.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg12.jpg)';
 		} else if ( 'default13' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg13.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg13.jpg)';
 		} else if ( 'default14' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg14.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg14.jpg)';
 		} else if ( 'default15' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg15.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg15.jpg)';
 		} else if ( 'default16' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg16.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg16.jpg)';
 		} else if ( 'default17' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg17.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg17.jpg)';
 		} else if ( 'default18' == customizer_bg ) {
-			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/img/bg18.jpg)';
+			loginpress_bg = 'url(' + loginpress_script.plugin_url + '/loginpress-pro/assets/img/bg18.jpg)';
 		}
 	}
 

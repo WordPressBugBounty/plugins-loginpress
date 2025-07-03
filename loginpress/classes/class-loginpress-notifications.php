@@ -116,7 +116,7 @@ if ( ! class_exists( 'LoginPress_Notification' ) ) :
 		 * Review notice message
 		 *
 		 * @since 1.0.11
-		 * @version 4.0.0
+		 * @version 5.0.0
 		 */
 		public function loginpress_review_notice_message() {
 
@@ -136,7 +136,7 @@ if ( ! class_exists( 'LoginPress_Notification' ) ) :
 					<h3><?php esc_html_e( 'Leave A Review?', 'loginpress' ); ?></h3>
 					<p><?php esc_html_e( 'We hope you\'ve enjoyed using LoginPress! Would you consider leaving us a review on WordPress.org?', 'loginpress' ); ?></p>
 					<ul class="loginpress-review-ul">
-						<li><a href="https://g.page/r/CULak6DDOljIEAE/review" target="_blank"><span class="dashicons dashicons-external"></span><?php esc_html_e( 'Sure! I\'d love to!', 'loginpress' ); ?></a></li>
+						<li><a href="https://wordpress.org/support/view/plugin-reviews/loginpress?rate=5#postform" target="_blank"><span class="dashicons dashicons-external"></span><?php esc_html_e( 'Sure! I\'d love to!', 'loginpress' ); ?></a></li>
 						<!-- <li><a href="<?php echo esc_url( $dismiss_url ); ?>"><span class="dashicons dashicons-smiley"></span><?php esc_html_e( 'I\'ve already left a review', 'loginpress' ); ?></a></li> -->
 						<li><a href="<?php echo esc_url( $later_url ); ?>"><span class="dashicons dashicons-calendar-alt"></span><?php esc_html_e( 'Maybe Later', 'loginpress' ); ?></a></li>
 						<li><a href="<?php echo esc_url( $dismiss_url ); ?>"><span class="dashicons dashicons-dismiss"></span><?php esc_html_e( 'Never show again', 'loginpress' ); ?></a></li>

@@ -1505,6 +1505,7 @@ if ( version_compare( $GLOBALS['wp_version'], '5.9', '>=' ) && ! empty( get_avai
 		font-size: inherit;
 		width: fit-content;
 		max-width: fit-content;
+		min-height: 30px;
 	}
 	@media screen and (max-width: 782px){
 		input[type=checkbox], input[type=radio]{

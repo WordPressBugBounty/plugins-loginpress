@@ -3,11 +3,12 @@
  * Plugin Name: LoginPress
  * Plugin URI: https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-header&utm_campaign=pro-upgrade&utm_content=plugin-uri
  * Description: LoginPress is the best <code>wp-login</code> Login Page Customizer plugin by <a href="https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=plugins&utm_campaign=wpbrigade-home&utm_content=WPBrigade-text-link">WPBrigade</a> which allows you to completely change the layout of login, register and forgot password forms.
- * Version: 4.0.1
+ * Version: 5.0.0
  * Author: LoginPress
  * Author URI: https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-header&utm_campaign=pro-upgrade&utm_content=author-uri
  * Text Domain: loginpress
  * Domain Path: /languages
+ * GitHub Plugin URI: https://github.com/WPBrigade/loginpress
  *
  * @package loginpress
  * @category Core
@@ -71,7 +72,7 @@ if ( ! class_exists( 'LoginPress' ) ) :
 		/**
 		 * @var string
 		 */
-		public $version = '4.0.1';
+		public $version = '5.0.0';
 
 		/**
 		 * @var The single instance of the class
@@ -455,6 +456,50 @@ if ( ! class_exists( 'LoginPress' ) ) :
 		 * @version 3.0.0
 		 */
 		function _admin_scripts( $hook ) {
+				if ( $hook === 'toplevel_page_loginpress-settings' ) {
+					wp_enqueue_script( 'youtube-api', 'https://www.youtube.com/iframe_api', [], null, true );
+
+					$js_code = '
+					var ytPlayers = {};
+
+					function onYouTubeIframeAPIReady() {
+						var iframes = document.querySelectorAll("iframe.loginPress-feature-video");
+
+						Array.prototype.forEach.call(iframes, function(iframe) {
+							// Assign a unique ID if not present
+							if (!iframe.id) {
+								iframe.id = "yt-player-" + Math.random().toString(36).substring(2, 15);
+							}
+
+							var id = iframe.id;
+
+							ytPlayers[id] = new YT.Player(id, {
+								events: {
+									"onStateChange": function(event) {
+										handleStateChange(event, id);
+									}
+								}
+							});
+						});
+					}
+
+					function handleStateChange(event, currentId) {
+						if (event.data === YT.PlayerState.PLAYING) {
+							for (var id in ytPlayers) {
+								if (ytPlayers.hasOwnProperty(id) && id !== currentId) {
+									var player = ytPlayers[id];
+									if (typeof player.pauseVideo === "function") {
+										player.pauseVideo();
+									}
+								}
+							}
+						}
+					}
+					';
+
+					wp_add_inline_script( 'youtube-api', $js_code );
+				}
+
 
 			if ( $hook == 'toplevel_page_loginpress-settings' || $hook == 'loginpress_page_loginpress-addons' || $hook == 'loginpress_page_loginpress-help' || $hook == 'loginpress_page_loginpress-import-export' || $hook == 'loginpress_page_loginpress-license' || $hook == 'admin_page_loginpress-optin' ) {
 

@@ -3646,6 +3646,9 @@ tr.enable_pass_strength_forms {
   .loginpress-integration-body{
 	  margin-block: 17px 15px;
   }
+  body.toplevel_page_loginpress-settings{
+	overflow-y: scroll;
+  }
   
   .loginpress-integration-body h3{
 	  font-weight: 600;
@@ -3664,7 +3667,7 @@ tr.enable_pass_strength_forms {
   }
   
   
-  .loginpress-integration-button,
+  #wpbody-content .loginpress-admin-setting .loginpress-integration-button,
   .loginpress-integration-comingsoon{
 	border-radius: 4px;
 	padding-top: 7px;
@@ -3680,6 +3683,7 @@ tr.enable_pass_strength_forms {
 	line-height: 100%;
 	cursor: pointer;
 	border: 1px solid #3C50E0;
+	text-decoration: none;
 	}
 	.loginpress-integration-comingsoon{
 		cursor: default;
@@ -3687,6 +3691,7 @@ tr.enable_pass_strength_forms {
 	.loginpress-integration-foot{
 		margin-top: auto;
 	}
+	#wpbody-content .loginpress-admin-setting
 	.loginpress-integration-button:hover{
 		background: #fff;
 		color: #3C50E0;

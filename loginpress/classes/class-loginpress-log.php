@@ -6,7 +6,7 @@
  *
  * @package    LoginPress
  * @since      1.0.19
- * @version    3.0.0
+ * @version    5.0.0
  */
 
 class LoginPress_Log_Info {
@@ -17,7 +17,7 @@ class LoginPress_Log_Info {
 	 * @access public
 	 * @package LoginPress
 	 * @since 1.0.19
-	 * @version 3.0.0
+	 * @version 5.0.0
 	 * @return string
 	 */
 	public static function get_sysinfo() {
@@ -179,6 +179,33 @@ class LoginPress_Log_Info {
 					}
 				}
 			}
+
+			// Retrieve the LoginPress Pro Addons settings
+			$loginpress_pro_addons = get_option('loginpress_pro_addons', array());
+
+			// Check if 'limit-login-attempts' is active
+			$is_limit_login_active = isset($loginpress_pro_addons['limit-login-attempts']['is_active']) && $loginpress_pro_addons['limit-login-attempts']['is_active'];
+
+			// Check if 'loginpress-hidelogin' is active
+			$is_hide_login_active = isset($loginpress_pro_addons['hide-login']['is_active']) && $loginpress_pro_addons['hide-login']['is_active'];
+
+			// Check if 'loginpress-hidelogin' is active
+			$is_social_login_active = isset($loginpress_pro_addons['social-login']['is_active']) && $loginpress_pro_addons['social-login']['is_active'];
+
+			//  llla' is active
+			if ($is_limit_login_active) {
+				$html .= self::get_limit_login_attempts_logs();
+			 }
+
+			 // Proceed if 'loginpress-hidelogin' is active
+			if ($is_hide_login_active) {
+				$html .= self::get_hide_login_logs();
+			}
+
+			if ($is_social_login_active) {
+				// Retrieve Social Login settings
+				$html .= self::get_social_login_logs();
+			}
 		}
 		// Server Configuration
 		$html .= "\n" . '-- Server Configuration --' . "\n\n";
@@ -244,4 +271,87 @@ class LoginPress_Log_Info {
 		$html .= "\n" . '### End System Info ###';
 		return $html;
 	}
+
+	/**
+	 * Returns the llla info.
+	 *
+	 * @access public
+	 * @package LoginPress
+	 * @since 5.0.0
+	 * @return string
+	 */
+	public static function get_limit_login_attempts_logs() {
+		$settings = get_option('loginpress_limit_login_attempts', array());
+	
+		$attempts_allowed = $settings['attempts_allowed'] ?? 'Not Set';
+		$minutes_lockout  = $settings['minutes_lockout'] ?? 'Not Set';
+		$lockout_message  = $settings['lockout_message'] ?? 'Not Set';
+		$ip_add_remove    = $settings['ip_add_remove'] ?? 'Not Set';
+		$disable_xml_rpc  = isset($settings['disable_xml_rpc_request']) && $settings['disable_xml_rpc_request'] === 'on' ? 'Enabled' : 'Disabled';
+	
+		return "-- LoginPress Limit Login Attempts --\n" .
+			   "Allowed Login Attempts:     {$attempts_allowed}\n" .
+			   "Lockout Duration (Minutes): {$minutes_lockout}\n" .
+			   "Lockout Message:            {$lockout_message}\n" .
+			   "Managed IP Addresses:       {$ip_add_remove}\n" .
+			   "Disable XML-RPC:            {$disable_xml_rpc}\n";
+	}
+
+	/**
+	 * Returns the hide login info.
+	 *
+	 * @access public
+	 * @package LoginPress
+	 * @since 5.0.0
+	 * @return string
+	 */
+	public static function get_hide_login_logs() {
+		$settings = get_option('loginpress_hide_login', array());
+	
+		$rename_login_slug    = esc_html($settings['rename_login_slug'] ?? 'Not Set');
+		$is_rename_send_email = isset($settings['is_rename_send_email']) && $settings['is_rename_send_email'] === 'on' ? 'Yes' : 'No';
+		$rename_email_send_to = esc_html($settings['rename_email_send_to'] ?? 'Not Set');
+	
+		return "-- LoginPress Hide Login Settings --\n" .
+			   "Rename Login Slug:         {$rename_login_slug}\n" .
+			   "Send Email Notification:   {$is_rename_send_email}\n" .
+			   "Email Recipients:          {$rename_email_send_to}\n";
+	}
+
+	/**
+	 * Returns the social login info.
+	 *
+	 * @access public
+	 * @package LoginPress
+	 * @since 5.0.0
+	 * @return string
+	 */
+	public static function get_social_login_logs() {
+		$social_login_settings = get_option('loginpress_social_logins', array());
+			
+				// General Settings
+				$enable_social_login_links = isset($social_login_settings['enable_social_login_links']) && !empty($social_login_settings['enable_social_login_links']) ? implode(', ', array_keys($social_login_settings['enable_social_login_links'])) : 'None';
+				$social_login_button_label = isset($social_login_settings['social_login_button_label']) && !empty($social_login_settings['social_login_button_label']) ? $social_login_settings['social_login_button_label'] : 'Login with %provider%';
+				$social_button_styles = isset($social_login_settings['social_button_styles']) && !empty($social_login_settings['social_button_styles']) ? $social_login_settings['social_button_styles'] : 'default';
+				$social_button_position = isset($social_login_settings['social_button_position']) && !empty($social_login_settings['social_button_position']) ? $social_login_settings['social_button_position'] : 'below';
+
+		$log = "-- LoginPress Social Login Settings --\n" .
+			   "Enable Social Login On:     {$enable_social_login_links}\n" .
+			   "Social Login Button Label:  {$social_login_button_label}\n" .
+			   "Button Styles:              {$social_button_styles}\n" .
+			   "Button Position:            {$social_button_position}\n";
+	
+			   $providers = array('facebook', 'twitter', 'gplus', 'linkedin', 'microsoft', 'github', 'discord', 'wordpress', 'apple', 'amazon', 'twitch', 'pinterest', 'spotify', 'reddit', 'disqus');
+				
+			   foreach ($providers as $provider) {
+				   if (isset($social_login_settings[$provider]) && $social_login_settings[$provider] === 'on') {
+					   $provider_status = isset($social_login_settings[$provider . '_status']) ? $social_login_settings[$provider . '_status'] : 'Not verified';
+					   $log .= ucfirst($provider) . ' Status:            ' . esc_html($provider_status) . "\n";
+				   }
+			   }
+	
+		return $log;
+	}
+	
+	
 } // End of Class.

@@ -24,8 +24,24 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 */
 		protected $settings_fields = array();
 
+		/**
+		 * Captcha settings
+		 *
+		 * @since 5.0.0
+		 */
+		public $loginpress_captcha_settings;
+
+		/**
+		 * loginpress pro addons status
+		 *
+		 * @since 5.0.0
+		 */
+		public $loginpress_pro_addons;
+
 		public function __construct() {
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
+			$this->loginpress_captcha_settings = get_option( 'loginpress_captcha_settings' );
+			$this->loginpress_pro_addons = get_option( 'loginpress_pro_addons' );
 		}
 
 		/**
@@ -267,16 +283,36 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 * Displays a checkbox for a settings field
 		 *
 		 * @param array $args settings field args
-		 * @version 1.0.23
+		 * @version 5.0.0
 		 */
 		function callback_checkbox( $args ) {
-
+			
 			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 
-			$html  = '<fieldset>';
+			// Get all LoginPress Pro addons
+			$addons = $this->loginpress_pro_addons;
+
+			// Check if Social Login addon is active
+			$is_social_login_active = isset( $addons['social-login']['is_active'] ) && $addons['social-login']['is_active'];
+
+			// Conditionally disable and uncheck specific fields
+			$should_disable = false;
+
+			// Add more IDs here if needed
+			$disabled_ids = array( 'enable_social_woo_lf', 'enable_social_woo_rf', 'enable_social_woo_co', 'enable_social_llms_lf', 'enable_social_llms_rf', 'enable_social_llms_co', 'enable_social_ld_lf', 'enable_social_ld_rf', 'enable_social_ld_qf', 'enable_social_login_links_bp', 'enable_social_login_links_bb', 'enable_social_edd_lf', 'enable_social_edd_rf', 'enable_social_edd_co' );
+			$html = '';
+			if ( in_array( $args['id'], $disabled_ids ) && ! $is_social_login_active ) {
+				$should_disable = true;
+				$value = 'off'; // Force uncheck
+				if ( $args['id'] == 'enable_social_woo_lf' || $args['id'] == 'enable_social_llms_lf' || $args['id'] == 'enable_social_ld_lf' || $args['id'] == 'enable_social_edd_lf' || $args['id'] == 'enable_social_login_links_bp' || $args['id'] == 'enable_social_login_links_bb' ){
+					$html  .= '<div class="message warning">' . __( 'Activate Social Login addon to use following settings.', 'loginpress' ) . '</div>';
+				}
+			}
+
+			$html  .= '<fieldset>';
 			$html .= sprintf( '<label for="wpb-%1$s[%2$s]">', $args['section'], $args['id'] );
 			$html .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="off" />', $args['section'], $args['id'] );
-			$html .= sprintf( '<input type="checkbox" class="checkbox loginpress-check-hidden" id="wpb-%1$s[%2$s]" name="%1$s[%2$s]" value="on" %3$s />', $args['section'], $args['id'], checked( $value, 'on', false ) );
+			$html .= sprintf( '<input type="checkbox" class="checkbox loginpress-check-hidden" id="wpb-%1$s[%2$s]" name="%1$s[%2$s]" value="on" %3$s %4$s />', $args['section'], $args['id'], checked( $value, 'on', false ), $should_disable ? 'disabled' : '' );
 			$html .= sprintf( '%2$s%3$s%1$s%4$s</label>', $args['desc'], '<span class="loginpress-checkbox"></span>', '<p>', '</p>' );
 			$html .= '</fieldset>';
 
@@ -287,18 +323,28 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 * Displays a multi-checkbox settings field.
 		 *
 		 * @param array $args settings field args
-		 * @version 1.0.23
+		 * @version 5.0.0
 		 */
 		function callback_multicheck( $args ) {
-
+			$captcha_settings = $this->loginpress_captcha_settings;
+			$captcha_enabled = isset( $captcha_settings['enable_captchas'] ) ? $captcha_settings['enable_captchas'] : 'off';
+			// Check if the whole field should be disabled
+			// For example: disable if it's the WooCommerce-related setting and WooCommerce is not active
+			$disabled_attr = '';
+			$html = '';
+			if ( ($args['id'] === 'enable_captcha_woo' || $args['id'] === 'enable_captcha_ld' || $args['id'] === 'enable_captcha_llms' || $args['id'] === 'enable_captcha_bp' || $args['id'] === 'enable_captcha_bb' || $args['id'] === 'enable_captcha_edd') && $captcha_enabled === 'off' ) {
+				$disabled_attr = 'disabled';
+				$html  .= '<div class="message warning">' . __( 'Please enable Captcha first.', 'loginpress' ) . '</div>';
+			}
 			$br    = ( 'roles_for_password_reset' == $args['id'] || 'exclude_roles' == $args['id']) ? '' : '<br>';
 			$value = $this->get_option( $args['id'], $args['section'], $args['std'] );
-			$html  = '<fieldset>';
+			$html  .= '<fieldset>';
 			$html .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="" />', $args['section'], $args['id'] );
+
 			foreach ( $args['options'] as $key => $label ) {
 				$checked = isset( $value[ $key ] ) ? $value[ $key ] : '0';
 				$html   .= sprintf( '<label for="wpb-%1$s[%2$s][%3$s]">', $args['section'], $args['id'], $key );
-				$html   .= sprintf( '<input type="checkbox" class="checkbox loginpress-check-hidden" id="wpb-%1$s[%2$s][%3$s]" name="%1$s[%2$s][%3$s]" value="%3$s" %4$s />', $args['section'], $args['id'], $key, checked( $checked, $key, false ) );
+				$html   .= sprintf( '<input type="checkbox" class="checkbox loginpress-check-hidden" id="wpb-%1$s[%2$s][%3$s]" name="%1$s[%2$s][%3$s]" value="%3$s" %4$s %5$s/>', $args['section'], $args['id'], $key, checked( $checked, $key, false ), $disabled_attr );
 				$html   .= sprintf( '%2$s%1$s</label>%3$s', $label, '<span class="loginpress-checkbox"></span>', $br );
 			}
 

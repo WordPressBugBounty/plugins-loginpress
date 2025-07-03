@@ -15,6 +15,16 @@ jQuery( document ).ready( function( $ ) {
         );
     });
 
+    $( 'body' ).on( 'input change', 'input[name=user_pass], input[name=user_confirm_pass]', function( event ) {
+        passwordStrengthValidator(
+            $(this).closest('form').find('input[name=user_pass]'),
+            $(this).closest('form').find('input[name=user_confirm_pass]'),
+            $(this).closest('form').find('#pass-strength-result'),
+            $(this).closest('form').find('input[type=submit]'),
+            ['admin', 'happy', 'hello', '1234']
+        );
+    });
+
     /**
      * Checks the strength of a password and updates the UI accordingly.
      *

@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: LoginPress - Customizing the WordPress Login\n"
-"POT-Creation-Date: 2025-03-01 17:54+0500\n"
+"POT-Creation-Date: 2025-07-02 18:06+0500\n"
 "PO-Revision-Date: 2018-07-13 17:43+0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -10,91 +10,90 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: loginpress.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: classes/class-loginpress-addons-meta.php:29
+#: classes/class-loginpress-addons-meta.php:35
 msgid "Login Logout Menu"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:30
+#: classes/class-loginpress-addons-meta.php:36
 msgid "Login Logout Menu Section"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:36
+#: classes/class-loginpress-addons-meta.php:42
 #: classes/class-loginpress-promotion.php:49
 msgid "Auto Login"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:37
+#: classes/class-loginpress-addons-meta.php:43
 #: classes/class-loginpress-promotion.php:50
 msgid "No More Manual Login"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:43
+#: classes/class-loginpress-addons-meta.php:49
 #: classes/class-loginpress-promotion.php:67
 msgid "Login Redirects"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:44
+#: classes/class-loginpress-addons-meta.php:50
 #: classes/class-loginpress-promotion.php:68
 msgid "Automatically redirects the login"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:50
+#: classes/class-loginpress-addons-meta.php:56
 #: classes/class-loginpress-promotion.php:61
 msgid "Limit Login Attempts"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:51
+#: classes/class-loginpress-addons-meta.php:57
 #: classes/class-loginpress-promotion.php:62
 msgid "Limits for login attempts"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:57
+#: classes/class-loginpress-addons-meta.php:63
 #: classes/class-loginpress-promotion.php:55
 msgid "Hide Login"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:58
+#: classes/class-loginpress-addons-meta.php:64
 #: classes/class-loginpress-promotion.php:56
 msgid "Hide your login page"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:64
+#: classes/class-loginpress-addons-meta.php:70
 #: classes/class-loginpress-promotion.php:73
 msgid "Social Login"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:65
+#: classes/class-loginpress-addons-meta.php:71
 #: classes/class-loginpress-promotion.php:74
 msgid "Third Party login access"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:71
+#: classes/class-loginpress-addons-meta.php:77
 msgid "Login Widget"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:72
+#: classes/class-loginpress-addons-meta.php:78
 msgid "Creates a login widget"
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:113
+#: classes/class-loginpress-addons-meta.php:119
 #: include/loginpress-static-addons.php:108
 msgid ""
 "Login Logout Menu is a handy plugin which allows you to add login, logout, "
 "register and profile menu items in your selected menu."
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:117
+#: classes/class-loginpress-addons-meta.php:123
 msgid ""
 "Redirects users based on their roles. This is helpful, If you have an editor "
 "and want to redirect him to his editor stats page. Restrict your "
@@ -103,7 +102,7 @@ msgid ""
 "created on your site."
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:121
+#: classes/class-loginpress-addons-meta.php:127
 msgid ""
 "Social login from LoginPress is an add-on which provides facility your users "
 "to log in and Register via Facebook, Google, and Twitter. This add-on will "
@@ -111,15 +110,15 @@ msgid ""
 "to hassle-free registrations/logins on your site."
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:125
+#: classes/class-loginpress-addons-meta.php:131
 msgid ""
 "This LoginPress add-on is a widget you can use into your blog sidebar. It "
 "uses an Ajax way to login via the sidebar. You may need to know HTML/CSS to "
 "give it style according to your site even we have styled it in general."
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:129
-#: classes/class-loginpress-promotion.php:104
+#: classes/class-loginpress-addons-meta.php:135
+#: classes/class-loginpress-promotion.php:109
 msgid ""
 "Everybody needs a control of their Login page. This will help you to track "
 "your login attempts by each user. You can limit the login attempts for each "
@@ -128,7 +127,7 @@ msgid ""
 "control to set the time between each login attempts."
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:133
+#: classes/class-loginpress-addons-meta.php:139
 msgid ""
 "This LoginPress add-on lets you (Administrator) generates a unique URL for "
 "your certain users who you dont want to provide a password to login to your "
@@ -137,8 +136,8 @@ msgid ""
 "certain users."
 msgstr ""
 
-#: classes/class-loginpress-addons-meta.php:137
-#: classes/class-loginpress-promotion.php:101
+#: classes/class-loginpress-addons-meta.php:143
+#: classes/class-loginpress-promotion.php:106
 msgid ""
 "This LoginPress add-on lets you change the login page URL to anything you "
 "want. It will give a hard time to spammers who keep hitting to your login "
@@ -147,86 +146,86 @@ msgid ""
 "an option to email your custom login url so you remember it."
 msgstr ""
 
-#: classes/class-loginpress-addons.php:63
+#: classes/class-loginpress-addons.php:64
 #: classes/class-loginpress-deprecated-addons.php:491
 msgid "You have a lifetime license, it will never expire."
 msgstr ""
 
 #. translators: License key validity
-#: classes/class-loginpress-addons.php:67
+#: classes/class-loginpress-addons.php:68
 #: classes/class-loginpress-deprecated-addons.php:495
 #, php-format
 msgid "Your (%2$s) license key is valid until %1$s."
 msgstr ""
 
 #. translators: License expiration
-#: classes/class-loginpress-addons.php:90
+#: classes/class-loginpress-addons.php:91
 #, php-format
 msgid "Your license key has been expired on %1$s."
 msgstr ""
 
-#: classes/class-loginpress-addons.php:109
+#: classes/class-loginpress-addons.php:110
 #: classes/class-loginpress-deprecated-addons.php:546
 msgid "You need to upgrade to LoginPress Pro to access these add-ons."
 msgstr ""
 
 #. translators: Something wrong
 #. translators: Plugin activated
-#: classes/class-loginpress-addons.php:168
+#: classes/class-loginpress-addons.php:169
 #: classes/class-loginpress-deprecated-addons.php:181
 #, php-format
 msgid "%s Something Wrong."
 msgstr ""
 
 #. translators: Invalid license key
-#: classes/class-loginpress-addons.php:171
+#: classes/class-loginpress-addons.php:172
 msgid "Your License Key isn't valid"
 msgstr ""
 
 #. translators: Activating the plugin
-#: classes/class-loginpress-addons.php:182
+#: classes/class-loginpress-addons.php:183
 #: classes/class-loginpress-deprecated-addons.php:143
 #, php-format
 msgid "Activating %s..."
 msgstr ""
 
 #. translators: Plugin activated
-#: classes/class-loginpress-addons.php:190
+#: classes/class-loginpress-addons.php:191
 #: classes/class-loginpress-deprecated-addons.php:152
 #, php-format
 msgid "%s Activated."
 msgstr ""
 
 #. translators: Deactivating the plugin
-#: classes/class-loginpress-addons.php:200
+#: classes/class-loginpress-addons.php:201
 #: classes/class-loginpress-deprecated-addons.php:163
 #, php-format
 msgid "Deactivating %s..."
 msgstr ""
 
 #. translators: Plugin deactivated
-#: classes/class-loginpress-addons.php:208
+#: classes/class-loginpress-addons.php:209
 #: classes/class-loginpress-deprecated-addons.php:172
 #, php-format
 msgid "%s Deactivated."
 msgstr ""
 
-#: classes/class-loginpress-addons.php:313
-#: classes/class-loginpress-addons.php:337
+#: classes/class-loginpress-addons.php:314
+#: classes/class-loginpress-addons.php:338
 #: classes/class-loginpress-deprecated-addons.php:56
 #: classes/class-loginpress-deprecated-addons.php:80
 msgid "Something went wrong in loading the Add-Ons, Try again later!"
 msgstr ""
 
-#: classes/class-loginpress-addons.php:457
+#: classes/class-loginpress-addons.php:458
 #: classes/class-loginpress-deprecated-addons.php:270
 #: classes/class-loginpress-deprecated-addons.php:405
 #: classes/class-loginpress-deprecated-addons.php:460
-#: classes/class-loginpress-promotion.php:147
+#: classes/class-loginpress-promotion.php:237
 msgid "UPGRADE NOW"
 msgstr ""
 
-#: classes/class-loginpress-addons.php:926
+#: classes/class-loginpress-addons.php:927
 #: classes/class-loginpress-deprecated-addons.php:1046
 msgid "Extend the functionality of LoginPress with these awesome Add-ons"
 msgstr ""
@@ -235,34 +234,34 @@ msgstr ""
 msgid "Sorry, you are not allowed to edit this item."
 msgstr ""
 
-#: classes/class-loginpress-custom-password.php:64
+#: classes/class-loginpress-custom-password.php:66
 #: include/customizer-strings.php:166 include/template-loginpress.php:648
 msgid "Password"
 msgstr ""
 
-#: classes/class-loginpress-custom-password.php:73
+#: classes/class-loginpress-custom-password.php:75
 msgid "Confirm Password"
 msgstr ""
 
 #. translators: Empty Password
-#: classes/class-loginpress-custom-password.php:111
+#: classes/class-loginpress-custom-password.php:114
 #, php-format
 msgid "%1$sError:%2$s Please enter your password twice."
 msgstr ""
 
 #. translators: Passwords Unmatched
-#: classes/class-loginpress-custom-password.php:119
+#: classes/class-loginpress-custom-password.php:123
 #, php-format
-msgid "%1$sError:%2$s Passwords don't match."
+msgid "%1$sError:%2$s Passwords doesn't match."
 msgstr ""
 
 #. translators: Error Message
-#: classes/class-loginpress-custom-password.php:125
+#: classes/class-loginpress-custom-password.php:129
 #, php-format
 msgid "Error: %s"
 msgstr ""
 
-#: classes/class-loginpress-custom-password.php:180
+#: classes/class-loginpress-custom-password.php:184
 msgid ""
 "You have already set your own password, use the password you have already "
 "set to login."
@@ -489,37 +488,37 @@ msgid ""
 msgstr ""
 
 #. translators: Minimum password length.
-#: classes/class-loginpress-pass-strength.php:107
+#: classes/class-loginpress-pass-strength.php:117
 #, php-format
 msgid "Password must be at least %d characters long."
 msgstr ""
 
-#: classes/class-loginpress-pass-strength.php:114
+#: classes/class-loginpress-pass-strength.php:125
 msgid "Password must contain at least one both upper and lower case letters."
 msgstr ""
 
-#: classes/class-loginpress-pass-strength.php:119
+#: classes/class-loginpress-pass-strength.php:130
 msgid "Password must contain at least one special character."
 msgstr ""
 
-#: classes/class-loginpress-pass-strength.php:124
+#: classes/class-loginpress-pass-strength.php:135
 msgid "Password must contain at least one integer number."
 msgstr ""
 
-#: classes/class-loginpress-pass-strength.php:169
+#: classes/class-loginpress-pass-strength.php:212
 msgid "Require upper and lower case letters."
 msgstr ""
 
-#: classes/class-loginpress-pass-strength.php:170
+#: classes/class-loginpress-pass-strength.php:213
 msgid "Require special characters like ! \" ? $ % ^ & *"
 msgstr ""
 
-#: classes/class-loginpress-pass-strength.php:171
+#: classes/class-loginpress-pass-strength.php:214
 msgid "Require numbers."
 msgstr ""
 
 #. translators: Minimum password length
-#: classes/class-loginpress-pass-strength.php:175
+#: classes/class-loginpress-pass-strength.php:218
 #, php-format
 msgid ""
 "Hint: The password should be at least %1$d characters long. %2$s %3$s %4$s "
@@ -546,13 +545,21 @@ msgstr ""
 msgid "CAPTCHA Protection Settings"
 msgstr ""
 
+#: classes/class-loginpress-promotion.php:79
+msgid "Integrations"
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:80
+msgid "All Plugin Integrations"
+msgstr ""
+
 #. translators: Upgrade to Pro
-#: classes/class-loginpress-promotion.php:81
+#: classes/class-loginpress-promotion.php:87
 #, php-format
 msgid "Upgrade to Pro%1$s for More Features%2$s"
 msgstr ""
 
-#: classes/class-loginpress-promotion.php:107
+#: classes/class-loginpress-promotion.php:112
 msgid ""
 "Social login from LoginPress is an add-on which provides facility your users "
 "to login and Register via Facebook, Google and Twitter. This add-on will "
@@ -560,7 +567,7 @@ msgid ""
 "to hassle free registrations/logins on your site."
 msgstr ""
 
-#: classes/class-loginpress-promotion.php:110
+#: classes/class-loginpress-promotion.php:115
 msgid ""
 "Redirect users based on their roles and specific usernames. This is helpful, "
 "If you have an editor and want to redirect him to his editor stats page. "
@@ -569,7 +576,7 @@ msgid ""
 "you have created on your site."
 msgstr ""
 
-#: classes/class-loginpress-promotion.php:113
+#: classes/class-loginpress-promotion.php:118
 msgid ""
 "This LoginPress add-on lets you (Adminstrator) generates a unique URL for "
 "your certain users who you don't want to provide a password to login into "
@@ -578,7 +585,7 @@ msgid ""
 "certain users."
 msgstr ""
 
-#: classes/class-loginpress-promotion.php:116
+#: classes/class-loginpress-promotion.php:121
 msgid ""
 "The LoginPress CAPTCHA feature lets you easily integrate different types of "
 "CAPTCHA services into your login and registration forms. CAPTCHA types "
@@ -587,17 +594,91 @@ msgid ""
 "access, ensuring a more secure user experience."
 msgstr ""
 
+#: classes/class-loginpress-promotion.php:124
+msgid ""
+"LoginPress integrates with the most popular WordPress plugins to enhance "
+"your login experience. Our Social Login, CAPTCHA and Limit Login Attempts "
+"features among others are easily integrated into these platforms, helping "
+"you streamline user access and enhance security."
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:132
+#: classes/class-loginpress-promotion.php:133
+msgid "WooCommerce"
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:134
+msgid "Quick, secure logins for your WooCommerce store."
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:141
+#: classes/class-loginpress-promotion.php:142
+msgid "Easy Digital Downloads"
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:143
+msgid "Secure digital purchases with login enhancements."
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:150
+#: classes/class-loginpress-promotion.php:151
+msgid "BuddyPress"
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:152
+msgid "Boost community logins with social and captcha support."
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:159
+#: classes/class-loginpress-promotion.php:160
+msgid "BuddyBoss"
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:161
+msgid "Hassle-free login experience for your BuddyBoss community."
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:168
+#: classes/class-loginpress-promotion.php:169
+msgid "LifterLMS"
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:170
+msgid "Let students log in easily and securely."
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:177
+#: classes/class-loginpress-promotion.php:178
+msgid "LearnDash"
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:179
+msgid "Simplify learning access with our login tools."
+msgstr ""
+
+#: classes/class-loginpress-promotion.php:199
+msgid "Upgrade Now"
+msgstr ""
+
 #. translators: Video title.
-#: classes/class-loginpress-promotion.php:130
+#: classes/class-loginpress-promotion.php:220
 #, php-format
 msgid "Video: %s"
 msgstr ""
 
-#: classes/class-loginpress-settings-api.php:122
+#: classes/class-loginpress-settings-api.php:138
 msgid "How to Setup"
 msgstr ""
 
-#: classes/class-loginpress-settings-api.php:425 custom.php:1007
+#: classes/class-loginpress-settings-api.php:308
+msgid "Activate Social Login addon to use following settings."
+msgstr ""
+
+#: classes/class-loginpress-settings-api.php:337
+msgid "Please enable Captcha first."
+msgstr ""
+
+#: classes/class-loginpress-settings-api.php:471 custom.php:1007
 msgid "Choose File"
 msgstr ""
 
@@ -607,7 +688,7 @@ msgstr ""
 
 #. Plugin Name of the plugin/theme
 #. Author of the plugin/theme
-#: classes/class-loginpress-setup.php:140 custom.php:389 loginpress.php:387
+#: classes/class-loginpress-setup.php:140 custom.php:389 loginpress.php:388
 msgid "LoginPress"
 msgstr ""
 
@@ -642,7 +723,7 @@ msgid "Add-Ons"
 msgstr ""
 
 #: classes/class-loginpress-setup.php:222
-msgid "Login Page Setting"
+msgid "Login Page Settings"
 msgstr ""
 
 #. translators: Wordpress customizer
@@ -862,47 +943,47 @@ msgstr ""
 msgid "LoginPress Log File Downloaded Successfully!"
 msgstr ""
 
-#: classes/class-loginpress-setup.php:599
+#: classes/class-loginpress-setup.php:600
 msgid "Lost Password URL"
 msgstr ""
 
-#: classes/class-loginpress-setup.php:600
+#: classes/class-loginpress-setup.php:601
 msgid ""
 "Use WordPress default lost password URL instead of WooCommerce custom lost "
 "password URL."
 msgstr ""
 
-#: classes/class-loginpress-setup.php:620
+#: classes/class-loginpress-setup.php:621
 msgid "Language Switcher"
 msgstr ""
 
 #. translators: Custom Password Fields
-#: classes/class-loginpress-setup.php:623
+#: classes/class-loginpress-setup.php:624
 #, php-format
 msgid "Enable to remove %1$sLanguage Switcher Dropdown%2$s on Login Forms."
 msgstr ""
 
-#: classes/class-loginpress-setup.php:641
+#: classes/class-loginpress-setup.php:642
 msgid "and LoginPress page"
 msgstr ""
 
-#: classes/class-loginpress-setup.php:647
+#: classes/class-loginpress-setup.php:648
 msgid "Remove Settings On Uninstall"
 msgstr ""
 
 #. translators: Remove Settings on Uninstall
-#: classes/class-loginpress-setup.php:650
+#: classes/class-loginpress-setup.php:651
 #, php-format
 msgid ""
 "Enable to remove all custom settings made %1$s by LoginPress upon uninstall."
 msgstr ""
 
-#: classes/class-loginpress-setup.php:659
+#: classes/class-loginpress-setup.php:660
 msgid "Remove Settings On Uninstall For Pro"
 msgstr ""
 
 #. translators: Remove Settings on Uninstall For Pro
-#: classes/class-loginpress-setup.php:662
+#: classes/class-loginpress-setup.php:663
 #, php-format
 msgid ""
 "Enable to remove all custom settings made %1$s by LoginPress-Pro upon "
@@ -910,24 +991,24 @@ msgid ""
 msgstr ""
 
 #. translators: Upgrade to Pro link
-#: classes/class-loginpress-setup.php:716
+#: classes/class-loginpress-setup.php:717
 #, php-format
 msgid "Upgrade%1$s to Pro%2$s"
 msgstr ""
 
-#: classes/class-loginpress-setup.php:719
+#: classes/class-loginpress-setup.php:720
 msgid "Support"
 msgstr ""
 
-#: classes/class-loginpress-setup.php:730
+#: classes/class-loginpress-setup.php:731
 msgid "Documentation"
 msgstr ""
 
-#: classes/class-loginpress-setup.php:740
+#: classes/class-loginpress-setup.php:741
 msgid "Please activate your license key."
 msgstr ""
 
-#: classes/class-loginpress-setup.php:741
+#: classes/class-loginpress-setup.php:742
 msgid ""
 "Validating the license key is mandatory to use automatic updates and receive "
 "plugin support."
@@ -2106,45 +2187,45 @@ msgstr ""
 msgid "Would you like to share what's other reason?"
 msgstr ""
 
-#: loginpress.php:385
+#: loginpress.php:386
 msgid "Activate"
 msgstr ""
 
-#: loginpress.php:468
+#: loginpress.php:513
 msgctxt "Login Redirect Roles"
 msgid "Name"
 msgstr ""
 
-#: loginpress.php:502
+#: loginpress.php:547
 msgid "Vote!"
 msgstr ""
 
-#: loginpress.php:505
+#: loginpress.php:550
 msgid "Rate"
 msgstr ""
 
 #. translators: Build links
-#: loginpress.php:587
+#: loginpress.php:632
 #, php-format
 msgid "%1$s Settings %2$s | %3$s Customize %4$s"
 msgstr ""
 
 #. translators: links based on opt in
 #. translators: setting link when opted out
-#: loginpress.php:610 loginpress.php:629
+#: loginpress.php:655 loginpress.php:674
 #, php-format
 msgid " | %1$s Opt Out %2$s "
 msgstr ""
 
 #. translators: Update opt-in state
 #. translators: Opt-out link
-#: loginpress.php:639 loginpress.php:649
+#: loginpress.php:684 loginpress.php:694
 #, php-format
 msgid " | %1$s Opt In %2$s "
 msgstr ""
 
 #. translators: Pro upgrade link
-#: loginpress.php:662
+#: loginpress.php:707
 #, php-format
 msgid "%1$s %3$s Upgrade Pro %4$s %2$s"
 msgstr ""

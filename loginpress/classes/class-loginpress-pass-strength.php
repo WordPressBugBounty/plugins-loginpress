@@ -147,7 +147,6 @@ if ( ! class_exists( 'LoginPress_Password_Strength' ) ) :
 		 */
 		public function loginpress_password_strength_meter() {
 			wp_enqueue_script( 'loginpress-pasword-strength-meter', plugins_url( 'js/password-strength-meter.js', LOGINPRESS_ROOT_FILE ), array( 'jquery', 'password-strength-meter' ), LOGINPRESS_VERSION, true );
-			wp_enqueue_script( 'password-strength-meter' );
 		}
 
 		/**

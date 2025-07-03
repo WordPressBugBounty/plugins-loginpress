@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LoginPress - Customizing the WordPress Login\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-01 17:54+0500\n"
-"PO-Revision-Date: 2025-03-04 00:52+0500\n"
+"POT-Creation-Date: 2025-07-02 18:05+0500\n"
+"PO-Revision-Date: 2025-07-02 18:05+0500\n"
 "Last-Translator: stormcorn <stormcorn@gmail.com>\n"
 "Language-Team: Chinese (Taiwan)\n"
 "Language: zh_TW\n"
@@ -11,85 +11,84 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: loginpress.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Loco-Version: 2.3.1; wp-5.3.2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: classes/class-loginpress-addons-meta.php:29
+#: classes/class-loginpress-addons-meta.php:35
 msgid "Login Logout Menu"
 msgstr "登入 登出 選單"
 
-#: classes/class-loginpress-addons-meta.php:30
+#: classes/class-loginpress-addons-meta.php:36
 msgid "Login Logout Menu Section"
 msgstr "登入登出選單部分"
 
-#: classes/class-loginpress-addons-meta.php:36
+#: classes/class-loginpress-addons-meta.php:42
 #: classes/class-loginpress-promotion.php:49
 msgid "Auto Login"
 msgstr "自動登錄"
 
-#: classes/class-loginpress-addons-meta.php:37
+#: classes/class-loginpress-addons-meta.php:43
 #: classes/class-loginpress-promotion.php:50
 msgid "No More Manual Login"
 msgstr "不再需要手動登錄"
 
-#: classes/class-loginpress-addons-meta.php:43
+#: classes/class-loginpress-addons-meta.php:49
 #: classes/class-loginpress-promotion.php:67
 msgid "Login Redirects"
 msgstr "登錄重定向"
 
-#: classes/class-loginpress-addons-meta.php:44
+#: classes/class-loginpress-addons-meta.php:50
 #: classes/class-loginpress-promotion.php:68
 msgid "Automatically redirects the login"
 msgstr "自動重定向登錄"
 
-#: classes/class-loginpress-addons-meta.php:50
+#: classes/class-loginpress-addons-meta.php:56
 #: classes/class-loginpress-promotion.php:61
 msgid "Limit Login Attempts"
 msgstr "限制登錄嘗試"
 
-#: classes/class-loginpress-addons-meta.php:51
+#: classes/class-loginpress-addons-meta.php:57
 #: classes/class-loginpress-promotion.php:62
 msgid "Limits for login attempts"
 msgstr "登錄嘗試限制"
 
-#: classes/class-loginpress-addons-meta.php:57
+#: classes/class-loginpress-addons-meta.php:63
 #: classes/class-loginpress-promotion.php:55
 msgid "Hide Login"
 msgstr "隱藏登錄"
 
-#: classes/class-loginpress-addons-meta.php:58
+#: classes/class-loginpress-addons-meta.php:64
 #: classes/class-loginpress-promotion.php:56
 msgid "Hide your login page"
 msgstr "隱藏您的登錄頁面"
 
-#: classes/class-loginpress-addons-meta.php:64
+#: classes/class-loginpress-addons-meta.php:70
 #: classes/class-loginpress-promotion.php:73
 msgid "Social Login"
 msgstr "社交登錄"
 
-#: classes/class-loginpress-addons-meta.php:65
+#: classes/class-loginpress-addons-meta.php:71
 #: classes/class-loginpress-promotion.php:74
 msgid "Third Party login access"
 msgstr "第三方登錄訪問"
 
-#: classes/class-loginpress-addons-meta.php:71
+#: classes/class-loginpress-addons-meta.php:77
 msgid "Login Widget"
 msgstr "登入小工具"
 
-#: classes/class-loginpress-addons-meta.php:72
+#: classes/class-loginpress-addons-meta.php:78
 msgid "Creates a login widget"
 msgstr "建立登入小工具"
 
-#: classes/class-loginpress-addons-meta.php:113
+#: classes/class-loginpress-addons-meta.php:119
 #: include/loginpress-static-addons.php:108
 msgid ""
 "Login Logout Menu is a handy plugin which allows you to add login, logout, "
@@ -98,7 +97,7 @@ msgstr ""
 "登錄註銷功能表是一個方便的外掛程式，允許您在所選單中添加登錄，註銷，註冊和配"
 "置檔功能表項。"
 
-#: classes/class-loginpress-addons-meta.php:117
+#: classes/class-loginpress-addons-meta.php:123
 msgid ""
 "Redirects users based on their roles. This is helpful, If you have an editor "
 "and want to redirect him to his editor stats page. Restrict your "
@@ -110,7 +109,7 @@ msgstr ""
 "面，這將很有幫助。將您的訂閱者、訪客甚至客戶限制在某些頁面上，而不是 wp-"
 "admin。這個外掛程式有一個很酷的 UX/UI 來管理您在網站上建立的所有登入重定向。"
 
-#: classes/class-loginpress-addons-meta.php:121
+#: classes/class-loginpress-addons-meta.php:127
 msgid ""
 "Social login from LoginPress is an add-on which provides facility your users "
 "to log in and Register via Facebook, Google, and Twitter. This add-on will "
@@ -121,7 +120,7 @@ msgstr ""
 "Twitter 登入和註冊的便利性。此附加元件將消除垃圾郵件和機器人註冊。此外掛程式"
 "將幫助您的用戶在您的網站上輕鬆註冊/登入。"
 
-#: classes/class-loginpress-addons-meta.php:125
+#: classes/class-loginpress-addons-meta.php:131
 msgid ""
 "This LoginPress add-on is a widget you can use into your blog sidebar. It "
 "uses an Ajax way to login via the sidebar. You may need to know HTML/CSS to "
@@ -131,8 +130,8 @@ msgstr ""
 "透過側邊欄登入。即使我們已經對其進行了一般樣式設置，您可能仍需要了解 HTML/"
 "CSS，以便根據您的網站賦予其樣式。"
 
-#: classes/class-loginpress-addons-meta.php:129
-#: classes/class-loginpress-promotion.php:104
+#: classes/class-loginpress-addons-meta.php:135
+#: classes/class-loginpress-promotion.php:109
 msgid ""
 "Everybody needs a control of their Login page. This will help you to track "
 "your login attempts by each user. You can limit the login attempts for each "
@@ -144,7 +143,7 @@ msgstr ""
 "制每個使用者的登錄嘗試次數。暴力攻擊是訪問您網站的最常見方式。此附加元件充當"
 "這些駭客攻擊的護套，並讓您控制設置每次登錄嘗試之間的時間。"
 
-#: classes/class-loginpress-addons-meta.php:133
+#: classes/class-loginpress-addons-meta.php:139
 msgid ""
 "This LoginPress add-on lets you (Administrator) generates a unique URL for "
 "your certain users who you dont want to provide a password to login to your "
@@ -156,8 +155,8 @@ msgstr ""
 "產生唯一的 URL。此 Pro 外掛程式為您提供了已提供自動產生的登入連結的所有使用者"
 "的清單。您可以停用某些人的存取權限並刪除某些使用者。"
 
-#: classes/class-loginpress-addons-meta.php:137
-#: classes/class-loginpress-promotion.php:101
+#: classes/class-loginpress-addons-meta.php:143
+#: classes/class-loginpress-promotion.php:106
 msgid ""
 "This LoginPress add-on lets you change the login page URL to anything you "
 "want. It will give a hard time to spammers who keep hitting to your login "
@@ -170,86 +169,86 @@ msgstr ""
 "程式的一個警告是，您需要在更改自定義登錄 URL 後記住它。我們可以通過電子郵件發"
 "送您的自訂登錄網址，以便您記住它。"
 
-#: classes/class-loginpress-addons.php:63
+#: classes/class-loginpress-addons.php:64
 #: classes/class-loginpress-deprecated-addons.php:491
 msgid "You have a lifetime license, it will never expire."
 msgstr "您有終身許可證，它永遠不會過期。"
 
 #. translators: License key validity
-#: classes/class-loginpress-addons.php:67
+#: classes/class-loginpress-addons.php:68
 #: classes/class-loginpress-deprecated-addons.php:495
 #, php-format
 msgid "Your (%2$s) license key is valid until %1$s."
 msgstr "您的 (%2$s) 許可證金鑰有效期至 %1$s。"
 
 #. translators: License expiration
-#: classes/class-loginpress-addons.php:90
+#: classes/class-loginpress-addons.php:91
 #, php-format
 msgid "Your license key has been expired on %1$s."
 msgstr "您的許可證密鑰已於 %1$s 過期。"
 
-#: classes/class-loginpress-addons.php:109
+#: classes/class-loginpress-addons.php:110
 #: classes/class-loginpress-deprecated-addons.php:546
 msgid "You need to upgrade to LoginPress Pro to access these add-ons."
 msgstr "您需要升級到 LoginPress Pro 才能訪問這些載入項。"
 
 #. translators: Something wrong
 #. translators: Plugin activated
-#: classes/class-loginpress-addons.php:168
+#: classes/class-loginpress-addons.php:169
 #: classes/class-loginpress-deprecated-addons.php:181
 #, php-format
 msgid "%s Something Wrong."
 msgstr "%s 出了點問題。"
 
 #. translators: Invalid license key
-#: classes/class-loginpress-addons.php:171
+#: classes/class-loginpress-addons.php:172
 msgid "Your License Key isn't valid"
 msgstr "您的許可證密鑰無效"
 
 #. translators: Activating the plugin
-#: classes/class-loginpress-addons.php:182
+#: classes/class-loginpress-addons.php:183
 #: classes/class-loginpress-deprecated-addons.php:143
 #, php-format
 msgid "Activating %s..."
 msgstr "正在啟動 %s..."
 
 #. translators: Plugin activated
-#: classes/class-loginpress-addons.php:190
+#: classes/class-loginpress-addons.php:191
 #: classes/class-loginpress-deprecated-addons.php:152
 #, php-format
 msgid "%s Activated."
 msgstr "%s 已啟動。"
 
 #. translators: Deactivating the plugin
-#: classes/class-loginpress-addons.php:200
+#: classes/class-loginpress-addons.php:201
 #: classes/class-loginpress-deprecated-addons.php:163
 #, php-format
 msgid "Deactivating %s..."
 msgstr "正在停用 %s..."
 
 #. translators: Plugin deactivated
-#: classes/class-loginpress-addons.php:208
+#: classes/class-loginpress-addons.php:209
 #: classes/class-loginpress-deprecated-addons.php:172
 #, php-format
 msgid "%s Deactivated."
 msgstr "%s 已停用。"
 
-#: classes/class-loginpress-addons.php:313
-#: classes/class-loginpress-addons.php:337
+#: classes/class-loginpress-addons.php:314
+#: classes/class-loginpress-addons.php:338
 #: classes/class-loginpress-deprecated-addons.php:56
 #: classes/class-loginpress-deprecated-addons.php:80
 msgid "Something went wrong in loading the Add-Ons, Try again later!"
 msgstr "載入附加元件時出錯，請稍後再試！"
 
-#: classes/class-loginpress-addons.php:457
+#: classes/class-loginpress-addons.php:458
 #: classes/class-loginpress-deprecated-addons.php:270
 #: classes/class-loginpress-deprecated-addons.php:405
 #: classes/class-loginpress-deprecated-addons.php:460
-#: classes/class-loginpress-promotion.php:147
+#: classes/class-loginpress-promotion.php:237
 msgid "UPGRADE NOW"
 msgstr "現在更新"
 
-#: classes/class-loginpress-addons.php:926
+#: classes/class-loginpress-addons.php:927
 #: classes/class-loginpress-deprecated-addons.php:1046
 msgid "Extend the functionality of LoginPress with these awesome Add-ons"
 msgstr "通過這些令人敬畏的附加元件擴展 LoginPress 的功能"
@@ -258,34 +257,35 @@ msgstr "通過這些令人敬畏的附加元件擴展 LoginPress 的功能"
 msgid "Sorry, you are not allowed to edit this item."
 msgstr "抱歉，您無權編輯此項目。"
 
-#: classes/class-loginpress-custom-password.php:64
+#: classes/class-loginpress-custom-password.php:66
 #: include/customizer-strings.php:166 include/template-loginpress.php:648
 msgid "Password"
 msgstr "密碼"
 
-#: classes/class-loginpress-custom-password.php:73
+#: classes/class-loginpress-custom-password.php:75
 msgid "Confirm Password"
 msgstr "確認密碼"
 
 #. translators: Empty Password
-#: classes/class-loginpress-custom-password.php:111
+#: classes/class-loginpress-custom-password.php:114
 #, php-format
 msgid "%1$sError:%2$s Please enter your password twice."
 msgstr "%1$s錯誤：%2$s 請輸入兩次密碼。"
 
 #. translators: Passwords Unmatched
-#: classes/class-loginpress-custom-password.php:119
-#, php-format
-msgid "%1$sError:%2$s Passwords don't match."
+#: classes/class-loginpress-custom-password.php:123
+#, fuzzy, php-format
+#| msgid "%1$sError:%2$s Passwords don't match."
+msgid "%1$sError:%2$s Passwords doesn't match."
 msgstr "%1$s錯誤：%2$s密碼不匹配。"
 
 #. translators: Error Message
-#: classes/class-loginpress-custom-password.php:125
+#: classes/class-loginpress-custom-password.php:129
 #, php-format
 msgid "Error: %s"
 msgstr "錯誤：%s"
 
-#: classes/class-loginpress-custom-password.php:180
+#: classes/class-loginpress-custom-password.php:184
 msgid ""
 "You have already set your own password, use the password you have already "
 "set to login."
@@ -521,37 +521,37 @@ msgid ""
 msgstr ""
 
 #. translators: Minimum password length.
-#: classes/class-loginpress-pass-strength.php:107
+#: classes/class-loginpress-pass-strength.php:117
 #, php-format
 msgid "Password must be at least %d characters long."
 msgstr "密碼長度必須至少為 %d 個字元。"
 
-#: classes/class-loginpress-pass-strength.php:114
+#: classes/class-loginpress-pass-strength.php:125
 msgid "Password must contain at least one both upper and lower case letters."
 msgstr "密碼必須至少包含一個大寫字母和一個小寫字母。"
 
-#: classes/class-loginpress-pass-strength.php:119
+#: classes/class-loginpress-pass-strength.php:130
 msgid "Password must contain at least one special character."
 msgstr "密碼必須至少包含一個大寫字母和一個小寫字母。"
 
-#: classes/class-loginpress-pass-strength.php:124
+#: classes/class-loginpress-pass-strength.php:135
 msgid "Password must contain at least one integer number."
 msgstr "密碼必須至少包含一個整數。"
 
-#: classes/class-loginpress-pass-strength.php:169
+#: classes/class-loginpress-pass-strength.php:212
 msgid "Require upper and lower case letters."
 msgstr "需要大寫和小寫字母。"
 
-#: classes/class-loginpress-pass-strength.php:170
+#: classes/class-loginpress-pass-strength.php:213
 msgid "Require special characters like ! \" ? $ % ^ & *"
 msgstr "需要特殊字符，如！ “？$%^&*"
 
-#: classes/class-loginpress-pass-strength.php:171
+#: classes/class-loginpress-pass-strength.php:214
 msgid "Require numbers."
 msgstr "需要數字。"
 
 #. translators: Minimum password length
-#: classes/class-loginpress-pass-strength.php:175
+#: classes/class-loginpress-pass-strength.php:218
 #, php-format
 msgid ""
 "Hint: The password should be at least %1$d characters long. %2$s %3$s %4$s "
@@ -578,13 +578,21 @@ msgstr "Captchas"
 msgid "CAPTCHA Protection Settings"
 msgstr "CAPTCHA 保護設置"
 
+#: classes/class-loginpress-promotion.php:79
+msgid "Integrations"
+msgstr "整合"
+
+#: classes/class-loginpress-promotion.php:80
+msgid "All Plugin Integrations"
+msgstr "所有插件集成"
+
 #. translators: Upgrade to Pro
-#: classes/class-loginpress-promotion.php:81
+#: classes/class-loginpress-promotion.php:87
 #, php-format
 msgid "Upgrade to Pro%1$s for More Features%2$s"
 msgstr "Upgrade to Pro %1$s for More Features %2$s"
 
-#: classes/class-loginpress-promotion.php:107
+#: classes/class-loginpress-promotion.php:112
 msgid ""
 "Social login from LoginPress is an add-on which provides facility your users "
 "to login and Register via Facebook, Google and Twitter. This add-on will "
@@ -595,7 +603,7 @@ msgstr ""
 "Google和Twitter登錄和註冊的便利。此附加元件將消除垃圾郵件和機器人註冊。此附加"
 "元件將説明您的使用者在您的網站上輕鬆註冊/登錄。"
 
-#: classes/class-loginpress-promotion.php:110
+#: classes/class-loginpress-promotion.php:115
 msgid ""
 "Redirect users based on their roles and specific usernames. This is helpful, "
 "If you have an editor and want to redirect him to his editor stats page. "
@@ -608,7 +616,7 @@ msgstr ""
 "而不是 wp-admin。此附加元件具有很酷的UX / UI，可以管理您在網站上創建的所有登"
 "錄重定向。"
 
-#: classes/class-loginpress-promotion.php:113
+#: classes/class-loginpress-promotion.php:118
 msgid ""
 "This LoginPress add-on lets you (Adminstrator) generates a unique URL for "
 "your certain users who you don't want to provide a password to login into "
@@ -620,7 +628,7 @@ msgstr ""
 "不想提供密碼來登錄您的網站。此Pro附加元件為您提供了自動生成的登錄連結的所有用"
 "戶的清單。您可以關閉某人的存取權限並刪除某些使用者。"
 
-#: classes/class-loginpress-promotion.php:116
+#: classes/class-loginpress-promotion.php:121
 msgid ""
 "The LoginPress CAPTCHA feature lets you easily integrate different types of "
 "CAPTCHA services into your login and registration forms. CAPTCHA types "
@@ -633,17 +641,96 @@ msgstr ""
 "用的 CAPTCHA 服務。此功能有助於防止垃圾郵件、機器人攻擊和授權訪問，確保更安全"
 "的用戶體驗。"
 
+#: classes/class-loginpress-promotion.php:124
+msgid ""
+"LoginPress integrates with the most popular WordPress plugins to enhance "
+"your login experience. Our Social Login, CAPTCHA and Limit Login Attempts "
+"features among others are easily integrated into these platforms, helping "
+"you streamline user access and enhance security."
+msgstr ""
+"LoginPress 與最熱門的 WordPress 外掛集成，提升您的登入體驗。我們的社群登入、"
+"驗證碼和限制登入嘗試次數等功能可輕鬆整合到這些平台，幫助您簡化使用者存取並增"
+"強安全性。"
+
+#: classes/class-loginpress-promotion.php:132
+#: classes/class-loginpress-promotion.php:133
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: classes/class-loginpress-promotion.php:134
+msgid "Quick, secure logins for your WooCommerce store."
+msgstr "快速、安全地登入您的 WooCommerce 商店。"
+
+#: classes/class-loginpress-promotion.php:141
+#: classes/class-loginpress-promotion.php:142
+msgid "Easy Digital Downloads"
+msgstr "Easy Digital Downloads"
+
+#: classes/class-loginpress-promotion.php:143
+msgid "Secure digital purchases with login enhancements."
+msgstr "透過登入增強功能確保數位購買的安全。"
+
+#: classes/class-loginpress-promotion.php:150
+#: classes/class-loginpress-promotion.php:151
+msgid "BuddyPress"
+msgstr "BuddyPress"
+
+#: classes/class-loginpress-promotion.php:152
+msgid "Boost community logins with social and captcha support."
+msgstr "透過社交和驗證碼支援來促進社區登入。"
+
+#: classes/class-loginpress-promotion.php:159
+#: classes/class-loginpress-promotion.php:160
+msgid "BuddyBoss"
+msgstr "BuddyBoss"
+
+#: classes/class-loginpress-promotion.php:161
+msgid "Hassle-free login experience for your BuddyBoss community."
+msgstr "為您的 BuddyBoss 社群提供無憂的登入體驗。"
+
+#: classes/class-loginpress-promotion.php:168
+#: classes/class-loginpress-promotion.php:169
+msgid "LifterLMS"
+msgstr "LifterLMS"
+
+#: classes/class-loginpress-promotion.php:170
+msgid "Let students log in easily and securely."
+msgstr "讓學生輕鬆安全地登入。"
+
+#: classes/class-loginpress-promotion.php:177
+#: classes/class-loginpress-promotion.php:178
+msgid "LearnDash"
+msgstr "LearnDash"
+
+#: classes/class-loginpress-promotion.php:179
+msgid "Simplify learning access with our login tools."
+msgstr "使用我們的登入工具簡化學習存取。"
+
+#: classes/class-loginpress-promotion.php:199
+#, fuzzy
+#| msgid "Upgrade"
+msgid "Upgrade Now"
+msgstr "升級"
+
 #. translators: Video title.
-#: classes/class-loginpress-promotion.php:130
+#: classes/class-loginpress-promotion.php:220
 #, php-format
 msgid "Video: %s"
 msgstr "影片：%s"
 
-#: classes/class-loginpress-settings-api.php:122
+#: classes/class-loginpress-settings-api.php:138
 msgid "How to Setup"
 msgstr "如何設定"
 
-#: classes/class-loginpress-settings-api.php:425 custom.php:1007
+#: classes/class-loginpress-settings-api.php:308
+msgid "Activate Social Login addon to use following settings."
+msgstr "啟動社交登入外掛程式以使用以下設定。"
+
+#: classes/class-loginpress-settings-api.php:337
+msgid "Please enable Captcha first."
+msgstr "請先啟用驗證碼。"
+
+#: classes/class-loginpress-settings-api.php:471 custom.php:1007
 msgid "Choose File"
 msgstr "選擇檔案"
 
@@ -653,7 +740,7 @@ msgstr "已恢復預設值。"
 
 #. Plugin Name of the plugin/theme
 #. Author of the plugin/theme
-#: classes/class-loginpress-setup.php:140 custom.php:389 loginpress.php:387
+#: classes/class-loginpress-setup.php:140 custom.php:389 loginpress.php:388
 msgid "LoginPress"
 msgstr "LoginPress"
 
@@ -688,8 +775,8 @@ msgid "Add-Ons"
 msgstr "附加元件"
 
 #: classes/class-loginpress-setup.php:222
-msgid "Login Page Setting"
-msgstr "登錄頁面設置"
+msgid "Login Page Settings"
+msgstr "登入頁面設定"
 
 #. translators: Wordpress customizer
 #: classes/class-loginpress-setup.php:225
@@ -913,48 +1000,48 @@ msgstr "下載日誌檔"
 msgid "LoginPress Log File Downloaded Successfully!"
 msgstr "登錄按日誌檔下載成功！"
 
-#: classes/class-loginpress-setup.php:599
+#: classes/class-loginpress-setup.php:600
 msgid "Lost Password URL"
 msgstr "忘記密碼"
 
-#: classes/class-loginpress-setup.php:600
+#: classes/class-loginpress-setup.php:601
 msgid ""
 "Use WordPress default lost password URL instead of WooCommerce custom lost "
 "password URL."
 msgstr ""
 "使用 WordPress 預設丟失的密碼 URL，而不是 WooCommerce 自訂丟失的密碼 URL。"
 
-#: classes/class-loginpress-setup.php:620
+#: classes/class-loginpress-setup.php:621
 msgid "Language Switcher"
 msgstr "語言切換器"
 
 #. translators: Custom Password Fields
-#: classes/class-loginpress-setup.php:623
+#: classes/class-loginpress-setup.php:624
 #, php-format
 msgid "Enable to remove %1$sLanguage Switcher Dropdown%2$s on Login Forms."
 msgstr "啟用此選項可刪除登錄表單上的%1$s語言切換器下拉清單%2$s。"
 
-#: classes/class-loginpress-setup.php:641
+#: classes/class-loginpress-setup.php:642
 msgid "and LoginPress page"
 msgstr "和LoginPress頁面"
 
-#: classes/class-loginpress-setup.php:647
+#: classes/class-loginpress-setup.php:648
 msgid "Remove Settings On Uninstall"
 msgstr "卸載時刪除設置"
 
 #. translators: Remove Settings on Uninstall
-#: classes/class-loginpress-setup.php:650
+#: classes/class-loginpress-setup.php:651
 #, php-format
 msgid ""
 "Enable to remove all custom settings made %1$s by LoginPress upon uninstall."
 msgstr "啟用此選項可在卸載時刪除由 LoginPress %1$s的所有自訂設置。"
 
-#: classes/class-loginpress-setup.php:659
+#: classes/class-loginpress-setup.php:660
 msgid "Remove Settings On Uninstall For Pro"
 msgstr "刪除專業版的解除安裝設定"
 
 #. translators: Remove Settings on Uninstall For Pro
-#: classes/class-loginpress-setup.php:662
+#: classes/class-loginpress-setup.php:663
 #, php-format
 msgid ""
 "Enable to remove all custom settings made %1$s by LoginPress-Pro upon "
@@ -962,24 +1049,24 @@ msgid ""
 msgstr "啟用以刪除卸載時由 LoginPress-Pro 進行的所有自訂設定 %1$s。"
 
 #. translators: Upgrade to Pro link
-#: classes/class-loginpress-setup.php:716
+#: classes/class-loginpress-setup.php:717
 #, php-format
 msgid "Upgrade%1$s to Pro%2$s"
 msgstr "升級%1$s專業版%2$s"
 
-#: classes/class-loginpress-setup.php:719
+#: classes/class-loginpress-setup.php:720
 msgid "Support"
 msgstr "技術支援"
 
-#: classes/class-loginpress-setup.php:730
+#: classes/class-loginpress-setup.php:731
 msgid "Documentation"
 msgstr "文檔"
 
-#: classes/class-loginpress-setup.php:740
+#: classes/class-loginpress-setup.php:741
 msgid "Please activate your license key."
 msgstr "請啟動您的許可證密鑰。"
 
-#: classes/class-loginpress-setup.php:741
+#: classes/class-loginpress-setup.php:742
 msgid ""
 "Validating the license key is mandatory to use automatic updates and receive "
 "plugin support."
@@ -2006,9 +2093,9 @@ msgid ""
 "Spam, I promise.%6$s %4$s%4$s Help us %7$sImprove LoginPress%8$s %4$s %4$s "
 msgstr ""
 "%1$s 嗨！%2$s， %4$s 如果你選擇在你的 LoginPress 安裝一些數據將被發送到 "
-"WPBrigade.com（這不包括統計數據）%4$s ，你將收到新功能的更新、安全通知"
-"等，%5$s沒有垃圾郵件 - 我保證。%6$s %4$s%4$s幫助我們%7$s改進 LoginPress%8$s "
-"%4$s %4$s "
+"WPBrigade.com（這不包括統計數據）%4$s ，你將收到新功能的更新、安全通知等，"
+"%5$s沒有垃圾郵件 - 我保證。%6$s %4$s%4$s幫助我們%7$s改進 LoginPress%8$s %4$s "
+"%4$s "
 
 #: include/loginpress-optin-form.php:458
 msgid "Allow and Continue  "
@@ -2176,64 +2263,56 @@ msgstr "該插件的名字是什麼？"
 msgid "Would you like to share what's other reason?"
 msgstr "您願意分享其他原因嗎？"
 
-#: loginpress.php:385
+#: loginpress.php:386
 msgid "Activate"
 msgstr "啟用"
 
-#: loginpress.php:468
+#: loginpress.php:513
 msgctxt "Login Redirect Roles"
 msgid "Name"
 msgstr "姓名"
 
-#: loginpress.php:502
+#: loginpress.php:547
 msgid "Vote!"
 msgstr "投票日誌!"
 
-#: loginpress.php:505
+#: loginpress.php:550
 msgid "Rate"
 msgstr "評分"
 
 #. translators: Build links
-#: loginpress.php:587
+#: loginpress.php:632
 #, php-format
 msgid "%1$s Settings %2$s | %3$s Customize %4$s"
 msgstr "%1$s 設定 %2$s | %3$s 自訂 %4$s"
 
 #. translators: links based on opt in
 #. translators: setting link when opted out
-#: loginpress.php:610 loginpress.php:629
+#: loginpress.php:655 loginpress.php:674
 #, php-format
 msgid " | %1$s Opt Out %2$s "
 msgstr " | %1$s 選擇退出 %2$s "
 
 #. translators: Update opt-in state
 #. translators: Opt-out link
-#: loginpress.php:639 loginpress.php:649
+#: loginpress.php:684 loginpress.php:694
 #, php-format
 msgid " | %1$s Opt In %2$s "
 msgstr "|%1$s 加入宣告 %2$s"
 
 #. translators: Pro upgrade link
-#: loginpress.php:662
+#: loginpress.php:707
 #, php-format
 msgid "%1$s %3$s Upgrade Pro %4$s %2$s"
 msgstr "%1$s %3$s 升級 PRO 版 %4$s %2$s"
 
 #. Plugin URI of the plugin/theme
-#| msgid ""
-#| "https://loginpress.pro/?utm_source=loginpress-lite&utm_medium=plugin-"
-#| "inside&utm_campaign=pro-upgrade&utm_content=plugin_uri"
 msgid ""
 "https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-"
 "header&utm_campaign=pro-upgrade&utm_content=plugin-uri"
 msgstr ""
 
 #. Description of the plugin/theme
-#| msgid ""
-#| "LoginPress is the best <code>wp-login</code> Login Page Customizer plugin "
-#| "by <a href=\"https://wpbrigade.com/?utm_source=loginpress-"
-#| "lite\">WPBrigade</a> which allows you to completely change the layout of "
-#| "login, register and forgot password forms."
 msgid ""
 "LoginPress is the best <code>wp-login</code> Login Page Customizer plugin by "
 "<a href=\"https://wpbrigade.com/?utm_source=loginpress-"
@@ -2243,13 +2322,13 @@ msgid ""
 msgstr ""
 
 #. Author URI of the plugin/theme
-#| msgid ""
-#| "https://loginpress.pro/?utm_source=loginpress-lite&utm_medium=plugin-"
-#| "inside&utm_campaign=pro-upgrade&utm_content=plugin_uri"
 msgid ""
 "https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-"
 "header&utm_campaign=pro-upgrade&utm_content=author-uri"
 msgstr ""
+
+#~ msgid "Coming soon"
+#~ msgstr "即將推出"
 
 #~ msgid "Getting Started Video"
 #~ msgstr "入門影片"

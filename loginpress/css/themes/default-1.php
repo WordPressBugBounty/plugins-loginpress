@@ -11,9 +11,6 @@ function first_presets() {
 	ob_start();
 	if ( version_compare( $GLOBALS['wp_version'], '5.3', '>=' ) ) : ?>
 		<style media="screen"  id="loginpress-style-wp-5-3">
-			body .social-networks a svg {
-				position: absolute;
-			}
 			.login .privacy-policy-page-link>a.privacy-policy-link{
 				color: inherit;
 				text-decoration: none;

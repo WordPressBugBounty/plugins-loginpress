@@ -5,7 +5,7 @@ Contributors: WPBrigade, hiddenpearls, AbdulWahab610
 Donate link: https://loginpress.pro/pricing/?utm_source=loginpress-lite
 Author URI: https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=author-url-link
 Tags: wp-login, login, login customizer, custom login, wordpress login,
-Stable tag: 4.0.1
+Stable tag: 5.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -197,31 +197,62 @@ Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricin
 
 == Screenshots ==
 
-1. Custom Login page Example #1 with Default Background
-2. Custom Login page (Company theme) Example #2 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
-3. Custom Login page (Company theme) Example #3 with Captcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
-4. Custom Login page (Persona theme) Example #4 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Persona+theme)
-5. Custom Login page (Corporate theme) Example #5 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Corporate+theme)
-6. Custom Login page (Corporate theme) Example #6 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Corporate+theme)
-7. Custom Login page (Startup theme) Example #7 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Startup+theme)
-8. Custom Login page (Wedding theme) Example #8 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Wedding+theme)
-9. Custom Login page (Wedding theme) Example #9 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Wedding+theme)
-10. Custom Login page (Company theme) Example #10 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
-11. Custom Login page (Company theme) Example #11 with Captcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
-12. Custom Login page (Bikers theme) Example #12 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Bikers+theme)
-13. Custom Login page (Fitness theme) Example #13 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Fitness+theme)
-14. Custom Login page (Shopping theme) Example #14 [Pro feature]https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Shopping+theme)
-15. Custom Login page (Writers theme) Example #15 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Writers+theme)
-16. Custom Login page (Writers theme) Example #16 with reCaptcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Writers+theme)
-17. Custom Login page (Persona theme) Example #17 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Persona+theme)
-18. Custom Login page (Persona theme) Example #18 with reCaptcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Persona+theme)
-19. Custom Login page (Geek theme) Example #19 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Geek+theme)
-20. Custom Login page (Geek theme) Example #20 with reCaptcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Geek+theme)
-21. Custom Login page (Innovation theme) Example #21 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Innovation+themee)
-22. Custom Login page (Photographers theme) Example #22 [Pro feature](hhttps://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Photographers+theme)
-23. Custom Login page (Company theme) Example #23 with Captcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
+1. Integration tab in LoginPress where you can enable compatibility with popular plugins like BuddyBoss, LearnDash, WooCommerce, and more. [Pro feature]
+2. LoginPress allows seamless integration with top social platforms for quick and secure user login. [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
+3. Social Login general settings in LoginPress.  [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
+4. Social Login styles settings in LoginPress.  [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Persona+theme)
+5. General settings screen for your login page. (https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Corporate+theme)
+6. LoginPress Captchas tab – easily enable Google reCAPTCHA, hCAPTCHA, or Cloudflare Turnstile CAPTCHA for spam protection. [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Corporate+theme)
+7. LoginPress Auto Login tab – generate secure auto-login links for specific users. [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Startup+theme)
+8. LoginPress User Redirects settings tab for managing login and logout redirects. [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Wedding+theme)
+9. LoginPress Attempt Details tab – monitor and manage blocked login attempts with detailed logs. [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
+10. LoginPress Hide Login tab – customize your login URL to protect against brute-force attacks. [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
+11. Custom Login page Example #1 with Default Background
+12. Custom Login page (Company theme) Example #2 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
+13. Custom Login page (Company theme) Example #3 with Captcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
+14. Custom Login page (Persona theme) Example #4 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Persona+theme)
+15. Custom Login page (Corporate theme) Example #5 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Corporate+theme)
+16. Custom Login page (Corporate theme) Example #6 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Corporate+theme)
+17. Custom Login page (Startup theme) Example #7 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Startup+theme)
+18. Custom Login page (Wedding theme) Example #8 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Wedding+theme)
+19. Custom Login page (Wedding theme) Example #9 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Wedding+theme)
+20. Custom Login page (Company theme) Example #10 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
+21. Custom Login page (Company theme) Example #11 with Captcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
+22. Custom Login page (Bikers theme) Example #12 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Bikers+theme)
+23. Custom Login page (Fitness theme) Example #13 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Fitness+theme)
+24. Custom Login page (Shopping theme) Example #14 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Shopping+theme)
+25. Custom Login page (Writers theme) Example #15 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Writers+theme)
+26. Custom Login page (Writers theme) Example #16 with reCaptcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Writers+theme)
+27. Custom Login page (Persona theme) Example #17 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Persona+theme)
+28. Custom Login page (Persona theme) Example #18 with reCaptcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Persona+theme)
+29. Custom Login page (Geek theme) Example #19 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Geek+theme)
+30. Custom Login page (Geek theme) Example #20 with reCaptcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Geek+theme)
+31. Custom Login page (Innovation theme) Example #21 [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Innovation+themee)
+32. Custom Login page (Photographers theme) Example #22 [Pro feature](hhttps://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Photographers+theme)
+33. Custom Login page (Company theme) Example #23 with Captcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
 
 == Changelog ==
+
+= 5.0.0 – 2025-07-03 =
+* New Feature: We've added a new Integrations section that allows LoginPress to connect with other powerful WordPress plugins.
+				* WooCommerce
+				* Easy Digital Downloads
+				* BuddyPress
+				* BuddyBoss
+				* LearnDash
+				* Lifter LMS
+* New Feature: Adding more Social login providers.
+				* Login with Amazon
+				* Login with Twitch
+				* Login with Spotify
+				* Login with Disqus
+				* Login with Pinterest
+				* Login with Reddit
+* New Feature: Enhanced security with a password strength meter now applied to the LoginPress widget.
+* Bugfix: Resolved an issue with inconsistent button height for language selectors.
+* Enhancement: Improved diagnostic logging for better error tracking, debugging, and support.
+* Enhancement: Updated language files for Arabic, Dutch, Espanol, Polish, Portuguese, Urdu, Chinese and French to ensure better translations and localization.
+* Compatibility: Compatible with WordPress 6.8
 
 = 4.0.1 – 2025-04-18 =
 * Bugfix: Resolved CSS conflict in review notification.
@@ -239,7 +270,7 @@ Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricin
 * Enhancement: Color Customization - Eye-icon & Remember me checkbox color are now syncs with the button color settings.
 * Enhancement: Import/Export Improvements - Enhanced functionality for smoother data handling.
 * Enhancement: Uninstallation Optimization - Improved the uninstallation process for better cleanup and efficiency.
-* Enhancement: Language File Updates - Updated language files for Arabic, Dutch, Espanol, Polish, Portuguese, urdu, Chinese and French to ensure better translations and localization.
+* Enhancement: Language File Updates - Updated language files for Arabic, Dutch, Espanol, Polish, Portuguese, Urdu, Chinese and French to ensure better translations and localization.
 * Compatibility: Customizer Conflict with [LoftLoader](https://wordpress.org/plugins/loftloader/) plugin.
 
 = 3.3.1 – 2025-01-03 =
@@ -359,5 +390,5 @@ For more detail on changelog visit [LoginPress.Pro](https://loginpress.pro/chang
 
 == Upgrade Notice ==
 
-= 4.0.1 =
-* LoginPress 4.0 is packed with enhancements, new features, and performance improvements for a seamless login experience! Upgrade now.
+= 5.0.0 =
+* Upgrade Now, LoginPress 5.0 is packed with New features, enhancements and performance improvements.

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2025-03-01 17:54+0500\n"
-"PO-Revision-Date: 2025-03-03 14:25+0500\n"
+"PO-Revision-Date: 2025-06-28 16:13+0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: .\n"
 
 #: classes/class-loginpress-addons-meta.php:29
@@ -603,7 +603,7 @@ msgid ""
 "Hint: The password should be at least %1$d characters long. %2$s %3$s %4$s "
 msgstr ""
 "Hinweis: Das Passwort sollte mindestens %1$d Zeichen lang sein. %2$s %3$s "
-"%4$s"
+"%4$s "
 
 #: classes/class-loginpress-promo.php:16
 msgid "Google Fonts"
@@ -963,7 +963,7 @@ msgid ""
 "pro%2$s."
 msgstr ""
 "Für Premiumfunktionen, Add-ons oder vorrangigen E-Mail-Support führen Sie "
-"ein Upgrade auf Pro durch."
+"ein Upgrade von %1$s auf Pro %2$s durch."
 
 #. translators: Submit query through support page
 #: classes/class-loginpress-setup.php:519
@@ -973,7 +973,7 @@ msgid ""
 "through %1$sour support page%2$s!"
 msgstr ""
 "Senden Sie Ihre Anfrage für Premiumfunktionen, Add-ons oder vorrangigen E-"
-"Mail-Support über %1$unsere Supportseite%2$s!"
+"Mail-Support über %1$seine Supportseite%2$s!"
 
 #. translators: Issue submission form
 #: classes/class-loginpress-setup.php:525
@@ -983,7 +983,7 @@ msgid ""
 "%1$sissue submission form%2$s!"
 msgstr ""
 "Wenn Sie einen Fehler gefunden haben oder eine Funktionsanfrage haben, "
-"lassen Sie es uns über unser %1$ Problemmeldungsformular %2$s wissen!"
+"lassen Sie es uns über unser %1$sProblemübermittlungsformular%2$s wissen!"
 
 #: classes/class-loginpress-setup.php:530
 msgid "Download Log File"
