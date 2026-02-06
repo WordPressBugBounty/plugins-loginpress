@@ -1,13 +1,15 @@
 <?php
 /**
+ * LoginPress Custom Password Class.
+ *
  * Enable Custom Password for Register User.
  *
  * @package LoginPress
  * @since 1.0.22
  * @version 3.2.1
  */
-if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 
+if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 
 	/**
 	 * LoginPress Custom Passwords class.
@@ -17,16 +19,22 @@ if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 	 */
 	class LoginPress_Custom_Password {
 		/**
-		 * @var The single instance of the class
+		 * LoginPress customization options.
+		 *
+		 * @var array<string, mixed>|false The single instance of the class.
 		 * @since 1.0.0
 		 */
 		public $loginpress_key;
+
 		/**
 		 * Class Constructor.
+		 *
+		 * @since 1.0.22
+		 * @return void
 		 */
 		public function __construct() {
 			$this->loginpress_key = get_option( 'loginpress_customization' );
-			$this->_hooks();
+			$this->hooks();
 			$this->includes();
 		}
 
@@ -34,15 +42,23 @@ if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 		 * Include required files used in admin or on the frontend.
 		 *
 		 * @since 4.0.0
+		 * @return void
 		 */
 		public function includes() {
-			include_once LOGINPRESS_DIR_PATH . 'classes/class-loginpress-pass-strength.php';
+			if ( defined( 'LOGINPRESS_DIR_PATH' ) ) {
+				require_once LOGINPRESS_DIR_PATH . 'classes/class-loginpress-password-strength.php';
+			}
 		}
 
-		public function _hooks() {
+		/**
+		 * Hook into actions and filters.
+		 *
+		 * @since 1.0.22
+		 * @return void
+		 */
+		public function hooks() {
 
 			add_action( 'register_form', array( $this, 'loginpress_reg_password_fields' ) );
-			// add_filter( 'random_password',                array( $this, 'loginpress_set_password' ) );
 			add_action( 'register_new_user', array( $this, 'loginpress_default_password_nag' ) );
 			add_filter( 'registration_errors', array( $this, 'loginpress_reg_pass_errors' ), 10, 3 );
 			add_filter( 'wp_new_user_notification_email', array( $this, 'loginpress_new_user_email_notification' ), 11 );
@@ -53,7 +69,7 @@ if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 		 *
 		 * @since   1.0.22
 		 * @access  public
-		 * @return  string html.
+		 * @return  void
 		 */
 		public function loginpress_reg_password_fields() {
 
@@ -86,9 +102,9 @@ if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 				}
 			</style>
 			
-			<?php if ( 'on' == $enable_password_strength && $register ) { ?>
+			<?php if ( 'on' === $enable_password_strength && $register ) { ?>
 			<p class="hint-custom-reg" style="padding: 5px;">
-				<?php echo LoginPress_Password_Strength::loginpress_hint_creator(); ?>
+				<?php echo wp_kses_post( LoginPress_Password_Strength::loginpress_hint_creator() ); ?>
 			</p>
 			<?php } ?>
 			<?php
@@ -97,76 +113,60 @@ if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 		/**
 		 * Handles password field errors for registration form.
 		 *
-		 * @param Object $errors WP_Error
-		 * @param Object $sanitized_user_login user login.
-		 * @param Object $user_email user email.
+		 * @param WP_Error $errors WP_Error object.
+		 * @param string   $sanitized_user_login User login.
+		 * @param string   $user_email User email.
 		 * @since 1.0.22
 		 * @version 3.0.0
 		 * @return WP_Error object.
 		 */
-		public function loginpress_reg_pass_errors( $errors, $sanitized_user_login, $user_email ) {
+		public function loginpress_reg_pass_errors( $errors, $sanitized_user_login, $user_email ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Parameters required by WordPress filter.
 
 			// Ensure passwords aren't empty.
-			if ( ( empty( $_POST['loginpress-reg-pass'] ) || empty( $_POST['loginpress-reg-pass-2'] ) ) && ( empty( $_POST['user_pass'] ) || empty( $_POST['user_confirm_pass'] ) ) ) {
+			if ( ( empty( $_POST['loginpress-reg-pass'] ) || empty( $_POST['loginpress-reg-pass-2'] ) ) && ( empty( $_POST['user_pass'] ) || empty( $_POST['user_confirm_pass'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified above.
 				$errors->add(
 					'empty_password',
-					// translators: Empty Password
-					sprintf( __( '%1$sError:%2$s Please enter your password twice.', 'loginpress' ), '<strong>', '</strong>' )
+					// translators: Empty Password.
+					sprintf( __( '%1$sError:%2$s Please enter your password twice.', 'loginpress' ), '<strong>', '</strong>' ) // phpcs:ignore
 				);
 
 				// Ensure passwords are matched.
-			} elseif ( $_POST['loginpress-reg-pass'] != $_POST['loginpress-reg-pass-2'] ) {
+			} elseif ( sanitize_text_field( wp_unslash( $_POST['loginpress-reg-pass'] ) ) !== sanitize_text_field( wp_unslash( $_POST['loginpress-reg-pass-2'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified above.
 
-				// if passwords are not matched, then set default passwords doesn't match message or show customized message
-				$password_mismatch = array_key_exists( 'password_mismatch', $this->loginpress_key ) && ! empty( $this->loginpress_key['password_mismatch'] ) ? $this->loginpress_key['password_mismatch'] :
-				// translators: Passwords Unmatched
-				sprintf( __( '%1$sError:%2$s Passwords doesn\'t match.', 'loginpress' ), '<strong>', '</strong>' );
+				// if passwords are not matched, then set default passwords doesn't match message or show customized message.
+				$password_mismatch = is_array( $this->loginpress_key ) && array_key_exists( 'password_mismatch', $this->loginpress_key ) && ! empty( $this->loginpress_key['password_mismatch'] ) ? $this->loginpress_key['password_mismatch'] :
+				// translators: Passwords Unmatched.
+				sprintf( __( '%1$sError:%2$s Passwords doesn\'t match.', 'loginpress' ), '<strong>', '</strong>' ); // phpcs:ignore
 
-				// Show error message of passwords don't match message
+				// Show error message of passwords don't match message.
 				$errors->add(
 					'password_mismatch',
-					// translators: Error Message
-					sprintf( __( 'Error: %s', 'loginpress' ), $password_mismatch )
+					// translators: Error Message.
+					sprintf( __( 'Error: %s', 'loginpress' ), $password_mismatch ) // phpcs:ignore
 				);
 
-				// Password Set? assign password to a user_pass
+				// Password Set? assign password to a user_pass.
 			} else {
-				$_POST['user_pass'] = sanitize_text_field( $_POST['loginpress-reg-pass'] );
+				$_POST['user_pass'] = sanitize_text_field( wp_unslash( $_POST['loginpress-reg-pass'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified above.
 			}
 
 			return $errors;
 		}
 
 		/**
-		 * Let's set the user password.
-		 *
-		 * @param string $password Auto-generated password passed in from filter.
-		 * @since 1.0.22
-		 * @version 3.0.0
-		 * @return string Password Choose by User.
-		 */
-		// public function loginpress_set_password( $password ) {
-
-		// Make sure password field isn't empty.
-		// if ( isset( $_POST['user_pass'] ) && ! empty( $_POST['user_pass'] ) ) {
-		// $password = $_POST['user_pass'];
-		// }
-		// return esc_html( $password );
-		// }
-
-		/**
 		 * Sets the value of default password nag.
 		 *
-		 * @param int $user_id.
+		 * @param int $user_id User ID.
 		 * @since 1.0.22
 		 * @version 3.0.0
+		 * @return void
 		 */
 		public function loginpress_default_password_nag( $user_id ) {
 
 			// False => User not using WordPress default password.
 			update_user_meta( $user_id, 'default_password_nag', false );
-			if ( isset( $_POST['user_pass'] ) && ! empty( $_POST['user_pass'] ) ) {
-				$password = $_POST['user_pass'];
+			if ( isset( $_POST['user_pass'] ) && ! empty( $_POST['user_pass'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- This is called during user registration process where nonce is already verified.
+				$password = sanitize_text_field( wp_unslash( $_POST['user_pass'] ) ); // phpcs:ignore
 				wp_set_password( $password, $user_id );
 			}
 		}
@@ -174,14 +174,14 @@ if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 		/**
 		 * Filter the new user email notification.
 		 *
-		 * @param array $email The new user email notification parameters.
+		 * @param array<string, mixed> $email The new user email notification parameters.
 		 * @since 1.4.0
 		 * @version 3.0.0
-		 * @return array The new user email notification parameters.
+		 * @return array<string, mixed> The new user email notification parameters.
 		 */
-		function loginpress_new_user_email_notification( $email ) {
+		public function loginpress_new_user_email_notification( $email ) {
 
-			$email['message']  = "\r\n" . __( 'You have already set your own password, use the password you have already set to login.', 'loginpress' );
+			$email['message']  = "\r\n" . esc_html__( 'You have already set your own password, use the password you have already set to login.', 'loginpress' );
 			$email['message'] .= "\r\n\r\n" . wp_login_url() . "\r\n";
 
 			return $email;

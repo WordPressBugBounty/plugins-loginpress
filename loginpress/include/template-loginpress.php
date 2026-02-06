@@ -1,12 +1,12 @@
 <?php
-
 /**
- * Template Name: LoginPress
+ * LoginPress Template.
  *
+ * Template Name: LoginPress
  * Template to display the WordPress login page in the WP-Customizer.
+ * Purpose of this file is to provide a custom template for the login page within the WordPress Customizer.
  *
  * @package LoginPress
- * @author  WPBrigade
  * @since 1.1.3
  */
 
@@ -15,17 +15,16 @@ global $interim_login;
 
 if ( ! is_customize_preview() ) {
 
-	$loginpress_obj  = new LoginPress();
-	$loginpress_page = $loginpress_obj->get_loginpress_page();
-
-	$page = get_permalink( $loginpress_page );
+	$loginpress_obj      = new LoginPress();
+	$loginpress_page     = $loginpress_obj->get_loginpress_page();
+	$loginpress_page_url = get_permalink( $loginpress_page );
 
 	// Generate the redirect url.
 	$url = add_query_arg(
 		array(
 			'autofocus[panel]' => 'loginpress_panel',
 			'return'           => admin_url( 'index.php' ),
-			'url'              => rawurlencode( $page ),
+			'url'              => rawurlencode( $loginpress_page_url ? $loginpress_page_url : '' ),
 		),
 		admin_url( 'customize.php' )
 	);
@@ -33,16 +32,20 @@ if ( ! is_customize_preview() ) {
 	wp_safe_redirect( $url );
 }
 
-	/** Make sure that the WordPress bootstrap has run before continuing. */
+	/**
+	 * Make sure that the WordPress bootstrap has run before continuing.
+	 *
+	 * @phpstan-ignore-next-line
+	 */
 	require ABSPATH . '/wp-load.php';
 
-	// Redirect to https login if forced to use SSL
+// Redirect to https login if forced to use SSL.
 if ( force_ssl_admin() && ! is_ssl() ) {
-	if ( 0 === strpos( $_SERVER['REQUEST_URI'], 'http' ) ) {
-		wp_redirect( set_url_scheme( $_SERVER['REQUEST_URI'], 'https' ) );
+	if ( isset( $_SERVER['REQUEST_URI'] ) && 0 === strpos( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), 'http' ) ) {
+		wp_safe_redirect( set_url_scheme( sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ), 'https' ) );
 		exit();
-	} else {
-		wp_redirect( 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] );
+	} elseif ( isset( $_SERVER['HTTP_HOST'], $_SERVER['REQUEST_URI'] ) ) {
+		wp_safe_redirect( 'https://' . sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) . sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) );
 		exit();
 	}
 }
@@ -54,16 +57,17 @@ if ( force_ssl_admin() && ! is_ssl() ) {
  *                           Default 'Log In'.
  * @param string   $message  Optional. Message to display in header. Default empty.
  * @param WP_Error $wp_error Optional. The error to pass. Default empty.
+ * @return void
  */
-function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
+function login_header( $title = 'Log In', $message = '', $wp_error = null ) {
 	global $error, $interim_login, $action;
 
-	// Don't index any of these forms
+	// Don't index any of these forms.
 	add_action( 'login_head', 'wp_no_robots' );
 
 	add_action( 'login_head', 'wp_login_viewport_meta' );
 
-	if ( empty( $wp_error ) ) {
+	if ( null === $wp_error ) {
 		$wp_error = new WP_Error();
 	}
 
@@ -90,7 +94,7 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 	<html xmlns="http://www.w3.org/1999/xhtml" <?php language_attributes(); ?>>
 	<!--<![endif]-->
 	<head>
-	<title><?php echo $login_title; ?></title>
+	<title><?php echo esc_html( $login_title ); ?></title>
 	<?php
 
 	wp_enqueue_style( 'login' );
@@ -149,7 +153,8 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 
 	if ( is_multisite() ) {
 		$login_header_url   = network_home_url();
-		$login_header_title = get_network()->site_name;
+		$network            = get_network();
+		$login_header_title = $network ? $network->site_name : '';
 	} else {
 		$login_header_url   = __( 'https://wordpress.org/' ); // @codingStandardsIgnoreLine.
 		$login_header_title = __( 'Powered by WordPress' ); // @codingStandardsIgnoreLine.
@@ -185,7 +190,7 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 
 	?>
 	<div id="login">
-	<h1><a href="<?php echo esc_url( $login_header_url ); ?>" title="<?php echo esc_attr( $login_header_title ); ?>" tabindex="-1"><?php echo $login_header_text; ?></a></h1>
+	<h1><a href="<?php echo esc_url( $login_header_url ); ?>" title="<?php echo esc_attr( $login_header_title ); ?>" tabindex="-1"><?php echo esc_html( $login_header_text ); ?></a></h1>
 	<?php
 
 	unset( $login_header_url, $login_header_title );
@@ -199,10 +204,10 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 	*/
 	$message = apply_filters( 'login_message', $message );
 	if ( ! empty( $message ) ) {
-		echo $message . "\n";
+		echo wp_kses_post( $message ) . "\n";
 	}
 
-	// In case a plugin uses $error rather than the $wp_errors object
+	// In case a plugin uses $error rather than the $wp_errors object.
 	if ( ! empty( $error ) ) {
 		$wp_error->add( 'error', $error );
 		unset( $error );
@@ -214,7 +219,7 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 		foreach ( $wp_error->get_error_codes() as $code ) {
 			$severity = $wp_error->get_error_data( $code );
 			foreach ( $wp_error->get_error_messages( $code ) as $error_message ) {
-				if ( 'message' == $severity ) {
+				if ( 'message' === $severity ) {
 					$messages .= '	' . $error_message . "<br />\n";
 				} else {
 					$errors .= '	' . $error_message . "<br />\n";
@@ -229,6 +234,7 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 			*
 			* @param string $errors Login error message.
 			*/
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Content is escaped by WP_Error.
 			echo '<div id="login_error">' . apply_filters( 'login_errors', $errors ) . "</div>\n";
 		}
 		if ( ! empty( $messages ) ) {
@@ -239,6 +245,7 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
 			*
 			* @param string $messages Login messages.
 			*/
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Content is escaped by WP_Error.
 			echo '<p class="message">' . apply_filters( 'login_messages', $messages ) . "</p>\n";
 		}
 	}
@@ -253,6 +260,7 @@ function login_header( $title = 'Log In', $message = '', $wp_error = '' ) {
  * upon successful login.
  *
  * @param string $input_id Which input to auto-focus.
+ * @return void
  */
 function login_footer( $input_id = '' ) {
 	global $interim_login;
@@ -278,12 +286,13 @@ function login_footer( $input_id = '' ) {
 			 *
 			 * @param string $link HTML link to the home URL of the current site.
 			 */
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Filter output is escaped.
 			echo apply_filters( 'login_site_html_link', $html_link );
 			?>
 		</p>
 		<?php if ( ! empty( $input_id ) ) : ?>
 			<script type="text/javascript">
-			try{document.getElementById('<?php echo $input_id; ?>').focus();}catch(e){}
+			try{document.getElementById('<?php echo esc_js( $input_id ); ?>').focus();}catch(e){}
 			if(typeof wpOnload=='function')wpOnload();
 			</script>
 			<?php
@@ -293,7 +302,7 @@ function login_footer( $input_id = '' ) {
 	}
 
 	?>
-	</div><?php // End of <div id="login">. ?>
+	</div>
 
 	<?php
 	if (
@@ -345,18 +354,30 @@ function login_footer( $input_id = '' ) {
 					 */
 					wp_dropdown_languages( apply_filters( 'login_language_dropdown_args', $args ) );
 					?>
-
-					<?php if ( $interim_login ) { ?>
+					<?php
+					/**
+					 * Handle interim login hidden field.
+					 *
+					 * @phpstan-ignore-next-line
+					 */
+					if ( $interim_login ) {
+						?>
 						<input type="hidden" name="interim-login" value="1" />
-					<?php } ?>
-
-					<?php if ( isset( $_GET['redirect_to'] ) && '' !== $_GET['redirect_to'] ) { ?>
-						<input type="hidden" name="redirect_to" value="<?php echo sanitize_url( $_GET['redirect_to'] ); ?>" />
-					<?php } ?>
-
-					<?php if ( isset( $_GET['action'] ) && '' !== $_GET['action'] ) { ?>
-						<input type="hidden" name="action" value="<?php echo esc_attr( $_GET['action'] ); ?>" />
-					<?php } ?>
+						<?php
+					}
+					// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET parameter for language switcher.
+					if ( isset( $_GET['redirect_to'] ) && '' !== $_GET['redirect_to'] ) {
+						?>
+						<input type="hidden" name="redirect_to" value="<?php echo esc_url( wp_unslash( $_GET['redirect_to'] ) ); // phpcs:ignore ?>" />
+						<?php
+					}
+					// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET parameter for language switcher.
+					if ( isset( $_GET['action'] ) && '' !== sanitize_text_field( wp_unslash( $_GET['action'] ) ) ) {
+						?>
+						<input type="hidden" name="action" value="<?php echo esc_attr( sanitize_text_field( wp_unslash( $_GET['action'] ) ) ); // phpcs:ignore ?>" />
+						<?php
+					}
+					?>
 
 						<input type="submit" class="button" value="<?php esc_attr_e( 'Change' ); // @codingStandardsIgnoreLine.?>"> 
 
@@ -370,11 +391,12 @@ function login_footer( $input_id = '' ) {
 		ob_start();
 		?>
 		<script>
-		try{document.getElementById('<?php echo $input_id; ?>').focus();}catch(e){}
+		try{document.getElementById('<?php echo esc_js( $input_id ); ?>').focus();}catch(e){}
 		if(typeof wpOnload=='function')wpOnload();
 		</script>
 		<?php
-		wp_print_inline_script_tag( wp_remove_surrounding_empty_script_tags( ob_get_clean() ) );
+		$script_content = ob_get_clean();
+		wp_print_inline_script_tag( wp_remove_surrounding_empty_script_tags( $script_content ? $script_content : '' ) );
 	}
 
 	/**
@@ -391,7 +413,10 @@ function login_footer( $input_id = '' ) {
 }
 
 /**
+ * Output viewport meta tag for login page.
+ *
  * @since 3.7.0
+ * @return void
  */
 function wp_login_viewport_meta() {
 	?>
@@ -399,17 +424,18 @@ function wp_login_viewport_meta() {
 	<?php
 }
 
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET/POST parameter for login action.
+$login_action = isset( $_REQUEST['action'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) : 'login';
+$login_errors = new WP_Error();
 
-$action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : 'login';
-$errors = new WP_Error();
-
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET parameter for password reset.
 if ( isset( $_GET['key'] ) ) {
-	$action = 'resetpass';
+	$login_action = 'resetpass';
 }
 
-// validate action so as to default to the login screen
-if ( ! in_array( $action, array( 'postpass', 'logout', 'lostpassword', 'retrievepassword', 'resetpass', 'rp', 'register', 'login' ), true ) && false === has_filter( 'login_form_' . $action ) ) {
-	$action = 'login';
+// Validate action so as to default to the login screen.
+if ( ! in_array( $login_action, array( 'postpass', 'logout', 'lostpassword', 'retrievepassword', 'resetpass', 'rp', 'register', 'login' ), true ) && false === has_filter( 'login_form_' . $login_action ) ) {
+	$login_action = 'login';
 }
 
 	nocache_headers();
@@ -419,28 +445,45 @@ if ( ! is_customize_preview() ) {
 	header( 'Content-Type: ' . get_bloginfo( 'html_type' ) . '; charset=' . get_bloginfo( 'charset' ) );
 
 }
-if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set
-	if ( isset( $_SERVER['PATH_INFO'] ) && ( $_SERVER['PATH_INFO'] != $_SERVER['PHP_SELF'] ) ) {
-		$_SERVER['PHP_SELF'] = str_replace( $_SERVER['PATH_INFO'], '', $_SERVER['PHP_SELF'] );
+if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set.
+	if ( isset( $_SERVER['PATH_INFO'], $_SERVER['PHP_SELF'] ) && ( sanitize_text_field( wp_unslash( $_SERVER['PATH_INFO'] ) ) !== sanitize_text_field( wp_unslash( $_SERVER['PHP_SELF'] ) ) ) ) {
+		$_SERVER['PHP_SELF'] = str_replace( sanitize_text_field( wp_unslash( $_SERVER['PATH_INFO'] ) ), '', sanitize_text_field( wp_unslash( $_SERVER['PHP_SELF'] ) ) );
 	}
 
-	$url = dirname( set_url_scheme( 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] ) );
-	if ( $url != get_option( 'siteurl' ) ) {
-		update_option( 'siteurl', $url );
+	if ( isset( $_SERVER['HTTP_HOST'], $_SERVER['PHP_SELF'] ) ) {
+		$url = dirname( set_url_scheme( 'http://' . sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) . sanitize_text_field( wp_unslash( $_SERVER['PHP_SELF'] ) ) ) );
+		if ( get_option( 'siteurl' ) !== $url ) {
+			update_option( 'siteurl', $url );
+		}
 	}
 }
 
 // Set a cookie now to see if they are supported by the browser.
 $secure = ( 'https' === wp_parse_url( wp_login_url(), PHP_URL_SCHEME ) );
 if ( ! is_customize_preview() ) {
-
+	/**
+	 * Set test cookie.
+	 *
+	 * @phpstan-ignore-next-line
+	 */
 	setcookie( TEST_COOKIE, 'WP Cookie check', 0, COOKIEPATH, COOKIE_DOMAIN, $secure );
-	if ( SITECOOKIEPATH != COOKIEPATH ) {
+	/**
+	 * Set test cookie for site path if different.
+	 *
+	 * @phpstan-ignore-next-line
+	 */
+	if ( SITECOOKIEPATH !== COOKIEPATH ) {
+		/**
+		 * Set test cookie for site path.
+		 *
+		 * @phpstan-ignore-next-line
+		 */
 		setcookie( TEST_COOKIE, 'WP Cookie check', 0, SITECOOKIEPATH, COOKIE_DOMAIN, $secure );
 	}
 }
 
-$lang            = ! empty( $_GET['wp_lang'] ) ? sanitize_text_field( $_GET['wp_lang'] ) : '';
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET parameter for language switcher.
+$lang            = ! empty( $_GET['wp_lang'] ) ? sanitize_text_field( wp_unslash( $_GET['wp_lang'] ) ) : '';
 $switched_locale = switch_to_locale( $lang );
 
 /**
@@ -459,10 +502,11 @@ do_action( 'login_init' );
 *
 * @since 2.8.0
 */
-do_action( "login_form_{$action}" );
+do_action( "login_form_{$login_action}" );
 
-$http_post     = ( 'POST' == $_SERVER['REQUEST_METHOD'] );
-$interim_login = isset( $_REQUEST['interim-login'] );
+$http_post = ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === sanitize_text_field( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) );
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET/POST parameter for interim login.
+$interim_login_request = isset( $_REQUEST['interim-login'] );
 
 /**
 * Filters the separator used between login form navigation links.
@@ -473,7 +517,7 @@ $interim_login = isset( $_REQUEST['interim-login'] );
 */
 $login_link_separator = apply_filters( 'login_link_separator', ' | ' );
 
-switch ( $action ) {
+switch ( $login_action ) {
 
 	case 'lostpassword':
 	case 'retrievepassword':
@@ -484,7 +528,8 @@ switch ( $action ) {
 		*
 		* @param string $lostpassword_redirect The redirect destination URL.
 		*/
-		$redirect_to = apply_filters( 'lostpassword_redirect', $lostpassword_redirect );
+		$lostpassword_redirect = '';
+		$redirect_to           = apply_filters( 'lostpassword_redirect', $lostpassword_redirect );
 
 		/**
 		* Fires before the lost password form.
@@ -493,12 +538,14 @@ switch ( $action ) {
 		*/
 		do_action( 'lost_password' );
 
-		login_header( __( 'Lost Password' ), '<p class="message">' . __( 'Please enter your username or email address. You will receive a link to create a new password via email.' ) . '</p>', $errors ); // @codingStandardsIgnoreLine.
+		login_header( __( 'Lost Password' ), '<p class="message">' . __( 'Please enter your username or email address. You will receive a link to create a new password via email.' ) . '</p>', $login_errors ); // @codingStandardsIgnoreLine.
 
-		$user_login = '';
+		$lostpassword_user_login = '';
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This is the lost password form.
 		if ( isset( $_POST['user_login'] ) && is_string( $_POST['user_login'] ) ) {
-			$user_login = wp_unslash( $_POST['user_login'] );
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This is the lost password form.
+			$lostpassword_user_login = sanitize_text_field( wp_unslash( $_POST['user_login'] ) );
 		}
 
 		?>
@@ -506,7 +553,7 @@ switch ( $action ) {
 		<form name="lostpasswordform" id="lostpasswordform" action="<?php echo esc_url( network_site_url( 'wp-login.php?action=lostpassword', 'login_post' ) ); ?>" method="post">
 			<p>
 				<label for="user_login" ><span><?php _e( 'Username or Email Address' ); // @codingStandardsIgnoreLine. ?></span><br />
-				<input type="text" name="user_login" id="user_login" class="input" value="<?php echo esc_attr( $user_login ); ?>" size="20" /></label>
+				<input type="text" name="user_login" id="user_login" class="input" value="<?php echo esc_attr( $lostpassword_user_login ); ?>" size="20" /></label>
 			</p>
 			<?php
 			/**
@@ -529,6 +576,7 @@ switch ( $action ) {
 				echo esc_html( $login_link_separator );
 
 				/** This filter is documented in wp-includes/general-template.php */
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Filter output is escaped.
 				echo apply_filters( 'register', $registration_url );
 			endif;
 			?>
@@ -551,36 +599,42 @@ switch ( $action ) {
 			*
 			* @param string $sign_up_url The sign up URL.
 			*/
-			wp_redirect( apply_filters( 'wp_signup_location', network_site_url( 'wp-signup.php' ) ) );
+			wp_safe_redirect( apply_filters( 'wp_signup_location', network_site_url( 'wp-signup.php' ) ) );
 			exit;
 		}
 
 		if ( ! get_option( 'users_can_register' ) ) {
-			wp_redirect( site_url( 'wp-login.php?registration=disabled' ) );
+			wp_safe_redirect( site_url( 'wp-login.php?registration=disabled' ) );
 			exit();
 		}
 
-		$user_login = '';
-		$user_email = '';
+		$register_user_login = '';
+		$register_user_email = '';
 
 		if ( $http_post ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This is the registration form.
 			if ( isset( $_POST['user_login'] ) && is_string( $_POST['user_login'] ) ) {
-				$user_login = $_POST['user_login'];
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This is the registration form.
+				$register_user_login = sanitize_text_field( wp_unslash( $_POST['user_login'] ) );
 			}
 
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This is the registration form.
 			if ( isset( $_POST['user_email'] ) && is_string( $_POST['user_email'] ) ) {
-				$user_email = wp_unslash( $_POST['user_email'] );
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This is the registration form.
+				$register_user_email = sanitize_email( wp_unslash( $_POST['user_email'] ) );
 			}
 
-			$errors = register_new_user( $user_login, $user_email );
-			if ( ! is_wp_error( $errors ) ) {
-				$redirect_to = ! empty( $_POST['redirect_to'] ) ? $_POST['redirect_to'] : 'wp-login.php?checkemail=registered';
+			$register_errors = register_new_user( $register_user_login, $register_user_email );
+			if ( ! is_wp_error( $register_errors ) ) {
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This is the registration form.
+				$redirect_to = ! empty( $_POST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_POST['redirect_to'] ) ) : 'wp-login.php?checkemail=registered';
 				wp_safe_redirect( $redirect_to );
 				exit();
 			}
 		}
 
-		$registration_redirect = ! empty( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET/POST parameter for redirect.
+		$registration_redirect = ! empty( $_REQUEST['redirect_to'] ) ? esc_url_raw( wp_unslash( $_REQUEST['redirect_to'] ) ) : '';
 		/**
 		* Filters the registration redirect URL.
 		*
@@ -589,17 +643,17 @@ switch ( $action ) {
 		* @param string $registration_redirect The redirect destination URL.
 		*/
 		$redirect_to = apply_filters( 'registration_redirect', $registration_redirect );
-		login_header( __( 'Registration Form' ), '<p class="message register">' . __( 'Register For This Site' ) . '</p>', $errors ); // @codingStandardsIgnoreLine.
+		login_header( __( 'Registration Form' ), '<p class="message register">' . __( 'Register For This Site' ) . '</p>', $register_errors ); // @codingStandardsIgnoreLine.
 		?>
-		<form name="registerform" id="registerform" action="<?php echo esc_url( site_url( 'wp-login.php?action=register', 'login_post' ) ); ?>" method="post" novalidate="novalidate">
-			<p>
-				<label for="user_login"><?php _e( 'Username' ); // @codingStandardsIgnoreLine.?><br />
-				<input type="text" name="user_login" id="user_login" class="input" value="<?php echo esc_attr( wp_unslash( $user_login ) ); ?>" size="20" /></label>
-			</p>
-			<p>
-				<label for="user_email"><?php _e( 'Email' ); // @codingStandardsIgnoreLine.?><br />
-				<input type="email" name="user_email" id="user_email" class="input" value="<?php echo esc_attr( wp_unslash( $user_email ) ); ?>" size="25" /></label>
-			</p>
+	<form name="registerform" id="registerform" action="<?php echo esc_url( site_url( 'wp-login.php?action=register', 'login_post' ) ); ?>" method="post" novalidate="novalidate">
+		<p>
+			<label for="user_login"><?php _e( 'Username' ); // @codingStandardsIgnoreLine.?><br />
+			<input type="text" name="user_login" id="user_login" class="input" value="<?php echo esc_attr( wp_unslash( $register_user_login ) ); ?>" size="20" /></label>
+		</p>
+		<p>
+			<label for="user_email"><?php _e( 'Email' ); // @codingStandardsIgnoreLine.?><br />
+			<input type="email" name="user_email" id="user_email" class="input" value="<?php echo esc_attr( wp_unslash( $register_user_email ) ); ?>" size="25" /></label>
+		</p>
 			<?php
 			/**
 			 * Fires following the 'Email' field in the user registration form.
@@ -629,54 +683,65 @@ switch ( $action ) {
 
 	case 'login':
 	default:
-		$secure_cookie   = '';
+		$secure_cookie = '';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET/POST parameter for customizer.
 		$customize_login = isset( $_REQUEST['customize-login'] );
 		if ( $customize_login ) {
 			wp_enqueue_script( 'customize-base' );
 		}
 
-		login_header( __( 'Log In' ), '', $errors );// @codingStandardsIgnoreLine.
+		$login_user_login = '';
+		login_header( __( 'Log In' ), '', $login_errors );// @codingStandardsIgnoreLine.
 		$aria_describedby_error = '';
 		?>
 
-		<form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post" autocomplete="off">
-			<p>
-				<label for="user_login"><span><?php _e( 'Username or Email Address' ); // @codingStandardsIgnoreLine.?></span><br />
-				<input type="text" name="log" id="user_login"<?php echo $aria_describedby_error; ?> class="input" value="<?php echo esc_attr( $user_login ); ?>" size="20"  autocomplete="off"/></label>
-			</p>
-			<p>
-				<label for="user_pass"><span><?php _e( 'Password' ); // @codingStandardsIgnoreLine.?></span><br />
-				<input type="password" name="pwd" id="user_pass"<?php echo $aria_describedby_error; ?> class="input" value="" size="20"  autocomplete="off"/></label>
-			</p>
-			<?php
-			/**
-			 * Fires following the 'Password' field in the login form.
-			 *
-			 * @since 2.1.0
-			 */
-			do_action( 'login_form' );
-			if ( isset( $_POST ) ) {
-				$rememberme = ! empty( $_POST['rememberme'] );
-			} else {
-				$rememberme = '';
-			}
-			?>
-			<p class="forgetmenot">
-				<label for="rememberme"><input name="rememberme" type="checkbox" id="rememberme" value="forever" <?php checked( $rememberme ); ?> /> <?php esc_html_e( 'Remember Me' ); // @codingStandardsIgnoreLine.?></label>
-			</p>
+	<form name="loginform" id="loginform" action="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" method="post" autocomplete="off">
+		<p>
+			<label for="user_login"><span><?php _e( 'Username or Email Address' ); // @codingStandardsIgnoreLine.?></span><br />
+			<input type="text" name="log" id="user_login"<?php echo wp_kses_post( $aria_describedby_error ); ?> class="input" value="<?php echo esc_attr( $login_user_login ); ?>" size="20"  autocomplete="off"/></label>
+		</p>
+		<p>
+			<label for="user_pass"><span><?php _e( 'Password' ); // @codingStandardsIgnoreLine.?></span><br />
+			<input type="password" name="pwd" id="user_pass"<?php echo wp_kses_post( $aria_describedby_error ); ?> class="input" value="" size="20"  autocomplete="off"/></label>
+		</p>
+		<?php
+		/**
+		 * Fires following the 'Password' field in the login form.
+		 *
+		 * @since 2.1.0
+		 */
+		do_action( 'login_form' );
+		/**
+		 * Check if rememberme is set.
+		 *
+		 * @phpstan-ignore-next-line
+		 */
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This is the login form.
+		if ( isset( $_POST ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- This is the login form.
+			$rememberme = ! empty( $_POST['rememberme'] );
+		} else {
+			$rememberme = '';
+		}
+		?>
+		<p class="forgetmenot">
+			<label for="rememberme"><input name="rememberme" type="checkbox" id="rememberme" value="forever" <?php checked( $rememberme ); ?> /> <?php esc_html_e( 'Remember Me' ); // @codingStandardsIgnoreLine.?></label>
+		</p>
 			<p class="submit">
 				<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php esc_attr_e( 'Log In' ); // @codingStandardsIgnoreLine.?>" />
 			</p>
 		</form>
 
-		<?php if ( ! $interim_login ) { ?>
+		<?php if ( ! $interim_login_request ) { ?>
 			<p id="nav">
 				<?php
-				if ( ! isset( $_GET['checkemail'] ) || ! in_array( $_GET['checkemail'], array( 'confirm', 'newpass' ) ) ) :
+				// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET parameter for display purposes.
+				if ( ! isset( $_GET['checkemail'] ) || ! in_array( sanitize_text_field( wp_unslash( $_GET['checkemail'] ) ), array( 'confirm', 'newpass' ), true ) ) :
 					if ( get_option( 'users_can_register' ) ) :
 						$registration_url = sprintf( '<a href="%s">%s</a>', esc_url( wp_registration_url() ), __( 'Register' ) ); // @codingStandardsIgnoreLine.
 
 						/** This filter is documented in wp-includes/general-template.php */
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Filter output is escaped.
 						echo apply_filters( 'register', $registration_url );
 
 						echo esc_html( $login_link_separator );

@@ -1,13 +1,17 @@
 <?php
 /**
+ * LoginPress Customizer Strings.
+ *
  * Customizer strings for the logo control.
  *
+ * @package LoginPress
  * @since 1.1.3
  * @version 1.4.3
  */
+
 $logo_range_control = array( 'customize_logo_width', 'customize_logo_height', 'customize_logo_padding' );
 $logo_range_default = array( '84', '84', '0' );
-$logo_range_label   = array( __( 'Logo Width:', 'loginpress' ), __( 'Logo Height:', 'loginpress' ), __( 'Space Bottom:', 'loginpress' ) );
+$logo_range_label   = array( esc_html__( 'Logo Width:', 'loginpress' ), esc_html__( 'Logo Height:', 'loginpress' ), esc_html__( 'Space Bottom:', 'loginpress' ) );
 $logo_range_attrs   = array(
 	array(
 		'min'    => 0,
@@ -34,8 +38,10 @@ $logo_range_unit    = array( 'px', 'px', 'px' );
  * Customizer strings for the grouping control.
  *
  * @since 1.1.3
+ * @version 6.0.0
  */
-$group_control = array( 'login_input_group', 'login_label_group', 'login_form_group', 'footer_form_group', 'footer_back_group', 'footer_group', 'bg_image_group', 'bg_video_group', 'logo_group', 'login_page_meta_group' );
+
+$group_control = array( 'login_input_group', 'login_label_group', 'login_form_group', 'footer_form_group', 'footer_back_group', 'footer_group', 'bg_image_group', 'bg_video_group', 'logo_group', 'login_page_meta_group', 'random_bg_group' );
 $group_label   = array(
 	__( 'Input Fields:', 'loginpress' ),
 	__( 'Input Field Labels:', 'loginpress' ),
@@ -47,6 +53,7 @@ $group_label   = array(
 	__( 'Background Video', 'loginpress' ),
 	__( 'Form Logo', 'loginpress' ),
 	__( 'Login Page Meta', 'loginpress' ),
+	__( 'Random Background Images', 'loginpress' ),
 );
 $group_info    = array(
 	__( 'This section helps you to easily Customize the login form input field elements.', 'loginpress' ),
@@ -59,6 +66,7 @@ $group_info    = array(
 	__( 'Customize the background Video.', 'loginpress' ),
 	__( 'Customize the form logo.', 'loginpress' ),
 	__( 'Customize the login page meta tags.', 'loginpress' ),
+	__( 'Customize the Random background images.', 'loginpress' ),
 );
 /** ------------------Grouping Control-------------------- */
 
@@ -88,67 +96,67 @@ $form_range_attrs   = array(
 		'max'    => 800,
 		'step'   => 1,
 		'suffix' => 'px',
-	), // form width
+	), // form width.
 	array(
 		'min'    => 0,
 		'max'    => 500,
 		'step'   => 1,
 		'suffix' => 'px',
-	), // form height
+	), // form height.
 	array(
 		'min'    => 0,
 		'max'    => 100,
 		'step'   => 1,
 		'suffix' => 'px',
-	), // form radius
+	), // form radius.
 	array(
 		'min'    => 0,
 		'max'    => 30,
 		'step'   => 1,
 		'suffix' => 'px',
-	), // form shadow
+	), // form shadow.
 	array(
 		'min'    => 0,
 		'max'    => 100,
 		'step'   => 1,
 		'suffix' => '%',
-	), // form Opacity
+	), // form Opacity.
 	array(
 		'min'    => 0,
 		'max'    => 100,
 		'step'   => 1,
 		'suffix' => '%',
-	), // textfield width
+	), // textfield width.
 	array(
 		'min'    => 0,
 		'max'    => 30,
 		'step'   => 1,
 		'suffix' => 'px',
-	), // textfield radius
+	), // textfield radius.
 	array(
 		'min'    => 0,
 		'max'    => 30,
 		'step'   => 1,
 		'suffix' => 'px',
-	), // textfield shadow
+	), // textfield shadow.
 	array(
 		'min'    => 0,
 		'max'    => 100,
 		'step'   => 1,
 		'suffix' => '%',
-	), // textfield Opacity
+	), // textfield Opacity.
 	array(
 		'min'    => 9,
 		'max'    => 30,
 		'step'   => 1,
 		'suffix' => 'px',
-	), // textfield label
+	), // textfield label.
 	array(
 		'min'    => 9,
 		'max'    => 30,
 		'step'   => 1,
 		'suffix' => 'px',
-	), // readme label
+	), // readme label.
 );
 $form_range_unit    = array( 'px', 'px', 'px', 'px', '%', '%', 'px', 'px', '%', 'px', 'px' );
 // --------------------
@@ -257,6 +265,7 @@ $close_control = array( 'login_input_br', 'login_label_br', 'login_form_br', 'fo
  */
 $error_control = array( 'incorrect_username', 'incorrect_password', 'empty_username', 'empty_password', 'invalid_email', 'empty_email', 'username_exists', 'email_exists', 'invalidcombo_message', 'force_email_login', 'password_mismatch' );
 $error_default = array(
+
 	// translators: 1: Opening strong tag, 2: Closing strong tag.
 	sprintf( __( '%1$sError:%2$s Invalid Username.', 'loginpress' ), '<strong>', '</strong>' ),
 
@@ -264,6 +273,7 @@ $error_default = array(
 	sprintf( __( '%1$sError:%2$s Invalid Password.', 'loginpress' ), '<strong>', '</strong>' ),
 
 	// translators: 1: Opening strong tag, 2: Closing strong tag.
+
 	sprintf( __( '%1$sError:%2$s The username field is empty.', 'loginpress' ), '<strong>', '</strong>' ),
 
 	// translators: 1: Opening strong tag, 2: Closing strong tag.

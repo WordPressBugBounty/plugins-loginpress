@@ -1,9 +1,14 @@
 <?php
 /**
- * The footer styling when default template is disabled by usage of hook.
+ * LoginPress Login Footer Styles.
  *
+ * This file contains the footer styling when default template is disabled by usage of hook.
+ * Purpose of this file is to provide custom CSS styles for the login page footer.
+ *
+ * @package LoginPress
  * @since 1.6.4
  */
+
 ?>
 
 <style>

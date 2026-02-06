@@ -1,4 +1,4 @@
-.loginpress-review-notice{
+.loginpress-review-notice {
 	padding: 15px 15px 15px 0;
 	background-color: #fff;
 	border-radius: 3px;
@@ -7,7 +7,7 @@
 	overflow: hidden;
 }
 
-.loginpress-review-thumbnail{
+.loginpress-review-thumbnail {
 	width: 114px;
 	float: left;
 	line-height: 80px;
@@ -15,38 +15,38 @@
 	border-right: 4px solid transparent;
 }
 
-.loginpress-review-thumbnail img{
+.loginpress-review-thumbnail img {
 	width: 68px;
 	vertical-align: middle;
 }
 
-.loginpress-review-text{
+.loginpress-review-text {
 	overflow: hidden;
 }
 
-.loginpress-review-text h3{
+.loginpress-review-text h3 {
 	font-size: 24px;
 	margin: 0 0 5px;
 	font-weight: 400;
 	line-height: 1.3;
 }
 
-.loginpress-review-text p{
+.loginpress-review-text p {
 	font-size: 13px;
 	margin: 0 0 5px;
 }
 
-.loginpress-review-ul{
+.loginpress-review-ul {
 	margin: 0;
 	padding: 0;
 }
 
-.loginpress-review-ul li{
+.loginpress-review-ul li {
 	display: inline-block;
 	margin-right: 15px;
 }
 
-.loginpress-review-ul li a{
+.loginpress-review-ul li a {
 	display: inline-block;
 	color: #10738B;
 	text-decoration: none;
@@ -55,57 +55,55 @@
 	line-height: 18px;
 }
 
-.loginpress-review-ul li a span{
+.loginpress-review-ul li a span {
 	position: absolute;
 	left: 0;
 	top: -1px;
 }
 
-#update-nag, .update-nag{
+#update-nag,
+.update-nag {
 	margin-left: 20px;
 }
 
-.loginpress-dashboard-pro-link{
+.loginpress-dashboard-pro-link {
 	color: #0cbb0c;
 }
-  
+
 /* LoginPress Add-ons CSS @since 1.1.3 */
 
 .black_friday_notice .loginpress-alert-text {
 	padding: 16px 10px 16px 80px;
+	display: flex;
+	align-items: center;
 }
 
-.black_friday{
+.black_friday {
 	background: #000 !important;
 	text-align: center;
 }
 
-.black_friday:after{
+.black_friday:after {
 	display: none;
-}
-
-.black_friday_notice .loginpress-alert-text {
-	display: flex;
-	align-items: center;
 }
 
 .black_friday_notice .loginpress-alert-button-section {
 	width: 450px;
 }
 
-.loginpress-addon-notice-link:focus{
+.loginpress-addon-notice-link:focus {
 	outline: none;
 	box-shadow: none;
 }
 
-.loginpress-alert-text h3{
+.loginpress-alert-text h3 {
 	font-size: 20px;
 	line-height: 24px;
 	margin: 0 0 10px;
 	color: #fff;
 }
 
-#wpcontent .loginpress-alert-text p{
+#wpcontent .loginpress-alert-text p {
 	font-size: 16px;
 	margin: 0;
 	color: #fff;
@@ -117,71 +115,75 @@
 	font-size: 38px;
 	background-color: #24afe9;
 	color: #000;
-	border-radius: 0px;
+	border-radius: 0;
 	text-decoration: none;
-	font-weight: bold;
+	font-weight: 700;
 }
 
-.loginpress-alert-button-section{
+.loginpress-alert-button-section {
 	width: 300px;
 	text-align: center;
 	position: relative;
 }
 
-.loginpress-alert-button{
+.loginpress-alert-button {
 	height: auto;
-	padding: 0;
-	color: #1a5fa4;
+	padding: 20px 32px;
+	color: #FFFFFF;
 	border: 0;
-	border-radius: 5px;
-	background: none;
-	font-size: 16px;
-	font-weight: bold;
-	text-decoration: underline;
+	border-radius: 3px;
+	background: #28296A;
+	font-size: 22px;
+	font-weight: 600;
+	text-decoration: none;
 	cursor: pointer;
+	line-height: 22px;
+	/* identical to box height, or 100% */
+	text-transform: uppercase;
+	display: inline-block;
 }
 
-.loginpress-alert-button:focus{
+.loginpress-alert-button:focus {
 	outline: none;
 	box-shadow: none;
 }
 
-.wp-core-ui .loginpress-alert-notice.notice.is-dismissible{
-	padding: 0px;
-	border-left: 0px;
+.wp-core-ui .loginpress-alert-notice.notice.is-dismissible {
+	padding: 0;
+	border-left: 0;
 }
 
-.loginpress-alert-notice .notice-dismiss{
+.loginpress-alert-notice .notice-dismiss {
 	text-decoration: none;
 	z-index: 1;
 }
 
-.loginpress-addon-notice-link{
+.loginpress-addon-notice-link {
 	display: flex;
 	align-items: center;
 	flex: 1;
 	text-decoration: none;
 }
 
-.loginpress-notice-logo{
+.loginpress-notice-logo {
 	width: 72px;
 	text-align: center;
 	position: relative;
 	margin: 10px;
 }
 
-.loginpress-notice-logo img{
+.loginpress-notice-logo img {
 	width: 50px;
 	vertical-align: middle;
 }
-  
-.loginpress-notice-description{
+
+.loginpress-notice-description {
 	overflow: hidden;
 	width: calc(100% - 50px);
 }
 
-.loginpress-notification.loginpress-notice-success{
-	border:1px solid #6ab074;
+.loginpress-notification.loginpress-notice-success {
+	border: 1px solid #6ab074;
 	background: #e6f0e8;
 	margin: 36px 20px 0 0;
 	display: -webkit-box;
@@ -192,100 +194,89 @@
 	align-items: center;
 }
 
-.loginpress-notice-success .loginpress-notice-description p{
+.loginpress-notice-success .loginpress-notice-description p {
 	color: #21573a;
 }
 
-.loginpress-notification.loginpress-notice-success .loginpress-notification-close:before{
+.loginpress-notification.loginpress-notice-success .loginpress-notification-close:before {
 	color: #21573a;
 }
 
-.loginpress-alert-text{
-    display: flex;
-    align-items: center;
-}
-[dir="rtl"] .rpt-review-notice, 
-[dir="rtl"] .loginpress-review-notice{
-    padding: 15px 30px 15px 0;
-    margin: 20px 0 0 20px;
-}
-.loginpress-v-text{
-    background: rgba(255,255,255,.1);
-    padding: 18px 73px;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 73.2727px;
-    line-height: 62px;
-    color: #fff;
-    margin-right: 20px;
-    clip-path: polygon( 0 100%, 28px 0px, 100% 0, 100% 0, calc( 100% - 28px ) 100%, 0 100% );
+.loginpress-alert-text {
+	display: flex;
+	align-items: center;
 }
 
-.loginpress-alert-button{
-    background: #28296A;
-	border-radius: 3px;
-    padding: 20px 32px;
-    font-weight: 600;
-	font-size: 22px;
-	line-height: 22px;
-	/* identical to box height, or 100% */
-	text-transform: uppercase;
-	color: #FFFFFF;
-    display: inline-block;
-    text-decoration: none;
+[dir="rtl"] .rpt-review-notice,
+[dir="rtl"] .loginpress-review-notice {
+	padding: 15px 30px 15px 0;
+	margin: 20px 0 0 20px;
 }
 
-.loginpress-alert-button:hover{
-    background: #F6366A;
+.loginpress-v-text {
+	background: rgba(255, 255, 255, .1);
+	padding: 18px 73px;
+	font-style: normal;
+	font-weight: 700;
+	font-size: 73.2727px;
+	line-height: 62px;
+	color: #fff;
+	margin-right: 20px;
+	clip-path: polygon(0 100%, 28px 0, 100% 0, 100% 0, calc(100% - 28px) 100%, 0 100%);
+}
+
+.loginpress-alert-button:hover {
+	background: #F6366A;
 	color: #FFFFFF;
 }
 
 @media screen and (max-width: 1600px) {
-	.loginpress-v-text{
+	.loginpress-v-text {
 		font-size: 52px;
 		padding: 18px 40px;
 	}
 }
 
 @media screen and (max-width: 1300px) {
-	.loginpress-alert-thumbnail{
+	.loginpress-alert-thumbnail {
 		width: 200px;
 	}
 
-	.loginpress-alert-thumbnail img{
+	.loginpress-alert-thumbnail img {
 		width: 170px;
 	}
 
-	.loginpress-alert-button-section{
+	.loginpress-alert-button-section {
 		width: 250px;
 	}
 }
 
 @media screen and (max-width: 1100px) {
-	.loginpress-v-text{
+	.loginpress-v-text {
 		display: none;
 	}
 
-	.loginpress-alert-thumbnail{
+	.loginpress-alert-thumbnail {
 		display: none;
 	}
 
-	.loginpress-alert-thumbnail img{
+	.loginpress-alert-thumbnail img {
 		width: 150px;
 	}
 
-	.loginpress-alert-text{
+	.loginpress-alert-text {
 		padding-left: 30px;
-		clip-path: polygon( 0 100%, 0px 0px, 100% 0, 100% 0, calc( 100% - 28px ) 100%, 0 100% );
+		clip-path: polygon(0 100%, 0 0, 100% 0, 100% 0, calc(100% - 28px) 100%, 0 100%);
 	}
 
-	.loginpress-alert-text:before,.loginpress-alert-text:after{
+	.loginpress-alert-text:before,
+	.loginpress-alert-text:after {
 		display: none;
 	}
 }
 
 @media screen and (max-width: 782px) {
-	.black_friday_sale_btn .loginpress-alert-button{
+	.black_friday_sale_btn .loginpress-alert-button {
 		width: 310px;
 		text-align: center;
 	}

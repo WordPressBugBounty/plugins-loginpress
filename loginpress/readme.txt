@@ -1,11 +1,11 @@
 === LoginPress | wp-login Custom Login Page Customizer ===
 Requires at least: 4.0
-Tested up to: 6.8
+Tested up to: 6.9
 Contributors: WPBrigade, hiddenpearls, AbdulWahab610
 Donate link: https://loginpress.pro/pricing/?utm_source=loginpress-lite
 Author URI: https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=author-url-link
 Tags: wp-login, login, login customizer, custom login, wordpress login,
-Stable tag: 5.0.0
+Stable tag: 6.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -201,7 +201,7 @@ Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricin
 2. LoginPress allows seamless integration with top social platforms for quick and secure user login. [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
 3. Social Login general settings in LoginPress.  [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
 4. Social Login styles settings in LoginPress.  [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Persona+theme)
-5. General settings screen for your login page. (https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Corporate+theme)
+5. General settings screen for your login page.
 6. LoginPress Captchas tab – easily enable Google reCAPTCHA, hCAPTCHA, or Cloudflare Turnstile CAPTCHA for spam protection. [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Corporate+theme)
 7. LoginPress Auto Login tab – generate secure auto-login links for specific users. [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Startup+theme)
 8. LoginPress User Redirects settings tab for managing login and logout redirects. [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Wedding+theme)
@@ -232,6 +232,39 @@ Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricin
 33. Custom Login page (Company theme) Example #23 with Captcha [Pro feature](https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=screenshots&utm_campaign=pro-upgrade&utm_content=Company+theme)
 
 == Changelog ==
+
+
+= 6.1.2 – 2026-01-26 =
+* Bugfix: Fixed box shadow customization issues.
+
+= 6.1.1 – 2026-01-09 =
+* Enhancement: Improved compatibility between LoginPress Custom Password Strength and the WordPress core password strength feature.
+* Bugfix: Fixed a JavaScript issue that could trigger an “Invalid or unexpected token” error during optout.
+* Bugfix: Fixed footer bar issue with the LoginPress Customizer live preview vs frontend.
+* Bugfix: Fixed box shadow customization issues.
+* Bugfix: Fixed "Back to site" option in customizer.
+* Bugfix: Fixed auto-playing audio for YouTube background videos.
+
+= 6.1.0 – 2025-12-09 =
+* Major update: Applied coding standards across the entire codebase.
+* Enhancement: Improved add-ons layout management by adding the `loginpress_excluded_addons` filter.
+* Enhancement: Optimized and cleaned up the codebase for better performance and maintainability.
+* Enhancement: Reduced overall plugin file size for faster loading.
+* Enhancement: Updated the LoginPress branded icon in the WordPress dashboard menu.
+* Bugfix: Fixed several issues with the LoginPress Customizer live preview.
+* Bugfix: Resolved social login issues on subfolder installations.
+* Compatibility: Compatible with WordPress 6.9
+
+= 6.0.0 – 2025-10-16 =
+* Roar to 6.0: Converted all plugin settings to React for a faster and more modern UI experience.
+* New Feature: Updated the color control in the Customizer, introducing a new transparency feature.
+* New Feature: Added the ability to restrict specific email domains from registering on the site.
+* New Feature: Added support for special characters in usernames during registration, with language-based handling.
+* New Feature: Introduced a random background image control for the login page.
+* Bugfix: Resolved welcome message display issue when the force password change screen appears.
+* Bugfix: Error message during password reset.
+* Bugfix: Range control issue in customizer.
+* Enhancement: Optimized and cleaned up codebase for better performance and maintainability.
 
 = 5.0.0 – 2025-07-03 =
 * New Feature: We've added a new Integrations section that allows LoginPress to connect with other powerful WordPress plugins.
@@ -390,5 +423,5 @@ For more detail on changelog visit [LoginPress.Pro](https://loginpress.pro/chang
 
 == Upgrade Notice ==
 
-= 5.0.0 =
-* Upgrade Now, LoginPress 5.0 is packed with New features, enhancements and performance improvements.
+= 6.1.2 =
+* Upgrade Carefully, LoginPress 6.1 is packed with major enhancements and performance improvements.

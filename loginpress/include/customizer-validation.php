@@ -1,11 +1,13 @@
 <?php
 /**
- * Customizer: Sanitization Callbacks
+ * LoginPress Customizer Validation Functions.
+ *
+ * Customizer: Sanitization Callbacks.
  *
  * This file demonstrates how to define sanitization callback functions for various data types.
  *
+ * @package LoginPress
  * @since 1.1.16
- *
  * @version 1.6.1
  */
 
@@ -19,9 +21,8 @@
  * @return bool Whether the checkbox is checked.
  */
 function loginpress_sanitize_checkbox( $checked ) {
-
 	// Boolean check.
-	return ( ( isset( $checked ) && true == $checked ) ? true : false );
+	return ( true === $checked );
 }
 
 /**
@@ -33,6 +34,7 @@ function loginpress_sanitize_checkbox( $checked ) {
  * Sanitization callback for 'select' and 'radio' type controls. This callback sanitizes `$input`
  * as a slug, and then validates `$input` against the choices defined for the control.
  *
+ * @since 1.1.16
  * @see sanitize_key()               https://developer.wordpress.org/reference/functions/sanitize_key/
  * @see $wp_customize->get_control() https://developer.wordpress.org/reference/classes/wp_customize_manager/get_control/
  *
@@ -46,7 +48,8 @@ function loginpress_sanitize_select( $input, $setting ) {
 	$input = sanitize_key( $input );
 
 	// Get list of choices from the control associated with the setting.
-	$choices = $setting->manager->get_control( $setting->id )->choices;
+	$control = $setting->manager->get_control( $setting->id );
+	$choices = $control ? $control->choices : array();
 
 	// If the input is a valid key, return it; otherwise, return the default.
 	return ( array_key_exists( $input, $choices ) ? $input : $setting->default );
@@ -87,7 +90,7 @@ function loginpress_sanitize_image( $image, $setting ) {
 		'ico'          => 'image/x-icon',
 	);
 
-	// Allowed svg mime type in version 1.2.2
+	// Allowed svg mime type in version 1.2.2.
 	$allowed_mime = get_allowed_mime_types();
 
 	/**
@@ -96,8 +99,8 @@ function loginpress_sanitize_image( $image, $setting ) {
 	 * @since 1.6.1
 	 */
 	$extra_mimes = array(
-		'svg'  => 'image/svg+xml', // Allowed svg mime type in version 1.2.2
-		'webp' => 'image/webp',   // Allowed webp mime type in version 1.6.1
+		'svg'  => 'image/svg+xml', // Allowed svg mime type in version 1.2.2.
+		'webp' => 'image/webp',   // Allowed webp mime type in version 1.6.1.
 	);
 
 	foreach ( $extra_mimes as $key => $value ) {
@@ -131,15 +134,15 @@ function loginpress_sanitize_image( $image, $setting ) {
 /**
  * If CDN is being used get sanitization option.
  *
- * @param string $image The image URL.
- * @param array  $mimes The mime type allowed.
- * @param object $setting The settings object.
+ * @param string                $image The image URL.
+ * @param array<string, string> $mimes The mime type allowed.
+ * @param object                $setting The settings object.
  *
  * @version 3.0.2
  * @return mixed The images based on content type.
  */
 function loginpress_image_content_type( $image, $mimes, $setting ) {
-	$headers           = get_headers( $image, 1 );
+	$headers           = get_headers( $image, true );
 	$content_type      = false;
 	$file_type         = false;
 	$content_types_can = array( 'Content-Type', 'content-type' );
@@ -152,11 +155,11 @@ function loginpress_image_content_type( $image, $mimes, $setting ) {
 
 	if ( $content_type ) {
 
-		$file_type = $content_type ? in_array( $content_type, $mimes ) : false;
+		$file_type = in_array( $content_type, $mimes, true );
 
 		if ( is_array( $content_type ) ) {
 			foreach ( $content_type as $type ) {
-				$file_type = $type ? in_array( $type, $mimes ) : false;
+				$file_type = $type ? in_array( $type, $mimes, true ) : false;
 				if ( $file_type ) {
 					break;
 				}
@@ -165,5 +168,5 @@ function loginpress_image_content_type( $image, $mimes, $setting ) {
 	}
 
 	// If $image has a valid mime_type, return it; otherwise, return the default.
-	return ( $file_type ? $image : $setting->default );
+	return ( $file_type ? $image : ( isset( $setting->default ) ? $setting->default : '' ) );
 }

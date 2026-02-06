@@ -1,16 +1,18 @@
 <?php
 /**
- * Uninstall LoginPress.
+ * LoginPress Uninstall Functions.
  *
- * @package loginpress
- * @author WPBrigade
+ * This file contains functions to uninstall LoginPress.
+ * Purpose of this file is to clean up plugin data when the plugin is uninstalled.
+ *
+ * @package LoginPress
  * @since 1.1.9
- * @version  3.0.0
+ * @version 3.0.0
  */
 
 $loginpress_setting   = get_option( 'loginpress_setting' );
 $loginpress_uninstall = isset( $loginpress_setting['loginpress_uninstall'] ) ? $loginpress_setting['loginpress_uninstall'] : 'off';
-if ( 'on' != $loginpress_uninstall ) {
+if ( 'on' !== $loginpress_uninstall ) {
 	return;
 }
 
@@ -52,11 +54,12 @@ if ( ! is_multisite() ) {
 } else {
 
 	global $wpdb;
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching -- Required for multisite uninstall to get all blog IDs.
 	$loginpress_blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
 
-	foreach ( $loginpress_blog_ids as $blog_id ) {
+	foreach ( $loginpress_blog_ids as $loginpress_blog_id ) {
 
-		switch_to_blog( $blog_id );
+		switch_to_blog( $loginpress_blog_id );
 
 		// Handle the delete loginpress force rest password for all users.
 		loginpress_force_reset_password_remove();
@@ -79,14 +82,15 @@ if ( ! is_multisite() ) {
 
 
 /**
- * Handle the delete loginpress force rest password for all users.
+ * Handle the delete loginpress force reset password for all users.
  *
- * @return void
  * @since 3.0.0
+ * @return void
  */
 function loginpress_force_reset_password_remove() {
 
 	$args = array(
+		// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query -- Required for uninstall to find users with password reset meta.
 		'meta_query' => array(
 			array(
 				'key' => 'loginpress_password_reset_limit',
@@ -103,5 +107,3 @@ function loginpress_force_reset_password_remove() {
 		}
 	}
 }
-// Clear any cached data that has been removed.
-// wp_cache_flush();

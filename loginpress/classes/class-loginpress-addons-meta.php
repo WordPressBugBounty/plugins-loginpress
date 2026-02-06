@@ -1,5 +1,7 @@
 <?php
 /**
+ * LoginPress Addons Meta Class.
+ *
  * Meta class about Add-Ons.
  *
  * @package LoginPress
@@ -8,25 +10,35 @@
 
 if ( ! class_exists( 'LoginPress_Addons_Meta' ) ) :
 
+	/**
+	 * LoginPress Addons Meta Class.
+	 *
+	 * Handles metadata for LoginPress addons.
+	 *
+	 * @package LoginPress
+	 * @since 3.0.5
+	 */
 	class LoginPress_Addons_Meta {
 
 		/**
-		 * Class Constructor.
+		 * Class constructor.
+		 *
+		 * @since 1.0.19
+		 * @return void
 		 */
-		function __construct() {
-			// add_action( 'init', array( $this, 'addons_options_array' ) ,0);
+		public function __construct() {
 			if ( ! get_option( 'loginpress_pro_addons' ) ) {
 				$this->addons_options_array();
 			} else {
 				add_action( 'init', array( $this, 'addons_options_array' ) );
 			}
-			
 		}
 
 		/**
 		 * The addons options array.
 		 *
 		 * @since 3.0.5
+		 * @return void
 		 */
 		public static function addons_options_array() {
 
@@ -80,27 +92,13 @@ if ( ! class_exists( 'LoginPress_Addons_Meta' ) ) :
 					'is_free'    => false,
 					'is_active'  => false,
 				),
-				// 'protect-content'      => array(
-				// 'title'      => __( 'Protect Content', 'loginpress' ),
-				// 'short_desc' => __( 'Protected Contents', 'loginpress' ),
-				// 'slug'       => 'protect-content',
-				// 'is_free'    => false,
-				// 'is_active'  => false,
-				// ),
-				// 'custom-fields'        => array(
-				// 'title'      => __( 'Custom Registration Fields', 'loginpress' ),
-				// 'short_desc' => __( 'Custom Registration Fields', 'loginpress' ),
-				// 'slug'       => 'custom-fields',
-				// 'is_free'    => false,
-				// 'is_active'  => false,
-				// ),
 			);
 
 			if ( ! get_option( 'loginpress_pro_addons' ) ) {
 				add_option( 'loginpress_pro_addons', $addons_array );
 			}
 
-			if ( sizeof( $addons_array ) != sizeof( get_option( 'loginpress_pro_addons' ) ) ) {
+			if ( count( $addons_array ) !== count( get_option( 'loginpress_pro_addons' ) ) ) {
 				update_option( 'loginpress_pro_addons', $addons_array );
 			}
 		}
@@ -109,7 +107,7 @@ if ( ! class_exists( 'LoginPress_Addons_Meta' ) ) :
 		 * The addon details.
 		 *
 		 * @since 3.0.5
-		 * @return void
+		 * @return array<string, array<string, string>>
 		 */
 		public static function addons_details() {
 
@@ -142,18 +140,10 @@ if ( ! class_exists( 'LoginPress_Addons_Meta' ) ) :
 					'title'   => 'Hide Login',
 					'excerpt' => __( 'This LoginPress add-on lets you change the login page URL to anything you want. It will give a hard time to spammers who keep hitting to your login page. This is helpful for Brute force attacks. One caution to use this add-on is you need to remember the custom login url after you change it. We have an option to email your custom login url so you remember it.', 'loginpress' ),
 				),
-				// 'protect-content'      => array(
-				// 'title'   => 'Protect Content',
-				// 'excerpt' => __( 'Protect Content add-on allows you to protect your page/post/CPT specific content.', 'loginpress' ),
-				// ),
-				// 'custom-fields'        => array(
-				// 'title'   => 'Custom Registration Fields',
-				// 'excerpt' => __( 'This addon lets you create custom fields like text,radio button, checkboxes even an image.', 'loginpress' ),
-				// ),
 			);
 			return $addons_details_array;
 		}
-	} // Enf of Class.
+	}
 
 endif;
 new LoginPress_Addons_Meta();

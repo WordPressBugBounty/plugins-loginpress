@@ -1,8 +1,12 @@
 <?php
 
 /**
- * LoginPress Settings API
+ * LoginPress Settings API Class.
  *
+ * This class provides a settings API for the LoginPress plugin.
+ * Purpose of this class is to handle settings form generation, validation, and data management.
+ *
+ * @package LoginPress
  * @since 1.0.9
  * @version 4.0.0
  */
@@ -11,61 +15,68 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 	class LoginPress_Settings_API {
 
 		/**
-		 * settings sections array
+		 * Settings sections array for organizing settings into tabs.
 		 *
-		 * @var array
+		 * @var array<string, mixed> Array of settings sections with id, title, and description.
 		 */
 		protected $settings_sections = array();
 
 		/**
-		 * Settings fields array
+		 * Settings fields array containing all form fields and their configurations.
 		 *
-		 * @var array
+		 * @var array<string, mixed> Array of settings fields organized by section.
 		 */
 		protected $settings_fields = array();
 
 		/**
-		 * Captcha settings
+		 * Captcha settings configuration for reCAPTCHA and other captcha services.
 		 *
+		 * @var array<string, mixed> Captcha settings including API keys and configuration options.
 		 * @since 5.0.0
 		 */
 		public $loginpress_captcha_settings;
 
 		/**
-		 * loginpress pro addons status
+		 * LoginPress Pro addons activation status and configuration.
 		 *
+		 * @var array<string, mixed> Pro addons status including activation state and settings.
 		 * @since 5.0.0
 		 */
 		public $loginpress_pro_addons;
 
+		/**
+		 * Class constructor.
+		 *
+		 * @since 1.0.9
+		 * @return void
+		 */
 		public function __construct() {
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 			$this->loginpress_captcha_settings = get_option( 'loginpress_captcha_settings' );
-			$this->loginpress_pro_addons = get_option( 'loginpress_pro_addons' );
+			$this->loginpress_pro_addons       = get_option( 'loginpress_pro_addons' );
 		}
 
 		/**
-		 * Enqueue scripts and styles
+		 * Enqueue scripts and styles.
+		 *
+		 * @since 1.0.9
+		 * @param string $hook The current admin page hook.
+		 * @return void
 		 */
-		function admin_enqueue_scripts( $hook ) {
-
-			if ( $hook != 'toplevel_page_loginpress-settings' ) {
+		public function admin_enqueue_scripts( $hook ) {
+			if ( 'toplevel_page_loginpress-settings' !== $hook ) {
 				return;
 			}
-			// wp_enqueue_style( 'wp-color-picker' );
-			// wp_enqueue_script( 'wp-color-picker' );
-
-			// wp_enqueue_media();
 			wp_enqueue_script( 'jquery' );
 		}
 
 		/**
-		 * Set settings sections
+		 * Set settings sections.
 		 *
-		 * @param array $sections setting sections array
+		 * @param array<string, mixed> $sections setting sections array.
+		 * @return $this
 		 */
-		function set_sections( $sections ) {
-
+		public function set_sections( $sections ) {
 			$this->settings_sections = $sections;
 
 			return $this;
@@ -74,37 +85,35 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		/**
 		 * Add a single section or multiple sections.
 		 *
-		 * @param array $section section array to add.
+		 * @param array<string, mixed> $section section array to add.
+		 * @return $this
 		 */
-		function add_section( $section ) {
-
+		public function add_section( $section ) {
 			$this->settings_sections[] = $section;
 
 			return $this;
 		}
 
 		/**
-		 * Set settings fields
+		 * Set settings fields.
 		 *
-		 * @param array $fields settings fields array
+		 * @param array<string, mixed> $fields settings fields array.
+		 * @return $this
 		 */
-		function set_fields( $fields ) {
-
+		public function set_fields( $fields ) {
 			$this->settings_fields = $fields;
 
 			return $this;
 		}
 
 		/**
-		 * Add settings field
+		 * Add settings field.
 		 *
-		 * @param string $section settings section name
-		 * @param string $field  settings field name
-		 *
-		 * @return array settings fields
+		 * @param string               $section settings section name.
+		 * @param array<string, mixed> $field settings field array.
+		 * @return $this
 		 */
-		function add_field( $section, $field ) {
-
+		public function add_field( $section, $field ) {
 			$defaults = array(
 				'name'  => '',
 				'label' => '',
@@ -119,26 +128,32 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		}
 
 		/**
-		 * Initialize and registers the settings sections and fileds to WordPress
+		 * Initialize and registers the settings sections and fileds to WordPress.
 		 *
 		 * Usually this should be called at `admin_init` hook.
 		 *
 		 * This function gets the initiated settings sections and fields. Then
 		 * registers them to WordPress and ready for use.
 		 */
-		function admin_init() {
+		/**
+		 * Initialize admin settings.
+		 *
+		 * @since 1.0.9
+		 * @return void
+		 */
+		public function admin_init() {
 
-			// register settings sections
+			// register settings sections.
 			foreach ( $this->settings_sections as $section ) {
 				if ( false == get_option( $section['id'] ) ) {
 					add_option( $section['id'] );
 				}
 				$video_link = '';
 				if ( isset( $section['video_link'] ) && ! empty( $section['video_link'] ) ) {
-					$video_link = '<div class="video"><a href="https://www.youtube.com/watch?v=' . $section['video_link'] . '" target="_blank">' . __( 'How to Setup', 'loginpress' ) . '</a></div>';
+					$video_link = '<div class="video"><a href="https://www.youtube.com/watch?v=' . esc_attr( $section['video_link'] ) . '" target="_blank">' . esc_html__( 'How to Setup', 'loginpress' ) . '</a></div>';
 				}
 				if ( isset( $section['desc'] ) && ! empty( $section['desc'] ) ) {
-					$section['desc'] = '<div class="inside"><div class="desc">' . $section['desc'] . '</div>' . $video_link . '</div>';
+					$section['desc'] = '<div class="inside"><div class="desc">' . wp_kses_post( $section['desc'] ) . '</div>' . $video_link . '</div>';
 					$callback        = call_user_func( array( $this, 'get_description' ), $section['desc'] );
 				} elseif ( isset( $section['callback'] ) ) {
 					$callback = $section['callback'];
@@ -150,7 +165,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			}
 
 			/**
-			 * register settings fields
+			 * register settings fields.
 			 */
 			foreach ( $this->settings_fields as $section => $field ) {
 				foreach ( $field as $option ) {
@@ -183,7 +198,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 				}
 			}
 
-			// creates our settings in the options table
+			// creates our settings in the options table.
 			foreach ( $this->settings_sections as $section ) {
 				register_setting( $section['id'], $section['id'], array( $this, 'sanitize_options' ) );
 			}
@@ -192,7 +207,8 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		/**
 		 * Get field description for display.
 		 *
-		 * @param array $args settings field args.
+		 * @param array<string, mixed> $args settings field args.
+		 * @return void
 		 */
 		public function get_field_description( $args ) {
 			if ( ! empty( $args['desc'] ) ) {
@@ -205,16 +221,17 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		}
 
 		/**
-		 * Displays a text field for a settings field
+		 * Displays a text field for a settings field.
 		 *
-		 * @param array $args settings field args
+		 * @param array<string, mixed> $args settings field args.
+		 * @return void
 		 */
-		function callback_text( $args ) {
+		public function callback_text( $args ) {
 
 			$value       = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$type        = isset( $args['type'] ) ? $args['type'] : 'text';
-			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
+			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
 
 			$html  = sprintf( '<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder );
 			$html .= $this->get_field_description( $args );
@@ -225,15 +242,16 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		/**
 		 * Displays a text field for a settings field with type email.
 		 *
-		 * @param array $args settings field args
+		 * @param array<string, mixed> $args settings field args.
 		 * @since 1.2.5
+		 * @return void
 		 */
-		function callback_email( $args ) {
+		public function callback_email( $args ) {
 
 			$value       = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$type        = isset( $args['type'] ) ? $args['type'] : 'email';
-			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
+			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
 			$multiple    = empty( $args['multiple'] ) ? '' : 'multiple';
 
 			$html  = sprintf( '<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder, $multiple );
@@ -243,7 +261,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		}
 
 		/**
-		 * Displays a url field for a settings field
+		 * Displays a url field for a settings field.
 		 *
 		 * @param array $args settings field args
 		 */
@@ -251,7 +269,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$value       = esc_url( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$type        = isset( $args['type'] ) ? $args['type'] : 'text';
-			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
+			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
 
 			$html  = sprintf( '<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder );
 			$html .= $this->get_field_description( $args );
@@ -260,7 +278,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		}
 
 		/**
-		 * Displays a number field for a settings field
+		 * Displays a number field for a settings field.
 		 *
 		 * @param array $args settings field args
 		 */
@@ -268,10 +286,10 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$value       = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$type        = isset( $args['type'] ) ? $args['type'] : 'number';
-			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
-			$min         = ! isset( $args['min'] ) ? '' : ' min="' . $args['min'] . '"';
-			$max         = empty( $args['max'] ) ? '' : ' max="' . $args['max'] . '"';
-			$step        = empty( $args['max'] ) ? '' : ' step="' . $args['step'] . '"';
+			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
+			$min         = ! isset( $args['min'] ) ? '' : ' min="' . esc_attr( $args['min'] ) . '"';
+			$max         = empty( $args['max'] ) ? '' : ' max="' . esc_attr( $args['max'] ) . '"';
+			$step        = empty( $args['step'] ) ? '' : ' step="' . esc_attr( $args['step'] ) . '"';
 			$required    = isset( $args['min'] ) && $args['min'] > 0 ? 'required' : '';
 			$html        = sprintf( '<input type="%1$s" class="%2$s-number" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s%8$s%9$s%10$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder, $min, $max, $step, $required );
 			$html       .= $this->get_field_description( $args );
@@ -280,36 +298,36 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		}
 
 		/**
-		 * Displays a checkbox for a settings field
+		 * Displays a checkbox for a settings field.
 		 *
 		 * @param array $args settings field args
 		 * @version 5.0.0
 		 */
 		function callback_checkbox( $args ) {
-			
+
 			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 
-			// Get all LoginPress Pro addons
+			// Get all LoginPress Pro addons.
 			$addons = $this->loginpress_pro_addons;
 
-			// Check if Social Login addon is active
+			// Check if Social Login addon is active.
 			$is_social_login_active = isset( $addons['social-login']['is_active'] ) && $addons['social-login']['is_active'];
 
-			// Conditionally disable and uncheck specific fields
+			// Conditionally disable and uncheck specific fields.
 			$should_disable = false;
 
-			// Add more IDs here if needed
+			// Add more IDs here if needed.
 			$disabled_ids = array( 'enable_social_woo_lf', 'enable_social_woo_rf', 'enable_social_woo_co', 'enable_social_llms_lf', 'enable_social_llms_rf', 'enable_social_llms_co', 'enable_social_ld_lf', 'enable_social_ld_rf', 'enable_social_ld_qf', 'enable_social_login_links_bp', 'enable_social_login_links_bb', 'enable_social_edd_lf', 'enable_social_edd_rf', 'enable_social_edd_co' );
-			$html = '';
+			$html         = '';
 			if ( in_array( $args['id'], $disabled_ids ) && ! $is_social_login_active ) {
 				$should_disable = true;
-				$value = 'off'; // Force uncheck
-				if ( $args['id'] == 'enable_social_woo_lf' || $args['id'] == 'enable_social_llms_lf' || $args['id'] == 'enable_social_ld_lf' || $args['id'] == 'enable_social_edd_lf' || $args['id'] == 'enable_social_login_links_bp' || $args['id'] == 'enable_social_login_links_bb' ){
-					$html  .= '<div class="message warning">' . __( 'Activate Social Login addon to use following settings.', 'loginpress' ) . '</div>';
+				$value          = 'off'; // Force uncheck.
+				if ( $args['id'] == 'enable_social_woo_lf' || $args['id'] == 'enable_social_llms_lf' || $args['id'] == 'enable_social_ld_lf' || $args['id'] == 'enable_social_edd_lf' || $args['id'] == 'enable_social_login_links_bp' || $args['id'] == 'enable_social_login_links_bb' ) {
+					$html .= '<div class="message warning">' . esc_html__( 'Activate Social Login addon to use following settings.', 'loginpress' ) . '</div>';
 				}
 			}
 
-			$html  .= '<fieldset>';
+			$html .= '<fieldset>';
 			$html .= sprintf( '<label for="wpb-%1$s[%2$s]">', $args['section'], $args['id'] );
 			$html .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="off" />', $args['section'], $args['id'] );
 			$html .= sprintf( '<input type="checkbox" class="checkbox loginpress-check-hidden" id="wpb-%1$s[%2$s]" name="%1$s[%2$s]" value="on" %3$s %4$s />', $args['section'], $args['id'], checked( $value, 'on', false ), $should_disable ? 'disabled' : '' );
@@ -327,18 +345,18 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 */
 		function callback_multicheck( $args ) {
 			$captcha_settings = $this->loginpress_captcha_settings;
-			$captcha_enabled = isset( $captcha_settings['enable_captchas'] ) ? $captcha_settings['enable_captchas'] : 'off';
-			// Check if the whole field should be disabled
-			// For example: disable if it's the WooCommerce-related setting and WooCommerce is not active
+			$captcha_enabled  = isset( $captcha_settings['enable_captchas'] ) ? $captcha_settings['enable_captchas'] : 'off';
+			// Check if the whole field should be disabled.
+			// For example: disable if it's the WooCommerce-related setting and WooCommerce is not active.
 			$disabled_attr = '';
-			$html = '';
-			if ( ($args['id'] === 'enable_captcha_woo' || $args['id'] === 'enable_captcha_ld' || $args['id'] === 'enable_captcha_llms' || $args['id'] === 'enable_captcha_bp' || $args['id'] === 'enable_captcha_bb' || $args['id'] === 'enable_captcha_edd') && $captcha_enabled === 'off' ) {
+			$html          = '';
+			if ( ( $args['id'] === 'enable_captcha_woo' || $args['id'] === 'enable_captcha_ld' || $args['id'] === 'enable_captcha_llms' || $args['id'] === 'enable_captcha_bp' || $args['id'] === 'enable_captcha_bb' || $args['id'] === 'enable_captcha_edd' ) && $captcha_enabled === 'off' ) {
 				$disabled_attr = 'disabled';
-				$html  .= '<div class="message warning">' . __( 'Please enable Captcha first.', 'loginpress' ) . '</div>';
+				$html         .= '<div class="message warning">' . esc_html__( 'Please enable Captcha first.', 'loginpress' ) . '</div>';
 			}
-			$br    = ( 'roles_for_password_reset' == $args['id'] || 'exclude_roles' == $args['id']) ? '' : '<br>';
+			$br    = ( 'roles_for_password_reset' == $args['id'] || 'exclude_roles' == $args['id'] ) ? '' : '<br>';
 			$value = $this->get_option( $args['id'], $args['section'], $args['std'] );
-			$html  .= '<fieldset>';
+			$html .= '<fieldset>';
 			$html .= sprintf( '<input type="hidden" name="%1$s[%2$s]" value="" />', $args['section'], $args['id'] );
 
 			foreach ( $args['options'] as $key => $label ) {
@@ -406,7 +424,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 
 			$value       = esc_textarea( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size        = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
-			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . $args['placeholder'] . '"';
+			$placeholder = empty( $args['placeholder'] ) ? '' : ' placeholder="' . esc_attr( $args['placeholder'] ) . '"';
 
 			$html  = sprintf( '<textarea rows="5" cols="55" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]"%4$s>%5$s</textarea>', $size, $args['section'], $args['id'], $placeholder, $value );
 			$html .= $this->get_field_description( $args );
@@ -418,19 +436,20 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		/**
 		 * Displays a textarea for a settings field.
 		 *
-		 * @param array $args settings field args
+		 * @param array<string, mixed> $args settings field args
 		 * @return string $html the html to be displayed.
 		 * @since 1.0.0
 		 */
 		function callback_html( $args ) {
 
 			echo $this->get_field_description( $args );
+			return '';
 		}
 
 		/**
-		 * Displays a rich text textarea for a settings field
+		 * Displays a rich text textarea for a settings field.
 		 *
-		 * @param array $args settings field args
+		 * @param array<string, mixed> $args settings field args
 		 * @return string $html the html to be displayed.
 		 */
 		function callback_wysiwyg( $args ) {
@@ -438,7 +457,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$value = $this->get_option( $args['id'], $args['section'], $args['std'] );
 			$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : '500px';
 
-			echo '<div style="max-width: ' . $size . ';">';
+			echo '<div style="max-width: ' . esc_attr( $size ) . ';">';
 
 			$editor_settings = array(
 				'teeny'         => true,
@@ -456,10 +475,11 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			echo '</div>';
 
 			echo $this->get_field_description( $args );
+			return '';
 		}
 
 		/**
-		 * Displays a file upload field for a settings field
+		 * Displays a file upload field for a settings field.
 		 *
 		 * @param array $args settings field args
 		 */
@@ -468,7 +488,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
 			$size  = isset( $args['size'] ) && ! is_null( $args['size'] ) ? $args['size'] : 'regular';
 			$id    = $args['section'] . '[' . $args['id'] . ']';
-			$label = isset( $args['options']['button_label'] ) ? $args['options']['button_label'] : __( 'Choose File', 'loginpress' );
+			$label = isset( $args['options']['button_label'] ) ? $args['options']['button_label'] : esc_html__( 'Choose File', 'loginpress' );
 
 			$html  = sprintf( '<input type="text" class="%1$s-text wpsa-url" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
 			$html .= '<input type="button" class="button wpsa-browse" value="' . $label . '" />';
@@ -523,7 +543,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		}
 
 		/**
-		 * Displays a text field for a hidelogin field
+		 * Displays a text field for a hidelogin field.
 		 *
 		 * @param array $args settings field args
 		 */
@@ -565,9 +585,9 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		}
 
 		/**
-		 * Sanitize callback for Settings API
+		 * Sanitize callback for Settings API.
 		 *
-		 * @param array $options The options array.
+		 * @param array<string, mixed> $options The options array.
 		 * @return mixed
 		 */
 		function sanitize_options( $options ) {
@@ -579,7 +599,6 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			foreach ( $options as $option_slug => $option_value ) {
 				$sanitize_callback = $this->get_sanitize_callback( $option_slug );
 
-				// If callback is set and not false returned, call the sanitization function accordingly
 				if ( $sanitize_callback !== false ) {
 					$options[ $option_slug ] = call_user_func( $sanitize_callback, $option_value );
 					continue;
@@ -590,7 +609,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		}
 
 		/**
-		 * Get sanitization callback for given option slug
+		 * Get sanitization callback for given option slug.
 		 *
 		 * @param string $slug option slug
 		 *
@@ -601,14 +620,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 				return false;
 			}
 
-			// Iterate over registered fields and see if we can find proper callback
+			// Iterate over registered fields and see if we can find proper callback.
 			foreach ( $this->settings_fields as $section => $options ) {
 				foreach ( $options as $option ) {
 					if ( $option['name'] != $slug ) {
 						continue;
 					}
 
-					// Return the callback name
+					// Return the callback name.
 					return isset( $option['sanitize_callback'] ) && is_callable( $option['sanitize_callback'] ) ? $option['sanitize_callback'] : false;
 				}
 			}
@@ -617,11 +636,11 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		}
 
 		/**
-		 * Get the value of a settings field
+		 * Get the value of a settings field.
 		 *
-		 * @param string $option  settings field name
-		 * @param string $section the section name this field belongs to
-		 * @param string $default default text if it's not found
+		 * @param string $option  settings field name.
+		 * @param string $section the section name this field belongs to.
+		 * @param string $default default text if it's not found.
 		 * @return string
 		 */
 		function get_option( $option, $section, $default = '' ) {
@@ -636,7 +655,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		}
 
 		/**
-		 * Show navigation as tab
+		 * Show navigation as tab.
 		 *
 		 * Shows all the settings section labels as tab.
 		 *
@@ -644,25 +663,31 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 * @version 3.0.8
 		 * @return $html The html output.
 		 */
-		function show_navigation() {
+		/**
+		 * Show navigation tabs.
+		 *
+		 * @since 1.0.9
+		 * @return void
+		 */
+		public function show_navigation() {
 
 			$html = '<div class="loginpress-tabs-main"><span class="tabs-toggle">Menu</span><ul class="nav-tab-wrapper loginpress-tabs-wrapper">';
 
 			foreach ( $this->settings_sections as $tab ) {
 				if ( 'loginpress_premium' != $tab['id'] ) {
 					$sub_title = isset( $tab['sub-title'] ) ? $tab['sub-title'] : '';
-					// Define the end date for showing the "New" tag
-					$end_date     = strtotime( '2025-03-25' ); // Timestamp for 17th February 2025
-					$current_date = time(); // Current timestamp
+					// Define the end date for showing the "New" tag.
+					$end_date     = strtotime( '2025-03-25' ); // Timestamp for 17th February 2025.
+					$current_date = time(); // Current timestamp.
 					$new_tag      = '';
 					if ( ( $tab['id'] == 'loginpress_captcha_settings' || $tab['id'] == 'loginpress_social_logins' ) ) {
 						$new_tag = $this->loginpress_new_tag( $end_date );
 					}
 
-					$html .= sprintf( '<li class="settings-tabs-list"><a href="#%1$s" class="nav-tab" id="%1$s-tab">%2$s<span>%3$s</span>' . $new_tag . '</a></li>', $tab['id'], $tab['title'], $sub_title );
+					$html .= sprintf( '<li class="settings-tabs-list"><a href="#%1$s" class="nav-tab" id="%1$s-tab">%2$s<span>%3$s</span>' . $new_tag . '</a></li>', $tab['id'], esc_html( $tab['title'] ), esc_html( $sub_title ) );
 				}
 				if ( 'loginpress_premium' == $tab['id'] ) {
-					$html .= sprintf( '<a href="%1$s" class="loginpress-premium" target="_blank"><span class="dashicons dashicons-star-filled"></span>%2$s</a>', 'https://loginpress.pro/pricing/?utm_source=loginpress-lite&utm_medium=settings-tab&utm_campaign=pro-upgrade&utm_content=Upgrade+to+Pro+for+More+Features+CTA', $tab['title'] );
+					$html .= sprintf( '<a href="%1$s" class="loginpress-premium" target="_blank"><span class="dashicons dashicons-star-filled"></span>%2$s</a>', esc_url( 'https://loginpress.pro/pricing/?utm_source=loginpress-lite&utm_medium=settings-tab&utm_campaign=pro-upgrade&utm_content=Upgrade+to+Pro+for+More+Features+CTA' ), esc_html( $tab['title'] ) );
 				}
 			}
 
@@ -671,36 +696,43 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			echo $html;
 		}
 		/**
-		 * Add "NEW" tag to any tab
+		 * Add "NEW" tag to any tab.
 		 *
 		 * @since 4.0.0
-		 * @return $html The html output.
+		 * @param int $time Time in seconds.
+		 * @return string The html output.
 		 */
 		function loginpress_new_tag( $time = null ) {
-			// Check if $time is set and is a valid timestamp
+			// Check if $time is set and is a valid timestamp.
 			if ( is_null( $time ) || ! is_numeric( $time ) ) {
-				return; // Exit early if no valid time is provided
+				return; // Exit early if no valid time is provided.
 			}
-			// Compare the provided time with the current time
+			// Compare the provided time with the current time.
 			if ( time() <= $time ) {
 				return '<strong class="loginpress-new-tag">New</strong>';
 			}
 		}
 
 		/**
-		 * Show the section settings forms
+		 * Show the section settings forms.
 		 *
 		 * This function displays every sections in a different form.
 		 *
 		 * @since 1.0.9
 		 * @version 1.1.6
 		 */
-		function show_forms() {
+		/**
+		 * Show forms.
+		 *
+		 * @since 1.0.9
+		 * @return void
+		 */
+		public function show_forms() {
 			?>
 
 			<div class="metabox-holder loginpress-settings">
 				<?php foreach ( $this->settings_sections as $form ) : ?>
-					<div id="<?php echo $form['id']; ?>" class="group" style="display: none;">
+					<div id="<?php echo esc_attr( $form['id'] ); ?>" class="group" style="display: none;">
 						<form method="post" action="options.php">
 							<?php
 							$remove_submit = array( 'loginpress_autologin', 'loginpress_login_redirects', 'loginpress_register_fields' );
@@ -777,23 +809,27 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		}
 
 		/**
-		 * Tabulable JavaScript codes & Initiate Color Picker
+		 * Tabulable JavaScript codes & Initiate Color Picker.
 		 *
-		 * This code uses local-storage for displaying active tabs
+		 * This code uses local-storage for displaying active tabs.
 		 */
-		function script() {
+		/**
+		 * Enqueue scripts.
+		 *
+		 * @since 1.0.9
+		 * @return void
+		 */
+		public function script() {
 			?>
 
 			<script>
 				jQuery(document).ready(function($) {
-					//Initiate Color Picker
-					// $('.wp-color-picker-field').wpColorPicker();
 
 					let searchParams = new URLSearchParams(window.location.search);
 					if(searchParams.has('tab')){
 						localStorage.setItem("activetab", '#loginpress_' + searchParams.get('tab'));
 					}
-					// Switches option sections
+					// Switches option sections.
 					$('.group').hide();
 					var activetab = '';
 					if (typeof(localStorage) != 'undefined' ) {
@@ -851,7 +887,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 							self.prev('.wpsa-url').val(attachment.url).change();
 						});
 
-						// Finally, open the modal
+						// Finally, open the modal.
 						file_frame.open();
 					});
 				});
@@ -865,7 +901,13 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 *
 		 * @return void
 		 */
-		function _style_fix() {
+		/**
+		 * Fix styles.
+		 *
+		 * @since 1.0.9
+		 * @return void
+		 */
+		public function _style_fix() {
 
 			global $wp_version;
 
@@ -883,10 +925,10 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 
 
 		/**
-		 * Get Section Description
+		 * Get Section Description.
 		 *
 		 * @param string $desc Description.
-		 *
+		 * @return string
 		 * @since 1.1.0
 		 */
 		function get_description( $desc ) {
@@ -897,6 +939,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 * Prints out all settings sections added to a particular settings page.
 		 *
 		 * @param string $page The slug name of the page who's settings sections you want to output.
+		 * @return void
 		 * @since 1.1.0
 		 */
 		function do_settings_sections( $page ) {
@@ -907,7 +950,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			}
 
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
-				echo "<h3>{$section['title']}</h3>\n";
+				echo '<h3>' . esc_html( $section['title'] ) . "</h3>\n";
 				echo $section['callback'];
 				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
 					continue;

@@ -1,7 +1,10 @@
 <?php
 /**
+ * LoginPress Theme Template Class.
+ *
  * LoginPress template functions.
  *
+ * @package LoginPress
  * @since 1.1.3
  */
 
@@ -13,29 +16,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 
 	/**
-	 * Add LoginPress Templates to to use in the theme.
+	 * LoginPress Theme Template Class.
+	 *
+	 * Add LoginPress Templates to use in the theme.
+	 *
+	 * @since 1.1.3
 	 */
 	class LoginPress_Theme_Template {
 
 		/**
 		 * A reference to an instance of this class.
 		 *
-		 * @var string
+		 * @var LoginPress_Theme_Template|null
 		 */
 		private static $instance;
 
 		/**
 		 * The array of templates that this plugin tracks.
 		 *
-		 * @var string
+		 * @var array<string, string>
 		 */
 		protected $templates;
 
 		/**
 		 * Returns an instance of this class.
+		 *
+		 * @since 1.1.3
+		 * @return LoginPress_Theme_Template
 		 */
 		public static function get_instance() {
-
 			if ( null === self::$instance ) {
 				self::$instance = new LoginPress_Theme_Template();
 			}
@@ -45,17 +54,20 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 
 		/**
 		 * Initializes the plugin by setting filters and administration functions.
+		 *
+		 * @since 1.1.3
+		 * @return void
 		 */
 		private function __construct() {
 
 			$this->templates = array();
 
 			// Add a filter to the attributes metabox to inject template into the cache.
-			if ( version_compare( floatval( get_bloginfo( 'version' ) ), '4.7', '<' ) ) {
-				// 4.6 and older
+			if ( version_compare( (string) get_bloginfo( 'version' ), '4.7', '<' ) ) {
+				// 4.6 and older.
 				add_filter( 'page_attributes_dropdown_pages_args', array( $this, 'register_project_templates' ) );
 			} else {
-				// Add a filter to the wp 4.7 version attributes metabox
+				// Add a filter to the wp 4.7 version attributes metabox.
 				add_filter( 'theme_page_templates', array( $this, 'add_new_template' ) );
 			}
 
@@ -72,7 +84,10 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 		}
 
 		/**
-		 * Adds our template to the page dropdown for v4.7+
+		 * Adds our template to the page dropdown for v4.7+.
+		 *
+		 * @param array<string, string> $posts_templates The templates array.
+		 * @return array<string, string>
 		 */
 		public function add_new_template( $posts_templates ) {
 
@@ -81,8 +96,11 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 		}
 
 		/**
-		 * Adds our template to the pages cache in order to trick WordPress
+		 * Adds our template to the pages cache in order to trick WordPress.
 		 * into thinking the template file exists where it doesn't really exist.
+		 *
+		 * @param array<string, mixed> $atts The attributes array.
+		 * @return array<string, mixed>
 		 */
 		public function register_project_templates( $atts ) {
 
@@ -96,7 +114,7 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 				$templates = array();
 			}
 
-			// New cache, therefore remove the old one
+			// New cache, therefore remove the old one.
 			wp_cache_delete( $cache_key, 'themes' );
 
 			// Now add our template to the list of templates by merging our templates
@@ -104,7 +122,7 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 			$templates = array_merge( $templates, $this->templates );
 
 			// Add the modified cache to allow WordPress to pick it up for listing
-			// available templates
+			// available templates.
 			wp_cache_add( $cache_key, $templates, 'themes', 1800 );
 
 			return $atts;
@@ -112,34 +130,42 @@ if ( ! class_exists( 'LoginPress_Theme_Template' ) ) :
 
 		/**
 		 * Checks if the template is assigned to the page.
+		 *
+		 * @param string $template The template path.
+		 * @return string
 		 */
 		public function view_project_template( $template ) {
 
-			// Get global post
+			// Get global post.
 			global $post;
 
-			// Return template if post is empty
+			// Return template if post is empty.
 			if ( ! $post ) {
 				return $template;
 			}
 
-			// Return default template if we don't have a custom one defined
+			// Return default template if we don't have a custom one defined.
 			if ( ! isset( $this->templates[ get_post_meta( $post->ID, '_wp_page_template', true ) ] ) ) {
 				return $template;
 			}
 
 			$file = plugin_dir_path( __FILE__ ) . get_post_meta( $post->ID, '_wp_page_template', true );
 
-			// Just to be safe, we check if the file exist first
+			// Just to be safe, we check if the file exist first.
 			if ( file_exists( $file ) ) {
 				return $file;
 			} else {
-				echo $file;
+				echo esc_html( $file );
 			}
 
-			// Return template
+			// Return template.
 			return $template;
 		}
 	}
 endif;
-add_action( 'plugins_loaded', array( 'LoginPress_Theme_Template', 'get_instance' ) );
+add_action(
+	'plugins_loaded',
+	function () {
+		LoginPress_Theme_Template::get_instance();
+	}
+);

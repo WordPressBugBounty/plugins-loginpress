@@ -1,12 +1,17 @@
 <?php
 /**
- * Structure for Optin Form.
+ * LoginPress Optin Form.
  *
- * @since  1.0.9
+ * This file contains the structure for the optin form.
+ * Purpose of this file is to provide users with an optin form for data collection and communication preferences.
+ *
+ * @package LoginPress
+ * @since 1.0.9
  * @version 3.0.0
- * @access public
  */
+
 ?>
+
 <style media="screen">
 	#wpwrap {
 		background-color: #fdfdfd;
@@ -344,7 +349,7 @@
 		height: 200px;
 		width: 200px;
 		margin: -12px -5px;
-		background: url("<?php echo plugins_url( 'assets/images/welcome-loginpress.png', __FILE__ ); ?>") no-repeat;
+		background: url("<?php echo esc_url( plugins_url( 'assets/images/welcome-loginpress.png', __FILE__ ) ); ?>") no-repeat;
 		background-size: 100% auto;
 	}
 	.about-wrap .loginpress-badge {
@@ -437,40 +442,58 @@ $default_login_press_redirect = 'loginpress-settings';
  * @since 1.5.12
  * @version 3.0.0
  */
+// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET parameter for redirect page, used in read-only context.
 if ( isset( $_GET['redirect-page'] ) ) {
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET parameter for redirect page, used in read-only context.
 	$default_login_press_redirect = esc_attr( sanitize_text_field( wp_unslash( $_GET['redirect-page'] ) ) );
 
 }
+/**
+ * Output admin page header.
+ *
+ * @phpstan-ignore-next-line
+ */
+// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static method outputs escaped content.
 echo LoginPress_Settings::loginpress_admin_page_header();
-echo '<form method="post" action="' . admin_url( 'admin.php?page=' . $default_login_press_redirect ) . '">';
-echo "<input type='hidden' name='email' value='$email'>";
-echo "<input type='hidden' name='loginpress_submit_optin_nonce' value='" . sanitize_text_field( $nonce ) . "'>";
+echo '<form method="post" action="' . esc_url( admin_url( 'admin.php?page=' . $default_login_press_redirect ) ) . '">';
+echo "<input type='hidden' name='email' value='" . esc_attr( $email ) . "'>";
+echo "<input type='hidden' name='loginpress_submit_optin_nonce' value='" . esc_attr( $nonce ) . "'>";
 echo '<div id="loginpress-splash">';
-echo '<h1> <img id="loginpress-logo-text" src="' . plugins_url( 'img/loginpress.png', __DIR__ ) . '"> ' . esc_html__( 'Welcome to LoginPress', 'loginpress' ) . '</h1>';
+echo '<h1> <img id="loginpress-logo-text" src="' . esc_url( plugins_url( 'img/loginpress.png', __DIR__ ) ) . '"> ' . esc_html__( 'Welcome to LoginPress', 'loginpress' ) . '</h1>';
 echo '<div id="loginpress-splash-main" class="loginpress-splash-box">';
 echo '<div class="step-wrapper">';
 
-if ( get_option( '_loginpress_optin' ) == 'no' || ! get_option( '_loginpress_optin' ) ) {
+if ( 'no' === get_option( '_loginpress_optin' ) || ! get_option( '_loginpress_optin' ) ) {
 	echo "<div class='first-step step'>";
-	echo sprintf( 
-		// translators: 1: Opt-in disclaimer
-		__( '%1$s Hey %2$s,  %4$s If you opt-in some data about your installation of LoginPress will be sent to WPBrigade.com (This doesn\'t include stats)%4$s and You will receive new feature updates, security notifications etc %5$sNo Spam, I promise.%6$s %4$s%4$s Help us %7$sImprove LoginPress%8$s %4$s %4$s ', 'loginpress' ), '<p id="loginpress-splash-main-text">', '<strong>' . $name . '</strong>', '<strong>' . $website . '</strong>', '<br>', '<i>', '</i>', '<strong>', '</strong>' ) . '</p>';
-	echo "<button type='submit' id='loginpress-ga-submit-btn' class='loginpress-ga-button button button-primary' name='loginpress-submit-optin' >" . __( 'Allow and Continue  ', 'loginpress' ) . '</button><br>';
-	echo "<button type='submit' id='loginpress-ga-optout-btn' name='loginpress-submit-optout' >" . __( 'Skip This Step', 'loginpress' ) . '</button>';
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Translated string with HTML tags for formatting.
+	echo sprintf(
+		// translators: 1: Opt-in disclaimer.
+		__( '%1$s Hey %2$s,  %4$s If you opt-in some data about your installation of LoginPress will be sent to WPBrigade.com (This doesn\'t include stats)%4$s and You will receive new feature updates, security notifications etc %5$sNo Spam, I promise.%6$s %4$s%4$s Help us %7$sImprove LoginPress%8$s %4$s %4$s ', 'loginpress' ), // phpcs:ignore
+		'<p id="loginpress-splash-main-text">',
+		'<strong>' . esc_html( $name ) . '</strong>',
+		'<strong>' . esc_html( $website ) . '</strong>',
+		'<br>',
+		'<i>',
+		'</i>',
+		'<strong>',
+		'</strong>'
+	) . '</p>';
+	echo "<button type='submit' id='loginpress-ga-submit-btn' class='loginpress-ga-button button button-primary' name='loginpress-submit-optin' >" . esc_html__( 'Allow and Continue  ', 'loginpress' ) . '</button><br>';
+	echo "<button type='submit' id='loginpress-ga-optout-btn' name='loginpress-submit-optout' >" . esc_html__( 'Skip This Step', 'loginpress' ) . '</button>';
 	echo '<div id="loginpress-splash-permissions" class="loginpress-splash-box">';
-	echo '<a id="loginpress-splash-permissions-toggle" href="#" >' . __( 'What permissions are being granted?', 'loginpress' ) . '</a>';
+	echo '<a id="loginpress-splash-permissions-toggle" href="#" >' . esc_html__( 'What permissions are being granted?', 'loginpress' ) . '</a>';
 	echo '<div id="loginpress-splash-permissions-dropdown" style="display: none;">';
-	echo '<h3>' . __( 'Your Website Overview', 'loginpress' ) . '</h3>';
-	echo '<p>' . __( 'Your Site URL, WordPress & PHP version, plugins & themes. This data lets us make sure this plugin always stays compatible with the most popular plugins and themes.', 'loginpress' ) . '</p>';
+	echo '<h3>' . esc_html__( 'Your Website Overview', 'loginpress' ) . '</h3>';
+	echo '<p>' . esc_html__( 'Your Site URL, WordPress & PHP version, plugins & themes. This data lets us make sure this plugin always stays compatible with the most popular plugins and themes.', 'loginpress' ) . '</p>';
 
-	echo '<h3>' . __( 'Your Profile Overview', 'loginpress' ) . '</h3>';
-	echo '<p>' . __( 'Your name and email address.', 'loginpress' ) . '</p>';
+	echo '<h3>' . esc_html__( 'Your Profile Overview', 'loginpress' ) . '</h3>';
+	echo '<p>' . esc_html__( 'Your name and email address.', 'loginpress' ) . '</p>';
 
-	echo '<h3>' . __( 'Admin Notices', 'loginpress' ) . '</h3>';
-	echo '<p>' . __( 'Updates, Announcement, Marketing. No Spam, I promise.', 'loginpress' ) . '</p>';
+	echo '<h3>' . esc_html__( 'Admin Notices', 'loginpress' ) . '</h3>';
+	echo '<p>' . esc_html__( 'Updates, Announcement, Marketing. No Spam, I promise.', 'loginpress' ) . '</p>';
 
-	echo '<h3>' . __( 'Plugin Actions', 'loginpress' ) . '</h3>';
-	echo '<p>' . __( "Active, Deactive, Uninstallation and How you use this plugin's features and settings. This is limited to usage data. It does not include any of your sensitive LoginPress data, such as traffic. This data helps us learn which features are most popular, so we can improve the plugin further.", 'loginpress' ) . '</p>';
+	echo '<h3>' . esc_html__( 'Plugin Actions', 'loginpress' ) . '</h3>';
+	echo '<p>' . esc_html__( "Active, Deactive, Uninstallation and How you use this plugin's features and settings. This is limited to usage data. It does not include any of your sensitive LoginPress data, such as traffic. This data helps us learn which features are most popular, so we can improve the plugin further.", 'loginpress' ) . '</p>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
