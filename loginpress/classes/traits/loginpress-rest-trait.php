@@ -83,6 +83,7 @@ if ( ! trait_exists( 'LoginPress_Rest_Trait' ) ) {
 		 *
 		 * @param WP_REST_Request $request The REST request object.
 		 * @since  6.0.0
+		 * @version 6.2.0
 		 * @return array<string, mixed>
 		 */
 		public function loginpress_update_settings( WP_REST_Request $request ) {
@@ -112,6 +113,58 @@ if ( ! trait_exists( 'LoginPress_Rest_Trait' ) ) {
 
 				// Save as array instead of string.
 				$settings['restrict_domains_textarea'] = $domains_array;
+			}
+
+			// Process exclude_force_login_ids - ensure it's saved as array of IDs (dense array for JSON/React).
+			if ( isset( $settings['exclude_force_login_ids'] ) ) {
+				$raw = $settings['exclude_force_login_ids'];
+				if ( is_array( $raw ) ) {
+					$settings['exclude_force_login_ids'] = array_values( array_filter( array_map( 'absint', $raw ) ) );
+				} else {
+					// Best-effort migration for legacy or malformed data (e.g. string or comma-separated IDs).
+					$ids = array();
+					if ( is_string( $raw ) ) {
+						$parts = preg_split( '/[\s,]+/', $raw, -1, PREG_SPLIT_NO_EMPTY );
+						foreach ( $parts as $part ) {
+							$id = absint( trim( $part ) );
+							if ( $id > 0 ) {
+								$ids[] = $id;
+							}
+						}
+					} elseif ( is_numeric( $raw ) ) {
+						$id = absint( $raw );
+						if ( $id > 0 ) {
+							$ids[] = $id;
+						}
+					}
+					$settings['exclude_force_login_ids'] = array_values( array_unique( $ids ) );
+				}
+			}
+
+			if ( ! isset( $settings['exclude_force_login_ids'] ) ) {
+				$settings['exclude_force_login_ids'] = array();
+			}
+
+			// Compute and cache exclude_force_login_urls from IDs (used on front end to avoid get_posts per request).
+			$ids = $settings['exclude_force_login_ids'];
+			if ( ! empty( $ids ) ) {
+				$posts = get_posts(
+					array(
+						'post__in'       => $ids,
+						'posts_per_page' => -1,
+						'post_type'      => 'any',
+						'post_status'    => 'publish',
+						'fields'         => 'ids',
+						'no_found_rows'  => true,
+					)
+				);
+				$urls  = array();
+				foreach ( $posts as $post_id ) {
+					$urls[] = rtrim( get_permalink( $post_id ), '/' );
+				}
+				$settings['exclude_force_login_urls'] = array_values( $urls );
+			} else {
+				$settings['exclude_force_login_urls'] = array();
 			}
 
 			if ( isset( $settings['reset_settings'] ) && 'on' === $settings['reset_settings'] ) {

@@ -7,8 +7,12 @@
  *
  * @package LoginPress
  * @since 1.1.9
- * @version 3.0.0
+ * @version 6.2.0
  */
+
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+	exit;
+}
 
 $loginpress_setting   = get_option( 'loginpress_setting' );
 $loginpress_uninstall = isset( $loginpress_setting['loginpress_uninstall'] ) ? $loginpress_setting['loginpress_uninstall'] : 'off';
@@ -48,8 +52,8 @@ if ( ! is_multisite() ) {
 	loginpress_force_reset_password_remove();
 
 	// Delete all plugin Options.
-	foreach ( $loginpress_uninstall_options as $option ) {
-		delete_option( $option );
+	foreach ( $loginpress_uninstall_options as $loginpress_option ) {
+		delete_option( $loginpress_option );
 	}
 } else {
 
@@ -72,8 +76,8 @@ if ( ! is_multisite() ) {
 		wp_trash_post( $loginpress_page_id );
 
 		// Delete all plugin Options.
-		foreach ( $loginpress_uninstall_options as $option ) {
-			delete_option( $option );
+		foreach ( $loginpress_uninstall_options as $loginpress_option ) {
+			delete_option( $loginpress_option );
 		}
 
 		restore_current_blog();

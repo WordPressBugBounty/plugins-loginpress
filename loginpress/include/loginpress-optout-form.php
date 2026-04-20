@@ -7,35 +7,40 @@
  *
  * @package LoginPress
  * @since 5.3.2
+ * @version 6.2.0
  */
 
-$plugin_slug             = 'loginpress';
-$plugin_name             = 'LoginPress';
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$loginpress_plugin_slug  = 'loginpress';
+$loginpress_plugin_name  = 'LoginPress';
 $loginpress_optout_nonce = wp_create_nonce( 'loginpress-optout-nonce' );
 
 // Fetch the wpb_sdk_ option and decode it into an array.
-$sdk_data = json_decode( get_option( 'wpb_sdk_' . $plugin_slug ), true );
+$loginpress_sdk_data = json_decode( get_option( 'wpb_sdk_' . $loginpress_plugin_slug ), true );
 
 // Handle cases where option doesn't exist.
-$sdk_communication   = isset( $sdk_data['communication'] ) ? $sdk_data['communication'] : '0';
-$sdk_diagnostic_info = isset( $sdk_data['diagnostic_info'] ) ? $sdk_data['diagnostic_info'] : '0';
-$sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'] : '0';
+$loginpress_sdk_communication   = isset( $loginpress_sdk_data['communication'] ) ? $loginpress_sdk_data['communication'] : '0';
+$loginpress_sdk_diagnostic_info = isset( $loginpress_sdk_data['diagnostic_info'] ) ? $loginpress_sdk_data['diagnostic_info'] : '0';
+$loginpress_sdk_extensions      = isset( $loginpress_sdk_data['extensions'] ) ? $loginpress_sdk_data['extensions'] : '0';
 
 ?>
 
-<input type="hidden" id="<?php echo esc_attr( $plugin_slug . '_communication' ); ?>"
-	value="<?php echo esc_attr( $sdk_communication ); ?>" />
-<input type="hidden" id="<?php echo esc_attr( $plugin_slug . '_diagnostic_info' ); ?>"
-	value="<?php echo esc_attr( $sdk_diagnostic_info ); ?>" />
-<input type="hidden" id="<?php echo esc_attr( $plugin_slug . '_extensions' ); ?>"
-	value="<?php echo esc_attr( $sdk_extensions ); ?>" />
+<input type="hidden" id="<?php echo esc_attr( $loginpress_plugin_slug . '_communication' ); ?>"
+	value="<?php echo esc_attr( $loginpress_sdk_communication ); ?>" />
+<input type="hidden" id="<?php echo esc_attr( $loginpress_plugin_slug . '_diagnostic_info' ); ?>"
+	value="<?php echo esc_attr( $loginpress_sdk_diagnostic_info ); ?>" />
+<input type="hidden" id="<?php echo esc_attr( $loginpress_plugin_slug . '_extensions' ); ?>"
+	value="<?php echo esc_attr( $loginpress_sdk_extensions ); ?>" />
 
 <style media="screen">
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal.active {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal.active {
 		display: block;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal {
 		position: fixed;
 		overflow: auto;
 		height: 100%;
@@ -46,11 +51,11 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 		background: rgba(0, 0, 0, 0.6);
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal.active .<?php echo esc_attr( $plugin_slug ); ?>-modal-dialog {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal.active .<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-dialog {
 		top: 10%;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal .<?php echo esc_attr( $plugin_slug ); ?>-modal-dialog {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal .<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-dialog {
 		background: #fff;
 		position: absolute;
 		left: 50%;
@@ -63,7 +68,7 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal .<?php echo esc_attr( $plugin_slug ); ?>-modal-header {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal .<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-header {
 		background: #fbfbfb;
 		border-bottom: 1px solid #eee;
 		margin-bottom: -3px;
@@ -71,12 +76,12 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 		position: relative;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal .<?php echo esc_attr( $plugin_slug ); ?>-modal-body {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal .<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-body {
 		border-bottom: 0;
 		padding: 20px;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal .<?php echo esc_attr( $plugin_slug ); ?>-modal-footer {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal .<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-footer {
 		background: #fefefe;
 		border: 0;
 		padding: 20px;
@@ -84,7 +89,7 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 		text-align: right;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal h4 {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal h4 {
 		color: #cacaca;
 		font-size: 1.2em;
 		font-weight: 700;
@@ -96,13 +101,13 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 		-webkit-font-smoothing: antialiased;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal h2 {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal h2 {
 		font-weight: bold;
 		font-size: 20px;
 		margin-top: 0;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal p {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal p {
 		font-size: 14px;
 		color: #333;
 	}
@@ -123,14 +128,14 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 		margin: 0;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-opt-out-link {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-opt-out-link {
 		color: #2271b1;
 		font-size: 13px;
 		text-decoration: underline;
 		line-height: 20px;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-opt-out-link:hover {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-opt-out-link:hover {
 		text-decoration: none;
 	}
 
@@ -246,17 +251,17 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 		padding-left: 19px;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-opt-out-button {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-opt-out-button {
 		display: inline-block;
 		vertical-align: middle;
 		margin-right: 10px;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal-footer .wp-core-ui .button-primary {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-footer .wp-core-ui .button-primary {
 		vertical-align: middle;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal-close {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-close {
 		border-radius: 20px;
 		color: #bbb;
 		cursor: pointer;
@@ -267,18 +272,18 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 		transition: all .2s ease-in-out;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal-close:hover {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-close:hover {
 		background: #aaa;
 		color: #fff;
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal-opt-out-overlay {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-opt-out-overlay {
 		position: fixed;
 		inset: 0;
 		content: '';
 	}
 
-	.<?php echo esc_attr( $plugin_slug ); ?>-modal-body hr {
+	.<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-body hr {
 		border: 0;
 		border-top: 1px solid #eee;
 		margin: 25px 0 20px;
@@ -347,7 +352,7 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 	}
 
 	.wpb-loading .wpb-switch-feedback,
-	.wpb-loading .<?php echo esc_attr( $plugin_slug ); ?>-opt-out-link,
+	.wpb-loading .<?php echo esc_attr( $loginpress_plugin_slug ); ?>-opt-out-link,
 	.wpb-loading .communication-content {
 		cursor: wait;
 	}
@@ -356,24 +361,24 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 		color: #71ae00;
 	}
 </style>
-<div class="<?php echo esc_attr( $plugin_slug ); ?>-modal <?php echo esc_attr( $plugin_slug ); ?>-modal-opt-out">
-	<div class="<?php echo esc_attr( $plugin_slug ); ?>-modal-opt-out-overlay"></div>
-	<div class="<?php echo esc_attr( $plugin_slug ); ?>-modal-dialog">
-		<div class="<?php echo esc_attr( $plugin_slug ); ?>-modal-header">
+<div class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal <?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-opt-out">
+	<div class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-opt-out-overlay"></div>
+	<div class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-dialog">
+		<div class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-header">
 			<div
-				class="<?php echo esc_attr( $plugin_slug ); ?>-modal-close <?php echo esc_attr( $plugin_slug ); ?>-continue-button">
+				class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-close <?php echo esc_attr( $loginpress_plugin_slug ); ?>-continue-button">
 				<span class="dashicons dashicons-no"></span></div>
 			<h4>Opt Out</h4>
 		</div>
-		<div class="<?php echo esc_attr( $plugin_slug ); ?>-modal-body" data-optin="extensions">
+		<div class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-body" data-optin="extensions">
 			<!-- Communication Section -->
-			<div class="communication-container <?php echo '1' === $sdk_communication ? '' : 'wpb-deactivated'; ?>">
+			<div class="communication-container <?php echo '1' === $loginpress_sdk_communication ? '' : 'wpb-deactivated'; ?>">
 				<div class="communication-header">
 					<h2>COMMUNICATION</h2>
 					<span class="wpb-communication-switch-feedback wpb-switch-feedback"><i
 							class="dashicons dashicons-yes"></i></span>
-					<a href="#" class="<?php echo esc_attr( $plugin_slug ); ?>-opt-out-link"
-						option-name="communication"><?php echo '1' === $sdk_communication ? 'Opt Out' : 'Opt In'; ?></a>
+					<a href="#" class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-opt-out-link"
+						option-name="communication"><?php echo '1' === $loginpress_sdk_communication ? 'Opt Out' : 'Opt In'; ?></a>
 				</div>
 				<div class="communication-content">
 					<div class="info-box">
@@ -394,13 +399,13 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 			</div>
 			<hr>
 			<!-- Diagnostic Info Section -->
-			<div class="communication-container <?php echo '1' === $sdk_diagnostic_info ? '' : 'wpb-deactivated'; ?>">
+			<div class="communication-container <?php echo '1' === $loginpress_sdk_diagnostic_info ? '' : 'wpb-deactivated'; ?>">
 				<div class="communication-header">
 					<h2>Diagnostic Info</h2>
 					<span class="wpb-diagnostic_info-switch-feedback wpb-switch-feedback"><i
 							class="dashicons dashicons-yes"></i></span>
-					<a href="#" class="<?php echo esc_attr( $plugin_slug ); ?>-opt-out-link"
-						option-name="diagnostic_info"><?php echo '1' === $sdk_diagnostic_info ? 'Opt Out' : 'Opt In'; ?></a>
+					<a href="#" class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-opt-out-link"
+						option-name="diagnostic_info"><?php echo '1' === $loginpress_sdk_diagnostic_info ? 'Opt Out' : 'Opt In'; ?></a>
 				</div>
 				<div class="communication-content">
 					<div class="info-box">
@@ -431,13 +436,13 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 			</div>
 			<hr>
 			<!-- Extensions Section -->
-			<div class="communication-container <?php echo '1' === $sdk_extensions ? '' : 'wpb-deactivated'; ?>" ">
+			<div class="communication-container <?php echo '1' === $loginpress_sdk_extensions ? '' : 'wpb-deactivated'; ?>" ">
 			<div class=" communication-header">
 				<h2>Extensions</h2>
 				<span class="wpb-extensions-switch-feedback wpb-switch-feedback"><i
 						class="dashicons dashicons-yes"></i></span>
-				<a href="#" class="<?php echo esc_attr( $plugin_slug ); ?>-opt-out-link"
-					option-name="extensions"><?php echo '1' === $sdk_extensions ? 'Opt Out' : 'Opt In'; ?></a>
+				<a href="#" class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-opt-out-link"
+					option-name="extensions"><?php echo '1' === $loginpress_sdk_extensions ? 'Opt Out' : 'Opt In'; ?></a>
 			</div>
 			<div class="communication-content">
 				<div class="info-box">
@@ -451,35 +456,35 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 							Names, slugs, versions, and if active or not
 						</div>
 					</div>
-					<label class="wpb-optin-switch"><input data-checkbox="extensions" type="checkbox" <?php echo '1' === $sdk_extensions ? 'Checked' : ''; ?>></label>
+					<label class="wpb-optin-switch"><input data-checkbox="extensions" type="checkbox" <?php echo '1' === $loginpress_sdk_extensions ? 'Checked' : ''; ?>></label>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="<?php echo esc_attr( $plugin_slug ); ?>-modal-body" style="display: none;" data-optin="communication">
+	<div class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-body" style="display: none;" data-optin="communication">
 		<p>Sharing your name and email allows us to keep you in the loop about new features and important updates, warn
 			you about security issues before they become public knowledge, and send you special offers.</p>
-		<p>By clicking "Opt Out", <strong><?php echo esc_html( $plugin_name ); ?></strong> will no longer be able to view your name
+		<p>By clicking "Opt Out", <strong><?php echo esc_html( $loginpress_plugin_name ); ?></strong> will no longer be able to view your name
 			and email.</p>
 	</div>
-	<div class="<?php echo esc_attr( $plugin_slug ); ?>-modal-body" style="display: none;" data-optin="diagnostic_info">
+	<div class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-body" style="display: none;" data-optin="diagnostic_info">
 		<p>Sharing diagnostic data helps to provide additional functionality that's relevant to your website, avoid
 			WordPress or PHP version incompatibilities that can break the website, and recognize which languages &
 			regions the plugin should be translated and tailored to.</p>
-		<p>By clicking "Opt Out", diagnostic data will no longer be sent to <strong><?php echo esc_html( $plugin_name ); ?></strong>.
+		<p>By clicking "Opt Out", diagnostic data will no longer be sent to <strong><?php echo esc_html( $loginpress_plugin_name ); ?></strong>.
 		</p>
 	</div>
-	<div class="<?php echo esc_attr( $plugin_slug ); ?>-modal-footer" data-optin-footer="extensions">
-		<button class="button button-primary <?php echo esc_attr( $plugin_slug ); ?>-continue-button">Done</button>
+	<div class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-footer" data-optin-footer="extensions">
+		<button class="button button-primary <?php echo esc_attr( $loginpress_plugin_slug ); ?>-continue-button">Done</button>
 	</div>
-	<div class="<?php echo esc_attr( $plugin_slug ); ?>-modal-footer" style="display: none;"
+	<div class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-footer" style="display: none;"
 		data-optin-footer="communication">
-		<a class="<?php echo esc_attr( $plugin_slug ); ?>-opt-out-button" data-optin="" href="#">Opt Out</a>
+		<a class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-opt-out-button" data-optin="" href="#">Opt Out</a>
 		<button class="button button-primary" id="stay-connected">Stay Connected</button>
 	</div>
-	<div class="<?php echo esc_attr( $plugin_slug ); ?>-modal-footer" style="display: none;"
+	<div class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-modal-footer" style="display: none;"
 		data-optin-footer="diagnostic_info">
-		<a class="<?php echo esc_attr( $plugin_slug ); ?>-opt-out-button" data-optin="" href="#">Opt Out</a>
+		<a class="<?php echo esc_attr( $loginpress_plugin_slug ); ?>-opt-out-button" data-optin="" href="#">Opt Out</a>
 		<button class="button button-primary" id="stay-connected">Keep Sharing</button>
 	</div>
 </div>
@@ -489,7 +494,7 @@ $sdk_extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'
 	(function ($) {
 		$(function () {
 
-			var pluginSlug = '<?php echo esc_attr( $plugin_slug ); ?>';  // Define the plugin slug.
+			var pluginSlug = '<?php echo esc_attr( $loginpress_plugin_slug ); ?>';  // Define the plugin slug.
 
 			// Open modal when the "Opt Out" button is clicked for a specific plugin row.
 			$(document).on('click', 'tr[data-slug="' + pluginSlug + '"] .opt-out', function (e) {

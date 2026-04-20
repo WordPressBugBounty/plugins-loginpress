@@ -162,7 +162,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Sections' ) ) {
 		 *
 		 * @param WP_Customize_Manager $wp_customize The WordPress Customize object.
 		 * @since 1.0.0
-		 * @version 6.0.0
+		 * @version 6.2.0
 		 * @return void
 		 */
 		private function setup_logo_section( $wp_customize ) {
@@ -170,7 +170,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Sections' ) ) {
 			include LOGINPRESS_ROOT_PATH . 'include/customizer-strings.php';
 
 			// Section for Login Logo.
-			$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'customize_logo_section', 8, 4 );
+			$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'customize_logo_section', 8, 4 );
 			$wp_customize->add_section(
 				'customize_logo_section',
 				array(
@@ -263,12 +263,12 @@ if ( ! trait_exists( 'LoginPress_Customizer_Sections' ) ) {
 			 * Change CSS Properties Input fields with LoginPress_Range_Control.
 			 *
 			 * @since 1.0.1
-			 * @version 3.0.0
+			 * @version 6.2.0
 			 */
 
-			$this->loginpress_range_setting( $wp_customize, $logo_range_control, $logo_range_default, $logo_range_label, $logo_range_attrs, $logo_range_unit, 'customize_logo_section', 0, 10 );
-			$this->loginpress_range_setting( $wp_customize, $logo_range_control, $logo_range_default, $logo_range_label, $logo_range_attrs, $logo_range_unit, 'customize_logo_section', 1, 15 );
-			$this->loginpress_range_setting( $wp_customize, $logo_range_control, $logo_range_default, $logo_range_label, $logo_range_attrs, $logo_range_unit, 'customize_logo_section', 2, 20 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_logo_range_control, $loginpress_logo_range_default, $loginpress_logo_range_label, $loginpress_logo_range_attrs, $loginpress_logo_range_unit, 'customize_logo_section', 0, 10 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_logo_range_control, $loginpress_logo_range_default, $loginpress_logo_range_label, $loginpress_logo_range_attrs, $loginpress_logo_range_unit, 'customize_logo_section', 1, 15 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_logo_range_control, $loginpress_logo_range_default, $loginpress_logo_range_label, $loginpress_logo_range_attrs, $loginpress_logo_range_unit, 'customize_logo_section', 2, 20 );
 
 			/**
 			 * Login Page meta and form logo options.
@@ -311,8 +311,8 @@ if ( ! trait_exists( 'LoginPress_Customizer_Sections' ) ) {
 					)
 				);
 				if ( 1 === $logo ) {
-					$this->loginpress_hr_setting( $wp_customize, $close_control, 'customize_logo_section', 9, 25 );
-					$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'customize_logo_section', 9, 25 );
+					$this->loginpress_hr_setting( $wp_customize, $loginpress_close_control, 'customize_logo_section', 9, 25 );
+					$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'customize_logo_section', 9, 25 );
 				}
 				++$logo;
 			endwhile;

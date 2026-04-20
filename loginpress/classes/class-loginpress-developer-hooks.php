@@ -6,8 +6,12 @@
  *
  * @package LoginPress
  * @since 1.1.7
- * @version 3.0.0
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'LoginPress_Developer_Hooks' ) ) :
 

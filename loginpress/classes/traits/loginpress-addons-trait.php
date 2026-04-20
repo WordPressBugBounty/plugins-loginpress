@@ -51,7 +51,13 @@ if ( ! trait_exists( 'LoginPress_Addons_Trait' ) ) {
 				.loginpress-extension p:empty {
 					display: none;
 				}
-					#wpbody-content .loginpress-extension .button-primary{
+				#wpbody-content .loginpress-extension p:has(.button-primary) {
+					margin-top: auto;
+					padding-top: 30px;
+					padding-bottom: 0;
+					text-align: center;
+				}
+				#wpbody-content .loginpress-extension .button-primary{
 					border:0;
 					text-shadow:none;
 					background: #516885;
@@ -59,10 +65,6 @@ if ( ! trait_exists( 'LoginPress_Addons_Trait' ) ) {
 					height:auto;
 					font-size:15px;
 					cursor: pointer;
-					position: absolute;
-					bottom: 20px;
-					left: 50%;
-					transform: translateX(-50%);
 					box-shadow:none;
 					border-radius:5px;
 					transition: background-color .3s;
@@ -72,7 +74,9 @@ if ( ! trait_exists( 'LoginPress_Addons_Trait' ) ) {
 					font-family: "Poppins", sans-serif;
 					font-weight: 500;
 					text-decoration: none;
-					}
+					margin-top: auto;
+					width: 100%;
+				}
 				#wpbody-content .loginpress-extension .button-primary:active,
 				#wpbody-content .loginpress-extension .button-primary:hover,
 				#wpbody-content .loginpress-extension .button-primary:focus{
@@ -92,14 +96,6 @@ if ( ! trait_exists( 'LoginPress_Addons_Trait' ) ) {
 					border-radius: 0;
 					box-shadow: none;
 					color: #444;
-					position: absolute;
-					bottom: 15px;
-					left: 50%;
-					transform: translateX(-50%);
-					border: 2px solid #a5dff6 !important;
-					background: #d3f3ff54 !important;
-					cursor: default;
-					transition: background-color .3s;
 				}
 				.loginpress-extension button.button-primary:visited,
 				.loginpress-extension button.button-primary:active,
@@ -126,10 +122,14 @@ if ( ! trait_exists( 'LoginPress_Addons_Trait' ) ) {
 				}
 				.loginpress-extension p {
 					margin: 0;
-					padding: 10px 20px;
+					padding: 15px 0 0;
 					color: #5C7697;
-					font-size: 13px;
-					font-family: "Poppins", sans-serif;
+					font-family: Poppins;
+					font-weight: 400;
+					font-style: Regular;
+					line-height: 1.5;
+					letter-spacing: 0%;
+
 				}
 				.loginpress-addons-loading-errors {
 					padding-top: 15px;
@@ -141,42 +141,37 @@ if ( ! trait_exists( 'LoginPress_Addons_Trait' ) ) {
 				.loginpress-free-add-ons h3:after{
 					content: "Free";
 					position: absolute;
-					top: 10px;
-					right: -30px;
+					top: -15px;
+					right: -50px;
 					width: 100px;
 					height: 30px;
-					background-color: #7FC22B;
+					background-color: #14AE5C;
 					color: #fff;
 					transform: rotate(45deg);
 					line-height: 30px;
 					text-align: center;
-					font-size: 13px;
+					font-size: 16px;
+					font-weight: 600;
+					font-family: Poppins, Arial, Helvetica, sans-serif;
 				}
 
 				.loginpress-extension .logoinpress_addons_links{
 					position: relative;
-					background-color: #DEE5F2;
 					text-decoration: none !important;
 					display: inline-block;
 					width: 100%;
-					line-height: 90px;
 					padding-bottom: 0px;
 					height: auto;
 				}
 
-				@media only screen and (min-width: 1700px) {
-					.loginpress-extension{
-						width: calc(25% - 30px);
-					}
-				}
 				@media only screen and (max-width: 1400px) {
 					.loginpress-extension{
-						width: calc(50% - 30px);
+						width: calc(50% - 15px);
 					}
 				}
 				@media only screen and (max-width: 670px) {
 					.loginpress-extension:nth-child(n){
-						width:calc(100% - 15px);
+						width:100%;
 						margin: 0 0 20px;
 					}
 
@@ -211,12 +206,12 @@ if ( ! trait_exists( 'LoginPress_Addons_Trait' ) ) {
 					left: 50%;
 					transform: translate(-50%, -50%);
 					width: 100%;
-					max-width: 100px;
+					max-width: 64px;
 				}
 				.loginpress-addon-enable p{
 					font-weight: 700;
 					position: absolute;
-					bottom: 0;
+					bottom: 15px;
 					left: 0;
 					width: 100%;
 					text-align: center;
@@ -345,7 +340,7 @@ if ( ! trait_exists( 'LoginPress_Addons_Trait' ) ) {
 				}
 				.loginpress-install.activated p{
 					position: absolute;
-					bottom: 0;
+					bottom: 15px;
 					left: 0;
 					text-align: center;
 					width: 100%;
@@ -353,7 +348,7 @@ if ( ! trait_exists( 'LoginPress_Addons_Trait' ) ) {
 				}
 				.loginpress-wrong.activated p{
 					position: absolute;
-					bottom: 0;
+					bottom: 15px;
 					left: 0;
 					text-align: center;
 					width: 100%;
@@ -382,20 +377,20 @@ if ( ! trait_exists( 'LoginPress_Addons_Trait' ) ) {
 					height: 4em;
 					width: 2em;
 					transform-origin: left top;
-					border-right: 2px solid #00c853;
-					border-top: 2px solid #00c853;
+					border-right: 4px solid #00c853;
+					border-top: 4px solid #00c853;
 					content: '';
 					left: 42px;
 					top: 70px;
 					position: absolute;
 				}
 				.loginpress-uninstall .checkmark:after{
-					border-right: 2px solid #ff0000;
-					border-top: 2px solid #ff0000;
+					border-right: 4px solid #ff0000;
+					border-top: 4px solid #ff0000;
 				}
 				.loginpress-uninstall p, .loginpress-uninstalling p{
 					position: absolute;
-					bottom: 0;
+					bottom: 15px;
 					left: 0;
 					text-align: center;
 					width: 100%;

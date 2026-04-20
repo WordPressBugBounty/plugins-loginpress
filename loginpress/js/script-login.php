@@ -7,8 +7,12 @@
  *
  * @package LoginPress
  * @since 1.2.2
- * @version 1.2.3
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Script-login.php is created for adding JS code in login page footer.

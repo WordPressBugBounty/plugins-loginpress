@@ -189,7 +189,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 		public function addon_card( $addon ) {
 
 			$addon_slug  = $addon['slug'];
-			$addon_thumb = ( defined( 'LOGINPRESS_DIR_URL' ) ? LOGINPRESS_DIR_URL : '' ) . 'img/addons/' . $addon_slug . '.png';
+			$addon_thumb = ( defined( 'LOGINPRESS_DIR_URL' ) ? LOGINPRESS_DIR_URL : '' ) . 'img/addons/' . $addon_slug . '.svg';
 			?>
 
 			<div class="loginpress-extension <?php echo esc_attr( true === $addon['is_free'] ? 'loginpress-free-add-ons' : '' ); ?> ">
@@ -229,7 +229,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 				<div class="loginpress-logo-container">
 				<img src="' . plugins_url( '../../loginpress/img/loginpress-logo-divid-logo.svg', __FILE__ ) . '" alt="loginpress">
 				<svg class="circular-loader" viewBox="25 25 50 50" >
-					<circle class="loader-path" cx="50" cy="50" r="18" fill="none" stroke="#d8d8d8" stroke-width="1" />
+					<circle class="loader-path" cx="50" cy="50" r="18" fill="none" stroke="#F6366A" stroke-width="1" />
 				</svg>
 				</div>
 				<p>' .
@@ -249,7 +249,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 				<div class="loginpress-logo-container">
 					<img src="' . plugins_url( '../../loginpress/img/loginpress-logo-divid-logo.svg', __FILE__ ) . '" alt="loginpress">
 					<svg class="circular-loader" viewBox="25 25 50 50" >
-					<circle class="loader-path" cx="50" cy="50" r="18" fill="none" stroke="#d8d8d8" stroke-width="1" />
+					<circle class="loader-path" cx="50" cy="50" r="18" fill="none" stroke="#F6366A" stroke-width="1" />
 					</svg>
 				</div>
 				<p>' .
@@ -286,7 +286,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 		 */
 		public function addon_card_free( $addon ) {
 			$addon_slug  = $addon['slug'];
-			$addon_thumb = ( defined( 'LOGINPRESS_DIR_URL' ) ? LOGINPRESS_DIR_URL : '' ) . 'img/addons/' . $addon_slug . '.png';
+			$addon_thumb = ( defined( 'LOGINPRESS_DIR_URL' ) ? LOGINPRESS_DIR_URL : '' ) . 'img/addons/' . $addon_slug . '.svg';
 			$utm_content = str_replace( ' ', '+', $this->addons_meta[ $addon_slug ]['title'] ?? '' );
 			?>
 
@@ -433,16 +433,14 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 
 					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'uninstall_' . $addon_slug ) ); ?>">
 					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $addon_slug ); ?>">
-					<input id="<?php echo esc_attr( $addon_slug ); ?>" type="checkbox" checked class="loginpress-radio loginpress-radio-ios loginpress-uninstall-pro-addon" value="<?php echo esc_attr( $addon_slug ); ?>">
-					<label for="<?php echo esc_attr( $addon_slug ); ?>" class="loginpress-radio-btn"></label>
+					<button type="button" class="button button-secondary loginpress-uninstall-pro-addon" data-slug="<?php echo esc_attr( $addon_slug ); ?>"><?php esc_html_e( 'Deactivate', 'loginpress' ); ?></button>
 
 				<?php } else { ?>
 
 					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . $addon_slug ) ); ?>">
 					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $addon_slug ); ?>">
 					<input name="loginpress_pro_addon_id" type="hidden" value="<?php echo esc_attr( $addon_slug ); ?>">
-					<input id="<?php echo esc_attr( $addon_slug ); ?>" type="checkbox" class="loginpress-radio loginpress-radio-ios loginpress-active-pro-addon" value="<?php echo esc_attr( $addon_slug ); ?>">
-					<label for="<?php echo esc_attr( $addon_slug ); ?>" class="loginpress-radio-btn"></label>
+					<button type="button" class="button button-primary loginpress-active-pro-addon" data-slug="<?php echo esc_attr( $addon_slug ); ?>"><?php esc_html_e( 'Activate', 'loginpress' ); ?></button>
 
 					<?php
 				}
@@ -468,22 +466,19 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 
 					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'uninstall_' . $addon_data['slug'] ) ); ?>">
 					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $addon_data['slug'] ); ?>">
-					<input id="<?php echo esc_attr( $addon_data['slug'] ); ?>" type="checkbox" checked class="loginpress-radio loginpress-radio-ios loginpress-uninstall-pro-addon" value="<?php echo esc_attr( $addon_data['slug'] ); ?>">
-					<label for="<?php echo esc_attr( $addon_data['slug'] ); ?>" class="loginpress-radio-btn"></label>
+					<button type="button" class="button button-secondary loginpress-uninstall-pro-addon" data-slug="<?php echo esc_attr( $addon_data['slug'] ); ?>"><?php esc_html_e( 'Deactivate', 'loginpress' ); ?></button>
 					
 				<?php } elseif ( array_key_exists( $plugin_file_path, $this->plugins_list ) ) { ?>
 
 					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . $addon_data['slug'] ) ); ?>">
 					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $addon_data['slug'] ); ?>">
-					<input id="<?php echo esc_attr( $addon_data['slug'] ); ?>" type="checkbox" class="loginpress-radio loginpress-radio-ios loginpress-active-pro-addon" value="<?php echo esc_attr( $addon_data['slug'] ); ?>">
-					<label for="<?php echo esc_attr( $addon_data['slug'] ); ?>" class="loginpress-radio-btn"></label>
+					<button type="button" class="button button-primary loginpress-active-pro-addon" data-slug="<?php echo esc_attr( $addon_data['slug'] ); ?>"><?php esc_html_e( 'Activate', 'loginpress' ); ?></button>
 
 				<?php } else { ?>
 
 					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . $addon_data['slug'] ) ); ?>">
 					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $addon_data['slug'] ); ?>">
-					<input id="<?php echo esc_attr( $addon_data['slug'] ); ?>" type="checkbox" class="loginpress-radio loginpress-radio-ios loginpress-install-pro-addon" value="<?php echo esc_attr( $addon_data['slug'] ); ?>">
-					<label for="<?php echo esc_attr( $addon_data['slug'] ); ?>" class="loginpress-radio-btn"></label>
+					<button type="button" class="button button-primary loginpress-install-pro-addon" data-slug="<?php echo esc_attr( $addon_data['slug'] ); ?>"><?php esc_html_e( 'Install', 'loginpress' ); ?></button>
 
 					<?php
 				}

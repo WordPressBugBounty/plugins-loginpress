@@ -7,6 +7,7 @@
  * @package   LoginPress
  * @subpackage Traits\Customizer
  * @since     6.1.0
+ * @version   6.2.0
  */
 
 // Prevent direct access.
@@ -32,7 +33,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Form' ) ) {
 		 *
 		 * @param WP_Customize_Manager $wp_customize The WordPress Customize object.
 		 * @since 1.0.0
-		 * @version 6.0.0
+		 * @version 6.2.0
 		 * @return void
 		 */
 		private function setup_form_section( $wp_customize ) {
@@ -50,7 +51,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Form' ) ) {
 				)
 			);
 
-			$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'section_form', 2, 4 );
+			$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'section_form', 2, 4 );
 
 			/**
 			 * Enable / Disable Form Background Image with LoginPress_Radio_Control.
@@ -108,13 +109,13 @@ if ( ! trait_exists( 'LoginPress_Customizer_Form' ) ) {
 
 			$wp_customize->register_control_type( LoginPress_Color_Picker_Alpha::class );
 
-			$this->loginpress_color_setting( $wp_customize, $form_color_control, $form_color_label, 'section_form', 0, 7 );
+			$this->loginpress_color_setting( $wp_customize, $loginpress_form_color_control, $loginpress_form_color_label, 'section_form', 0, 7 );
 
-			$this->loginpress_range_setting( $wp_customize, $form_range_control, $form_range_default, $form_range_label, $form_range_attrs, $form_range_unit, 'section_form', 0, 15 );
-			$this->loginpress_range_setting( $wp_customize, $form_range_control, $form_range_default, $form_range_label, $form_range_attrs, $form_range_unit, 'section_form', 1, 20 );
-			$this->loginpress_range_setting( $wp_customize, $form_range_control, $form_range_default, $form_range_label, $form_range_attrs, $form_range_unit, 'section_form', 2, 25 );
-			$this->loginpress_range_setting( $wp_customize, $form_range_control, $form_range_default, $form_range_label, $form_range_attrs, $form_range_unit, 'section_form', 3, 30 );
-			$this->loginpress_range_setting( $wp_customize, $form_range_control, $form_range_default, $form_range_label, $form_range_attrs, $form_range_unit, 'section_form', 4, 35 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 0, 15 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 1, 20 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 2, 25 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 3, 30 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 4, 35 );
 			// Add settings for padding and margin.
 			$wp_customize->add_setting(
 				'loginpress_customization[padding]',
@@ -149,37 +150,37 @@ if ( ! trait_exists( 'LoginPress_Customizer_Form' ) ) {
 					)
 				)
 			);
-			$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'section_button', 0, 44 );
+			$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'section_button', 0, 44 );
 			$form_padding = 0;
 			while ( $form_padding < 2 ) :
 
 				$wp_customize->add_setting(
-					"loginpress_customization[{$form_control[$form_padding]}]",
+					"loginpress_customization[{$loginpress_form_control[$form_padding]}]",
 					array(
-						'default'           => $form_default[ $form_padding ],
+						'default'           => $loginpress_form_default[ $form_padding ],
 						'type'              => 'option',
 						'capability'        => 'manage_options',
 						'transport'         => 'postMessage',
-						'sanitize_callback' => $form_sanitization[ $form_padding ],
+						'sanitize_callback' => $loginpress_form_sanitization[ $form_padding ],
 					)
 				);
 
 				$wp_customize->add_control(
-					"loginpress_customization[{$form_control[$form_padding]}]",
+					"loginpress_customization[{$loginpress_form_control[$form_padding]}]",
 					array(
-						'label'    => $form_label[ $form_padding ],
+						'label'    => $loginpress_form_label[ $form_padding ],
 						'section'  => 'section_form',
 						'priority' => 40,
-						'settings' => "loginpress_customization[{$form_control[$form_padding]}]",
+						'settings' => "loginpress_customization[{$loginpress_form_control[$form_padding]}]",
 					)
 				);
 
 				++$form_padding;
 			endwhile;
 
-			$this->loginpress_hr_setting( $wp_customize, $close_control, 'section_form', 3, 41 );
+			$this->loginpress_hr_setting( $wp_customize, $loginpress_close_control, 'section_form', 3, 41 );
 
-			$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'section_form', 0, 45 );
+			$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'section_form', 0, 45 );
 			// Add settings for margin.
 			$wp_customize->add_setting(
 				'loginpress_customization[margin]',
@@ -216,49 +217,62 @@ if ( ! trait_exists( 'LoginPress_Customizer_Form' ) ) {
 				)
 			);
 
-			$this->loginpress_color_setting( $wp_customize, $form_color_control, $form_color_label, 'section_form', 1, 50 );
-			$this->loginpress_color_setting( $wp_customize, $form_color_control, $form_color_label, 'section_form', 2, 55 );
+			$this->loginpress_color_setting( $wp_customize, $loginpress_form_color_control, $loginpress_form_color_label, 'section_form', 1, 50 );
+			$this->loginpress_color_setting( $wp_customize, $loginpress_form_color_control, $loginpress_form_color_label, 'section_form', 2, 55 );
 
-			$this->loginpress_range_setting( $wp_customize, $form_range_control, $form_range_default, $form_range_label, $form_range_attrs, $form_range_unit, 'section_form', 5, 60 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 5, 60 );
+
+			// @version 6.2.0. Created color setting for visibility_icon_color.
+			$this->loginpress_color_setting(
+				$wp_customize,
+				$loginpress_form_color_control,
+				$loginpress_form_color_label,
+				'section_form',
+				3,
+				61,
+				$loginpress_form_color_default[3],
+				__( 'Set the color for the password visibility icon and "Remember Me” checkbox.', 'loginpress' )
+			);
 
 			$input_padding = 2;
 			while ( $input_padding < 3 ) :
 
 				$wp_customize->add_setting(
-					"loginpress_customization[{$form_control[$input_padding]}]",
+					"loginpress_customization[{$loginpress_form_control[$input_padding]}]",
 					array(
-						'default'           => $form_default[ $input_padding ],
+						'default'           => $loginpress_form_default[ $input_padding ],
 						'type'              => 'option',
 						'capability'        => 'manage_options',
 						'transport'         => 'postMessage',
-						'sanitize_callback' => $form_sanitization[ $input_padding ],
+						'sanitize_callback' => $loginpress_form_sanitization[ $input_padding ],
 					)
 				);
 
 				$wp_customize->add_control(
-					"loginpress_customization[{$form_control[$input_padding]}]",
+					"loginpress_customization[{$loginpress_form_control[$input_padding]}]",
 					array(
-						'label'    => $form_label[ $input_padding ],
+						'label'    => $loginpress_form_label[ $input_padding ],
 						'section'  => 'section_form',
 						'priority' => 85,
-						'settings' => "loginpress_customization[{$form_control[$input_padding]}]",
+						'settings' => "loginpress_customization[{$loginpress_form_control[$input_padding]}]",
 					)
 				);
 
 				++$input_padding;
 			endwhile;
 
-			$this->loginpress_hr_setting( $wp_customize, $close_control, 'section_form', 4, 86 );
-			$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'section_form', 1, 90 );
+			$this->loginpress_hr_setting( $wp_customize, $loginpress_close_control, 'section_form', 4, 86 );
+			$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'section_form', 1, 90 );
 
-			$this->loginpress_color_setting( $wp_customize, $form_color_control, $form_color_label, 'section_form', 3, 95 );
-			$this->loginpress_color_setting( $wp_customize, $form_color_control, $form_color_label, 'section_form', 4, 100 );
+			// @since 6.2.0. used WP_Customize_Color_Control for eye button/eye icon.
+			$this->loginpress_color_setting( $wp_customize, $loginpress_form_color_control, $loginpress_form_color_label, 'section_form', 4, 95 );
+			$this->loginpress_color_setting( $wp_customize, $loginpress_form_color_control, $loginpress_form_color_label, 'section_form', 5, 100 );
 
 			// customize_form_label.
-			$this->loginpress_range_setting( $wp_customize, $form_range_control, $form_range_default, $form_range_label, $form_range_attrs, $form_range_unit, 'section_form', 9, 105 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 9, 105 );
 			// remember_me_font_size.
-			$this->loginpress_range_setting( $wp_customize, $form_range_control, $form_range_default, $form_range_label, $form_range_attrs, $form_range_unit, 'section_form', 10, 110 );
-			$this->loginpress_hr_setting( $wp_customize, $close_control, 'section_form', 5, 111 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 10, 110 );
+			$this->loginpress_hr_setting( $wp_customize, $loginpress_close_control, 'section_form', 5, 111 );
 		}
 
 		/**
@@ -340,7 +354,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Form' ) ) {
 		 *
 		 * @param WP_Customize_Manager $wp_customize The WordPress Customize object.
 		 * @since 1.0.0
-		 * @version 6.0.0
+		 * @version 6.2.0
 		 * @return void
 		 */
 		private function setup_button_section( $wp_customize ) {
@@ -358,21 +372,21 @@ if ( ! trait_exists( 'LoginPress_Customizer_Form' ) ) {
 				)
 			);
 
-			$this->loginpress_color_setting( $wp_customize, $button_control, $button_label, 'section_button', 0, 5 );
-			$this->loginpress_color_setting( $wp_customize, $button_control, $button_label, 'section_button', 1, 10 );
-			$this->loginpress_color_setting( $wp_customize, $button_control, $button_label, 'section_button', 2, 15 );
-			$this->loginpress_color_setting( $wp_customize, $button_control, $button_label, 'section_button', 3, 20 );
-			$this->loginpress_color_setting( $wp_customize, $button_control, $button_label, 'section_button', 4, 25 );
-			$this->loginpress_color_setting( $wp_customize, $button_control, $button_label, 'section_button', 5, 30 );
-			$this->loginpress_color_setting( $wp_customize, $button_control, $button_label, 'section_button', 6, 35 );
+			$this->loginpress_color_setting( $wp_customize, $loginpress_button_control, $loginpress_button_label, 'section_button', 0, 5 );
+			$this->loginpress_color_setting( $wp_customize, $loginpress_button_control, $loginpress_button_label, 'section_button', 1, 10 );
+			$this->loginpress_color_setting( $wp_customize, $loginpress_button_control, $loginpress_button_label, 'section_button', 2, 15 );
+			$this->loginpress_color_setting( $wp_customize, $loginpress_button_control, $loginpress_button_label, 'section_button', 3, 20 );
+			$this->loginpress_color_setting( $wp_customize, $loginpress_button_control, $loginpress_button_label, 'section_button', 4, 25 );
+			$this->loginpress_color_setting( $wp_customize, $loginpress_button_control, $loginpress_button_label, 'section_button', 5, 30 );
+			$this->loginpress_color_setting( $wp_customize, $loginpress_button_control, $loginpress_button_label, 'section_button', 6, 35 );
 
-			$this->loginpress_range_setting( $wp_customize, $button_range_control, $button_range_default, $button_range_label, $button_range_attrs, $button_range_unit, 'section_button', 0, 35 );
-			$this->loginpress_range_setting( $wp_customize, $button_range_control, $button_range_default, $button_range_label, $button_range_attrs, $button_range_unit, 'section_button', 1, 40 );
-			$this->loginpress_range_setting( $wp_customize, $button_range_control, $button_range_default, $button_range_label, $button_range_attrs, $button_range_unit, 'section_button', 2, 45 );
-			$this->loginpress_range_setting( $wp_customize, $button_range_control, $button_range_default, $button_range_label, $button_range_attrs, $button_range_unit, 'section_button', 3, 50 );
-			$this->loginpress_range_setting( $wp_customize, $button_range_control, $button_range_default, $button_range_label, $button_range_attrs, $button_range_unit, 'section_button', 4, 55 );
-			$this->loginpress_range_setting( $wp_customize, $button_range_control, $button_range_default, $button_range_label, $button_range_attrs, $button_range_unit, 'section_button', 5, 60 );
-			$this->loginpress_range_setting( $wp_customize, $button_range_control, $button_range_default, $button_range_label, $button_range_attrs, $button_range_unit, 'section_button', 6, 65 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_button_range_control, $loginpress_button_range_default, $loginpress_button_range_label, $loginpress_button_range_attrs, $loginpress_button_range_unit, 'section_button', 0, 35 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_button_range_control, $loginpress_button_range_default, $loginpress_button_range_label, $loginpress_button_range_attrs, $loginpress_button_range_unit, 'section_button', 1, 40 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_button_range_control, $loginpress_button_range_default, $loginpress_button_range_label, $loginpress_button_range_attrs, $loginpress_button_range_unit, 'section_button', 2, 45 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_button_range_control, $loginpress_button_range_default, $loginpress_button_range_label, $loginpress_button_range_attrs, $loginpress_button_range_unit, 'section_button', 3, 50 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_button_range_control, $loginpress_button_range_default, $loginpress_button_range_label, $loginpress_button_range_attrs, $loginpress_button_range_unit, 'section_button', 4, 55 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_button_range_control, $loginpress_button_range_default, $loginpress_button_range_label, $loginpress_button_range_attrs, $loginpress_button_range_unit, 'section_button', 5, 60 );
+			$this->loginpress_range_setting( $wp_customize, $loginpress_button_range_control, $loginpress_button_range_default, $loginpress_button_range_label, $loginpress_button_range_attrs, $loginpress_button_range_unit, 'section_button', 6, 65 );
 		}
 	}
 }

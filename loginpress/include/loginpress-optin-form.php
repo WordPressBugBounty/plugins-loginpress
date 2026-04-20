@@ -7,8 +7,12 @@
  *
  * @package LoginPress
  * @since 1.0.9
- * @version 3.0.0
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 ?>
 
@@ -428,24 +432,24 @@
 </style>
 <?php
 
-$user                         = wp_get_current_user();
-$name                         = empty( $user->user_firstname ) ? $user->display_name : $user->user_firstname;
-$email                        = $user->user_email;
-$site_link                    = '<a href="' . get_site_url() . '">' . get_site_url() . '</a>';
-$website                      = get_site_url();
-$nonce                        = wp_create_nonce( 'loginpress_submit_optin_nonce' );
-$default_login_press_redirect = 'loginpress-settings';
+$loginpress_optin_user       = wp_get_current_user();
+$loginpress_optin_name       = empty( $loginpress_optin_user->user_firstname ) ? $loginpress_optin_user->display_name : $loginpress_optin_user->user_firstname;
+$loginpress_optin_email      = $loginpress_optin_user->user_email;
+$loginpress_site_link        = '<a href="' . get_site_url() . '">' . get_site_url() . '</a>';
+$loginpress_website          = get_site_url();
+$loginpress_optin_nonce      = wp_create_nonce( 'loginpress_submit_optin_nonce' );
+$loginpress_default_redirect = 'loginpress-settings';
 
 /**
  * XSS Attack fix in the opt-in form.
  *
  * @since 1.5.12
- * @version 3.0.0
+ * @version 6.2.0
  */
 // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET parameter for redirect page, used in read-only context.
 if ( isset( $_GET['redirect-page'] ) ) {
 	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET parameter for redirect page, used in read-only context.
-	$default_login_press_redirect = esc_attr( sanitize_text_field( wp_unslash( $_GET['redirect-page'] ) ) );
+	$loginpress_default_redirect = esc_attr( sanitize_text_field( wp_unslash( $_GET['redirect-page'] ) ) );
 
 }
 /**
@@ -455,9 +459,9 @@ if ( isset( $_GET['redirect-page'] ) ) {
  */
 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Static method outputs escaped content.
 echo LoginPress_Settings::loginpress_admin_page_header();
-echo '<form method="post" action="' . esc_url( admin_url( 'admin.php?page=' . $default_login_press_redirect ) ) . '">';
-echo "<input type='hidden' name='email' value='" . esc_attr( $email ) . "'>";
-echo "<input type='hidden' name='loginpress_submit_optin_nonce' value='" . esc_attr( $nonce ) . "'>";
+echo '<form method="post" action="' . esc_url( admin_url( 'admin.php?page=' . $loginpress_default_redirect ) ) . '">';
+echo "<input type='hidden' name='email' value='" . esc_attr( $loginpress_optin_email ) . "'>";
+echo "<input type='hidden' name='loginpress_submit_optin_nonce' value='" . esc_attr( $loginpress_optin_nonce ) . "'>";
 echo '<div id="loginpress-splash">';
 echo '<h1> <img id="loginpress-logo-text" src="' . esc_url( plugins_url( 'img/loginpress.png', __DIR__ ) ) . '"> ' . esc_html__( 'Welcome to LoginPress', 'loginpress' ) . '</h1>';
 echo '<div id="loginpress-splash-main" class="loginpress-splash-box">';
@@ -470,8 +474,8 @@ if ( 'no' === get_option( '_loginpress_optin' ) || ! get_option( '_loginpress_op
 		// translators: 1: Opt-in disclaimer.
 		__( '%1$s Hey %2$s,  %4$s If you opt-in some data about your installation of LoginPress will be sent to WPBrigade.com (This doesn\'t include stats)%4$s and You will receive new feature updates, security notifications etc %5$sNo Spam, I promise.%6$s %4$s%4$s Help us %7$sImprove LoginPress%8$s %4$s %4$s ', 'loginpress' ), // phpcs:ignore
 		'<p id="loginpress-splash-main-text">',
-		'<strong>' . esc_html( $name ) . '</strong>',
-		'<strong>' . esc_html( $website ) . '</strong>',
+		'<strong>' . esc_html( $loginpress_optin_name ) . '</strong>',
+		'<strong>' . esc_html( $loginpress_website ) . '</strong>',
 		'<br>',
 		'<i>',
 		'</i>',

@@ -32,7 +32,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Background' ) ) {
 		 *
 		 * @param WP_Customize_Manager $wp_customize The WordPress Customize object.
 		 * @since 1.0.0
-		 * @version 6.0.0
+		 * @version 6.2.0
 		 * @return void
 		 */
 		private function setup_background_section( $wp_customize ) {
@@ -88,7 +88,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Background' ) ) {
 				)
 			);
 
-			$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'section_background', 6, 6 );
+			$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'section_background', 6, 6 );
 
 			/**
 			 * Enable / Disable Background Image with LoginPress_Radio_Control.
@@ -310,8 +310,8 @@ if ( ! trait_exists( 'LoginPress_Customizer_Background' ) ) {
 				)
 			);
 
-			$this->loginpress_hr_setting( $wp_customize, $close_control, 'section_form', 10, 31 );
-			$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'section_background', 10, 31 );
+			$this->loginpress_hr_setting( $wp_customize, $loginpress_close_control, 'section_form', 10, 31 );
+			$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'section_background', 10, 31 );
 
 			/**
 			 * Enable / Disable Radom Background Images with LoginPress_Radio_Control.
@@ -370,8 +370,8 @@ if ( ! trait_exists( 'LoginPress_Customizer_Background' ) ) {
 				)
 			);
 
-			$this->loginpress_hr_setting( $wp_customize, $close_control, 'section_form', 7, 35 );
-			$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'section_background', 7, 35 );
+			$this->loginpress_hr_setting( $wp_customize, $loginpress_close_control, 'section_form', 7, 35 );
+			$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'section_background', 7, 35 );
 			/**
 			 * Enable / Disable Background Video with LoginPress_Radio_Control.
 			 *

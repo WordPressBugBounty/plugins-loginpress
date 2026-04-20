@@ -6,8 +6,12 @@
  *
  * @package LoginPress
  * @since 1.1.24
- * @version 1.4.5
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'LoginPress_Promotion_Tabs' ) ) :
 

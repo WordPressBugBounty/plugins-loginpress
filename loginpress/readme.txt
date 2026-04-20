@@ -1,11 +1,11 @@
 === LoginPress | wp-login Custom Login Page Customizer ===
 Requires at least: 4.0
-Tested up to: 6.9
+Tested up to: 7.0
 Contributors: WPBrigade, hiddenpearls, AbdulWahab610
 Donate link: https://loginpress.pro/pricing/?utm_source=loginpress-lite
 Author URI: https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=author-url-link
 Tags: wp-login, login, login customizer, custom login, wordpress login,
-Stable tag: 6.1.2
+Stable tag: 6.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -195,6 +195,10 @@ You can find it in the email Sales Receipt.
 
 Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricing?utm_source=wp-org&utm_medium=FAQ&utm_campaign=pro-upgrade&utm_content=text-links">this link</a> for more info.
 
+= Where do I report security bugs found in this plugin? =
+
+Please report security bugs found in the source code of the LoginPress plugin through the [Patchstack Vulnerability Disclosure  Program](https://patchstack.com/database/vdp/d94aea6a-66c5-44ac-992c-c776ef1cbeea). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+
 == Screenshots ==
 
 1. Integration tab in LoginPress where you can enable compatibility with popular plugins like BuddyBoss, LearnDash, WooCommerce, and more. [Pro feature]
@@ -233,6 +237,16 @@ Please visit <a target="_blank" rel="friend" href="https://loginpress.pro/pricin
 
 == Changelog ==
 
+= 6.2.0 – 2026-04-20 =
+* Security: Added nonce verification and capability checks to prevent CSRF attacks.
+* New Feature: Added an option to exclude specific URLs from Force Login, so selected pages can stay public while the rest of the site remains protected.
+* New Feature: Added a Customizer control to change the color of the password visibility eye icon and the “Remember Me” checkbox on the login form.
+* New Feature: Added a Customizer color control for the “Show some love” footer text to better match your site’s branding.
+* Enhancement: Refined multiple UI elements and layouts in the admin and login screens for a more polished and consistent experience.
+* Enhancement: Improved and refactored the codebase for better performance, readability, and long-term maintainability.
+* Bugfix: Fixed a markup issue in the login screen templates to ensure cleaner HTML and better compatibility with themes and plugins.
+* Compatibility: Improved compatibility with WPS Hide Login to ensure custom login URLs work reliably with LoginPress settings.
+* Compatibility: Compatible with WordPress 7.0.
 
 = 6.1.2 – 2026-01-26 =
 * Bugfix: Fixed box shadow customization issues.
@@ -423,5 +437,5 @@ For more detail on changelog visit [LoginPress.Pro](https://loginpress.pro/chang
 
 == Upgrade Notice ==
 
-= 6.1.2 =
-* Upgrade Carefully, LoginPress 6.1 is packed with major enhancements and performance improvements.
+= 6.2.0 =
+* Upgrade Carefully, LoginPress 6.2.0 is packed with major enhancements and performance improvements.

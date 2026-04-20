@@ -6,7 +6,12 @@
  *
  * @package LoginPress
  * @since 4.0.0
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'LoginPress_Password_Strength' ) ) :
 

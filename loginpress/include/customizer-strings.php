@@ -6,13 +6,13 @@
  *
  * @package LoginPress
  * @since 1.1.3
- * @version 1.4.3
+ * @version 6.2.0
  */
 
-$logo_range_control = array( 'customize_logo_width', 'customize_logo_height', 'customize_logo_padding' );
-$logo_range_default = array( '84', '84', '0' );
-$logo_range_label   = array( esc_html__( 'Logo Width:', 'loginpress' ), esc_html__( 'Logo Height:', 'loginpress' ), esc_html__( 'Space Bottom:', 'loginpress' ) );
-$logo_range_attrs   = array(
+$loginpress_logo_range_control = array( 'customize_logo_width', 'customize_logo_height', 'customize_logo_padding' );
+$loginpress_logo_range_default = array( '84', '84', '0' );
+$loginpress_logo_range_label   = array( esc_html__( 'Logo Width:', 'loginpress' ), esc_html__( 'Logo Height:', 'loginpress' ), esc_html__( 'Space Bottom:', 'loginpress' ) );
+$loginpress_logo_range_attrs   = array(
 	array(
 		'min'    => 0,
 		'max'    => 500,
@@ -32,17 +32,17 @@ $logo_range_attrs   = array(
 		'suffix' => 'px',
 	),
 );
-$logo_range_unit    = array( 'px', 'px', 'px' );
+$loginpress_logo_range_unit    = array( 'px', 'px', 'px' );
 
 /**
  * Customizer strings for the grouping control.
  *
  * @since 1.1.3
- * @version 6.0.0
+ * @version 6.2.0
  */
 
-$group_control = array( 'login_input_group', 'login_label_group', 'login_form_group', 'footer_form_group', 'footer_back_group', 'footer_group', 'bg_image_group', 'bg_video_group', 'logo_group', 'login_page_meta_group', 'random_bg_group' );
-$group_label   = array(
+$loginpress_group_control = array( 'login_input_group', 'login_label_group', 'login_form_group', 'footer_form_group', 'footer_back_group', 'footer_group', 'bg_image_group', 'bg_video_group', 'logo_group', 'login_page_meta_group', 'random_bg_group' );
+$loginpress_group_label   = array(
 	__( 'Input Fields:', 'loginpress' ),
 	__( 'Input Field Labels:', 'loginpress' ),
 	__( 'Login Form:', 'loginpress' ),
@@ -55,7 +55,7 @@ $group_label   = array(
 	__( 'Login Page Meta', 'loginpress' ),
 	__( 'Random Background Images', 'loginpress' ),
 );
-$group_info    = array(
+$loginpress_group_info    = array(
 	__( 'This section helps you to easily Customize the login form input field elements.', 'loginpress' ),
 	__( 'This section helps you to easily Customize the login form input field labels.', 'loginpress' ),
 	__( 'This section helps you to easily Customize the login form elements whether they are form labels, fields or backgrounds.', 'loginpress' ),
@@ -74,10 +74,11 @@ $group_info    = array(
  * [ Customizer strings for the section login form. ]
  *
  * @since 1.1.3
+ * @version 6.2.0
  */
-$form_range_control = array( 'customize_form_width', 'customize_form_height', 'customize_form_radius', 'customize_form_shadow', 'customize_form_opacity', 'textfield_width', 'textfield_radius', 'textfield_shadow', 'textfield_shadow_opacity', 'customize_form_label', 'remember_me_font_size' );
-$form_range_default = array( '350', '200', '0', '0', '0', '100', '0', '0', '80', '14', '13' );
-$form_range_label   = array(
+$loginpress_form_range_control = array( 'customize_form_width', 'customize_form_height', 'customize_form_radius', 'customize_form_shadow', 'customize_form_opacity', 'textfield_width', 'textfield_radius', 'textfield_shadow', 'textfield_shadow_opacity', 'customize_form_label', 'remember_me_font_size' );
+$loginpress_form_range_default = array( '350', '200', '0', '0', '0', '100', '0', '0', '80', '14', '13' );
+$loginpress_form_range_label   = array(
 	__( 'Form Width:', 'loginpress' ),
 	__( 'Form Minimum Height:', 'loginpress' ),
 	__( 'Form Radius:', 'loginpress' ),
@@ -90,7 +91,7 @@ $form_range_label   = array(
 	__( 'Input Field Label Font Size:', 'loginpress' ),
 	__( 'Remember Me Font Size:', 'loginpress' ),
 );
-$form_range_attrs   = array(
+$loginpress_form_range_attrs   = array(
 	array(
 		'min'    => 320,
 		'max'    => 800,
@@ -158,39 +159,40 @@ $form_range_attrs   = array(
 		'suffix' => 'px',
 	), // readme label.
 );
-$form_range_unit    = array( 'px', 'px', 'px', 'px', '%', '%', 'px', 'px', '%', 'px', 'px' );
-// --------------------
-$form_color_control = array( 'form_background_color', 'textfield_background_color', 'textfield_color', 'textfield_label_color', 'remember_me_label_size' );
-$form_color_default = array( '#FFF', '#FFF', '#333', '#777', '#72777c' );
-$form_color_label   = array(
+$loginpress_form_range_unit    = array( 'px', 'px', 'px', 'px', '%', '%', 'px', 'px', '%', 'px', 'px' );
+// @version 6.2.0. Added default value for visibility_icon_color color.
+$loginpress_form_color_control = array( 'form_background_color', 'textfield_background_color', 'textfield_color', 'visibility_icon_color', 'textfield_label_color', 'remember_me_label_size' );
+$loginpress_form_color_default = array( '#FFF', '#FFF', '#333', '#333', '#777', '#72777c' );
+$loginpress_form_color_label   = array(
 	__( 'Form Background Color:', 'loginpress' ),
 	__( 'Input Field Background Color:', 'loginpress' ),
 	__( 'Input Field Text Color:', 'loginpress' ),
+	__( 'Password Eye Icon & checkbox color:', 'loginpress' ),
 	__( 'Input Field Label Color:', 'loginpress' ),
 	__( 'Remember me Label Color:', 'loginpress' ),
 );
 // --------------------
-$form_control      = array( 'customize_form_padding', 'customize_form_border', 'textfield_margin', 'form_username_label', 'form_password_label' );
-$form_default      = array( '', '', '2px 6px 18px 0px', __( 'Username or Email Address', 'loginpress' ), __( 'Password', 'loginpress' ) );
-$form_label        = array(
+$loginpress_form_control      = array( 'customize_form_padding', 'customize_form_border', 'textfield_margin', 'form_username_label', 'form_password_label' );
+$loginpress_form_default      = array( '', '', '2px 6px 18px 0px', __( 'Username or Email Address', 'loginpress' ), __( 'Password', 'loginpress' ) );
+$loginpress_form_label        = array(
 	__( 'Form Padding:', 'loginpress' ),
 	__( 'Border (Example: 2px dotted black):', 'loginpress' ),
 	__( 'Input Text Field Margin:', 'loginpress' ),
 	__( 'Username Label:', 'loginpress' ),
 	__( 'Password Label:', 'loginpress' ),
 );
-$form_sanitization = array( 'wp_strip_all_tags', 'wp_strip_all_tags', 'wp_strip_all_tags', 'wp_strip_all_tags', 'wp_strip_all_tags' );
+$loginpress_form_sanitization = array( 'wp_strip_all_tags', 'wp_strip_all_tags', 'wp_strip_all_tags', 'wp_strip_all_tags', 'wp_strip_all_tags' );
 /** -----------------Section Login Form------------------ */
 
 /**
  * [ Customizer strings for the section button beauty. ]
  *
  * @since 1.1.3
- * @version 1.4.3
+ * @version 6.2.0
  */
-$button_control = array( 'custom_button_color', 'button_border_color', 'button_hover_color', 'button_hover_border', 'custom_button_shadow', 'button_text_color', 'button_hover_text_color' );
-$button_default = array( '#F6366A', '#F6366A', '#1E8CBE', '#0074A2', '#78C8E6', '#FFF', '#FFF' );
-$button_label   = array(
+$loginpress_button_control = array( 'custom_button_color', 'button_border_color', 'button_hover_color', 'button_hover_border', 'custom_button_shadow', 'button_text_color', 'button_hover_text_color' );
+$loginpress_button_default = array( '#F6366A', '#F6366A', '#1E8CBE', '#0074A2', '#78C8E6', '#FFF', '#FFF' );
+$loginpress_button_label   = array(
 	__( 'Button Color:', 'loginpress' ),
 	__( 'Button Border Color:', 'loginpress' ),
 	__( 'Button Color (Hover):', 'loginpress' ),
@@ -200,10 +202,10 @@ $button_label   = array(
 	__( 'Button Text Color (Hover):', 'loginpress' ),
 );
 
-$button_range_control = array( 'login_button_size', 'login_button_top', 'login_button_bottom', 'login_button_radius', 'login_button_shadow', 'login_button_shadow_opacity', 'login_button_text_size' );
-$button_range_default = array( '100', '13', '13', '5', '0', '80', '15' );
-$button_range_label   = array( __( 'Button Size:', 'loginpress' ), __( 'Button Top Padding:', 'loginpress' ), __( 'Button Bottom Padding:', 'loginpress' ), __( 'Radius:', 'loginpress' ), __( 'Shadow:', 'loginpress' ), __( 'Shadow Opacity:', 'loginpress' ), __( 'Text Size:', 'loginpress' ) );
-$button_range_attrs   = array(
+$loginpress_button_range_control = array( 'login_button_size', 'login_button_top', 'login_button_bottom', 'login_button_radius', 'login_button_shadow', 'login_button_shadow_opacity', 'login_button_text_size' );
+$loginpress_button_range_default = array( '100', '13', '13', '5', '0', '80', '15' );
+$loginpress_button_range_label   = array( __( 'Button Size:', 'loginpress' ), __( 'Button Top Padding:', 'loginpress' ), __( 'Button Bottom Padding:', 'loginpress' ), __( 'Radius:', 'loginpress' ), __( 'Shadow:', 'loginpress' ), __( 'Shadow Opacity:', 'loginpress' ), __( 'Text Size:', 'loginpress' ) );
+$loginpress_button_range_attrs   = array(
 	array(
 		'min'    => 20,
 		'max'    => 100,
@@ -247,24 +249,26 @@ $button_range_attrs   = array(
 		'suffix' => 'px',
 	),
 );
-$button_range_unit    = array( '%', 'px', 'px', 'px', 'px', '%', 'px' );
+$loginpress_button_range_unit    = array( '%', 'px', 'px', 'px', 'px', '%', 'px' );
 /** -----------------Section Button Beauty------------------ */
 
 /**
  * [ Customizer strings for the group close. ]
  *
  * @since 1.1.3
+ * @version 6.2.0
  */
-$close_control = array( 'login_input_br', 'login_label_br', 'login_form_br', 'footer_form_br', 'footer_back_br', 'footer_br' );
+$loginpress_close_control = array( 'login_input_br', 'login_label_br', 'login_form_br', 'footer_form_br', 'footer_back_br', 'footer_br' );
 /** -----------------Section Login Footer------------------ */
 
 /**
  * [ Customizer strings for the error messages. ]
  *
  * @since 1.1.22
+ * @version 6.2.0
  */
-$error_control = array( 'incorrect_username', 'incorrect_password', 'empty_username', 'empty_password', 'invalid_email', 'empty_email', 'username_exists', 'email_exists', 'invalidcombo_message', 'force_email_login', 'password_mismatch' );
-$error_default = array(
+$loginpress_error_control = array( 'incorrect_username', 'incorrect_password', 'empty_username', 'empty_password', 'invalid_email', 'empty_email', 'username_exists', 'email_exists', 'invalidcombo_message', 'force_email_login', 'password_mismatch' );
+$loginpress_error_default = array(
 
 	// translators: 1: Opening strong tag, 2: Closing strong tag.
 	sprintf( __( '%1$sError:%2$s Invalid Username.', 'loginpress' ), '<strong>', '</strong>' ),
@@ -302,7 +306,7 @@ $error_default = array(
 
 );
 
-	$error_label = array(
+	$loginpress_error_label = array(
 		__( 'Incorrect Username Message:', 'loginpress' ),
 		__( 'Incorrect Password Message:', 'loginpress' ),
 		__( 'Empty Username Message:', 'loginpress' ),
@@ -322,14 +326,15 @@ $error_default = array(
 	 * [ Customizer strings for the welcome messages. ]
 	 *
 	 * @since 1.1.22
+	 * @version 6.2.0
 	 */
-	$welcome_control      = array( 'lostpwd_welcome_message', 'welcome_message', 'register_welcome_message', 'logout_message', 'message_background_border' );
-	$welcome_default      = array( 'Forgot password?', 'Welcome', 'Register For This Site', 'Logout', '' );
-	$welcome_label        = array(
+	$loginpress_welcome_control      = array( 'lostpwd_welcome_message', 'welcome_message', 'register_welcome_message', 'logout_message', 'message_background_border' );
+	$loginpress_welcome_default      = array( 'Forgot password?', 'Welcome', 'Register For This Site', 'Logout', '' );
+	$loginpress_welcome_label        = array(
 		__( 'Welcome Message on Lost Password:', 'loginpress' ),
 		__( 'Welcome Message on Login Page:', 'loginpress' ),
 		__( 'Welcome Message on Registration:', 'loginpress' ),
 		__( 'Logout Message:', 'loginpress' ),
 		__( 'Message Field Border: ( Example: 1px solid #00a0d2; )', 'loginpress' ),
 	);
-	$welcome_sanitization = array( 'wp_kses_post', 'wp_kses_post', 'wp_kses_post', 'wp_kses_post', 'wp_strip_all_tags' );
+	$loginpress_welcome_sanitization = array( 'wp_kses_post', 'wp_kses_post', 'wp_kses_post', 'wp_kses_post', 'wp_strip_all_tags' );

@@ -8,8 +8,12 @@
  *
  * @package LoginPress
  * @since 1.1.16
- * @version 1.6.1
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Checkbox sanitization callback example.

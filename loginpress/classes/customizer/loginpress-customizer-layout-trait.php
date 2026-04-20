@@ -438,26 +438,8 @@ if ( ! trait_exists( 'LoginPress_Customizer_Layout' ) ) {
 						wp_safe_redirect( $url );
 
 					} else {
-						$login_url = wp_login_url();
-						$site_url  = site_url();
-
-						// Parse the URLs only once to avoid redundancy.
-						$parsed_login_url = wp_parse_url( $login_url );
-						$parsed_site_url  = wp_parse_url( $site_url );
-
-						// Determine login path.
-						$login_path   = isset( $parsed_login_url['path'] ) ? $parsed_login_url['path'] : '/wp-login.php';
-						$subdirectory = isset( $parsed_site_url['path'] ) ? $parsed_site_url['path'] : '';
-
-						// If the login path starts with the subdirectory, remove the subdirectory from it.
-						if ( ! empty( $subdirectory ) && strpos( $login_path, $subdirectory ) === 0 ) {
-							$login_path = substr( $login_path, strlen( $subdirectory ) );
-						}
-
-						$login_path = sanitize_text_field( rtrim( $login_path, '/' ) );
-
 						// Redirect to the login page URL.
-						wp_safe_redirect( get_admin_url() . 'customize.php?url=' . esc_url( site_url( $login_path, 'login_post' ) ) . '&autofocus=loginpress_panel' );
+						wp_safe_redirect( get_admin_url() . 'customize.php?url=' . esc_url( site_url( 'wp-login.php', 'login_post' ) ) . '&autofocus=loginpress_panel' );
 						exit;
 					}
 				}

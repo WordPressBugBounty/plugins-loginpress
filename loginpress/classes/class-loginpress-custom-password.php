@@ -6,8 +6,12 @@
  *
  * @package LoginPress
  * @since 1.0.22
- * @version 3.2.1
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'LoginPress_Custom_Password' ) ) :
 

@@ -1801,7 +1801,17 @@ html .toplevel_page_loginpress-settings .dataTables_paginate a.paginate_button:h
 	flex-wrap: wrap;
 	align-items: center;
 }
-
+#wpcontent .loginpress-header-wrapper {
+	container-type: inline-size;
+	container-name: loginpress-header-wrapper;
+}
+@container loginpress-header-wrapper (width >= 1550px){
+	#wpcontent .loginpress-header-wrapper .loginpress-header-container {
+		padding: 43px 20px 43px 20px;
+		max-width: 1240px;
+		margin-inline: auto;
+	}
+}
 #wpcontent .loginpress-header-wrapper .loginpress-header-container .loginpress-header-logo {
 	width: 40%;
 }
@@ -1997,6 +2007,10 @@ html .toplevel_page_loginpress-settings .dataTables_paginate a.paginate_button:h
 .loginpress-premium .dashicons-star-filled:before {
 	color: #FFD700;
 	font-size: 35px;
+}
+
+div.loginpress-multi-select {
+	background: #fff url(../img/dropdown-arrow-icon.svg) right 15px center no-repeat;
 }
 
 .styledSelect {
@@ -2455,23 +2469,21 @@ html[dir="rtl"] .folded .loginpress-video-popup {
 }
 
 body.loginpress_page_loginpress-addons .main_notice_msg {
-	background: #F6366A;
-	margin: 20px 0 20px;
-	padding: 15px;
-	color: #fff;
+	margin: 0 0 40px;
+	color: #424A67;
 	display: inline-block;
-	font-size: 16px;
-	line-height: 24px;
 	font-family: Poppins, sans-serif;
-	border-radius: 5px;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 24px;
+	letter-spacing: 0;
 }
 
 .addon_cards_wraper {
 	display: flex;
 	flex-wrap: wrap;
-	margin: 0 -15px;
-	width: calc(100% + 15px);
 	box-sizing: border-box;
+	gap: 28px;
 }
 
 #loginpress_limit_login_attempts .ip_add_remove .regular-text {
@@ -2484,10 +2496,9 @@ body.loginpress_page_loginpress-addons .main_notice_msg {
 .loginpress-extension {
 	float: none;
 	box-sizing: border-box;
-	width: calc(33% - 30px);
-	margin: 0 15px 30px;
-	border: 2px solid #c8d6f1;
-	display: inline-block;
+	width: calc(33% - 15px);
+	display: inline-flex;
+	flex-direction: column;
 	height: auto;
 	vertical-align: top;
 	background: #fff;
@@ -2496,8 +2507,65 @@ body.loginpress_page_loginpress-addons .main_notice_msg {
 	padding-bottom: 70px;
 	border-radius: 8px;
 	overflow: hidden;
+	padding: 25px;
 }
-
+.loginpress-extension p:has(.button){
+	margin-top: auto;
+	padding-top: 30px;
+	padding-bottom: 0;
+}
+#wpbody-content .loginpress-extension button.loginpress-uninstall-pro-addon{
+	margin-top: auto;
+}
+#wpbody-content .loginpress-extension button.loginpress-uninstall-pro-addon,
+#wpbody-content .loginpress-extension p button.loginpress-uninstall-pro-addon{
+	background: #D2DDF2;
+	color: #07003B;
+	font-family: Poppins, Arial, Helvetica, sans-serif;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 1.5;
+	padding: 12px 20px;
+	border: 0;
+	width: 100%;
+	text-align: center;
+	border-radius: 5px;
+	text-decoration: none;
+	cursor: pointer;
+	position: static;
+	transform: translate(0);
+}
+#wpbody-content .loginpress-extension button.loginpress-active-pro-addon,
+#wpbody-content .loginpress-extension p button.loginpress-active-pro-addon{
+	font-family: Poppins, Arial, Helvetica, sans-serif;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 1.5;
+	padding: 12px 20px;
+	border: 0;
+	width: 100%;
+	text-align: center;
+	border-radius: 5px;
+	text-decoration: none;
+	background-color: #14AE5C;
+	color: #fff;
+position: static;
+transform: translate(0);
+}
+#wpbody-content .loginpress-extension button.loginpress-active-pro-addon:hover,
+#wpbody-content .loginpress-extension button.loginpress-active-pro-addon:focus,
+#wpbody-content .loginpress-extension p button.loginpress-active-pro-addon:hover,
+#wpbody-content .loginpress-extension p button.loginpress-active-pro-addon:focus{
+	background-color: #1F693F;
+	color: #fff;
+}
+#wpbody-content .loginpress-extension p button.loginpress-uninstall-pro-addon:focus,
+#wpbody-content .loginpress-extension button.loginpress-uninstall-pro-addon:focus,
+#wpbody-content .loginpress-extension button.loginpress-uninstall-pro-addon:hover,
+#wpbody-content .loginpress-extension p button.loginpress-uninstall-pro-addon:hover{
+	background-color: #07003B;
+	color: #fff;
+}
 body.loginpress_page_loginpress-addons .loginpress-extension .loginpress_addons_links {
 	position: relative;
 	background-color: #DEE5F2;
@@ -2505,14 +2573,11 @@ body.loginpress_page_loginpress-addons .loginpress-extension .loginpress_addons_
 }
 
 .loginpress-extension h3 {
-	margin: -2px -2px 0 0;
-	position: relative;
 	overflow: hidden;
 	box-sizing: border-box;
-	padding: 10px 60px 10px 20px;
-	border-bottom: 2px solid #c8d6f1;
+	padding: 0 60px 17px 0;
 	background-size: 115px 100px;
-	height: 100px;
+	border-bottom: 1px solid #424A6726;
 	font-size: 16px;
 	font-family: Poppins, sans-serif;
 	line-height: 1.3;
@@ -2526,6 +2591,11 @@ body.loginpress_page_loginpress-addons .loginpress-extension .loginpress_addons_
 	display: block;
 }
 
+#wpbody-content .loginpress-extension p:has(.button) {
+	margin-top: auto;
+	padding-top: 30px;
+	padding-bottom: 0;
+}
 #wpbody-content .loginpress-extension .button-primary {
 	border: 0;
 	text-shadow: none;
@@ -2534,10 +2604,6 @@ body.loginpress_page_loginpress-addons .loginpress-extension .loginpress_addons_
 	height: auto;
 	font-size: 15px;
 	cursor: pointer;
-	position: absolute;
-	bottom: 20px;
-	left: 50%;
-	transform: translateX(-50%);
 	box-shadow: none;
 	border-radius: 5px;
 	transition: background-color .3s;
@@ -2547,6 +2613,7 @@ body.loginpress_page_loginpress-addons .loginpress-extension .loginpress_addons_
 	font-family: Poppins, sans-serif;
 	font-weight: 500;
 	text-decoration: none;
+	margin-top: auto;
 }
 
 #wpbody-content .loginpress-extension .button-primary:active,
@@ -2706,10 +2773,10 @@ tr.password_strength_meter,
 tr.enable_pass_strength_forms {
 	display: none;
 }
-body[class*="page_loginpress"] #wpbody-content .wrap {
-	max-width: calc(100% - 20px);
+body[class*="page_loginpress"] #wpbody-content .loginpress-addons-wrap{
+    max-width: 1260px;
+    margin-inline: auto;
 	width: 100%;
-	margin-left: 0;
 }
 /* @media (min-width: 1380px) {
 	body[class*="page_loginpress"] #wpbody-content .wrap {
@@ -3321,7 +3388,7 @@ body.toplevel_page_loginpress-settings {
 	}
 
 	.loginpress-extension {
-		width: calc(50% - 30px);
+		width: calc(50% - 15px);
 
 	}
 }

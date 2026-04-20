@@ -7,7 +7,12 @@
  *
  * @package LoginPress
  * @since 1.6.4
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 ?>
 

@@ -7,8 +7,12 @@
  *
  * @package LoginPress
  * @since 1.0.9
- * @version 3.0.0
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'LoginPress_Settings' ) ) :
 	require_once ( defined( 'LOGINPRESS_DIR_PATH' ) ? LOGINPRESS_DIR_PATH : '' ) . 'classes/traits/loginpress-settings-trait.php'; //phpcs:ignore

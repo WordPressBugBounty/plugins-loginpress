@@ -19,7 +19,7 @@ $(window).on('load resize', function() {
 			 * @since 1.2.2
 			 */
 			$( document ).on(
-				'change',
+				'click',
 				'.loginpress-install-pro-addon',
 				function (e) {
 
@@ -73,7 +73,7 @@ $(window).on('load resize', function() {
 			 * @since 1.2.2
 			 */
 			$( document ).on(
-				'change',
+				'click',
 				'.loginpress-uninstall-pro-addon',
 				function (e) {
 
@@ -102,7 +102,8 @@ $(window).on('load resize', function() {
 								addonWrapper.find( 'input[name="loginpress_pro_addon_nonce"]' ).val( newNonce );
 								addonWrapper.find( '.loginpress-uninstalling' ).hide();
 								addonWrapper.find( '.loginpress-uninstall' ).show();
-								addonBtn.addClass( 'loginpress-active-pro-addon' ).removeClass( 'loginpress-install-pro-addon loginpress-uninstall-pro-addon' ).html( 'Activate Plugin' );
+								addonBtn.addClass( 'button button-primary' ).removeClass( 'loginpress-install-pro-addon' ).html( 'Activate' );
+					addonBtn.removeClass( 'loginpress-uninstall-pro-addon' ).addClass( 'loginpress-active-pro-addon' );
 								setTimeout(
 									function () {
 										addonWrapper.find( '.loginpress-uninstall' ).hide();
@@ -134,7 +135,7 @@ $(window).on('load resize', function() {
 			 * @since 1.2.2
 			 */
 			$( document ).on(
-				'change',
+				'click',
 				'.loginpress-active-pro-addon',
 				function (e) {
 
@@ -178,7 +179,8 @@ $(window).on('load resize', function() {
 
 							addonWrapper.find( '.loginpress-addon-enable' ).hide();
 							addonWrapper.find( '.loginpress-install' ).show();
-							addonBtn.addClass( 'loginpress-uninstall-pro-addon' ).removeClass( 'loginpress-install-pro-addon loginpress-active-pro-addon' ).html( 'Uninstall' );
+							addonBtn.addClass( 'button button-secondary' ).removeClass( 'loginpress-install-pro-addon loginpress-active-pro-addon' ).html( 'Deactivate' );
+					addonBtn.removeClass( 'loginpress-active-pro-addon' ).addClass( 'loginpress-uninstall-pro-addon' );
 							addonWrapper.find( 'input[name="loginpress_pro_addon_nonce"]' ).val( newNonce );
 
 							setTimeout(

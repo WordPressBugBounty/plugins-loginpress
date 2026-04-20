@@ -6,8 +6,12 @@
  *
  * @package LoginPress
  * @since 1.0.22
- * @version 3.1.1
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // phpcs:disable Universal.Files.SeparateFunctionsFromOO.Mixed -- Reason: local helper function used only in this file
 /**
@@ -187,6 +191,7 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 			 * PCI Compliance.
 			 *
 			 * @since 1.7.2
+			 * @version 6.2.0
 			 */
 			$loginpress_setting = get_option( 'loginpress_setting' );
 			$pci_compliance     = isset( $loginpress_setting['enable_pci_compliance'] ) ? $loginpress_setting['enable_pci_compliance'] : 'off';
@@ -198,21 +203,19 @@ if ( ! class_exists( 'LoginPress_Compatibility' ) ) :
 				wp_register_script( 'loginpress-disable-autocomplete', '', array(), LOGINPRESS_VERSION, true );
 				wp_enqueue_script( 'loginpress-disable-autocomplete' );
 
-				$inline_js = <<<JS
-					document.addEventListener("DOMContentLoaded", function () {
-						var inputs = document.querySelectorAll('input[type="text"],input[type="password"],input[type="email"]');
-						if (!inputs || inputs.length === 0) {
-							return;
+				$inline_js = 'document.addEventListener("DOMContentLoaded", function () {
+					var inputs = document.querySelectorAll(\'input[type="text"],input[type="password"],input[type="email"]\');
+					if (!inputs || inputs.length === 0) {
+						return;
+					}
+					for (var i = 0; i < inputs.length; i++) {
+						try {
+							inputs[i].setAttribute("autocomplete", "off");
+						} catch (e) {
+							/* ignore if a browser throws on setAttribute */
 						}
-						for (var i = 0; i < inputs.length; i++) {
-							try {
-								inputs[i].setAttribute("autocomplete", "off");
-							} catch (e) {
-								/* ignore if a browser throws on setAttribute */
-							}
-						}
-					});
-					JS;
+					}
+				});';
 
 				wp_add_inline_script( 'loginpress-disable-autocomplete', $inline_js );
 			}

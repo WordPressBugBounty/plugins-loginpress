@@ -135,7 +135,7 @@
 		function changeBackground() {
 			currentIndex = (currentIndex + 1) % imagesToLoad;
 			if ( images[currentIndex] ) {
-				$( '#customize-preview iframe' ).contents().find( 'body.login' ).css( 'background-image', 'url(' + imagesPreloaded[currentIndex] + ')' );
+				$( '#customize-preview iframe' ).contents().find( 'body.login' ).css( '--background-desktop-image', 'url(' + imagesPreloaded[currentIndex] + ')' );
 			}
 		}
 
@@ -172,7 +172,7 @@
 		var $body = $( '#customize-preview iframe' ).contents().find( 'body.login' );
 		
 		// Clear random background override
-		$body.css( 'background-image', '' );
+		$body.css( '--background-desktop-image', '' );
 		$body.css( 'background-color', '' );
 		
 		// Restore background video if enabled
@@ -185,7 +185,7 @@
 		if ( displayBg ) {
 			var finalBgImage = bgImage || galleryBg;
 			if ( finalBgImage ) {
-				$body.css( 'background-image', 'url(' + finalBgImage + ')' );
+				$body.css( '--background-desktop-image', 'url(' + finalBgImage + ')' );
 			}
 		}
 		

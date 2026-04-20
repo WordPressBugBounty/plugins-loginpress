@@ -4,8 +4,12 @@
  *
  * @package LoginPress
  * @since 1.0.0
- * @version 3.0.6
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // phpcs:ignoreFile
 
@@ -106,7 +110,8 @@ function first_presets() {
 		* Visit:       https://wordpress.org/plugins/loginpress/    *
 		*************************************************************/
 		body.login {
-			background-image: url(<?php echo esc_url( apply_filters( 'loginpress_default_bg', plugins_url( 'img/bg-default.jpg', LOGINPRESS_PLUGIN_BASENAME ) ) ); ?>);
+			--background-desktop-image: url(<?php echo esc_url( apply_filters( 'loginpress_default_bg', plugins_url( 'img/bg-default.jpg', LOGINPRESS_PLUGIN_BASENAME ) ) ); ?>);
+			background-image: var(--background-desktop-image);
 			/*background-color: #ddd5c3;*/
 			background-repeat: no-repeat;
 			background-position: center;
@@ -181,7 +186,11 @@ function first_presets() {
 			background: #008ec2;
 			color: #008ec2;
 		}
-		
+		.login #language-switcher input[type="submit"]{
+			background: #008ec2;
+			color: #fff;
+			border-color: #008ec2;
+		}
 		.wp-core-ui #login .wp-generate-pw{
 			background: #008ec233;
 			color: #008ec2;

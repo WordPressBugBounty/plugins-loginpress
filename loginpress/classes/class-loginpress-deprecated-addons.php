@@ -5,7 +5,12 @@
  *
  * @package LoginPress
  * @since 3.0.5
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'LoginPress_Addons' ) ) :
 
@@ -27,6 +32,60 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 		 */
 		function __construct() {
 			$this->plugins_list = get_plugins();
+		}
+
+		/**
+		 * Allowed HTML for addon excerpt after wpautop (paragraphs only).
+		 *
+		 * @since 6.2.0
+		 * @return array<string, array<string, bool>>
+		 */
+		private function loginpress_allowed_html_excerpt() {
+			return array(
+				'p'  => array( 'class' => true ),
+				'br' => array(),
+			);
+		}
+
+		/**
+		 * Allowed HTML for addon activation AJAX status markup (div, SVG loaders).
+		 *
+		 * @since 6.2.0
+		 * @return array<string, array<string, bool>>
+		 */
+		private function loginpress_allowed_html_ajax_status() {
+			return array(
+				'div'    => array(
+					'id'    => true,
+					'class' => true,
+					'style' => true,
+				),
+				'p'      => array(),
+				'img'    => array(
+					'src' => true,
+					'alt' => true,
+				),
+				'svg'    => array(
+					'class'   => true,
+					'viewbox' => true,
+					'xmlns'   => true,
+				),
+				'circle' => array(
+					'class'         => true,
+					'cx'            => true,
+					'cy'            => true,
+					'r'             => true,
+					'fill'          => true,
+					'stroke'        => true,
+					'stroke-width'  => true,
+				),
+				'path'   => array(
+					'class'  => true,
+					'stroke' => true,
+					'fill'   => true,
+					'd'      => true,
+				),
+			);
 		}
 
 		/**
@@ -84,6 +143,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 		 * Addon card for a specific addon.
 		 *
 		 * @since 3.0.5
+		 * @version 6.2.0
 		 * @param object $addon The LoginPress addon object.
 		 * @return void
 		 */
@@ -101,13 +161,13 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 					if ( $addon->media->icon->url ) {
 						echo esc_url( $addon->media->icon->url );
 					} else {
-						echo plugins_url( '../img/thumbnail/gray-loginpress.png', __FILE__ );
+						echo esc_url( plugins_url( '../img/thumbnail/gray-loginpress.png', __FILE__ ) );
 					}
 					?>
 					class="loginpress_addons_thumbnails"/><span><?php echo esc_html( $addon->title ); ?></span></h3>
 				</a>
 
-				<?php echo wpautop( wp_strip_all_tags( $addon->excerpt ) ); ?>
+				<?php echo wp_kses( wpautop( wp_strip_all_tags( $addon->excerpt ) ), $this->loginpress_allowed_html_excerpt() ); ?>
 				<p>
 					<?php
 					// $this->check_plugin_status( $addon->id, $addon->slug, $this->convert_to_array( $addon->categories ) );
@@ -115,7 +175,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 					?>
 				</p>
 				<?php
-				echo $this->_ajax_response( $addon->title, $addon->slug );
+				echo wp_kses( $this->_ajax_response( $addon->title, $addon->slug ), $this->loginpress_allowed_html_ajax_status() );
 				?>
 			</div>
 
@@ -129,12 +189,13 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 		 * @param string $slug The slug of the plugin.
 		 *
 		 * @since 3.0.5
+		 * @version 6.2.0
 		 * @return string $response The response of the ajax request.
 		 */
 		public function _ajax_response( $text, $slug ) {
 			$html = '<div id="loginpressEnableAddon' . esc_attr( $slug ) . '" class="loginpress-addon-enable" style="display:none;">
 			<div class="loginpress-logo-container">
-			<img src="' . plugins_url( '../../loginpress/img/loginpress.png', __FILE__ ) . '" alt="loginpress">
+			<img src="' . esc_url( plugins_url( '../../loginpress/img/loginpress.png', __FILE__ ) ) . '" alt="loginpress">
 			<svg class="circular-loader" viewBox="25 25 50 50" >
 			<circle class="loader-path" cx="50" cy="50" r="18" fill="none" stroke="#d8d8d8" stroke-width="1" />
 			</svg>
@@ -154,9 +215,9 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 
 			$html .= '<div id="loginpressUninstallingAddon' . esc_attr( $slug ) . '" class="loginpress-uninstalling activated" style="display:none">
 			<div class="loginpress-logo-container">
-			<img src="' . plugins_url( '../../loginpress/img/loginpress.png', __FILE__ ) . '" alt="loginpress">
+			<img src="' . esc_url( plugins_url( '../../loginpress/img/loginpress.png', __FILE__ ) ) . '" alt="loginpress">
 			<svg class="circular-loader" viewBox="25 25 50 50" >
-			<circle class="loader-path" cx="50" cy="50" r="18" fill="none" stroke="#d8d8d8" stroke-width="1" />
+			<circle class="loader-path" cx="50" cy="50" r="18" fill="none" stroke="#F6366A" stroke-width="1" />
 			</svg>
 			</div>
 			<p>' . // translators: Deactivating the plugin
@@ -205,64 +266,42 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 					if ( $addon->media->icon->url ) {
 						echo esc_url( $addon->media->icon->url );
 					} else {
-						echo plugins_url( '../img/thumbnail/gray-loginpress.png', __FILE__ );
+						echo esc_url( plugins_url( '../img/thumbnail/gray-loginpress.png', __FILE__ ) );
 					}
 					?>
 					class="loginpress_addons_thumbnails"/><span><?php echo esc_html( $addon->title ); ?></span></h3>
 				</a>
 
 				<?php
-				echo wpautop( wp_strip_all_tags( $addon->excerpt ) );
+				echo wp_kses( wpautop( wp_strip_all_tags( $addon->excerpt ) ), $this->loginpress_allowed_html_excerpt() );
 				$slug_id = $addon->slug;
 				if ( in_array( 'loginpress-free-add-ons', $this->convert_to_array( $addon->categories ) ) ) {
 					$slug = $addon->slug . '/' . $addon->slug . '.php';
 
-					if ( is_plugin_active( $slug ) ) {
-						?>
+				if ( is_plugin_active( $slug ) ) {
+					?>
 
-						<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo wp_create_nonce( 'uninstall_' . $slug ); ?>">
-						<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo $slug; ?>">
-						<!-- <a class="button-primary loginpress-uninstall-pro-addon" href="#">Uninstall</a> -->
-						<input id="<?php echo esc_attr( $slug_id ); ?>" type="checkbox" checked class="loginpress-radio loginpress-radio-ios loginpress-uninstall-pro-addon" value="<?php echo esc_attr( $slug_id ); ?>">
-						<label for="<?php echo esc_attr( $slug_id ); ?>" class="loginpress-radio-btn"></label>
+					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'uninstall_' . $slug ) ); ?>">
+					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
+					<button type="button" class="button button-secondary loginpress-uninstall-pro-addon" data-slug="<?php echo esc_attr( $slugid ); ?>"><?php esc_html_e( 'Deactivate', 'loginpress' ); ?></button>
 
-						<?php
+					<?php
+				} elseif ( array_key_exists( $slug, $this->plugins_list ) ) {
+					?>
 
-						// echo sprintf( esc_html__( '%1$s Already Installed %2$s', 'loginpress' ), '<button class="button-primary">', '</button>' );
-					} elseif ( array_key_exists( $slug, $this->plugins_list ) ) {
-						?>
+					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . $slug ) ); ?>">
+					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
+					<button type="button" class="button button-primary loginpress-active-pro-addon" data-slug="<?php echo esc_attr( $slugid ); ?>"><?php esc_html_e( 'Activate', 'loginpress' ); ?></button>
 
-						<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo wp_create_nonce( 'install-plugin_' . $slug ); ?>">
-						<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo $slug; ?>">
-						<!-- <a class="button-primary loginpress-active-pro-addon" href="#">Activate Plugin</a> -->
-						<input id="<?php echo esc_attr( $slug_id ); ?>" type="checkbox" class="loginpress-radio loginpress-radio-ios loginpress-active-pro-addon" value="<?php echo esc_attr( $slug_id ); ?>">
-						<label for="<?php echo esc_attr( $slug_id ); ?>" class="loginpress-radio-btn"></label>
-
-						<?php
-
-						// $link = wp_nonce_url( add_query_arg( array( 'action' => 'activate', 'plugin' => $slug ), admin_url( 'plugins.php' ) ),  'activate-plugin_' . $slug ) ;
-						// echo sprintf( esc_html__( '%1$s Activate Plugin %2$s', 'loginpress' ), '<a href="' .  $link . '" class="button-primary">', '</a>' );
-					} else {
-
-						$action = 'install-plugin';
-						$slug   = 'login-logout-menu';
-						$link   = wp_nonce_url(
-							add_query_arg(
-								array(
-									'action' => $action,
-									'plugin' => $slug,
-								),
-								admin_url( 'update.php' )
-							),
-							$action . '_' . $slug
-						);
-						?>
-						<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo wp_create_nonce( 'install-plugin_' . $slug ); ?>">
-						<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo $slug; ?>">
-						<input id="<?php echo esc_attr( $slug_id ); ?>" type="checkbox" class="loginpress-radio loginpress-radio-ios loginpress-install-pro-addon" value="<?php echo esc_attr( $slug_id ); ?>">
-						<label for="<?php echo esc_attr( $slug_id ); ?>" class="loginpress-radio-btn"></label>
-						<?php
-					}
+					<?php
+				} else {
+					?>
+					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . $slug ) ); ?>">
+					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
+					<input name="loginpress_pro_addon_id" type="hidden" value="<?php echo esc_attr( $id ); ?>">
+					<button type="button" class="button button-primary loginpress-install-pro-addon" data-slug="<?php echo esc_attr( $slugid ); ?>"><?php esc_html_e( 'Install', 'loginpress' ); ?></button>
+					<?php
+				}
 				} else {
 
 					?>
@@ -272,7 +311,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 					<?php
 				}
 				?>
-				<?php echo $this->_ajax_response( $addon->title, $addon->slug ); ?>
+				<?php echo wp_kses( $this->_ajax_response( $addon->title, $addon->slug ), $this->loginpress_allowed_html_ajax_status() ); ?>
 			</div>
 
 			<?php
@@ -362,6 +401,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 		 * Check plugin status
 		 *
 		 * @since 3.0.5
+		 * @version 6.2.0
 		 * @return array
 		 */
 		public function check_plugin_status( $id, $slug, $categories = array() ) {
@@ -373,8 +413,8 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 				if ( is_plugin_active( $slug ) ) {
 					?>
 
-					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo wp_create_nonce( 'uninstall_' . $slug ); ?>">
-					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo $slug; ?>">
+					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'uninstall_' . $slug ) ); ?>">
+					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
 					<a class="button-primary loginpress-uninstall-pro-addon" href="#"><?php esc_html_e( 'Uninstall', 'loginpress' ); ?></a>
 
 					<?php
@@ -382,8 +422,8 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 				} elseif ( array_key_exists( $slug, $this->plugins_list ) ) {
 					?>
 
-					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo wp_create_nonce( 'install-plugin_' . $slug ); ?>">
-					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo $slug; ?>">
+					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . $slug ) ); ?>">
+					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
 					<a class="button-primary loginpress-active-pro-addon" href="#"><?php esc_html_e( 'Activate Plugin', 'loginpress' ); ?></a>
 
 					<?php
@@ -394,9 +434,9 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 					// echo sprintf( esc_html__( '%1$s Install %2$s', 'loginpress' ), '<a  href="' . $link . '" class="button-primary">', '</a>' );
 
 					?>
-					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo wp_create_nonce( 'install-plugin_' . $slug ); ?>">
-					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo $slug; ?>">
-					<input name="loginpress_pro_addon_id" type="hidden" value="<?php echo $id; ?>">
+					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . $slug ) ); ?>">
+					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
+					<input name="loginpress_pro_addon_id" type="hidden" value="<?php echo esc_attr( $id ); ?>">
 					<a class="button-primary loginpress-install-pro-addon" href="#"><?php esc_html_e( 'Install', 'loginpress' ); ?></a>
 					<?php
 				}
@@ -411,6 +451,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 		 * Check plugin status
 		 *
 		 * @since 3.0.5
+		 * @version 6.2.0
 		 * @return array
 		 */
 		public function sa_check_plugin_status( $id, $slug, $categories = array() ) {
@@ -420,37 +461,29 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 			if ( $this->is_addon_licensed( $categories ) ) {
 
 				if ( is_plugin_active( $slug ) ) {
-					?>
+						?>
 
-					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo wp_create_nonce( 'uninstall_' . $slug ); ?>">
-					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
-					<!-- <a class="button-primary loginpress-uninstall-pro-addon" href="#">Uninstall</a> -->
+						<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'uninstall_' . $slug ) ); ?>">
+						<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
+						<button type="button" class="button button-secondary loginpress-uninstall-pro-addon" data-slug="<?php echo esc_attr( $slug_id ); ?>"><?php esc_html_e( 'Deactivate', 'loginpress' ); ?></button>
 
-					<input id="<?php echo esc_attr( $slugid ); ?>" type="checkbox" checked class="loginpress-radio loginpress-radio-ios loginpress-uninstall-pro-addon" value="<?php echo esc_attr( $slugid ); ?>">
-					<label for="<?php echo esc_attr( $slugid ); ?>" class="loginpress-radio-btn"></label>
+						<?php
+					} elseif ( array_key_exists( $slug, $this->plugins_list ) ) {
+						?>
 
-					<?php
-					// echo sprintf( esc_html__( '%1$s Already Installed %2$s', 'loginpress' ), '<button class="button-primary">', '</button>' );
-				} elseif ( array_key_exists( $slug, $this->plugins_list ) ) {
-					?>
+						<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . $slug ) ); ?>">
+						<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
+						<button type="button" class="button button-primary loginpress-active-pro-addon" data-slug="<?php echo esc_attr( $slug_id ); ?>"><?php esc_html_e( 'Activate', 'loginpress' ); ?></button>
 
-					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo wp_create_nonce( 'install-plugin_' . $slug ); ?>">
-					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
-					<input id="<?php echo esc_attr( $slugid ); ?>" type="checkbox" class="loginpress-radio loginpress-radio-ios loginpress-active-pro-addon" value="<?php echo esc_attr( $slugid ); ?>">
-					<label for="<?php echo esc_attr( $slugid ); ?>" class="loginpress-radio-btn"></label>
-					<!-- <a class="button-primary loginpress-active-pro-addon" href="#">Activate Plugin</a> -->
-
-					<?php
-					// $link = wp_nonce_url( add_query_arg( array( 'action' => 'activate', 'plugin' => $slug ), admin_url( 'plugins.php' ) ),  'activate-plugin_' . $slug ) ;
-					// echo sprintf( esc_html__( '%1$s Activate Plugin %2$s', 'loginpress' ), '<a href="' .  $link . '" class="button-primary">', '</a>' );
-				} else {
+						<?php
+					} else {
 					// $link   = wp_nonce_url( add_query_arg( array( 'action' => 'install-plugin', 'plugin' => $slug, 'lgp' => 1, 'id' => $id), admin_url( 'update.php' ) ), 'install-plugin_' . $slug );
 					// echo sprintf( esc_html__( '%1$s Install %2$s', 'loginpress' ), '<a  href="' . $link . '" class="button-primary">', '</a>' );
 
 					?>
-					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo wp_create_nonce( 'install-plugin_' . $slug ); ?>">
+					<input name="loginpress_pro_addon_nonce" type="hidden" value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . $slug ) ); ?>">
 					<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
-					<input name="loginpress_pro_addon_id" type="hidden" value="<?php echo $id; ?>">
+					<input name="loginpress_pro_addon_id" type="hidden" value="<?php echo esc_attr( $id ); ?>">
 					<input id="<?php echo esc_attr( $slugid ); ?>" type="checkbox" class="loginpress-radio loginpress-radio-ios loginpress-install-pro-addon" value="<?php echo esc_attr( $slugid ); ?>">
 					<label for="<?php echo esc_attr( $slugid ); ?>" class="loginpress-radio-btn"></label>
 					<?php
@@ -475,6 +508,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 		/**
 		 * All addon page content.
 		 *
+		 * @version 6.2.0
 		 * @return
 		 */
 		public function show_addon_page() {
@@ -493,8 +527,8 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 						echo '<div class="main_notice_msg">' . sprintf(
 							// translators: License key validity
 							esc_html__( 'Your (%2$s) license key is valid until %1$s.', 'loginpress' ),
-							'<strong>' . date_i18n( get_option( 'date_format' ), strtotime( $expiration_date, current_time( 'timestamp' ) ) ) . '</strong>',
-							LoginPress_Pro::get_license_type()
+							'<strong>' . esc_html( date_i18n( get_option( 'date_format' ), strtotime( $expiration_date, current_time( 'timestamp' ) ) ) ) . '</strong>',
+							esc_html( LoginPress_Pro::get_license_type() )
 						) . '</div>';
 					}
 
@@ -579,8 +613,8 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 			.loginpress-free-add-ons h3:after{
 				content: "Free";
 				position: absolute;
-				top: 10px;
-				right: -30px;
+				top: 15px;
+				right: -50px;
 				width: 100px;
 				height: 30px;
 				background-color: #00a0d2;
@@ -644,16 +678,6 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 				background: #f9fafa;
 				border-radius: 0;
 				box-shadow: none;
-				color: #444;
-				position: absolute;
-				bottom: 15px;
-				left: 50%;
-				transform: translateX(-50%);
-
-				border: 2px solid #a5dff6 !important;
-				background: #d3f3ff54 !important;
-				cursor: default;
-				transition: background-color .3s;
 			}
 			.loginpress-extension button.button-primary:visited,
 			.loginpress-extension button.button-primary:active,
@@ -732,7 +756,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 			}
 			@media only screen and (max-width: 1024px) {
 				.loginpress-extension{
-					width: calc(50% - 30px);
+					width: calc(50% - 15px);
 				}
 			}
 			@media only screen and (max-width: 600px) {
@@ -768,11 +792,11 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);
-				max-width: 100px;
+				max-width: 70px;
 			}
 			.loginpress-addon-enable p{
 				position: absolute;
-				bottom: 0;
+				bottom: 15px;
 				left: 0;
 				width: 100%;
 				text-align: center;
@@ -901,7 +925,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 			}
 			.loginpress-install.activated p{
 				position: absolute;
-				bottom: 0;
+				bottom: 15px;
 				left: 0;
 				text-align: center;
 				width: 100%;
@@ -909,7 +933,7 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 			}
 			.loginpress-wrong.activated p{
 				position: absolute;
-				bottom: 0;
+				bottom: 15px;
 				left: 0;
 				text-align: center;
 				width: 100%;
@@ -939,20 +963,20 @@ if ( ! class_exists( 'LoginPress_Addons' ) ) :
 				height: 4em;
 				width: 2em;
 				transform-origin: left top;
-				border-right: 2px solid #00c853;
-				border-top: 2px solid #00c853;
+				border-right: 4px solid #00c853;
+				border-top: 4px solid #00c853;
 				content: '';
 				left: 42px;
 				top: 70px;
 				position: absolute;
 			}
 			.loginpress-uninstall .checkmark:after{
-				border-right: 2px solid #ff0000;
-				border-top: 2px solid #ff0000;
+				border-right: 4px solid #ff0000;
+				border-top: 4px solid #ff0000;
 			}
 			.loginpress-uninstall p, .loginpress-uninstalling p{
 				position: absolute;
-				bottom: 0;
+				bottom: 15px;
 				left: 0;
 				text-align: center;
 				width: 100%;

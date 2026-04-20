@@ -78,10 +78,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 				<input name="loginpress_pro_addon_nonce" type="hidden"
 					value="<?php echo esc_attr( wp_create_nonce( 'uninstall_' . $slug ) ); ?>">
 				<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
-				<input id="<?php echo esc_attr( $slug ); ?>" type="checkbox" checked
-					class="loginpress-radio loginpress-radio-ios loginpress-uninstall-pro-addon"
-					value="<?php echo esc_attr( $slug ); ?>">
-				<label for="<?php echo esc_attr( $slug ); ?>" class="loginpress-radio-btn"></label>
+				<button type="button" class="button button-secondary loginpress-uninstall-pro-addon" data-slug="<?php echo esc_attr( $slug ); ?>"><?php esc_html_e( 'Deactivate', 'loginpress' ); ?></button>
 
 				<?php
 			} elseif ( array_key_exists( sanitize_text_field( $slug ), $plugins_list ) ) {
@@ -90,9 +87,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 				<input name="loginpress_pro_addon_nonce" type="hidden"
 					value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . $slug ) ); ?>">
 				<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
-				<input id="<?php echo esc_attr( $slug ); ?>" type="checkbox"
-					class="loginpress-radio loginpress-radio-ios loginpress-active-pro-addon" value="<?php echo esc_attr( $slug ); ?>">
-				<label for="<?php echo esc_attr( $slug ); ?>" class="loginpress-radio-btn"></label>
+				<button type="button" class="button button-primary loginpress-active-pro-addon" data-slug="<?php echo esc_attr( $slug ); ?>"><?php esc_html_e( 'Activate', 'loginpress' ); ?></button>
 				<?php
 			} elseif ( 'free' === $version && ! array_key_exists( sanitize_text_field( $slug ), $plugins_list ) ) {
 				$action = 'install-plugin';
@@ -114,20 +109,14 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 					value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . $slug ) ); ?>">
 				<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
 				<input name="loginpress_pro_addon_id" type="hidden" value="3536">
-				<input id="<?php echo esc_attr( $slug_id ); ?>" type="checkbox"
-					class="loginpress-radio loginpress-radio-ios loginpress-install-pro-addon"
-					value="<?php echo esc_attr( $slug_id ); ?>">
-				<label for="<?php echo esc_attr( $slug_id ); ?>" class="loginpress-radio-btn"></label>
+				<button type="button" class="button button-primary loginpress-install-pro-addon" data-slug="<?php echo esc_attr( $slug_id ); ?>"><?php esc_html_e( 'Install', 'loginpress' ); ?></button>
 				<?php
 			} else {
 				?>
 				<input name="loginpress_pro_addon_nonce" type="hidden"
 					value="<?php echo esc_attr( wp_create_nonce( 'install-plugin_' . sanitize_text_field( $slug ) ) ); ?>">
 				<input name="loginpress_pro_addon_slug" type="hidden" value="<?php echo esc_attr( $slug ); ?>">
-				<input id="<?php echo esc_attr( $slug_id ); ?>" type="checkbox"
-					class="loginpress-radio loginpress-radio-ios loginpress-active-pro-addon"
-					value="<?php echo esc_attr( $slug_id ); ?>">
-				<label for="<?php echo esc_attr( $slug_id ); ?>" class="loginpress-radio-btn"></label>
+				<button type="button" class="button button-primary loginpress-active-pro-addon" data-slug="<?php echo esc_attr( $slug_id ); ?>"><?php esc_html_e( 'Activate', 'loginpress' ); ?></button>
 				<?php
 
 			}
@@ -147,7 +136,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 					<a target="_blank"
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/login_logout_menu_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/login-logout-menu.svg' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Login Logout Menu' ); ?></span>
 						</h3>
 					</a>
@@ -164,7 +153,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 					<a target="_blank"
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/login_redirects_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/login-redirects.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span>
 								<?php
 								echo esc_html( 'Login Redirects' );
@@ -187,7 +176,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 					<a target="_blank"
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/social_login_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/social-login.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span>
 								<?php
 								echo esc_html( 'Social Login' );
@@ -211,7 +200,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 					<a target="_blank"
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/login_widget_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/login-widget.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Login Widget' ); ?></span></h3>
 					</a>
 					<p><?php echo esc_html( 'This LoginPress add-on is a widget you can use into your blog sidebar. It uses an Ajax way to login via the sidebar. You may need to know HTML/CSS to give it style according to your site even we have styled it in general.' ); ?>
@@ -228,7 +217,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 					<a target="_blank"
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/limit_login_attempts_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/limit-login-attempts.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Limit Login Attempts' ); ?></span>
 						</h3>
 					</a>
@@ -245,7 +234,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 					<a target="_blank"
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/auto_login_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/auto-login.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Auto Login' ); ?></span></h3>
 					</a>
 					<p><?php echo esc_html( 'This LoginPress add-on lets you (Administrator) generates a unique URL for your certain users who you don\'t want to provide a password to login to your site. This Pro add-on gives you a list of all the users who you have given auto-generated login links. You can disable someone\'s access and delete certain users.' ); ?>
@@ -261,7 +250,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 					<a target="_blank"
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/hide_rename_login_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/hide-login.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Hide Login' ); ?></span></h3>
 					</a>
 					<p><?php echo esc_html( 'This LoginPress add-on lets you change the login page URL to anything you want. It will give a hard time to spammers who keep hitting to your login page. This is helpful for Brute force attacks. One caution to use this add-on is you need to remember the custom login url after you change it. We have an option to email your custom login url so you remember it.' ); ?>
@@ -291,7 +280,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
 
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/login_logout_menu_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/login-logout-menu.svg' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Login Logout Menu' ); ?></span>
 						</h3>
 					</a>
@@ -310,7 +299,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
 
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/login_redirects_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/login-redirects.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Login Redirects' ); ?></span></h3>
 					</a>
 
@@ -328,7 +317,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
 
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/social_login_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/social-login.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Social Login' ); ?></span></h3>
 					</a>
 
@@ -346,7 +335,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
 
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/login_widget_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/login-widget.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Login Widget' ); ?></span></h3>
 					</a>
 
@@ -365,7 +354,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
 
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/limit_login_attempts_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/limit-login-attempts.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Limit Login Attempts' ); ?></span>
 						</h3>
 					</a>
@@ -384,7 +373,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
 
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/auto_login_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/auto-login.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Auto Login' ); ?></span></h3>
 					</a>
 
@@ -402,7 +391,7 @@ if ( ! class_exists( 'LoginPress_Static_Addons' ) ) :
 						href="https://loginpress.pro/pricing/?utm_source=loginpress-lite&amp;utm_medium=addons-coming-soon&amp;utm_campaign=pro-upgrade"
 						class="loginpress_addons_links">
 
-						<h3><img src="https://wpbrigade.com/wp-content/uploads/edd/2018/01/hide_rename_login_300_x_300-150x150.png"
+						<h3><img src="<?php echo esc_url( LOGINPRESS_DIR_URL . 'img/addons/hide-login.png' ); ?>"
 								class="loginpress_addons_thumbnails"><span><?php echo esc_html( 'Hide Login' ); ?></span></h3>
 					</a>
 

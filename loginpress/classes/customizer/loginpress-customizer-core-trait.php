@@ -205,47 +205,5 @@ if ( ! trait_exists( 'LoginPress_Customizer_Core' ) ) {
 				)
 			);
 		}
-
-		/**
-		 * LoginPress Color Setting.
-		 *
-		 * @param WP_Customize_Manager $wp_customize The WordPress Customize object.
-		 * @param array<string>        $color_control Color control array.
-		 * @param array<string>        $color_label   Color label array.
-		 * @param string               $section       Section name.
-		 * @param int                  $index         Index of the color.
-		 * @param int                  $priority      Priority of the control.
-		 * @since 1.0.0
-		 * @version 6.0.0
-		 * @return void
-		 */
-		private function loginpress_color_setting( $wp_customize, $color_control, $color_label, $section, $index, $priority ) {
-			$wp_customize->add_setting(
-				"loginpress_customization[{$color_control[$index]}]",
-				array(
-					'type'              => 'option',
-					'capability'        => 'manage_options',
-					'transport'         => 'postMessage',
-					'sanitize_callback' => 'sanitize_text_field',
-				)
-			);
-
-			$wp_customize->add_control(
-				new LoginPress_Color_Picker_Alpha(
-					$wp_customize,
-					"loginpress_customization[{$color_control[$index]}]",
-					array(
-						'label'       => $color_label[ $index ],
-						'section'     => $section,
-						'priority'    => $priority,
-						'settings'    => "loginpress_customization[{$color_control[$index]}]",
-						'input_attrs' => array(
-							'name'               => "loginpress_customization[{$color_control[$index]}]",
-							'data-alpha-enabled' => 'true',
-						),
-					)
-				)
-			);
-		}
 	}
 }

@@ -130,22 +130,24 @@ if ( ! class_exists( 'Remote_Dashboard_Notifications_Client' ) ) {
 		 * object therefore, we don't want the object to be cloned.
 		 *
 		 * @since 3.2.5
+		 * @version 6.2.0
 		 * @return void
 		 */
 		public function __clone() {
 			// Cloning instances of the class is forbidden.
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'loginpress' ), '3.2.5' );
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'loginpress' ), '3.2.5' );
 		}
 
 		/**
 		 * Disable unserializing of the class.
 		 *
 		 * @since 3.2.5
+		 * @version 6.2.0
 		 * @return void
 		 */
 		public function __wakeup() {
 			// Unserializing instances of the class is forbidden.
-			_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'loginpress' ), '3.2.5' );
+			_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'loginpress' ), '3.2.5' );
 		}
 
 		/**
@@ -330,6 +332,7 @@ if ( ! class_exists( 'Remote_Dashboard_Notifications_Client' ) ) {
 		 * Prepare the dismissal URL for the notice.
 		 *
 		 * @since 1.3.0
+		 * @version 6.2.0
 		 *
 		 * @param string $slug Notice slug
 		 *
@@ -337,7 +340,8 @@ if ( ! class_exists( 'Remote_Dashboard_Notifications_Client' ) ) {
 		 */
 		protected function get_notice_dismissal_url( $slug ) {
 
-			$args                 = array_map( 'sanitize_text_field', wp_unslash( $_GET ) );
+			// Building URL from current query args; dismiss action verifies nonce when link is followed.
+			$args                 = array_map( 'sanitize_text_field', wp_unslash( $_GET ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$args['rn']           = wp_create_nonce( 'rn-dismiss' );
 			$args['notification'] = trim( $slug );
 
@@ -373,6 +377,7 @@ if ( ! class_exists( 'Remote_Dashboard_Notifications_Client' ) ) {
 		 * before displaying it on the dashboard.
 		 *
 		 * @since 0.1.0
+		 * @version 6.2.0
 		 * @return void
 		 */
 		public function dismiss() {
@@ -385,16 +390,18 @@ if ( ! class_exists( 'Remote_Dashboard_Notifications_Client' ) ) {
 			}
 
 			/* Validate nonce. */
-			if ( ! wp_verify_nonce( sanitize_key( $_GET['rn'] ), 'rn-dismiss' ) ) {
+			if ( ! wp_verify_nonce( sanitize_key( wp_unslash( $_GET['rn'] ) ), 'rn-dismiss' ) ) {
 				return;
 			}
+
+			$notification_param = sanitize_text_field( wp_unslash( $_GET['notification'] ) );
 
 			/* Get dismissed list. */
 			$dismissed = array_filter( (array) get_user_meta( $current_user->ID, '_rn_dismissed', true ) );
 
 			/* Add the current notice to the list if needed. */
-			if ( ! in_array( $_GET['notification'], $dismissed ) ) {
-				array_push( $dismissed, $_GET['notification'] );
+			if ( ! in_array( $notification_param, $dismissed, true ) ) {
+				$dismissed[] = $notification_param;
 			}
 
 			/* Update option. */
@@ -405,6 +412,7 @@ if ( ! class_exists( 'Remote_Dashboard_Notifications_Client' ) ) {
 		 * Adds the script that hooks into the Heartbeat API.
 		 *
 		 * @since 1.3.0
+		 * @version 6.2.0
 		 * @return void
 		 */
 		public function script() {
@@ -416,6 +424,7 @@ if ( ! class_exists( 'Remote_Dashboard_Notifications_Client' ) ) {
 			}
 
 			if ( false === get_transient( 'loginpress_rdn_fetch_notifications' ) ) {
+				$rdn_nonce = wp_create_nonce( 'rdn_fetch_notifications' );
 				?>
 
 				<script type="text/javascript">
@@ -423,7 +432,7 @@ if ( ! class_exists( 'Remote_Dashboard_Notifications_Client' ) ) {
 
 						// Hook into the heartbeat-send.
 						$(document).on('heartbeat-send', function (e, data) {
-							data['rdn_maybe_fetch'] = <?php echo json_encode( $maybe_fetch ); ?>;
+							data['rdn_maybe_fetch'] = <?php echo wp_json_encode( $maybe_fetch ); ?>;
 						});
 
 						// Listen for the custom event "heartbeat-tick" on $(document).
@@ -433,6 +442,7 @@ if ( ! class_exists( 'Remote_Dashboard_Notifications_Client' ) ) {
 
 								ajax_data = {
 									'action': 'rdn_fetch_notifications',
+									'nonce': <?php echo wp_json_encode( $rdn_nonce ); ?>,
 									'notices': data.rdn_fetch
 								};
 
@@ -490,9 +500,12 @@ if ( ! class_exists( 'Remote_Dashboard_Notifications_Client' ) ) {
 		 * Triggers the remote requests that fetches notices for this particular instance.
 		 *
 		 * @since 1.3.0
+		 * @version 6.2.0
 		 * @return void
 		 */
 		public function remote_get_notice_ajax() {
+			check_ajax_referer( 'rdn_fetch_notifications', 'nonce' );
+
 			// Transient set for 1 week.
 			set_transient( 'loginpress_rdn_fetch_notifications', 'rdn_fetch_notifications', 604800 );
 
@@ -516,9 +529,10 @@ if ( ! class_exists( 'Remote_Dashboard_Notifications_Client' ) ) {
 				$rn = $this->remote_get_notification( $notification );
 
 				if ( is_wp_error( $rn ) ) {
-					echo $rn->get_error_message();
+					echo esc_html( $rn->get_error_message() );
 				} else {
-					echo json_encode( $rn );
+					// Intentional JSON output for AJAX response.
+					echo wp_json_encode( $rn ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 			}
 

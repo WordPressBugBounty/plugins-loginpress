@@ -7,7 +7,12 @@
  *
  * @package LoginPress
  * @since 1.0.19
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // Add privacy policy field.
 add_action( 'register_form', 'loginpress_add_privacy_policy_field' );

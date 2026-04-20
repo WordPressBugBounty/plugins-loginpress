@@ -4,8 +4,12 @@
  *
  * @package LoginPress
  * @since 1.0.0
- * @version 3.0.6
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // phpcs:ignoreFile
 
@@ -117,7 +121,9 @@ function free_minimalist_presets() {
 		* Visit:       https://wordpress.org/plugins/loginpress/    *
 		*************************************************************/
 		body.login {
-			background-image: url(<?php echo esc_url( apply_filters( 'loginpress_default_bg', plugins_url( 'img/minimalist.jpg', LOGINPRESS_PLUGIN_BASENAME ) ) ); ?>);
+			--background-desktop-image: url(<?php echo esc_url( apply_filters( 'loginpress_default_bg', plugins_url( 'img/minimalist.jpg', LOGINPRESS_PLUGIN_BASENAME ) ) ); ?>);
+			background-image: var(--background-desktop-image,url(<?php echo esc_url( apply_filters( 'loginpress_default_bg', plugins_url( 'img/minimalist.jpg', LOGINPRESS_PLUGIN_BASENAME ) ) ); ?>));
+			
 			/*background-color: #ddd5c3;*/
 			background-repeat: no-repeat;
 			background-position: center;

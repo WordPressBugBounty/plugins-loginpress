@@ -8,8 +8,12 @@
  *
  * @package LoginPress
  * @since 3.0.0
- * @version 4.0.0
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * LoginPress Force Password Reset Class.

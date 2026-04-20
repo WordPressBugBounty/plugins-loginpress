@@ -31,7 +31,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Messages' ) ) {
 		 *
 		 * @param WP_Customize_Manager $wp_customize The WordPress Customize object.
 		 * @since 1.0.0
-		 * @version 6.0.0
+		 * @version 6.2.0
 		 * @return void
 		 */
 		private function setup_error_section( $wp_customize ) {
@@ -51,9 +51,9 @@ if ( ! trait_exists( 'LoginPress_Customizer_Messages' ) ) {
 			$error = 0;
 			while ( $error < 11 ) :
 				$wp_customize->add_setting(
-					"loginpress_customization[{$error_control[$error]}]",
+					"loginpress_customization[{$loginpress_error_control[$error]}]",
 					array(
-						'default'           => $error_default[ $error ],
+						'default'           => $loginpress_error_default[ $error ],
 						'type'              => 'option',
 						'capability'        => 'manage_options',
 						'transport'         => 'postMessage',
@@ -62,12 +62,12 @@ if ( ! trait_exists( 'LoginPress_Customizer_Messages' ) ) {
 				);
 
 				$wp_customize->add_control(
-					"loginpress_customization[{$error_control[$error]}]",
+					"loginpress_customization[{$loginpress_error_control[$error]}]",
 					array(
-						'label'    => $error_label[ $error ],
+						'label'    => $loginpress_error_label[ $error ],
 						'section'  => 'section_error',
 						'priority' => 5,
-						'settings' => "loginpress_customization[{$error_control[$error]}]",
+						'settings' => "loginpress_customization[{$loginpress_error_control[$error]}]",
 					)
 				);
 				++$error;
@@ -79,7 +79,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Messages' ) ) {
 		 *
 		 * @param WP_Customize_Manager $wp_customize The WordPress Customize object.
 		 * @since 1.0.0
-		 * @version 6.0.0
+		 * @version 6.2.0
 		 * @return void
 		 */
 		private function setup_welcome_section( $wp_customize ) {
@@ -100,24 +100,24 @@ if ( ! trait_exists( 'LoginPress_Customizer_Messages' ) ) {
 			while ( $welcome < 5 ) :
 
 				$wp_customize->add_setting(
-					"loginpress_customization[{$welcome_control[$welcome]}]",
+					"loginpress_customization[{$loginpress_welcome_control[$welcome]}]",
 					array(
 						'type'              => 'option',
 						'capability'        => 'manage_options',
 						'transport'         => 'postMessage',
-						'sanitize_callback' => $welcome_sanitization[ $welcome ],
+						'sanitize_callback' => $loginpress_welcome_sanitization[ $welcome ],
 					)
 				);
 
 				$wp_customize->add_control(
-					"loginpress_customization[{$welcome_control[$welcome]}]",
+					"loginpress_customization[{$loginpress_welcome_control[$welcome]}]",
 					array(
-						'label'       => $welcome_label[ $welcome ],
+						'label'       => $loginpress_welcome_label[ $welcome ],
 						'section'     => 'section_welcome',
 						'priority'    => 5,
-						'settings'    => "loginpress_customization[{$welcome_control[$welcome]}]",
+						'settings'    => "loginpress_customization[{$loginpress_welcome_control[$welcome]}]",
 						'input_attrs' => array(
-							'placeholder' => $welcome_default[ $welcome ],
+							'placeholder' => $loginpress_welcome_default[ $welcome ],
 						),
 					)
 				);
@@ -158,7 +158,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Messages' ) ) {
 		 *
 		 * @param WP_Customize_Manager $wp_customize The WordPress Customize object.
 		 * @since 1.0.0
-		 * @version 6.0.0
+		 * @version 6.2.0
 		 * @return void
 		 */
 		private function setup_footer_section( $wp_customize ) {
@@ -175,7 +175,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Messages' ) ) {
 				)
 			);
 
-			$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'section_footer', 3, 4 );
+			$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'section_footer', 3, 4 );
 
 			$wp_customize->add_setting(
 				'loginpress_customization[footer_display_text]',
@@ -364,9 +364,9 @@ if ( ! trait_exists( 'LoginPress_Customizer_Messages' ) ) {
 				)
 			);
 
-			$this->loginpress_hr_setting( $wp_customize, $close_control, 'section_footer', 0, 36 );
+			$this->loginpress_hr_setting( $wp_customize, $loginpress_close_control, 'section_footer', 0, 36 );
 
-			$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'section_footer', 4, 40 );
+			$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'section_footer', 4, 40 );
 
 			$wp_customize->add_setting(
 				'loginpress_customization[back_display_text]',
@@ -557,9 +557,9 @@ if ( ! trait_exists( 'LoginPress_Customizer_Messages' ) ) {
 				)
 			);
 
-			$this->loginpress_hr_setting( $wp_customize, $close_control, 'section_footer', 1, 71 );
+			$this->loginpress_hr_setting( $wp_customize, $loginpress_close_control, 'section_footer', 1, 71 );
 
-			$this->loginpress_group_setting( $wp_customize, $group_control, $group_label, $group_info, 'section_footer', 5, 72 );
+			$this->loginpress_group_setting( $wp_customize, $loginpress_group_control, $loginpress_group_label, $loginpress_group_info, 'section_footer', 5, 72 );
 
 			/**
 			 * [Enable / Disable Footer Text with LoginPress_Radio_Control]
@@ -715,6 +715,70 @@ if ( ! trait_exists( 'LoginPress_Customizer_Messages' ) ) {
 			);
 
 			/**
+			 * [Show some Love – text color for "Powered by: LoginPress".]
+			 *
+			 * @since 6.2.0
+			 */
+			$wp_customize->add_setting(
+				'loginpress_customization[show_love_text_color]',
+				array(
+					'default'           => '#263466',
+					'type'              => 'option',
+					'capability'        => 'manage_options',
+					'transport'         => 'postMessage',
+					'sanitize_callback' => 'sanitize_text_field',
+				)
+			);
+			$wp_customize->add_control(
+				new LoginPress_Color_Picker_Alpha(
+					$wp_customize,
+					'loginpress_customization[show_love_text_color]',
+					array(
+						'label'       => __( 'Show some Love - text color:', 'loginpress' ),
+						'section'     => 'section_footer',
+						'priority'    => 81,
+						'settings'    => 'loginpress_customization[show_love_text_color]',
+						'input_attrs' => array(
+							'name'               => 'loginpress_customization[show_love_text_color]',
+							'data-alpha-enabled' => 'true',
+						),
+					)
+				)
+			);
+
+			/**
+			 * [Show some Love – LoginPress link hover color.]
+			 *
+			 * @since 6.2.0
+			 */
+			$wp_customize->add_setting(
+				'loginpress_customization[show_love_link_hover_color]',
+				array(
+					'default'           => '#263466',
+					'type'              => 'option',
+					'capability'        => 'manage_options',
+					'transport'         => 'postMessage',
+					'sanitize_callback' => 'sanitize_text_field',
+				)
+			);
+			$wp_customize->add_control(
+				new LoginPress_Color_Picker_Alpha(
+					$wp_customize,
+					'loginpress_customization[show_love_link_hover_color]',
+					array(
+						'label'       => __( 'LoginPress link hover color:', 'loginpress' ),
+						'section'     => 'section_footer',
+						'priority'    => 82,
+						'settings'    => 'loginpress_customization[show_love_link_hover_color]',
+						'input_attrs' => array(
+							'name'               => 'loginpress_customization[show_love_link_hover_color]',
+							'data-alpha-enabled' => 'true',
+						),
+					)
+				)
+			);
+
+			/**
 			 * [Love position on footer.]
 			 *
 			 * @since 1.1.3
@@ -743,7 +807,7 @@ if ( ! trait_exists( 'LoginPress_Customizer_Messages' ) ) {
 					),
 				)
 			);
-			$this->loginpress_hr_setting( $wp_customize, $close_control, 'section_footer', 2, 90 );
+			$this->loginpress_hr_setting( $wp_customize, $loginpress_close_control, 'section_footer', 2, 90 );
 		}
 
 		/**

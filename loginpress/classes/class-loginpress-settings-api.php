@@ -8,8 +8,13 @@
  *
  * @package LoginPress
  * @since 1.0.9
- * @version 4.0.0
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 
 	class LoginPress_Settings_API {
@@ -45,6 +50,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		public $loginpress_pro_addons;
 
 		/**
+		 * Section intro/description HTML keyed by section id (already passed through wp_kses).
+		 *
+		 * @since 6.2.0
+		 * @var array<string, string>
+		 */
+		protected $section_description_markup = array();
+
+		/**
 		 * Class constructor.
 		 *
 		 * @since 1.0.9
@@ -54,6 +67,67 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 			$this->loginpress_captcha_settings = get_option( 'loginpress_captcha_settings' );
 			$this->loginpress_pro_addons       = get_option( 'loginpress_pro_addons' );
+		}
+
+		/**
+		 * Allowed HTML for settings field output (forms, descriptions, filters).
+		 * Extends post-like tags with form controls wp_kses_post strips.
+		 *
+		 * @since 6.2.0
+		 * @return array<string, array<string, bool>>
+		 */
+		private function loginpress_allowed_html_settings() {
+			static $allowed = null;
+			if ( null !== $allowed ) {
+				return $allowed;
+			}
+			$allowed = wp_kses_allowed_html( 'post' );
+			$allowed['input']   = array(
+				'type'               => true,
+				'class'              => true,
+				'id'                 => true,
+				'name'               => true,
+				'value'              => true,
+				'placeholder'        => true,
+				'min'                => true,
+				'max'                => true,
+				'step'               => true,
+				'multiple'           => true,
+				'checked'            => true,
+				'disabled'           => true,
+				'required'           => true,
+				'data-default-color' => true,
+			);
+			$allowed['select']  = array(
+				'class' => true,
+				'name'  => true,
+				'id'    => true,
+			);
+			$allowed['option']  = array(
+				'value'    => true,
+				'selected' => true,
+			);
+			$allowed['textarea'] = array(
+				'rows'        => true,
+				'cols'        => true,
+				'class'       => true,
+				'id'          => true,
+				'name'        => true,
+				'placeholder' => true,
+			);
+			$allowed['fieldset'] = array();
+			$allowed['label']    = array(
+				'for'   => true,
+				'class' => true,
+			);
+			$allowed['button']   = array(
+				'type'  => true,
+				'class' => true,
+				'value' => true,
+			);
+			$allowed['ul']       = array( 'class' => true );
+			$allowed['li']       = array( 'class' => true );
+			return $allowed;
 		}
 
 		/**
@@ -139,6 +213,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 * Initialize admin settings.
 		 *
 		 * @since 1.0.9
+		 * @version 6.2.0
 		 * @return void
 		 */
 		public function admin_init() {
@@ -153,8 +228,9 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 					$video_link = '<div class="video"><a href="https://www.youtube.com/watch?v=' . esc_attr( $section['video_link'] ) . '" target="_blank">' . esc_html__( 'How to Setup', 'loginpress' ) . '</a></div>';
 				}
 				if ( isset( $section['desc'] ) && ! empty( $section['desc'] ) ) {
-					$section['desc'] = '<div class="inside"><div class="desc">' . wp_kses_post( $section['desc'] ) . '</div>' . $video_link . '</div>';
-					$callback        = call_user_func( array( $this, 'get_description' ), $section['desc'] );
+					$wrapped_desc = '<div class="inside"><div class="desc">' . wp_kses( $section['desc'], $this->loginpress_allowed_html_settings() ) . '</div>' . esc_url( $video_link ) . '</div>';
+					$this->section_description_markup[ $section['id'] ] = $wrapped_desc;
+					$callback                                           = array( $this, 'render_section_description_markup' );
 				} elseif ( isset( $section['callback'] ) ) {
 					$callback = $section['callback'];
 				} else {
@@ -224,6 +300,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 * Displays a text field for a settings field.
 		 *
 		 * @param array<string, mixed> $args settings field args.
+		 * @version 6.2.0
 		 * @return void
 		 */
 		public function callback_text( $args ) {
@@ -236,7 +313,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html  = sprintf( '<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder );
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
@@ -244,6 +321,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 *
 		 * @param array<string, mixed> $args settings field args.
 		 * @since 1.2.5
+		 * @version 6.2.0
 		 * @return void
 		 */
 		public function callback_email( $args ) {
@@ -257,13 +335,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html  = sprintf( '<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder, $multiple );
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
 		 * Displays a url field for a settings field.
 		 *
 		 * @param array $args settings field args
+		 * @version 6.2.0
 		 */
 		function callback_url( $args ) {
 			$value       = esc_url( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
@@ -274,13 +353,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html  = sprintf( '<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder );
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
 		 * Displays a number field for a settings field.
 		 *
 		 * @param array $args settings field args
+		 * @version 6.2.0
 		 */
 		function callback_number( $args ) {
 			$value       = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
@@ -294,14 +374,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html        = sprintf( '<input type="%1$s" class="%2$s-number" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s%8$s%9$s%10$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder, $min, $max, $step, $required );
 			$html       .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
 		 * Displays a checkbox for a settings field.
 		 *
 		 * @param array $args settings field args
-		 * @version 5.0.0
+		 * @version 6.2.0
 		 */
 		function callback_checkbox( $args ) {
 
@@ -334,14 +414,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html .= sprintf( '%2$s%3$s%1$s%4$s</label>', $args['desc'], '<span class="loginpress-checkbox"></span>', '<p>', '</p>' );
 			$html .= '</fieldset>';
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
 		 * Displays a multi-checkbox settings field.
 		 *
 		 * @param array $args settings field args
-		 * @version 5.0.0
+		 * @version 6.2.0
 		 */
 		function callback_multicheck( $args ) {
 			$captcha_settings = $this->loginpress_captcha_settings;
@@ -369,13 +449,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html .= $this->get_field_description( $args );
 			$html .= '</fieldset>';
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
 		 * Displays a multi-checkbox settings field.
 		 *
 		 * @param array $args settings field args
+		 * @version 6.2.0
 		 */
 		function callback_radio( $args ) {
 
@@ -391,13 +472,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html .= $this->get_field_description( $args );
 			$html .= '</fieldset>';
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
 		 * Displays a select box for a settings field.
 		 *
 		 * @param array $args settings field args
+		 * @version 6.2.0
 		 */
 		function callback_select( $args ) {
 
@@ -412,13 +494,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html .= sprintf( '</select>' );
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
 		 * Displays a textarea for a settings field.
 		 *
 		 * @param array $args settings field args
+		 * @version 6.2.0
 		 */
 		function callback_textarea( $args ) {
 
@@ -429,7 +512,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html  = sprintf( '<textarea rows="5" cols="55" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]"%4$s>%5$s</textarea>', $size, $args['section'], $args['id'], $placeholder, $value );
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 
@@ -439,10 +522,11 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 * @param array<string, mixed> $args settings field args
 		 * @return string $html the html to be displayed.
 		 * @since 1.0.0
+		 * @version 6.2.0
 		 */
 		function callback_html( $args ) {
 
-			echo $this->get_field_description( $args );
+			echo wp_kses( $this->get_field_description( $args ), $this->loginpress_allowed_html_settings() );
 			return '';
 		}
 
@@ -451,6 +535,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 *
 		 * @param array<string, mixed> $args settings field args
 		 * @return string $html the html to be displayed.
+		 * @version 6.2.0
 		 */
 		function callback_wysiwyg( $args ) {
 
@@ -474,7 +559,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 
 			echo '</div>';
 
-			echo $this->get_field_description( $args );
+			echo wp_kses( $this->get_field_description( $args ), $this->loginpress_allowed_html_settings() );
 			return '';
 		}
 
@@ -482,6 +567,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 * Displays a file upload field for a settings field.
 		 *
 		 * @param array $args settings field args
+		 * @version 6.2.0
 		 */
 		function callback_file( $args ) {
 
@@ -491,16 +577,17 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$label = isset( $args['options']['button_label'] ) ? $args['options']['button_label'] : esc_html__( 'Choose File', 'loginpress' );
 
 			$html  = sprintf( '<input type="text" class="%1$s-text wpsa-url" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
-			$html .= '<input type="button" class="button wpsa-browse" value="' . $label . '" />';
+			$html .= '<input type="button" class="button wpsa-browse" value="' . esc_attr( $label ) . '" />';
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
 		 * Displays a password field for a settings field.
 		 *
 		 * @param array $args settings field args.
+		 * @version 6.2.0
 		 */
 		function callback_password( $args ) {
 
@@ -510,13 +597,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html  = sprintf( '<input type="password" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
 		 * Displays a color picker field for a settings field.
 		 *
 		 * @param array $args settings field args.
+		 * @version 6.2.0
 		 */
 		function callback_color( $args ) {
 
@@ -526,26 +614,28 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html  = sprintf( '<input type="color" class="%1$s-color wp-color-picker-field" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s" data-default-color="%5$s" />', $size, $args['section'], $args['id'], $value, $args['std'] );
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
 		 * Displays a search field for a autologin field.
 		 *
 		 * @param array $args settings field args.
+		 * @version 6.2.0
 		 */
 		function callback_autologin( $args ) {
 
 			$html  = apply_filters( 'loginpress_autologin', $args );
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
 		 * Displays a text field for a hidelogin field.
 		 *
 		 * @param array $args settings field args
+		 * @version 6.2.0
 		 */
 		function callback_hidelogin( $args ) {
 
@@ -553,7 +643,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 			$html  = apply_filters( 'loginpress_hidelogin', $args, $value );
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
@@ -561,13 +651,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 *
 		 * @param array $args settings field args
 		 * @since 1.0.23
+		 * @version 6.2.0
 		 */
 		function callback_login_redirect( $args ) {
 
 			$html  = apply_filters( 'loginpress_login_redirects', $args );
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
@@ -575,13 +666,14 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 *
 		 * @param array $args settings field args
 		 * @since 1.0.23
+		 * @version 6.2.0
 		 */
 		function callback_register_fields( $args ) {
 
 			$html  = apply_filters( 'loginpress_register_fields', $args );
 			$html .= $this->get_field_description( $args );
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 
 		/**
@@ -667,6 +759,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 * Show navigation tabs.
 		 *
 		 * @since 1.0.9
+		 * @version 6.2.0
 		 * @return void
 		 */
 		public function show_navigation() {
@@ -693,7 +786,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 
 			$html .= '</ul></div>';
 
-			echo $html;
+			echo wp_kses( $html, $this->loginpress_allowed_html_settings() );
 		}
 		/**
 		 * Add "NEW" tag to any tab.
@@ -925,14 +1018,21 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 
 
 		/**
-		 * Get Section Description.
+		 * Echo section description HTML registered during admin_init().
 		 *
-		 * @param string $desc Description.
-		 * @return string
-		 * @since 1.1.0
+		 * WordPress expects a callable; the previous approach passed the HTML string as the
+		 * callback, which do_settings_sections() skipped because is_callable() was false.
+		 *
+		 * @param array<string, mixed> $section Section data from WordPress.
+		 * @return void
+		 * @since 6.2.0
 		 */
-		function get_description( $desc ) {
-			return $desc;
+		public function render_section_description_markup( $section ) {
+			$id = isset( $section['id'] ) ? $section['id'] : '';
+			if ( $id && isset( $this->section_description_markup[ $id ] ) ) {
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Markup sanitized with wp_kses() when stored.
+				echo $this->section_description_markup[ $id ];
+			}
 		}
 
 		/**
@@ -941,6 +1041,7 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 		 * @param string $page The slug name of the page who's settings sections you want to output.
 		 * @return void
 		 * @since 1.1.0
+		 * @version 6.2.0
 		 */
 		function do_settings_sections( $page ) {
 			global $wp_settings_sections, $wp_settings_fields;
@@ -951,7 +1052,9 @@ if ( ! class_exists( 'LoginPress_Settings_API' ) ) :
 
 			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
 				echo '<h3>' . esc_html( $section['title'] ) . "</h3>\n";
-				echo $section['callback'];
+				if ( ! empty( $section['callback'] ) && is_callable( $section['callback'] ) ) {
+					call_user_func( $section['callback'], $section );
+				}
 				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ) {
 					continue;
 				}

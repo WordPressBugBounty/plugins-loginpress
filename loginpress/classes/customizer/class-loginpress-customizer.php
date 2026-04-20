@@ -6,8 +6,12 @@
  *
  * @package   LoginPress
  * @since 1.0.0
- * @version 3.0.0
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Ignore next line for PHPStan analysis.
@@ -235,20 +239,34 @@ class LoginPress_Customizer {
 			$loginpress_auto_focus = false;
 		}
 
+		// Check if WPS Hide Login plugin is actually active (not just installed).
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		$wps_hide_login_active = is_plugin_active( 'wps-hide-login/wps-hide-login.php' ) || class_exists( '\WPS\WPS_Hide_Login\Plugin' );
+		$login_url             = wp_login_url();
+		$parsed_login_url      = wp_parse_url( $login_url );
+		$login_path            = isset( $parsed_login_url['path'] ) ? $parsed_login_url['path'] : '/wp-login.php';
+		$default_path          = '/wp-login.php';
+		// Only use custom login URL if WPS Hide Login is active AND path is different.
+		$use_custom_login_url = $wps_hide_login_active && ( $login_path !== $default_path );
+
 		// Array for localize.
 		$loginpress_localize = array(
-			'admin_url'          => admin_url(),
-			'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-			'plugin_url'         => plugins_url(),
-			'login_theme'        => $this->loginpress_preset,
-			'loginpress_bg_url'  => $loginpress_bg_url,
-			'preset_nonce'       => wp_create_nonce( 'loginpress-preset-nonce' ),
-			'attachment_nonce'   => wp_create_nonce( 'loginpress-attachment-nonce' ),
-			'preset_loader'      => includes_url( 'js/tinymce/skins/lightgray/img/loader.gif' ),
-			'autoFocusPanel'     => $loginpress_auto_focus,
-			'recaptchaType'      => $cap_type,
-			'filter_bg'          => apply_filters( 'loginpress_default_bg', '' ),
-			'translated_strings' => array(
+			'admin_url'            => esc_url( admin_url() ),
+			'ajaxurl'              => esc_url( admin_url( 'admin-ajax.php' ) ),
+			'plugin_url'           => esc_url( plugins_url() ),
+			'login_theme'          => $this->loginpress_preset,
+			'loginpress_bg_url'    => esc_url( $loginpress_bg_url ),
+			'preset_nonce'         => wp_create_nonce( 'loginpress-preset-nonce' ),
+			'attachment_nonce'     => wp_create_nonce( 'loginpress-attachment-nonce' ),
+			'preset_loader'        => esc_url( includes_url( 'js/tinymce/skins/lightgray/img/loader.gif' ) ),
+			'autoFocusPanel'       => $loginpress_auto_focus,
+			'recaptchaType'        => $cap_type,
+			'filter_bg'            => esc_url( apply_filters( 'loginpress_default_bg', '' ) ),
+			'login_url'            => esc_url( $login_url ),
+			'use_custom_login_url' => $use_custom_login_url,
+			'translated_strings'   => array(
 				'wrong_yt_id' => _x( 'Wrong YouTube Video ID', 'Wrong YouTube Video ID (Customizer)', 'loginpress' ),
 			),
 		);
@@ -376,35 +394,47 @@ class LoginPress_Customizer {
 	 * @param string        $section The section name.
 	 * @param int           $index The index of the control.
 	 * @param string|int    $priority To set the Priority of the section.
+	 * @param string|null   $default_value Optional. Default value for the setting (e.g. for new options never saved).
+	 * @param string|null   $description Optional. Control description shown under the label in the Customizer.
 	 *
 	 * @return mixed The modified WordPress Customize object.
 	 * @since 1.1.3
+	 * @version 6.2.0
 	 */
-	public function loginpress_color_setting( $wp_customize, $control, $label, $section, $index, $priority = '' ) {
+	public function loginpress_color_setting( $wp_customize, $control, $label, $section, $index, $priority = '', $default_value = null, $description = null ) {
+		$setting_args = array(
+			'type'              => 'option',
+			'capability'        => 'manage_options',
+			'transport'         => 'postMessage',
+			'sanitize_callback' => 'sanitize_text_field', // validates 3 or 6 digit HTML hex color code.
+		);
+		if ( null !== $default_value ) {
+			$setting_args['default'] = $default_value;
+		}
 		$wp_customize->add_setting(
 			"loginpress_customization[{$control[$index]}]",
-			array(
-				'type'              => 'option',
-				'capability'        => 'manage_options',
-				'transport'         => 'postMessage',
-				'sanitize_callback' => 'sanitize_text_field', // validates 3 or 6 digit HTML hex color code.
-			)
+			$setting_args
 		);
+
+		$control_args = array(
+			'label'       => $label[ $index ],
+			'section'     => $section,
+			'settings'    => "loginpress_customization[{$control[$index]}]",
+			'priority'    => $priority,
+			'input_attrs' => array(
+				'name'               => $label[ $index ],
+				'data-alpha-enabled' => 'true',
+			),
+		);
+		if ( null !== $description && '' !== $description ) {
+			$control_args['description'] = $description;
+		}
 
 		$wp_customize->add_control(
 			new LoginPress_Color_Picker_Alpha(
 				$wp_customize,
 				"loginpress_customization[{$control[$index]}]",
-				array(
-					'label'       => $label[ $index ],
-					'section'     => $section,
-					'settings'    => "loginpress_customization[{$control[$index]}]",
-					'priority'    => $priority,
-					'input_attrs' => array(
-						'name'               => $label[ $index ],
-						'data-alpha-enabled' => 'true',
-					),
-				)
+				$control_args
 			)
 		);
 	}

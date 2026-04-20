@@ -7,8 +7,12 @@
  *
  * @package LoginPress
  * @since 1.0.19
- * @version 1.1.14
+ * @version 6.2.0
  */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 $loginpress_import_nonce = wp_create_nonce( 'loginpress-import-nonce' );
 $loginpress_export_nonce = wp_create_nonce( 'loginpress-export-nonce' );
