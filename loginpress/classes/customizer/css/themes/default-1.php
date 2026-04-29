@@ -59,7 +59,7 @@ function first_presets() {
 			}
 			.admin-email__actions-primary .button:first-child {
 				font: 400 15px "Roboto", sans-serif;
-				color: #fff;
+				color: #fff !important;
 				height: auto;
 				line-height: 20px !important;
 				padding: 13px;

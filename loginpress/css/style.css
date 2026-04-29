@@ -1785,27 +1785,26 @@ html .toplevel_page_loginpress-settings .dataTables_paginate a.paginate_button:h
 /* Top Header Bar */
 
 #wpcontent .loginpress-header-wrapper {
-	width: calc(100% + 20px);
-	margin: 0 0 0 -20px;
 	background-color: #fff;
 	background-image: url(../img/loginpress-logo-divid-logo.svg);
 	background-position: left -90px top -86px;
-	background-size: auto;
 	background-repeat: no-repeat;
+	background-size: auto;
+	container-name: loginpress-header-wrapper;
+	container-type: inline-size;
+	margin: 0 0 0 -20px;
+	width: calc(100% + 20px);
 }
 
 #wpcontent .loginpress-header-wrapper .loginpress-header-container {
-	max-width: 100%;
-	padding: 43px 20px 43px 180px;
+	align-items: center;
 	display: flex;
 	flex-wrap: wrap;
-	align-items: center;
+	max-width: 100%;
+	padding: 43px 20px 43px 180px;
 }
-#wpcontent .loginpress-header-wrapper {
-	container-type: inline-size;
-	container-name: loginpress-header-wrapper;
-}
-@container loginpress-header-wrapper (width >= 1550px){
+
+@container loginpress-header-wrapper (width >= 1550px) {
 	#wpcontent .loginpress-header-wrapper .loginpress-header-container {
 		padding: 43px 20px 43px 20px;
 		max-width: 1240px;

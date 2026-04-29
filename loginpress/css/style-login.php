@@ -478,7 +478,7 @@ input[type=checkbox]:checked::before{
 	<?php endif; ?>
 	<?php if ( 'minimalist' !== $loginpress_theme_tem ) : ?>
 		<?php if ( ! empty( $loginpress_form_display_bg ) && true === $loginpress_form_display_bg ) : ?>
-		background: transparent;
+		background-color: transparent;
 		<?php endif; ?>
 		<?php if ( true !== $loginpress_form_display_bg && ! empty( $loginpress_form_background_clr ) ) : ?>
 		background-color: <?php echo esc_attr( $loginpress_form_background_clr ); ?>;
@@ -518,7 +518,7 @@ input[type=checkbox]:checked::before{
 	#loginform, html body.login .wishlistmember-loginform div#login form#loginform{
 		
 		<?php if ( ! empty( $loginpress_form_display_bg ) && true === $loginpress_form_display_bg ) : ?>
-		background: transparent;
+		background-color: transparent;
 		<?php endif; ?>
 		<?php if ( true !== $loginpress_form_display_bg && ! empty( $loginpress_form_background_clr ) ) : ?>
 		background-color: <?php echo esc_attr( $loginpress_form_background_clr ); ?>;
@@ -612,11 +612,13 @@ body.login #loginpress_video-background{
 		object-position: <?php echo esc_attr( $loginpress_bg_video_position ); ?>;
 	<?php endif; ?>
 }
-body.login:after{
+body.login:not(.default8):after{
 	<?php $loginpress_background_img = apply_filters( 'loginpress_body_after_background_image', $loginpress_background_img ); ?>
 	<?php if ( 'default8' === $loginpress_theme_tem && ! empty( $loginpress_background_img ) && $loginpress_display_bg ) : ?>
+	--background-desktop-image: url(<?php echo esc_url( $loginpress_background_img ); ?>);
 	background-image: var(--background-desktop-image, url(<?php echo esc_url( $loginpress_background_img ); ?>));
 	<?php elseif ( 'default8' === $loginpress_theme_tem && isset( $loginpress_display_bg ) && ! $loginpress_display_bg ) : ?>
+	--background-desktop-image: url();
 	background-image: var(--background-desktop-image, url(<?php echo esc_url( $loginpress_background_img ); ?>));
 	<?php endif; ?>
 

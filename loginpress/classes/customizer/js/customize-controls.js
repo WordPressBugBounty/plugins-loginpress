@@ -1306,7 +1306,7 @@
 							loginpress_bg = 'url(' + loginpress_bg + ')';
 						}
 						loginpress_find( 'body.login' ).css( '--background-desktop-image', loginpress_bg );
-						
+						loginpress_find( 'body.login' ).addClass(get_theme);
 						// Check if both setting_background and mobile_background are empty, then update mobile background
 						var settingBg = wp.customize( 'loginpress_customization[setting_background]' ).get();
 						var mobileBg = wp.customize( 'loginpress_customization[mobile_background]' ).get();
@@ -1324,6 +1324,7 @@
 						// }
 
 						loginpress_find( 'body.login' ).css( '--background-desktop-image', 'url(' + loginPressVal + ')' );
+						loginpress_find( 'body.login' ).addClass(get_theme);
 						
 						// Check if both setting_background and mobile_background are empty, then update mobile background
 						var settingBg = wp.customize( 'loginpress_customization[setting_background]' ).get();

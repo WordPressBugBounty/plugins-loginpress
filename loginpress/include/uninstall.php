@@ -10,7 +10,7 @@
  * @version 6.2.0
  */
 
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
