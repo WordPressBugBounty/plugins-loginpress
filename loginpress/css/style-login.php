@@ -371,6 +371,26 @@ $loginpress_theme_tem                   = 'default1' === $loginpress_theme_tem ?
 $loginpress_video_voice                 = ( true === $loginpress_bg_video_muted ) ? 'muted' : '';
 $loginpress_login_copy_right_           = loginpress_get_option_key( 'login_copy_right_display', $loginpress_array );
 
+$loginpress_get_logo_width_mobile  = loginpress_get_option_key( 'customize_logo_width_mobile', $loginpress_array );
+$loginpress_get_logo_height_mobile = loginpress_get_option_key( 'customize_logo_height_mobile', $loginpress_array );
+$loginpress_get_form_width_mobile  = loginpress_get_option_key( 'customize_form_width_mobile', $loginpress_array );
+
+$loginpress_desktop_logo_w_int = absint( $loginpress_get_logo_width );
+$loginpress_desktop_logo_h_int = absint( $loginpress_get_logo_height );
+$loginpress_desktop_form_w_int = absint( $loginpress_form_width );
+
+$loginpress_mobile_logo_w_int = absint( $loginpress_get_logo_width_mobile );
+$loginpress_mobile_logo_h_int = absint( $loginpress_get_logo_height_mobile );
+$loginpress_mobile_form_w_int = absint( $loginpress_get_form_width_mobile );
+
+$loginpress_effective_logo_w_mobile = $loginpress_mobile_logo_w_int > 0 ? $loginpress_mobile_logo_w_int : $loginpress_desktop_logo_w_int;
+$loginpress_effective_logo_h_mobile = $loginpress_mobile_logo_h_int > 0 ? $loginpress_mobile_logo_h_int : $loginpress_desktop_logo_h_int;
+$loginpress_effective_form_w_mobile = $loginpress_mobile_form_w_int > 0 ? $loginpress_mobile_form_w_int : $loginpress_desktop_form_w_int;
+
+$loginpress_logo_width_sm  = $loginpress_effective_logo_w_mobile > 0 ? loginpress_check_px( (string) $loginpress_effective_logo_w_mobile ) : '';
+$loginpress_logo_height_sm = $loginpress_effective_logo_h_mobile > 0 ? loginpress_check_px( (string) $loginpress_effective_logo_h_mobile ) : '';
+$loginpress_form_width_sm  = $loginpress_effective_form_w_mobile > 0 ? loginpress_check_px( (string) $loginpress_effective_form_w_mobile ) : '';
+
 /**
  * Generate box shadow CSS if user pass 0 then we're not going to set the value of box-shadow because it effects the pro templates.
  *
@@ -407,6 +427,26 @@ if ( ! function_exists( 'loginpress_box_shadow' ) ) {
 <style type="text/css">
 *{
 	box-sizing: border-box;
+}
+body.login{
+	<?php if ( ! empty( $loginpress_logo_width ) ) : ?>
+	--loginpress-logo-w: <?php echo esc_attr( $loginpress_logo_width ); ?>;
+	<?php endif; ?>
+	<?php if ( ! empty( $loginpress_logo_height ) ) : ?>
+	--loginpress-logo-h: <?php echo esc_attr( $loginpress_logo_height ); ?>;
+	<?php endif; ?>
+	<?php if ( ! empty( $loginpress_logo_width_sm ) ) : ?>
+	--loginpress-logo-w-sm: <?php echo esc_attr( $loginpress_logo_width_sm ); ?>;
+	<?php endif; ?>
+	<?php if ( ! empty( $loginpress_logo_height_sm ) ) : ?>
+	--loginpress-logo-h-sm: <?php echo esc_attr( $loginpress_logo_height_sm ); ?>;
+	<?php endif; ?>
+	<?php if ( ! empty( $loginpress_form_width ) ) : ?>
+	--loginpress-form-mw: <?php echo esc_attr( loginpress_check_px( $loginpress_form_width ) ); ?>;
+	<?php endif; ?>
+	<?php if ( ! empty( $loginpress_form_width_sm ) ) : ?>
+	--loginpress-form-mw-sm: <?php echo esc_attr( $loginpress_form_width_sm ); ?>;
+	<?php endif; ?>
 }
 .login .button-primary {
 	float: none;
@@ -671,11 +711,7 @@ body.login {
 	<?php endif; ?>
 }
 .interim-login.login h1 a{
-	<?php if ( ! empty( $loginpress_logo_width ) ) : ?>
-	width: <?php echo esc_attr( $loginpress_logo_width ); ?>;
-	<?php else : ?>
-	width: 84px;
-	<?php endif; ?>
+	width: var(--loginpress-logo-w, 84px);
 }
 
 .login h1 a,
@@ -685,10 +721,10 @@ body.login {
 	background-image: url( <?php echo esc_url( $loginpress_logo_img ); ?> ) <?php echo esc_attr( loginpress_important() ); ?>;
 	<?php endif; ?>
 	<?php if ( ! empty( $loginpress_logo_width ) ) : ?>
-	width: <?php echo esc_attr( $loginpress_logo_width . loginpress_important() ); ?>;
+	width: var(--loginpress-logo-w)<?php echo esc_attr( loginpress_important() ); ?>;
 	<?php endif; ?>
 	<?php if ( ! empty( $loginpress_logo_height ) ) : ?>
-	height: <?php echo esc_attr( $loginpress_logo_height . loginpress_important() ); ?>;
+	height: var(--loginpress-logo-h)<?php echo esc_attr( loginpress_important() ); ?>;
 	<?php endif; ?>
 	<?php if ( ! empty( $loginpress_logo_width ) || ! empty( $loginpress_logo_height ) ) : ?>
 	background-size: contain <?php echo esc_attr( loginpress_important() ); ?>;
@@ -1032,7 +1068,7 @@ box-shadow: <?php echo esc_attr( loginpress_box_shadow( $loginpress_textfield_sh
 <?php if ( 'default6' !== $loginpress_theme_tem && 'default10' !== $loginpress_theme_tem ) : ?>
 #login {
 	<?php if ( ! empty( $loginpress_form_width ) ) : ?>
-	max-width: <?php echo esc_attr( loginpress_check_px( $loginpress_form_width ) . loginpress_important() ); ?>;
+	max-width: var(--loginpress-form-mw)<?php echo esc_attr( loginpress_important() ); ?>;
 	<?php else : ?>
 	<?php endif; ?>
 
@@ -1041,7 +1077,7 @@ box-shadow: <?php echo esc_attr( loginpress_box_shadow( $loginpress_textfield_sh
 <?php else : ?>
 #login form{
 	<?php if ( ! empty( $loginpress_form_width ) ) : ?>
-	max-width: <?php echo esc_attr( loginpress_check_px( $loginpress_form_width ) . loginpress_important() ); ?>;
+	max-width: var(--loginpress-form-mw)<?php echo esc_attr( loginpress_important() ); ?>;
 	<?php else : ?>
 	<?php endif; ?>
 
@@ -1088,7 +1124,7 @@ body.login form.shake{
 }
 <?php endif; ?>
 
-.login label {
+.login label:not([for="rememberme"]) {
 	<?php if ( ! empty( $loginpress_form_label_font_size ) && 'default2' !== $loginpress_preset ) : ?>
 	font-size: <?php echo esc_attr( $loginpress_form_label_font_size ) . 'px;'; ?>
 	<?php endif; ?>
@@ -1123,7 +1159,9 @@ body.login form.shake{
 
 #wfls-prompt-overlay{
 	background: transparent;
+	<?php if ( 'minimalist' !== $loginpress_theme_tem ) : ?>
 	padding: 0;
+	<?php endif; ?>
 }
 #wfls-prompt-wrapper input[type="text"]{
 	padding-left: 20px;
@@ -1628,12 +1666,33 @@ input[type=checkbox]:checked::before{
 		--background-mobile-image: url(<?php echo esc_url( $loginpress_background_img ); ?>);
 	<?php endif; ?>
 
-	background-image: var(--background-mobile-image, var(--background-desktop-image, url(<?php echo esc_url( $loginpress_background_img ); ?>)));
+	background-image: var(
+	--background-mobile-image,
+	var(
+		--background-desktop-image,
+		url(<?php echo esc_url( (string) $loginpress_background_img ); ?>)
+	)
+);
 }
 
-		.login h1 a {
+		.login h1 a,
+		.login .wp-login-logo a {
 				max-width: 100%;
 				background-size: contain !important;
+		}
+		<?php if ( ! empty( $loginpress_logo_width_sm ) || ! empty( $loginpress_logo_height_sm ) ) : ?>
+		.login h1 a,
+		.login .wp-login-logo a {
+				<?php if ( ! empty( $loginpress_logo_width_sm ) ) : ?>
+				width: var(--loginpress-logo-w-sm)<?php echo esc_attr( loginpress_important() ); ?>;
+				<?php endif; ?>
+				<?php if ( ! empty( $loginpress_logo_height_sm ) ) : ?>
+				height: var(--loginpress-logo-h-sm)<?php echo esc_attr( loginpress_important() ); ?>;
+				<?php endif; ?>
+		}
+		<?php endif; ?>
+		#login {
+				max-width: var(--loginpress-form-mw-sm, 350px)<?php echo esc_attr( loginpress_important() ); ?>;
 		}
 	.copyRight{
 		padding: 12px;

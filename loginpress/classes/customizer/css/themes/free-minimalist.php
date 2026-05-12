@@ -506,7 +506,8 @@ function free_minimalist_presets() {
 		}
 		@media screen and (max-width: 767px) {
 			#login{
-				width: 300px;
+				max-width: 300px;
+				width: calc(100% - 30px);
 			}
 			.login .loginpress-show-love{
 				position: static;

@@ -409,7 +409,8 @@ function first_presets() {
 		}
 		@media screen and (max-width: 767px) {
 			#login{
-				width: 300px;
+				max-width: 300px;
+				width: calc(100% - 30px);
 			}
 			.login form{
 				padding-right: 0;

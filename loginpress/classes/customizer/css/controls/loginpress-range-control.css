@@ -66,6 +66,78 @@
 .loginpress-range-slider_range:active::-moz-range-thumb {
 	background: #0085ba;
 }
+.customize-control-loginpress-range:is(
+    #customize-control-loginpress_customization-customize_logo_width_mobile,
+    #customize-control-loginpress_customization-customize_logo_height_mobile,
+    #customize-control-loginpress_customization-customize_form_width_mobile
+) .customize-control-title {
+    position: relative;
+	max-width: fit-content;
+	overflow: hidden;
+}
+.customize-control-loginpress-range:is(#customize-control-loginpress_customization-customize_logo_width_mobile, #customize-control-loginpress_customization-customize_logo_height_mobile, #customize-control-loginpress_customization-customize_form_width_mobile) .customize-control-title:after {
+	background: #E33B3B;
+	border-radius: 2px;
+	display: inline-block;
+	font-size: 10px;
+	font-weight: 600;
+	text-align: left;
+	text-align: center;
+	color: #fff;
+	line-height: 1;
+	padding: 4px;
+	overflow: hidden;
+	content: 'New';
+	display: inline-block;
+	vertical-align: middle;
+    position: relative;
+    top: -2px;
+    margin-left: 5px;
+}
+
+.customize-control-loginpress-range:is(
+    #customize-control-loginpress_customization-customize_logo_width_mobile,
+    #customize-control-loginpress_customization-customize_logo_height_mobile,
+    #customize-control-loginpress_customization-customize_form_width_mobile
+) .customize-control-title:before {
+    content: "";
+    position: absolute;
+
+    /* Adjust based on badge position */
+    top: 2px;
+    left: calc(100% - 17px);
+
+    width: 12px;
+    height: 20px;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.7),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+    animation: shineEffect 2s infinite;
+    pointer-events: none;
+	z-index: 1;
+}
+
+@keyframes shineEffect {
+    0% {
+        transform: translateX(-20px) skewX(-20deg);
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(30px) skewX(-20deg);
+        opacity: 0;
+    }
+}
 .customize-control input[type=text].loginpress-range-slider_val {
 	display: inline-block;
 	position: relative;

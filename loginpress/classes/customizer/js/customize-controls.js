@@ -288,9 +288,9 @@
 						$( '#customize-control-loginpress_customization-textfield_label_color,#customize-control-loginpress_customization-customize_form_label' ).show();
 					}
 					if (checkbox_values == 'default18') {
-						loginpress_manage_customizer_controls( ['setting_logo', 'customize_logo_width', 'customize_logo_height'], 'off' );
+						loginpress_manage_customizer_controls( ['setting_logo', 'customize_logo_width', 'customize_logo_height', 'customize_logo_width_mobile', 'customize_logo_height_mobile'], 'off' );
 					} else {
-						loginpress_manage_customizer_controls( ['setting_logo', 'customize_logo_width', 'customize_logo_height'], 'on' );
+						loginpress_manage_customizer_controls( ['setting_logo', 'customize_logo_width', 'customize_logo_height', 'customize_logo_width_mobile', 'customize_logo_height_mobile'], 'on' );
 					}
 					formbg = $( '#customize-preview iframe' ).contents().find( '#login' ).css( 'background' );
 				}
@@ -382,6 +382,7 @@
 						if ( loginPressVal == '' ) {
 							loginpress_find( target ).css( property, '' );
 						} else {
+							console.log( loginpress_find( target ));
 							loginpress_find( target )[0].style.setProperty( property , loginPressVal + suffix , 'important' );
 							if ( property == 'height' ) {
 								wp_logo_height = loginPressVal;
@@ -1499,8 +1500,85 @@
 	 * @param  {[type]} px                       [Unit]
 	 * @version 6.2.0
 	 */
-	loginpress_new_css_property( 'loginpress_customization[customize_logo_width]', '#login h1 a', 'width', 'px' );
-	loginpress_new_css_property( 'loginpress_customization[customize_logo_height]', '#login h1 a', 'height', 'px' );
+
+	/**
+	 * Sync body.login CSS variables for logo and form width (matches style-login.php).
+	 *
+	 * @since 6.2.0
+	 * @return {void}
+	 */
+	function loginpress_refresh_layout_css_vars() {
+		var $body = loginpress_find( 'body.login' );
+		if ( ! $body.length ) {
+			return;
+		}
+		var body = $body[0];
+		function getInt( id ) {
+			try {
+				var v = wp.customize( 'loginpress_customization[' + id + ']' ).get();
+				var n = parseInt( v, 10 );
+				return isNaN( n ) ? 0 : n;
+			} catch ( err ) {
+				return 0;
+			}
+		}
+		function setVar( name, pxValue ) {
+			if ( pxValue > 0 ) {
+				body.style.setProperty( name, pxValue + 'px' );
+			} else {
+				body.style.removeProperty( name );
+			}
+		}
+		var dw = getInt( 'customize_logo_width' );
+		var dh = getInt( 'customize_logo_height' );
+		var mw = getInt( 'customize_logo_width_mobile' );
+		var mh = getInt( 'customize_logo_height_mobile' );
+		var fw = getInt( 'customize_form_width' );
+		var fwm = getInt( 'customize_form_width_mobile' );
+		var effW = mw > 0 ? mw : dw;
+		var effH = mh > 0 ? mh : dh;
+		var effF = fwm > 0 ? fwm : fw;
+		setVar( '--loginpress-logo-w', dw );
+		setVar( '--loginpress-logo-h', dh );
+		setVar( '--loginpress-logo-w-sm', effW );
+		setVar( '--loginpress-logo-h-sm', effH );
+		setVar( '--loginpress-form-mw', fw );
+		setVar( '--loginpress-form-mw-sm', effF );
+	}
+
+	wp.customize.bind(
+		'ready',
+		function () {
+			loginpress_refresh_layout_css_vars();
+			var layoutVarIds = [
+				'customize_logo_width',
+				'customize_logo_height',
+				'customize_logo_width_mobile',
+				'customize_logo_height_mobile',
+				'customize_form_width',
+				'customize_form_width_mobile',
+			];
+			layoutVarIds.forEach(
+				function ( id ) {
+					wp.customize(
+						'loginpress_customization[' + id + ']',
+						function ( value ) {
+							value.bind( function () {
+								loginpress_refresh_layout_css_vars();
+							} );
+						}
+					);
+				}
+			);
+			$( '#customize-preview iframe' ).on(
+				'load',
+				function () {
+					loginpress_refresh_layout_css_vars();
+				}
+			);
+		}
+	);
+
 	loginpress_new_css_property( 'loginpress_customization[customize_logo_padding]', '#login h1 a', 'margin-bottom', 'px' );
 	loginpress_new_css_property( 'loginpress_customization[visibility_icon_color]', '.wp-core-ui #login input[type=checkbox]', 'border-color', '' );
 	loginpress_new_css_property( 'loginpress_customization[visibility_icon_color]', '.wp-core-ui #login .dashicons-visibility', 'color', '' );
@@ -1679,7 +1757,6 @@
 
 	loginpress_background_img( 'loginpress_customization[setting_form_background]', '#loginform' );
 
-	loginpress_new_css_property( 'loginpress_customization[customize_form_width]', '#login', 'max-width', 'px' );
 	loginpress_new_css_property( 'loginpress_customization[customize_form_height]', '#loginform', 'min-height', 'px' );
 	loginpress_css_property( 'loginpress_customization[customize_form_padding]', '#loginform', 'padding' );
 	loginpress_css_property( 'loginpress_customization[customize_form_border]', '#loginform', 'border' );
@@ -2092,7 +2169,8 @@
 	);
 
 	loginpress_new_css_property( 'loginpress_customization[login_footer_font_size]', '.login #nav a', 'font-size', 'px' );
-	loginpress_new_css_property( 'loginpress_customization[customize_form_label]', '.login label[for="user_login"], .login label[for="user_pass"]', 'font-size', 'px' );
+	loginpress_new_css_property( 'loginpress_customization[customize_form_label]', '.login label[for="user_pass"]', 'font-size', 'px' );
+	loginpress_new_css_property( 'loginpress_customization[customize_form_label]', '.login label[for="user_login"]', 'font-size', 'px' );
 	loginpress_new_css_property( 'loginpress_customization[remember_me_font_size]', '.login form .forgetmenot label', 'font-size', 'px' );
 	loginpress_css_property( 'loginpress_customization[login_footer_bg_color]', '.login #nav', 'background-color', 'transparent' );
 	loginpress_css_property( 'loginpress_customization[back_display_text]', '.login #backtoblog', 'display' );
@@ -2740,7 +2818,7 @@
 
 			if ( $( '#customize_presets_settingsdefault18' ).is( ':checked' ) == true ) {
 
-				loginpress_manage_customizer_controls( ['setting_logo', 'customize_logo_width', 'customize_logo_height'], 'off' );
+				loginpress_manage_customizer_controls( ['setting_logo', 'customize_logo_width', 'customize_logo_height', 'customize_logo_width_mobile', 'customize_logo_height_mobile'], 'off' );
 				loginpress_find( '#loginform #user_login' ).on(
 					'focus',
 					function () {

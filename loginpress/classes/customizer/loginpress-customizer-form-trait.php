@@ -112,6 +112,37 @@ if ( ! trait_exists( 'LoginPress_Customizer_Form' ) ) {
 			$this->loginpress_color_setting( $wp_customize, $loginpress_form_color_control, $loginpress_form_color_label, 'section_form', 0, 7 );
 
 			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 0, 15 );
+
+			$wp_customize->add_setting(
+				'loginpress_customization[customize_form_width_mobile]',
+				array(
+					'default'           => 300,
+					'type'              => 'option',
+					'capability'        => 'manage_options',
+					'transport'         => 'postMessage',
+					'sanitize_callback' => 'absint',
+				)
+			);
+
+			$wp_customize->add_control(
+				new LoginPress_Range_Control(
+					$wp_customize,
+					'loginpress_customization[customize_form_width_mobile]',
+					array(
+						'label'       => __( 'Mobile Form Width:', 'loginpress' ),
+						'description' => __( 'Screens up to 767px wide. Set to 0 to use the same value as Form Width.', 'loginpress' ),
+						'section'     => 'section_form',
+						'priority'    => 16,
+						'settings'    => 'loginpress_customization[customize_form_width_mobile]',
+						'input_attrs' => array(
+							'min'  => 0,
+							'max'  => 800,
+							'step' => 1,
+						),
+					)
+				)
+			);
+
 			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 1, 20 );
 			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 2, 25 );
 			$this->loginpress_range_setting( $wp_customize, $loginpress_form_range_control, $loginpress_form_range_default, $loginpress_form_range_label, $loginpress_form_range_attrs, $loginpress_form_range_unit, 'section_form', 3, 30 );

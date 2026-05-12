@@ -5,7 +5,7 @@ Contributors: WPBrigade, hiddenpearls, AbdulWahab610
 Donate link: https://loginpress.pro/pricing/?utm_source=loginpress-lite
 Author URI: https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=author-url-link
 Tags: wp-login, login, login customizer, custom login, wordpress login,
-Stable tag: 6.2.1
+Stable tag: 6.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -237,6 +237,12 @@ Please report security bugs found in the source code of the LoginPress plugin th
 
 == Changelog ==
 
+= 6.2.2 – 2026-05-12 =
+* Bugfix: Resolved the readme checkbox tick indicator issue.
+* Bugfix: Fixed live preview for the Customizer control “Label Font Size”.
+* Enhancement: Added new mobile-specific controls for logo size and form width.
+* Enhancement: Refactored and optimized code for improved maintainability and performance.
+
 = 6.2.1 – 2026-04-29 =
 * Bugfix: Fixed button color issue on "confirm your email" login screen.
 * Bugfix: Fixed background image bug for LoginPress Pro Wedding # 2 template.
@@ -443,5 +449,5 @@ For more detail on changelog visit [LoginPress.Pro](https://loginpress.pro/chang
 
 == Upgrade Notice ==
 
-= 6.2.1 =
+= 6.2.2 =
 * Upgrade Carefully, LoginPress 6.2 is packed with major enhancements and performance improvements.

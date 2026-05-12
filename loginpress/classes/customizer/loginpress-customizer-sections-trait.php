@@ -270,6 +270,68 @@ if ( ! trait_exists( 'LoginPress_Customizer_Sections' ) ) {
 			$this->loginpress_range_setting( $wp_customize, $loginpress_logo_range_control, $loginpress_logo_range_default, $loginpress_logo_range_label, $loginpress_logo_range_attrs, $loginpress_logo_range_unit, 'customize_logo_section', 1, 15 );
 			$this->loginpress_range_setting( $wp_customize, $loginpress_logo_range_control, $loginpress_logo_range_default, $loginpress_logo_range_label, $loginpress_logo_range_attrs, $loginpress_logo_range_unit, 'customize_logo_section', 2, 20 );
 
+			$loginpress_mobile_logo_desc = __( 'Screens up to 767px wide. Set to 0 to use the same value as desktop.', 'loginpress' );
+
+			$wp_customize->add_setting(
+				'loginpress_customization[customize_logo_width_mobile]',
+				array(
+					'default'           => 84,
+					'type'              => 'option',
+					'capability'        => 'manage_options',
+					'transport'         => 'postMessage',
+					'sanitize_callback' => 'absint',
+				)
+			);
+
+			$wp_customize->add_control(
+				new LoginPress_Range_Control(
+					$wp_customize,
+					'loginpress_customization[customize_logo_width_mobile]',
+					array(
+						'label'       => __( 'Mobile Logo Width:', 'loginpress' ),
+						'description' => $loginpress_mobile_logo_desc,
+						'section'     => 'customize_logo_section',
+						'priority'    => 22,
+						'settings'    => 'loginpress_customization[customize_logo_width_mobile]',
+						'input_attrs' => array(
+							'min'  => 0,
+							'max'  => 500,
+							'step' => 1,
+						),
+					)
+				)
+			);
+
+			$wp_customize->add_setting(
+				'loginpress_customization[customize_logo_height_mobile]',
+				array(
+					'default'           => 84,
+					'type'              => 'option',
+					'capability'        => 'manage_options',
+					'transport'         => 'postMessage',
+					'sanitize_callback' => 'absint',
+				)
+			);
+
+			$wp_customize->add_control(
+				new LoginPress_Range_Control(
+					$wp_customize,
+					'loginpress_customization[customize_logo_height_mobile]',
+					array(
+						'label'       => __( 'Mobile Logo Height:', 'loginpress' ),
+						'description' => $loginpress_mobile_logo_desc,
+						'section'     => 'customize_logo_section',
+						'priority'    => 23,
+						'settings'    => 'loginpress_customization[customize_logo_height_mobile]',
+						'input_attrs' => array(
+							'min'  => 0,
+							'max'  => 500,
+							'step' => 1,
+						),
+					)
+				)
+			);
+
 			/**
 			 * Login Page meta and form logo options.
 			 *
