@@ -211,12 +211,41 @@
 </style>
 
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-$slug = get_option( 'wpb_sdk_module_slug' );
-$id   = get_option( 'wpb_sdk_module_id' );
+if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
+	wp_die(
+		esc_html__( 'You do not have permission to access this page.', 'wpbrigade-sdk' ),
+		'',
+		array( 'response' => 403 )
+	);
+}
 
-$wpb  = WPBRIGADE_Logger::instance( $id, $slug, true );
-$Data = $wpb->get_logs_data( $slug );
+if ( ! defined( 'WPBRIGADE_SDK__DEV_MODE' ) || true !== WPBRIGADE_SDK__DEV_MODE ) {
+	wp_die(
+		esc_html__( 'Debug mode is not enabled.', 'wpbrigade-sdk' ),
+		'',
+		array( 'response' => 403 )
+	);
+}
+
+$resolved = function_exists( 'wpb_sdk_dev_view_resolve_product' )
+	? wpb_sdk_dev_view_resolve_product()
+	: array(
+		'slug'      => '',
+		'module_id' => '1',
+	);
+$slug = isset( $resolved['slug'] ) ? (string) $resolved['slug'] : '';
+
+$Data = function_exists( 'wpb_sdk_dev_view_load_logs_data' )
+	? wpb_sdk_dev_view_load_logs_data( $slug )
+	: array();
+
+if ( empty( $Data ) && function_exists( 'wpb_sdk_dev_view_default_logs_data' ) ) {
+	$Data = wpb_sdk_dev_view_default_logs_data();
+}
 ?>
 <div class="wrap fs-section">
 	<h2 class="nav-tab-wrapper">
@@ -240,7 +269,7 @@ $Data = $wpb->get_logs_data( $slug );
 										<nobr>Name:</nobr>
 									</td>
 									<td>
-										<code><?php echo $Data['user_info']['user_nickname']; ?></code>
+										<code><?php echo esc_html( $Data['user_info']['user_nickname'] ?? '' ); ?></code>
 									</td>
 									<td class="fs-right">
 										<form action="#" method="POST" onsubmit="var val = prompt('What is your Name?', 'Admin'); if (null == val || '' === val) return false; jQuery('input[name=fs_user_name_login-customizer]').val(val); return true;">
@@ -255,7 +284,7 @@ $Data = $wpb->get_logs_data( $slug );
 										<nobr>Email:</nobr>
 									</td>
 									<td>
-										<code><?php echo $Data['user_info']['user_email']; ?></code>
+										<code><?php echo esc_html( $Data['user_info']['user_email'] ?? '' ); ?></code>
 									</td>
 									<td class="fs-right">
 										<form action="http://new-freemius-test.com/wp-admin/admin.php?page=login-customizer-account" method="POST" onsubmit="var val = prompt('What is your Email?', 'hamzabhatti151@gmail.com'); if (null == val || '' === val) return false; jQuery('input[name=fs_email_login-customizer]').val(val); return true;">
@@ -310,7 +339,7 @@ $Data = $wpb->get_logs_data( $slug );
 										<nobr>Public Key:</nobr>
 									</td>
 									<td>
-										<code><?php echo $Data['authentication']['public_key']; ?></code>
+										<code><?php echo esc_html( $Data['authentication']['public_key'] ?? '' ); ?></code>
 									</td>
 									<td class="fs-right">
 									</td>
@@ -351,7 +380,7 @@ $Data = $wpb->get_logs_data( $slug );
 										<nobr>Version:</nobr>
 									</td>
 									<td>
-										<code><?php echo $Data['product_info']['version']; ?></code>
+										<code><?php echo esc_html( $Data['product_info']['version'] ?? '' ); ?></code>
 									</td>
 									<td class="fs-right">
 									</td>

@@ -5,7 +5,7 @@
  * HIGH RISK – Admin-only debug UI. Outputs sensitive data (keys, paths, user info).
  * Only load when is_admin(), manage_options, and WPBRIGADE_SDK__DEV_MODE are satisfied.
  *
- * @package LoginPress
+ * @package wpbrigade_sdk
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
 	wp_die(
-		esc_html__( 'You do not have permission to access this page.', 'loginpress' ),
+		esc_html__( 'You do not have permission to access this page.', 'wpbrigade-sdk' ),
 		'',
 		array( 'response' => 403 )
 	);
@@ -22,7 +22,7 @@ if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
 
 if ( ! defined( 'WPBRIGADE_SDK__DEV_MODE' ) || true !== WPBRIGADE_SDK__DEV_MODE ) {
 	wp_die(
-		esc_html__( 'Debug mode is not enabled.', 'loginpress' ),
+		esc_html__( 'Debug mode is not enabled.', 'wpbrigade-sdk' ),
 		'',
 		array( 'response' => 403 )
 	);
@@ -30,16 +30,28 @@ if ( ! defined( 'WPBRIGADE_SDK__DEV_MODE' ) || true !== WPBRIGADE_SDK__DEV_MODE 
 
 /**
  * Enqueue CSS file for admin debugging.
+ *
+ * @param string $hook_suffix Current admin screen hook suffix.
+ * @return void
  */
-function wpb_debug_enqueue_styles() {
+function wpb_debug_enqueue_styles( $hook_suffix ) {
+	if ( 'toplevel_page_wpb-debug-mode' !== $hook_suffix || ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+
+	$css_path = dirname( __DIR__ ) . '/assets/css/debug.css';
+	if ( ! is_readable( $css_path ) ) {
+		return;
+	}
+
 	wp_enqueue_style(
-		'custom-debug-style',
-		plugins_url( 'admin/css/debug.css', __FILE__ ),
+		'wpb-sdk-debug-style',
+		plugins_url( 'assets/css/debug.css', dirname( __DIR__ ) . '/start.php' ),
 		array(),
 		defined( 'WP_WPBRIGADE_SDK_VERSION' ) ? WP_WPBRIGADE_SDK_VERSION : '1.0.0'
 	);
 }
-add_action( 'wp_enqueue_scripts', 'wpb_debug_enqueue_styles' );
+add_action( 'admin_enqueue_scripts', 'wpb_debug_enqueue_styles' );
 
 /**
  * Verify POST request: method, capability, and nonce for a given action.
@@ -93,8 +105,8 @@ function wpb_debug_mask_email( $email ) {
 	if ( 2 !== count( $parts ) ) {
 		return wpb_debug_mask( $email, 0 );
 	}
-	$local  = $parts[0];
-	$domain = $parts[1];
+	$local          = $parts[0];
+	$domain         = $parts[1];
 	$local_display  = strlen( $local ) > 2 ? substr( $local, 0, 1 ) . str_repeat( '•', strlen( $local ) - 1 ) : '••';
 	$domain_display = strlen( $domain ) > 4 ? '•••' . substr( $domain, -4 ) : '••••';
 	return $local_display . '@' . $domain_display;
@@ -110,19 +122,30 @@ function wpb_debug_mask_path( $path ) {
 	if ( '' === (string) $path ) {
 		return '—';
 	}
-	$path = str_replace( array( '\\', '/' ), '/', (string) $path );
+	$path  = str_replace( array( '\\', '/' ), '/', (string) $path );
 	$parts = array_filter( explode( '/', $path ) );
-	$tail = array_slice( $parts, -2 );
+	$tail  = array_slice( $parts, -2 );
 	return ( count( $parts ) > 2 ? '…/' : '' ) . implode( '/', $tail );
 }
 
-$slug              = get_option( 'wpb_sdk_module_slug' );
-$wpb_sdk_module_id = get_option( 'wpb_sdk_module_id' );
+$resolved = function_exists( 'wpb_sdk_dev_view_resolve_product' )
+	? wpb_sdk_dev_view_resolve_product()
+	: array(
+		'slug'      => '',
+		'module_id' => '1',
+	);
+$slug              = isset( $resolved['slug'] ) ? (string) $resolved['slug'] : '';
+$wpb_sdk_module_id = isset( $resolved['module_id'] ) ? (string) $resolved['module_id'] : '1';
 
 $all_plugins = array();
 
-$wpb  = WPBRIGADE_Logger::instance( $wpb_sdk_module_id, $slug, true );
-$data = $wpb->get_logs_data( $slug );
+$data = function_exists( 'wpb_sdk_dev_view_load_logs_data' )
+	? wpb_sdk_dev_view_load_logs_data( $slug )
+	: array();
+
+if ( empty( $data ) && function_exists( 'wpb_sdk_dev_view_default_logs_data' ) ) {
+	$data = wpb_sdk_dev_view_default_logs_data();
+}
 
 $plugin_path            = isset( $data['product_info']['path'] ) ? $data['product_info']['path'] : '';
 $installed_plugin_slugs = array_keys( get_plugins() );
@@ -158,16 +181,37 @@ if ( isset( $_POST['background_sync'] ) && 'true' === $_POST['background_sync'] 
 	);
 
 	if ( is_wp_error( $response ) ) {
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug view only.
-		error_log( 'Error sending data: ' . $response->get_error_message() );
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- SDK debug UI only.
+		error_log( 'WPB SDK debug: background sync failed — ' . $response->get_error_message() );
 	} else {
-		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug view only.
-		error_log( 'Log sent successfully' . wp_json_encode( $data ) );
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- SDK debug UI only.
+		error_log(
+			'WPB SDK debug: background sync completed — HTTP ' . (string) wp_remote_retrieve_response_code( $response )
+		);
 	}
 }
 
-/** Option name prefix allowed for Set DB Option (strict whitelist by prefix). */
+/** Option name prefix allowed for load/set DB option tools (strict whitelist by prefix). */
 define( 'WPB_DEBUG_OPTION_PREFIX', 'wpb_' );
+
+/**
+ * Whether an option name is allowed for debug load/set tools.
+ *
+ * @param string $option_name Raw option name.
+ * @return bool
+ */
+function wpb_debug_option_name_is_allowed( $option_name ) {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return false;
+	}
+
+	$option_name = sanitize_key( (string) $option_name );
+	if ( '' === $option_name ) {
+		return false;
+	}
+
+	return 0 === strpos( $option_name, WPB_DEBUG_OPTION_PREFIX );
+}
 
 /**
  * Set an option value only if it is in the allowed prefix scope.
@@ -177,14 +221,13 @@ define( 'WPB_DEBUG_OPTION_PREFIX', 'wpb_' );
  * @return bool True on success, false if not allowed.
  */
 function wpb_debug_set_option( $option_name, $option_value ) {
-	if ( ! current_user_can( 'manage_options' ) ) {
+	if ( ! wpb_debug_option_name_is_allowed( $option_name ) ) {
 		return false;
 	}
-	$option_name = sanitize_text_field( $option_name );
-	if ( '' === $option_name || 0 !== strpos( $option_name, WPB_DEBUG_OPTION_PREFIX ) ) {
-		return false;
-	}
+
+	$option_name = sanitize_key( (string) $option_name );
 	update_option( $option_name, $option_value );
+
 	return true;
 }
 
@@ -198,25 +241,35 @@ if ( isset( $_POST['set_option_name'], $_POST['option_value'] ) && wpb_debug_ver
 }
 
 /**
- * Get an option value from the database.
+ * Get an option value from the database (wpb_* options only).
  *
  * @param string $option_name Option name.
- * @return mixed Option value.
+ * @return mixed Option value or null when not allowed.
  */
 function wpb_debug_get_option_value( $option_name ) {
-	return get_option( sanitize_text_field( $option_name ) );
+	if ( ! wpb_debug_option_name_is_allowed( $option_name ) ) {
+		return null;
+	}
+
+	return get_option( sanitize_key( (string) $option_name ), null );
 }
 
-$option_value   = '';
-$result_visible = false;
+$option_value              = '';
+$result_visible            = false;
+$wpb_debug_load_option_error = false;
 if ( isset( $_POST['load_option_name'] ) && wpb_debug_verify_request( 'wpb_debug_load_option' ) ) {
-	$option_name    = sanitize_text_field( wp_unslash( $_POST['load_option_name'] ) );
-	$option_value   = wpb_debug_get_option_value( $option_name );
-	$result_visible = true;
+	$option_name = sanitize_text_field( wp_unslash( $_POST['load_option_name'] ) );
+	if ( wpb_debug_option_name_is_allowed( $option_name ) ) {
+		$option_value   = wpb_debug_get_option_value( $option_name );
+		$result_visible = true;
+	} else {
+		$wpb_debug_load_option_error = true;
+	}
 }
 
-$wpb_debug_msg_success = __( 'Successfully set the option.', 'loginpress' );
-$wpb_debug_msg_error   = __( 'Option not set. Name must start with wpb_.', 'loginpress' );
+$wpb_debug_msg_success    = __( 'Successfully set the option.', 'wpbrigade-sdk' );
+$wpb_debug_msg_error      = __( 'Option not set. Name must start with wpb_.', 'wpbrigade-sdk' );
+$wpb_debug_msg_load_error = __( 'Option not loaded. Name must start with wpb_.', 'wpbrigade-sdk' );
 ?>
 
 <h1>WPB Debug - SDK v.<?php echo esc_html( defined( 'WP_WPBRIGADE_SDK_VERSION' ) ? WP_WPBRIGADE_SDK_VERSION : '' ); ?></h1>
@@ -227,12 +280,18 @@ $wpb_debug_msg_error   = __( 'Option not set. Name must start with wpb_.', 'logi
 </div>
 <?php endif; ?>
 
+<?php if ( $wpb_debug_load_option_error ) : ?>
+<div class="notice notice-error" role="alert">
+	<p><?php echo esc_html( $wpb_debug_msg_load_error ); ?></p>
+</div>
+<?php endif; ?>
+
 <p class="notice notice-warning" style="margin: 1em 0;" role="alert">
-	<strong><?php esc_html_e( 'Admin-only debug page.', 'loginpress' ); ?></strong>
-	<?php esc_html_e( 'This page shows sensitive data (keys, paths, user info). Do not share screenshots or leave unattended.', 'loginpress' ); ?>
+	<strong><?php esc_html_e( 'Admin-only debug page.', 'wpbrigade-sdk' ); ?></strong>
+	<?php esc_html_e( 'This page shows sensitive data (keys, paths, user info). Do not share screenshots or leave unattended.', 'wpbrigade-sdk' ); ?>
 </p>
 
-<h2><?php esc_html_e( 'Actions', 'loginpress' ); ?></h2>
+<h2><?php esc_html_e( 'Actions', 'wpbrigade-sdk' ); ?></h2>
 <table>
 	<tbody>
 		<tr>
@@ -278,10 +337,12 @@ $wpb_debug_msg_error   = __( 'Option not set. Name must start with wpb_.', 'logi
 				?>
 				>
 					<?php
-					if ( is_array( $option_value ) ) {
-						echo 'Option Value: ' . esc_html( implode( ', ', array_map( 'strval', $option_value ) ) );
+					if ( null === $option_value ) {
+						esc_html_e( 'Option not found.', 'wpbrigade-sdk' );
+					} elseif ( is_array( $option_value ) ) {
+						echo esc_html__( 'Option Value:', 'wpbrigade-sdk' ) . ' ' . esc_html( wp_json_encode( $option_value ) );
 					} else {
-						echo 'Option Value: ' . esc_html( (string) $option_value );
+						echo esc_html__( 'Option Value:', 'wpbrigade-sdk' ) . ' ' . esc_html( (string) $option_value );
 					}
 					?>
 					<button id="clear_result_button">✖</button>
@@ -289,11 +350,11 @@ $wpb_debug_msg_error   = __( 'Option not set. Name must start with wpb_.', 'logi
 			</td>
 			<td>
 				<!-- Set DB Option (whitelist: wpb_ prefix only) -->
-				<button type="button" class="button" id="set_option_button"><?php esc_html_e( 'Set DB Option', 'loginpress' ); ?></button>
+				<button type="button" class="button" id="set_option_button"><?php esc_html_e( 'Set DB Option', 'wpbrigade-sdk' ); ?></button>
 				<form id="set_option_form" method="post" style="display: none; margin-right: 10px;">
 					<?php wp_nonce_field( 'wpb_debug_set_option' ); ?>
 					<div class="option-input-wrapper" style="display: inline-block;">
-						<label for="option_name"><?php esc_html_e( 'Option Name (must start with wpb_):', 'loginpress' ); ?></label>
+						<label for="option_name"><?php esc_html_e( 'Option Name (must start with wpb_):', 'wpbrigade-sdk' ); ?></label>
 						<input type="text" name="set_option_name" id="option_name" placeholder="wpb_">
 					</div>
 					<div class="option-input-wrapper">
@@ -346,7 +407,7 @@ $wpb_debug_msg_error   = __( 'Option not set. Name must start with wpb_.', 'logi
 		<tr style="background: #E6FFE6; font-weight: bold">
 			<td><?php echo esc_html( defined( 'WP_WPBRIGADE_SDK_VERSION' ) ? WP_WPBRIGADE_SDK_VERSION : '' ); ?></td>
 			<td><?php echo esc_html( wpb_debug_mask_path( WPBRIGADE_SDK_DIR ) ); ?></td>
-			<td><?php echo esc_html( wpb_debug_mask_path( WPBRIGADE_PLUGIN_DIR ) ); ?></td>
+			<td><?php echo esc_html( wpb_debug_mask_path( dirname( WPBRIGADE_SDK_DIR ) ) ); ?></td>
 			<td>Active</td>
 		</tr>
 	</tbody>
@@ -375,7 +436,7 @@ $wpb_debug_msg_error   = __( 'Option not set. Name must start with wpb_.', 'logi
 			<td><?php echo esc_html( isset( $data['product_info']['name'] ) ? $data['product_info']['name'] : '' ); ?></td>
 			<td></td>
 			<td></td>
-			<td><?php echo esc_html( wpb_debug_mask_path( WPBRIGADE_PLUGIN_DIR ) ); ?></td>
+			<td><?php echo esc_html( wpb_debug_mask_path( dirname( WPBRIGADE_SDK_DIR ) ) ); ?></td>
 			<td><?php echo esc_html( wpb_debug_mask( isset( $data['authentication']['public_key'] ) ? $data['authentication']['public_key'] : '', 4 ) ); ?></td>
 			<td>
 				<button class="button" id="show-account-button" onclick="window.location.href = '<?php echo esc_url( admin_url( 'admin.php?page=account' ) ); ?>'">Account</button>

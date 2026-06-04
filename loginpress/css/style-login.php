@@ -954,6 +954,8 @@ input[type=checkbox],input[type=checkbox]:checked{
 	border-color: <?php echo esc_attr( $loginpress_visibility_icon_color ); ?> !important;
 	<?php endif; ?>
 }
+.login .button.wp-hide-pw .dashicons,
+.login .button.wp-hide-pw .dashicons.dashicons-visibility, .login .button.wp-hide-pw .dashicons.dashicons-hidden:hover,
 .dashicons-visibility,
 .dashicons-hidden:hover {
 	<?php if ( ! empty( $loginpress_visibility_icon_color ) ) : ?>
@@ -963,6 +965,9 @@ input[type=checkbox],input[type=checkbox]:checked{
 .dashicons-visibility:before,
 .dashicons-hidden:hover::before {
 	color: inherit !important;
+}
+input[type=checkbox]:checked{
+	background-color: transparent;
 }
 input[type=checkbox]:checked:before {
 	<?php if ( ! empty( $loginpress_visibility_icon_color ) ) : ?>

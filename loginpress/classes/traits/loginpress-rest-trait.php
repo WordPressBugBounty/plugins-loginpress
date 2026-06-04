@@ -83,7 +83,7 @@ if ( ! trait_exists( 'LoginPress_Rest_Trait' ) ) {
 		 *
 		 * @param WP_REST_Request $request The REST request object.
 		 * @since  6.0.0
-		 * @version 6.2.0
+		 * @version 6.2.3
 		 * @return array<string, mixed>
 		 */
 		public function loginpress_update_settings( WP_REST_Request $request ) {
@@ -174,6 +174,18 @@ if ( ! trait_exists( 'LoginPress_Rest_Trait' ) ) {
 				$settings['reset_settings'] = 'off';
 				add_action( 'admin_notices', array( $this, 'settings_reset_message' ) );
 			}
+
+			if ( isset( $settings['session_expiration'] ) ) {
+				$session_expiration = absint( $settings['session_expiration'] );
+				$session_max        = loginpress_session_expiration_max();
+
+				if ( $session_expiration > $session_max ) {
+					$session_expiration = $session_max;
+				}
+
+				$settings['session_expiration'] = $session_expiration;
+			}
+
 			update_option( 'loginpress_setting', $settings );
 
 			return array( 'success' => true );
@@ -217,67 +229,6 @@ if ( ! trait_exists( 'LoginPress_Rest_Trait' ) ) {
 					'</a>'
 				);
 
-				// Retrieve WPB SDK Opt Out options.
-				$sdk_data = json_decode( get_option( 'wpb_sdk_loginpress' ), true );
-
-				// Set default values for options.
-				$communication   = isset( $sdk_data['communication'] ) ? $sdk_data['communication'] : false;
-				$diagnostic_info = isset( $sdk_data['diagnostic_info'] ) ? $sdk_data['diagnostic_info'] : false;
-				$extensions      = isset( $sdk_data['extensions'] ) ? $sdk_data['extensions'] : false;
-
-				// Determine the opt-in state and whether all options are false.
-				$is_optin          = 'yes' === get_option( '_loginpress_optin' );
-				$all_options_false = false === $communication && false === $diagnostic_info && false === $extensions;
-
-				// Build the settings link based on the option states.
-				if ( $communication || $diagnostic_info || $extensions ) {
-					$settings_link .= sprintf(
-						// translators: links based on opt in.
-						esc_html__( ' | %1$s Opt Out %2$s ', 'loginpress' ),
-						'<a class="opt-out" href="' . admin_url( 'admin.php?page=loginpress-settings' ) . '">',
-						'</a>'
-					);
-				} elseif ( $is_optin ) {
-					if ( $all_options_false ) {
-						// Case 1: Old users without any settings (meaning all options are false).
-						// Ensure old users remain fully opted in by setting all options to true.
-						$sdk_data = wp_json_encode(
-							array(
-								'communication'   => '1',
-								'diagnostic_info' => '1',
-								'extensions'      => '1',
-								'user_skip'       => '0',
-							)
-						);
-						update_option( 'wpb_sdk_loginpress', $sdk_data );
-						$settings_link .= sprintf(
-							// translators: setting link when opted out.
-							esc_html__( ' | %1$s Opt Out %2$s ', 'loginpress' ),
-							'<a class="opt-out" href="' . admin_url( 'admin.php?page=loginpress-settings' ) . '">',
-							'</a>'
-						);
-					} else {
-						// If opted in and not all options are false, update the opt-in state.
-						update_option( '_loginpress_optin', 'no' );
-						// Display opt-in link.
-						$settings_link .= sprintf(
-							// translators: Update opt-in state.
-							esc_html__( ' | %1$s Opt In %2$s ', 'loginpress' ),
-							'<a href="' . admin_url( 'admin.php?page=loginpress-optin&redirect-page=loginpress-settings' ) . '">',
-							'</a>'
-						);
-					}
-
-						// Display opt-out link.
-				} else {
-					$settings_link .= sprintf(
-						// translators: Opt-out link.
-						esc_html__( ' | %1$s Opt In %2$s ', 'loginpress' ),
-						'<a href="' . admin_url( 'admin.php?page=loginpress-optin&redirect-page=loginpress-settings' ) . '">',
-						'</a>'
-					);
-				}
-
 				// Add the settings link to the array.
 				array_unshift( $links, $settings_link );
 
@@ -286,7 +237,7 @@ if ( ! trait_exists( 'LoginPress_Rest_Trait' ) ) {
 					$pro_link = sprintf(
 						// translators: Pro upgrade link.
 						esc_html__( '%1$s %3$s Upgrade Pro %4$s %2$s', 'loginpress' ),
-						'<a href="https://loginpress.pro/lite/?utm_source=loginpress-lite&utm_medium=plugins&utm_campaign=pro-upgrade&utm_content=Upgrade+Pro" target="_blank">',
+						'<a href="https://loginpress.pro/lite/?utm_source=loginpress-lite&utm_medium=plugins&utm_campaign=pro-upgrade&utm_content=Upgrade+Pro" target="_blank" rel="noopener noreferrer" style="color:#3db634;font-weight:600;">',
 						'</a>',
 						'<span class="loginpress-dashboard-pro-link">',
 						'</span>'
@@ -311,6 +262,11 @@ if ( ! trait_exists( 'LoginPress_Rest_Trait' ) ) {
 		public function change_auth_cookie_expiration( $expiration, $user_id, $remember ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed -- Parameters required by WordPress filter.
 			$loginpress_setting = get_option( 'loginpress_setting' );
 			$expiration_time    = isset( $loginpress_setting['session_expiration'] ) ? absint( $loginpress_setting['session_expiration'] ) : 0;
+			$expiration_max     = loginpress_session_expiration_max();
+
+			if ( $expiration_time > $expiration_max ) {
+				$expiration_time = $expiration_max;
+			}
 
 			/**
 			 * Return the WordPress default $expiration time if LoginPress Session Expiration time set 0 or empty.
@@ -354,59 +310,6 @@ if ( ! trait_exists( 'LoginPress_Rest_Trait' ) ) {
 			$expiration = $expiration_time * 60;
 
 			return $expiration;
-		}
-
-		/**
-		 * Redirect to Optin page.
-		 *
-		 * @since 1.0.15
-		 * @return void
-		 */
-		public function redirect_optin() {
-			/**
-			 * Fix the Broken Access Control (BAC) security fix.
-			 *
-			 * @since 1.6.3
-			 */
-			if ( current_user_can( 'manage_options' ) ) {
-				if ( isset( $_POST['loginpress-submit-optout'] ) ) {
-					if ( ! isset( $_POST['loginpress_submit_optin_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['loginpress_submit_optin_nonce'] ) ), 'loginpress_submit_optin_nonce' ) ) {
-						return;
-					}
-					update_option( '_loginpress_optin', 'no' );
-					// Retrieve WPB SDK existing option and set user_skip.
-					$sdk_data              = json_decode( get_option( 'wpb_sdk_loginpress' ), true );
-					$sdk_data['user_skip'] = '1';
-					$sdk_data_json         = wp_json_encode( $sdk_data );
-					update_option( 'wpb_sdk_loginpress', $sdk_data_json );
-				} elseif ( isset( $_POST['loginpress-submit-optin'] ) ) {
-					if ( ! isset( $_POST['loginpress_submit_optin_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['loginpress_submit_optin_nonce'] ) ), 'loginpress_submit_optin_nonce' ) ) {
-						return;
-					}
-					update_option( '_loginpress_optin', 'yes' );
-					// WPB SDK OPT IN OPTIONS.
-					$sdk_data      = array(
-						'communication'   => '1',
-						'diagnostic_info' => '1',
-						'extensions'      => '1',
-						'user_skip'       => '0',
-					);
-					$sdk_data_json = wp_json_encode( $sdk_data );
-					update_option( 'wpb_sdk_loginpress', $sdk_data_json );
-				} elseif ( ! get_option( '_loginpress_optin' ) && isset( $_GET['page'] ) && ( 'loginpress-settings' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) || 'loginpress' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) || 'abw' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) ) {
-					/**
-					 * XSS Attack vector found and fixed.
-					 *
-					 * @since 1.5.11
-					 */
-					$page_redirect = 'loginpress' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) ? 'loginpress' : 'loginpress-settings';
-					wp_safe_redirect( admin_url( 'admin.php?page=loginpress-optin&redirect-page=' . $page_redirect ) );
-					exit;
-				} elseif ( get_option( '_loginpress_optin' ) && ( 'yes' === get_option( '_loginpress_optin' ) ) && isset( $_GET['page'] ) && 'loginpress-optin' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) {
-					wp_safe_redirect( admin_url( 'admin.php?page=loginpress-settings' ) );
-					exit;
-				}
-			}
 		}
 	}
 }

@@ -118,3 +118,23 @@ function loginpress_admin_upgrade_link( $medium = 'link', $content = '' ) {
 function loginpress_is_pro() {
 	return class_exists( 'LoginPress_Pro' ) || defined( 'LOGINPRESS_PRO_VERSION' );
 }
+
+/**
+ * Maximum session expiration time in minutes for the settings field.
+ *
+ * @since 6.2.3
+ *
+ * @return int Non-negative minute cap (default 43200 = 30 days).
+ */
+function loginpress_session_expiration_max() {
+	/**
+	 * Filter the maximum session expiration time in minutes.
+	 *
+	 * @since 6.2.3
+	 *
+	 * @param int $max Maximum minutes. Default 43200 (30 days).
+	 */
+	$max = absint( apply_filters( 'loginpress_session_expiration_max', 43200 ) );
+
+	return max( 0, $max );
+}

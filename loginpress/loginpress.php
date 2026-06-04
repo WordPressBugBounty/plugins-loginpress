@@ -3,7 +3,7 @@
  * Plugin Name: LoginPress
  * Plugin URI: https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-header&utm_campaign=pro-upgrade&utm_content=plugin-uri
  * Description: LoginPress is the best <code>wp-login</code> Login Page Customizer plugin by <a href="https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=plugins&utm_campaign=wpbrigade-home&utm_content=WPBrigade-text-link">WPBrigade</a> which allows you to completely change the layout of login, register and forgot password forms.
- * Version: 6.2.2
+ * Version: 6.2.3
  * Author: LoginPress
  * Author URI: https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-header&utm_campaign=pro-upgrade&utm_content=author-uri
  * Text Domain: loginpress
@@ -41,7 +41,7 @@ if ( ! defined( 'LOGINPRESS_ROOT_FILE' ) ) {
 	define( 'LOGINPRESS_ROOT_FILE', __FILE__ );
 }
 if ( ! defined( 'LOGINPRESS_VERSION' ) ) {
-	define( 'LOGINPRESS_VERSION', '6.2.2' );
+	define( 'LOGINPRESS_VERSION', '6.2.3' );
 }
 if ( ! defined( 'LOGINPRESS_FEEDBACK_SERVER' ) ) {
 	define( 'LOGINPRESS_FEEDBACK_SERVER', 'https://wpbrigade.com/' );
@@ -49,7 +49,6 @@ if ( ! defined( 'LOGINPRESS_FEEDBACK_SERVER' ) ) {
 if ( ! defined( 'LOGINPRESS_REST_NAMESPACE' ) ) {
 	define( 'LOGINPRESS_REST_NAMESPACE', 'loginpress/v1' );
 }
-
 
 if ( ! function_exists( 'loginpress_wpb53407382' ) ) {
 	/**
@@ -60,13 +59,13 @@ if ( ! function_exists( 'loginpress_wpb53407382' ) ) {
 	function loginpress_wpb53407382() {
 		global $loginpress_wpb53407382;
 
-		if ( ! isset( $loginpress_wpb53407382 ) ) {
+		if ( ! isset( $loginpress_wpb53407382 ) || ! is_array( $loginpress_wpb53407382 ) ) {
 			/**
 			 * Include Telemetry SDK.
 			 *
 			 * @var mixed $loginpress_wpb53407382
 			 * @phpstan-ignore-next-line
-		 */
+			 */
 			require_once __DIR__ . '/lib/wpb-sdk/start.php';
 
 			/**
@@ -74,22 +73,34 @@ if ( ! function_exists( 'loginpress_wpb53407382' ) ) {
 			 *
 			 * @phpstan-ignore-next-line
 			 */
-			$loginpress_wpb53407382 = wpb_dynamic_init(
+			$loginpress_wpb53407382 = wpb_sdk_dynamic_init(
 				array(
-					'id'             => '6',
-					'slug'           => 'loginpress',
-					'type'           => 'plugin',
-					'public_key'     => '1|4aOA8EuyIN4pi2miMvC23LLpnHbBZFNki9R9pVmwd673d3c8',
-					'secret_key'     => 'sk_b36c525848fee035',
-					'is_premium'     => false,
-					'has_addons'     => false,
-					'has_paid_plans' => false,
-					'menu'           => array(
+					'id'              => '6',
+					'slug'            => 'loginpress',
+					'type'            => 'plugin',
+					'plugin_file'     => __FILE__,
+					'sdk_views_dir'   => __DIR__ . '/lib/wpb-sdk/views',
+					'public_key'      => '1|4aOA8EuyIN4pi2miMvC23LLpnHbBZFNki9R9pVmwd673d3c8',
+					'secret_key'      => 'sk_b36c525848fee035',
+					'is_premium'      => false,
+					'has_addons'      => false,
+					'has_paid_plans'  => false,
+					'optin_user_meta' => array(
+						'token'    => '_loginpress_verification_token',
+						'verified' => '_loginpress_optin_verified',
+					),
+					'optin'           => array(
+						'verify_query_arg' => 'loginpress_optin_verify',
+						'option_name'      => '_loginpress_optin',
+						'settings_page'    => 'loginpress-settings',
+						'optin_page'       => 'loginpress-optin',
+					),
+					'menu'            => array(
 						'slug'    => 'loginpress',
 						'account' => false,
 						'support' => false,
 					),
-					'settings'       => array(
+					'settings'        => array(
 						'loginpress_customization'       => '',
 						'loginpress_setting'             => '',
 						'loginpress_addon_active_time'   => '',
@@ -97,6 +108,9 @@ if ( ! function_exists( 'loginpress_wpb53407382' ) ) {
 						'loginpress_review_dismiss'      => '',
 						'loginpress_active_time'         => '',
 						'_loginpress_optin'              => '',
+						'wpb_sdk_loginpress'             => '',
+						'wpb_sdk_loginpress_fallback_verify_token' => '',
+						'wpb_sdk_loginpress_initial_log_sent' => '',
 						'loginpress_friday_sale_active_time' => '',
 						'loginpress_friday_sale_dismiss' => '',
 						'loginpress_friday_21_sale_dismiss' => '',
@@ -108,10 +122,31 @@ if ( ! function_exists( 'loginpress_wpb53407382' ) ) {
 		return $loginpress_wpb53407382;
 	}
 
-	// Init Telemetry.
+	add_action(
+		'plugins_loaded',
+		static function () {
+			require_once __DIR__ . '/lib/wpb-sdk/start.php';
+		},
+		-1
+	);
+
+	/**
+	 * Init telemetry after all plugins are loaded so every bundled SDK.
+	 * provider can register before runtime selection happens.
+	 */
+	add_action( 'plugins_loaded', 'loginpress_wpb53407382', 1 );
+	add_action(
+		'plugins_loaded',
+		static function () {
+			do_action( 'loginpress_wpb53407382_loaded' );
+		},
+		2
+	);
+
+}
+
+if ( function_exists( 'loginpress_wpb53407382' ) ) {
 	loginpress_wpb53407382();
-	// Signal that SDK was initiated.
-	do_action( 'loginpress_wpb53407382_loaded' );
 }
 
 if ( ! class_exists( 'LoginPress' ) ) :
@@ -125,7 +160,7 @@ if ( ! class_exists( 'LoginPress' ) ) :
 	 *
 	 * @package   LoginPress
 	 * @since 1.0.0
-	 * @version 6.2.2
+	 * @version 6.2.3
 	 */
 	final class LoginPress {
 		use LoginPress_Rest_Trait;
@@ -135,7 +170,7 @@ if ( ! class_exists( 'LoginPress' ) ) :
 		 *
 		 * @var string Current version of the LoginPress plugin.
 		 */
-		public $version = '6.2.2';
+		public $version = '6.2.3';
 
 		/**
 		 * The single instance of the LoginPress class.
@@ -261,7 +296,6 @@ if ( ! class_exists( 'LoginPress' ) ) :
 			add_action( 'init', array( $this, 'textdomain' ) );
 			add_filter( 'plugin_row_meta', array( $this, '_row_meta' ), 10, 2 );
 			add_action( 'admin_enqueue_scripts', array( $this, '_admin_scripts' ) );
-			add_action( 'admin_footer', array( $this, 'add_deactivate_modal' ) );
 			add_filter( 'plugin_action_links', array( $this, 'loginpress_action_links' ), 10, 2 );
 			add_action( 'admin_init', array( $this, 'redirect_optin' ) );
 			add_filter( 'auth_cookie_expiration', array( $this, '_change_auth_cookie_expiration' ), 10, 3 );
@@ -316,50 +350,33 @@ if ( ! class_exists( 'LoginPress' ) ) :
 		 * @return void
 		 */
 		public function redirect_optin() {
-			/**
-			 * Fix the Broken Access Control (BAC) security fix.
-			 *
-			 * @since 1.6.3
-			 */
-			if ( current_user_can( 'manage_options' ) ) {
-				if ( isset( $_POST['loginpress-submit-optout'] ) ) {
-					if ( ! isset( $_POST['loginpress_submit_optin_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['loginpress_submit_optin_nonce'] ) ), 'loginpress_submit_optin_nonce' ) ) {
-						return;
-					}
-					update_option( '_loginpress_optin', 'no' );
-					// Retrieve WPB SDK existing option and set user_skip.
-					$sdk_data              = json_decode( get_option( 'wpb_sdk_loginpress' ), true );
-					$sdk_data['user_skip'] = '1';
-					$sdk_data_json         = wp_json_encode( $sdk_data );
-					update_option( 'wpb_sdk_loginpress', $sdk_data_json );
-				} elseif ( isset( $_POST['loginpress-submit-optin'] ) ) {
-					if ( ! isset( $_POST['loginpress_submit_optin_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['loginpress_submit_optin_nonce'] ) ), 'loginpress_submit_optin_nonce' ) ) {
-						return;
-					}
-					update_option( '_loginpress_optin', 'yes' );
-					// WPB SDK OPT IN OPTIONS.
-					$sdk_data      = array(
-						'communication'   => '1',
-						'diagnostic_info' => '1',
-						'extensions'      => '1',
-						'user_skip'       => '0',
-					);
-					$sdk_data_json = wp_json_encode( $sdk_data );
-					update_option( 'wpb_sdk_loginpress', $sdk_data_json );
-				} elseif ( ! get_option( '_loginpress_optin' ) && isset( $_GET['page'] ) && ( 'loginpress-settings' === $_GET['page'] || 'loginpress' === $_GET['page'] || 'abw' === $_GET['page'] ) ) {
-					/**
-					 * XSS Attack vector found and fixed.
-					 *
-					 * @since 1.5.11
-					 */
-					$page_redirect = 'loginpress' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) ? 'loginpress' : 'loginpress-settings';
-					wp_safe_redirect( admin_url( 'admin.php?page=loginpress-optin&redirect-page=' . $page_redirect ) );
-					exit;
-				} elseif ( get_option( '_loginpress_optin' ) && ( get_option( '_loginpress_optin' ) === 'yes' ) && isset( $_GET['page'] ) && 'loginpress-optin' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) {
-					wp_safe_redirect( admin_url( 'admin.php?page=loginpress-settings' ) );
-					exit;
-				}
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
 			}
+
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Read-only `page` admin query arg for redirect routing (not POST form data).
+			$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( (string) $_GET['page'] ) ) : '';
+
+			if (
+				$page
+				&& in_array( $page, array( 'loginpress-settings', 'loginpress', 'abw' ), true )
+				&& ! get_option( '_loginpress_optin' )
+			) {
+				$page_redirect = 'loginpress' === $page ? 'loginpress' : 'loginpress-settings';
+				wp_safe_redirect( admin_url( 'admin.php?page=loginpress-optin&redirect-page=' . rawurlencode( $page_redirect ) ) );
+				exit;
+			}
+
+			if (
+				get_option( '_loginpress_optin' )
+				&& 'yes' === get_option( '_loginpress_optin' )
+				&& isset( $_GET['page'] )
+				&& 'loginpress-optin' === sanitize_text_field( wp_unslash( (string) $_GET['page'] ) )
+			) {
+				wp_safe_redirect( admin_url( 'admin.php?page=loginpress-settings' ) );
+				exit;
+			}
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
 		}
 
 		/**
@@ -464,11 +481,12 @@ if ( ! class_exists( 'LoginPress' ) ) :
 				admin_url( 'customize.php' )
 			);
 
-			// Check current admin page.
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- GET parameter for admin page check.
-			if ( 'post.php' === $pagenow && isset( $_GET['post'] ) && absint( $_GET['post'] ) === $page_id ) {
+			// Check current admin page (read-only GET `post` compare for redirect).
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended
+			if ( 'post.php' === $pagenow && isset( $_GET['post'] ) && absint( wp_unslash( $_GET['post'] ) ) === $page_id ) {
 				wp_safe_redirect( $url );
 			}
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
 		}
 
 		/**
@@ -492,14 +510,14 @@ if ( ! class_exists( 'LoginPress' ) ) :
 		 * @return void
 		 */
 		public function render_optin() {
-			include LOGINPRESS_DIR_PATH . 'include/loginpress-optin-form.php';
+			include LOGINPRESS_DIR_PATH . 'lib/wpb-sdk/views/loginpress-optin-form.php';
 		}
 
 		/**
 		 * Session Expiration.
 		 *
 		 * @since  1.0.18
-		 * @version 1.3.2
+		 * @version 6.2.3
 		 * @param int  $expiration Default expiration time in seconds.
 		 * @param int  $user_id    The user ID.
 		 * @param bool $remember   Whether to remember the user.
@@ -511,6 +529,11 @@ if ( ! class_exists( 'LoginPress' ) ) :
 		public function _change_auth_cookie_expiration( $expiration, $user_id, $remember ) {
 			$loginpress_setting = get_option( 'loginpress_setting' );
 			$expiration_time    = isset( $loginpress_setting['session_expiration'] ) ? absint( $loginpress_setting['session_expiration'] ) : 0;
+			$expiration_max     = loginpress_session_expiration_max();
+
+			if ( $expiration_time > $expiration_max ) {
+				$expiration_time = $expiration_max;
+			}
 
 			/**
 			 * Return the WordPress default $expiration time if LoginPress Session Expiration time set 0 or empty.
@@ -561,7 +584,7 @@ if ( ! class_exists( 'LoginPress' ) ) :
 		 *
 		 * @param string $hook The current admin page hook identifier.
 		 * @return void
-		 * @version 3.0.0
+		 * @version 6.2.3
 		 *
 		 * phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
 		 */
@@ -625,20 +648,42 @@ if ( ! class_exists( 'LoginPress' ) ) :
 					wp_set_script_translations( 'loginpress-react-settings', 'loginpress', LOGINPRESS_DIR_PATH . 'languages' );
 
 					// Localize script data.
-					$is_pro_active = false;
-					if ( is_plugin_active( 'loginpress-pro/loginpress-pro.php' ) ) {
-						$is_pro_active = true;
+					$is_pro_active = is_plugin_active( 'loginpress-pro/loginpress-pro.php' );
+
+					$is_license_activated = false;
+					if ( $is_pro_active && class_exists( 'LoginPress_Pro' ) && is_callable( array( 'LoginPress_Pro', 'is_activated' ) ) ) {
+						$is_license_activated = LoginPress_Pro::is_activated();
 					}
+
+					$license_tab_url = admin_url( 'admin.php?page=loginpress-settings&tab=loginpress_pro_license' );
+
+					/**
+					 * Filters the purchase / pricing URL in the license sticky notice.
+					 *
+					 * @since 6.2.3
+					 *
+					 * @param string $url Pricing page URL.
+					 */
+					$purchase_license_url = apply_filters(
+						'loginpress_license_sticky_purchase_url',
+						'https://loginpress.pro/pricing/?utm_source=loginpress-pro&utm_medium=license-sticky-notice&utm_campaign=pro-upgrade&utm_content=Purchase+New+License'
+					);
+
 					$languages = ! empty( get_available_languages() );
 
 					wp_localize_script(
 						'loginpress-react-settings',
 						'loginpressReactData',
 						array(
-							'ajaxUrl'           => admin_url( 'admin-ajax.php' ),
-							'isProActive'       => $is_pro_active,
-							'wp_login_url'      => wp_login_url(),
-							'language_switcher' => $languages,
+							'ajaxUrl'              => admin_url( 'admin-ajax.php' ),
+							'isProActive'          => $is_pro_active,
+							'isLicenseActivated'   => $is_license_activated,
+							'licenseTabUrl'        => esc_url( $license_tab_url ),
+							'purchaseLicenseUrl'   => esc_url( $purchase_license_url ),
+							'licenseStickyInCore'  => true,
+							'wp_login_url'         => wp_login_url(),
+							'language_switcher'    => $languages,
+							'sessionExpirationMax' => loginpress_session_expiration_max(),
 						)
 					);
 				}
@@ -698,21 +743,6 @@ if ( ! class_exists( 'LoginPress' ) ) :
 			$meta_fields[] = "<a href='" . esc_url( $plugin_rate ) . "' target='_blank' title='" . esc_html__( 'Rate', 'loginpress' ) . "'><i class='loginpress-rate-stars'>" . $svg_icon . '</i></a>';
 
 			return $meta_fields;
-		}
-
-		/**
-		 * Add deactivate modal layout.
-		 *
-		 * @return void
-		 */
-		public function add_deactivate_modal() {
-			global $pagenow;
-
-			if ( 'plugins.php' !== $pagenow ) {
-				return;
-			}
-
-			include LOGINPRESS_DIR_PATH . 'include/loginpress-optout-form.php';
 		}
 
 		/**

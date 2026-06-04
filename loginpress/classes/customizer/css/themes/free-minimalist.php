@@ -94,9 +94,12 @@ function free_minimalist_presets() {
 				color: #F6366A;
 			}
 			.dashicons-hidden:before {
-				color: #000000;
+				color: inherit;
 			}
 			.dashicons-hidden:hover::before {
+				color: inherit;
+			}
+			body.login .button.wp-hide-pw .dashicons.dashicons-visibility, body.login .button.wp-hide-pw .dashicons.dashicons-hidden:hover {
 				color: #F6366A;
 			}
 		</style>

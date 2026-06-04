@@ -61,7 +61,6 @@ if ( ! class_exists( 'LoginPress_AJAX' ) ) :
 				'import'            => false,
 				'help'              => false,
 				'deactivate'        => false,
-				'optout_yes'        => false,
 				'presets'           => false,
 				'video_url'         => false,
 				'youtube_video_url' => false,
@@ -489,38 +488,6 @@ if ( ! class_exists( 'LoginPress_AJAX' ) ) :
 					'body'        => $fields,
 				)
 			);
-
-			wp_die();
-		}
-
-		/**
-		 * Handle opt-out.
-		 *
-		 * @since 1.0.15
-		 * @version 3.0.0
-		 * @return void
-		 */
-		public function optout_yes() {
-			if ( ! current_user_can( 'manage_options' ) || ! check_ajax_referer( 'loginpress-optout-nonce', 'optout_nonce' ) ) {
-				wp_die( '<p>' . esc_html__( 'Sorry, you are not allowed to edit this item.', 'loginpress' ) . '</p>', 403 );
-			}
-
-			// Get the current option and decode it as an associative array.
-			$sdk_data = json_decode( get_option( 'wpb_sdk_loginpress' ), true );
-
-			// If there is no current option, initialize an empty array.
-			if ( ! $sdk_data ) {
-				$sdk_data = array();
-			}
-
-			$setting_name  = isset( $_POST['setting_name'] ) ? sanitize_key( wp_unslash( $_POST['setting_name'] ) ) : '';  // e.g., communication, diagnostic_info, extensions.
-			$setting_value = isset( $_POST['setting_value'] ) ? sanitize_text_field( wp_unslash( $_POST['setting_value'] ) ) : '';  // The new value to be updated.
-
-			// Update the specific setting in the array.
-			$sdk_data[ $setting_name ] = $setting_value;
-
-			// Encode the array back into a JSON string and update the option.
-			update_option( 'wpb_sdk_loginpress', wp_json_encode( $sdk_data ) );
 
 			wp_die();
 		}

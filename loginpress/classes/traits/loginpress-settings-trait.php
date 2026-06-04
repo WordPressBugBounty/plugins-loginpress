@@ -318,7 +318,7 @@ if ( ! trait_exists( 'LoginPress_Settings_Trait' ) ) {
 		 * Returns all the settings fields
 		 *
 		 * @since 1.0.9
-		 * @version 3.0.8
+		 * @version 6.2.3
 		 * @return array<string, mixed> Settings fields array.
 		 */
 		public function get_settings_fields() {
@@ -374,6 +374,7 @@ if ( ! trait_exists( 'LoginPress_Settings_Trait' ) ) {
 					'desc'              => sprintf( __( 'Set the session expiration time in minutes. e.g: 10', 'loginpress' ) ), // <br /> When you set the time, here you need to set the expiration cookies. for this, you just need to logout at least one time. After login again, it should be working fine.<br />For removing the session expiration just pass empty value in “Expiration” field and save it. Now clear the expiration cookies by logout at least one time.
 					'placeholder'       => __( '10', 'loginpress' ),
 					'min'               => 0,
+					'max'               => loginpress_session_expiration_max(),
 					'step'              => '1',
 					'type'              => 'number',
 					'default'           => 'Title',

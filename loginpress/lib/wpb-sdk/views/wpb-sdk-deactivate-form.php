@@ -1,3 +1,11 @@
+<?php
+/**
+ * Deactivation feedback modal markup.
+ *
+ * @package wpbrigade_sdk
+ */
+
+?>
 <style>
 	.wpb-sdk_deactivation-frm-hidden {
 		overflow: hidden;
@@ -100,73 +108,71 @@
 		margin-top: 3px;
 	}
 </style>
-<div class="<?php echo $product_slug; ?>-deactivate-wrapper">
+<div class="<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper">
 	<div class="wpb-sdk_deactivation-frm-popup-overlay">
 		<div class="wpb-sdk_deactivation-frm-serveypanel">
 			<form action="#" method="post" class="wpb-sdk_deactivation-frm-deactivate-form">
 				<div class="wpb-sdk_deactivation-frm-popup-header">
-					<h2><?php sprintf( 
-						// translators: Product name
-						__( 'Quick feedback about %s', 'loginpress' ), esc_html( $product_name ) ); ?></h2>
+					<h2><?php echo esc_html( sprintf( /* translators: %s: product name */ __( 'Quick feedback about %s', 'wpbrigade-sdk' ), $product_name ) ); ?></h2>
 				</div>
 				<div class="wpb-sdk_deactivation-frm-popup-body">
-					<h3><?php _e( 'If you have a moment, please let us know why you are deactivating:', 'loginpress' ); ?></h3>
+					<h3><?php esc_html_e( 'If you have a moment, please let us know why you are deactivating:', 'wpbrigade-sdk' ); ?></h3>
 					<ul id="wpb-sdk_deactivation-frm-reason-list">
 						<li class="wpb-sdk_deactivation-frm-reason" data-input-type="" data-input-placeholder="">
 							<label>
 								<span class="wpb-sdk_deactivation-frm-radio"><input type="radio" name="wpb-sdk_deactivation-frm-selected-reason" value="1"></span>
-								<span class="wpb-sdk_deactivation-frm-reason-text"><?php _e( 'I only needed the plugin for a short period', 'loginpress' ); ?></span>
+								<span class="wpb-sdk_deactivation-frm-reason-text"><?php esc_html_e( 'I only needed the plugin for a short period', 'wpbrigade-sdk' ); ?></span>
 							</label>
 							<div class="wpb-sdk_deactivation-frm-internal-message"></div>
 						</li>
 						<li class="wpb-sdk_deactivation-frm-reason has-input" data-input-type="textfield">
 							<label>
 								<span class="wpb-sdk_deactivation-frm-radio"><input type="radio" name="wpb-sdk_deactivation-frm-selected-reason" value="2"></span>
-								<span class="wpb-sdk_deactivation-frm-reason-text"><?php _e( 'I found a better plugin', 'loginpress' ); ?></span>
+								<span class="wpb-sdk_deactivation-frm-reason-text"><?php esc_html_e( 'I found a better plugin', 'wpbrigade-sdk' ); ?></span>
 							</label>
 							<div class="wpb-sdk_deactivation-frm-internal-message"></div>
 							<div class="wpb-sdk_deactivation-frm-reason-input">
-								<span class="message error-message"><?php _e( 'Kindly tell us the name of plugin', 'loginpress' ); ?></span>
-								<input type="text" name="better_plugin" placeholder="<?php _e( "What's the plugin's name?", 'loginpress' ); ?>">
+								<span class="message error-message"><?php esc_html_e( 'Kindly tell us the name of plugin', 'wpbrigade-sdk' ); ?></span>
+								<input type="text" name="better_plugin" placeholder="<?php esc_html_e( "What's the plugin's name?", 'wpbrigade-sdk' ); ?>">
 							</div>
 						</li>
 						<li class="wpb-sdk_deactivation-frm-reason" data-input-type="" data-input-placeholder="">
 							<label>
 								<span class="wpb-sdk_deactivation-frm-radio"><input type="radio" name="wpb-sdk_deactivation-frm-selected-reason" value="3"></span>
-								<span class="wpb-sdk_deactivation-frm-reason-text"><?php _e( 'The plugin broke my site', 'loginpress' ); ?></span>
+								<span class="wpb-sdk_deactivation-frm-reason-text"><?php esc_html_e( 'The plugin broke my site', 'wpbrigade-sdk' ); ?></span>
 							</label>
 							<div class="wpb-sdk_deactivation-frm-internal-message"></div>
 						</li>
 						<li class="wpb-sdk_deactivation-frm-reason" data-input-type="" data-input-placeholder="">
 							<label>
 								<span class="wpb-sdk_deactivation-frm-radio"><input type="radio" name="wpb-sdk_deactivation-frm-selected-reason" value="4"></span>
-								<span class="wpb-sdk_deactivation-frm-reason-text"><?php _e( 'The plugin suddenly stopped working', 'loginpress' ); ?></span>
+								<span class="wpb-sdk_deactivation-frm-reason-text"><?php esc_html_e( 'The plugin suddenly stopped working', 'wpbrigade-sdk' ); ?></span>
 							</label>
 							<div class="wpb-sdk_deactivation-frm-internal-message"></div>
 						</li>
 						<li class="wpb-sdk_deactivation-frm-reason" data-input-type="" data-input-placeholder="">
 							<label>
 								<span class="wpb-sdk_deactivation-frm-radio"><input type="radio" name="wpb-sdk_deactivation-frm-selected-reason" value="5"></span>
-								<span class="wpb-sdk_deactivation-frm-reason-text"><?php _e( 'I no longer need the plugin', 'loginpress' ); ?></span>
+								<span class="wpb-sdk_deactivation-frm-reason-text"><?php esc_html_e( 'I no longer need the plugin', 'wpbrigade-sdk' ); ?></span>
 							</label>
 							<div class="wpb-sdk_deactivation-frm-internal-message"></div>
 						</li>
 						<li class="wpb-sdk_deactivation-frm-reason" data-input-type="" data-input-placeholder="">
 							<label>
 								<span class="wpb-sdk_deactivation-frm-radio"><input type="radio" name="wpb-sdk_deactivation-frm-selected-reason" value="6"></span>
-								<span class="wpb-sdk_deactivation-frm-reason-text"><?php _e( "It's a temporary deactivation. I'm just debugging an issue.", 'loginpress' ); ?></span>
+								<span class="wpb-sdk_deactivation-frm-reason-text"><?php esc_html_e( "It's a temporary deactivation. I'm just debugging an issue.", 'wpbrigade-sdk' ); ?></span>
 							</label>
 							<div class="wpb-sdk_deactivation-frm-internal-message"></div>
 						</li>
 						<li class="wpb-sdk_deactivation-frm-reason has-input" data-input-type="textfield">
 							<label>
 								<span class="wpb-sdk_deactivation-frm-radio"><input type="radio" name="wpb-sdk_deactivation-frm-selected-reason" value="7"></span>
-								<span class="wpb-sdk_deactivation-frm-reason-text"><?php _e( 'Other', 'loginpress' ); ?></span>
+								<span class="wpb-sdk_deactivation-frm-reason-text"><?php esc_html_e( 'Other', 'wpbrigade-sdk' ); ?></span>
 							</label>
 							<div class="wpb-sdk_deactivation-frm-internal-message"></div>
 							<div class="wpb-sdk_deactivation-frm-reason-input">
-								<span class="message error-message"><?php _e( 'Kindly tell us the reason so we can improve.', 'loginpress' ); ?></span>
-								<input type="text" name="other_reason" placeholder="<?php _e( "Would you like to share what's other reason?", 'loginpress' ); ?>">
+								<span class="message error-message"><?php esc_html_e( 'Kindly tell us the reason so we can improve.', 'wpbrigade-sdk' ); ?></span>
+								<input type="text" name="other_reason" placeholder="<?php esc_html_e( "Would you like to share what's other reason?", 'wpbrigade-sdk' ); ?>">
 							</div>
 						</li>
 					</ul>
@@ -174,14 +180,14 @@
 				<div class="wpb-sdk_deactivation-frm-popup-footer">
 					<label class="wpb-sdk_deactivation-frm-anonymous">
 						<input type="checkbox" />
-						<?php _e( 'Anonymous feedback', 'loginpress' ); ?>
+						<?php esc_html_e( 'Anonymous feedback', 'wpbrigade-sdk' ); ?>
 					</label>
 					<input type="button" class="button button-secondary button-skip wpb-sdk_deactivation-frm-popup-skip-feedback" value="Skip &amp; Deactivate">
 					<div class="action-btns">
-						<span class="wpb-sdk_deactivation-frm-spinner"><img src="<?php echo admin_url( '/images/spinner.gif' ); ?>" alt=""></span>
+						<span class="wpb-sdk_deactivation-frm-spinner"><img src="<?php echo esc_url( admin_url( '/images/spinner.gif' ) ); ?>" alt="<?php esc_attr_e( 'spinner', 'wpbrigade-sdk' ); ?>"></span>
 						<input type="submit" class="button button-secondary button-deactivate wpb-sdk_deactivation-frm-popup-allow-deactivate" value="Submit &amp; Deactivate" disabled="disabled">
 						<a href="#" class="button button-primary wpb-sdk_deactivation-frm-popup-button-close">
-							<?php _e( 'Cancel', 'loginpress' ); ?>
+							<?php esc_html_e( 'Cancel', 'wpbrigade-sdk' ); ?>
 						</a>
 					</div>
 				</div>
@@ -191,13 +197,53 @@
 </div>
 
 <script>
-	document.addEventListener("DOMContentLoaded", function(event) {
-		(function($) {
-			$(function() {
+	/**
+	 * WPBRIGADE_Logger prints this on admin_print_footer_scripts priority 100 so jQuery exists.
+	 */
+	(function() {
+		if (typeof window.jQuery === 'undefined') {
+			return;
+		}
+		window.jQuery(function($) {
 
-				var pluginSlug = "<?php echo $product_slug; ?>";
-				var pluginName = "<?php echo $product_name; ?>";
+				var pluginSlug = "<?php echo esc_js( $product_slug ); ?>";
+				var pluginFile = <?php echo wp_json_encode( (string) $plugin_file_basename ); ?>;
+				var pluginName = "<?php echo esc_js( $product_name ); ?>";
 				var loggerDeactiveNonce;
+				var deactivateReturnUrl = '';
+
+				function deactivateHrefIsOurs(href) {
+					if (!href || href.indexOf('action=deactivate') === -1) {
+						return false;
+					}
+					var m = href.match(/[?&]plugin=([^&]+)/);
+					if (!m || !m[1]) {
+						return false;
+					}
+					try {
+						return decodeURIComponent(m[1].replace(/\+/g, ' ')) === pluginFile;
+					} catch (err) {
+						return false;
+					}
+				}
+
+				/**
+				 * Core prints tr[data-plugin] with the same string as plugin= (WP_Plugins_List_Table).
+				 * Prefer that so we still intercept when the href encoding does not match byte-for-byte.
+				 */
+				function deactivateLinkIsOurs($a) {
+					if (!$a || !$a.length) {
+						return false;
+					}
+					var $tr = $a.closest('tr[data-plugin]');
+					if ($tr.length) {
+						var dp = $tr.attr('data-plugin') || '';
+						if (dp === pluginFile) {
+							return true;
+						}
+					}
+					return deactivateHrefIsOurs($a.attr('href') || '');
+				}
 
 				// Define the reason details mapping
 				var reasonDetailsMap = {
@@ -208,41 +254,59 @@
 					'6': 'It\'s a temporary deactivation. I\'m just debugging an issue.'
 				};
 
-				$(document).on('click', 'tr[data-slug="' + pluginSlug + '"] .deactivate', function(e) {
+				$(document).on('click', 'a[href*="action=deactivate"]', function(e) {
+					var $link = $(this);
+					if (!deactivateLinkIsOurs($link)) {
+						return;
+					}
 					e.preventDefault();
-					loggerDeactiveNonce = $(this).find('a').attr('href').split("wpnonce=")[1];
-					$('.<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-overlay').addClass('wpb-sdk_deactivation-frm-active');
+					var href = $link.attr('href') || '';
+					deactivateReturnUrl = href;
+					var nonceMatch = href.match(/[?&]_wpnonce=([^&]+)/);
+					loggerDeactiveNonce = nonceMatch ? nonceMatch[1] : href.split('wpnonce=')[1];
+					$('.<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-overlay').addClass('wpb-sdk_deactivation-frm-active');
 					$('body').addClass('wpb-sdk_deactivation-frm-hidden');
 				});
 
-				$(document).on('click', '.<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-button-close', function() {
+				$(document).on('click', '.<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-button-close', function() {
 					close_popup();
 				});
 
-				$(document).on('click', ".<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-serveypanel,tr[data-slug='" + pluginSlug + "'] .deactivate", function(e) {
-					e.stopPropagation();
-				});
+				$(document).on(
+					'click',
+					".<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-serveypanel",
+					function(e) {
+						e.stopPropagation();
+					}
+				);
 
-				$(document).on('click', function() {
+				$(document).on('click', function(e) {
+					if ($(e.target).closest('.<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper').length) {
+						return;
+					}
+					var $a = $(e.target).closest('a[href*="action=deactivate"]');
+					if ($a.length && deactivateLinkIsOurs($a)) {
+						return;
+					}
 					close_popup();
 				});
 
-				$('.<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-reason label').on('click', function() {
+				$('.<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-reason label').on('click', function() {
 					if ($(this).find('input[type="radio"]').is(':checked')) {
 						$(this).closest('li').siblings().find('.wpb-sdk_deactivation-frm-reason-input').hide();
 						$(this).closest('li').siblings().find('.wpb-sdk_deactivation-frm-internal-message').hide();
 						$(this).closest('li').find('.wpb-sdk_deactivation-frm-reason-input').show();
 						$(this).closest('li').find('.wpb-sdk_deactivation-frm-internal-message').show();
 					}
-					$('.<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-pro-message').hide();
+					$('.<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-pro-message').hide();
 				});
 
-				$('.<?php echo $product_slug; ?>-deactivate-wrapper input[type="radio"][name="wpb-sdk_deactivation-frm-selected-reason"]').on('click', function(event) {
-					$(".<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-allow-deactivate").removeAttr('disabled');
-					$(".<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-skip-feedback").removeAttr('disabled');
+				$('.<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper input[type="radio"][name="wpb-sdk_deactivation-frm-selected-reason"]').on('click', function(event) {
+					$(".<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-allow-deactivate").removeAttr('disabled');
+					$(".<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-skip-feedback").removeAttr('disabled');
 				});
 
-				$(document).on('submit', '.<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-deactivate-form', function(event) {
+				$(document).on('submit', '.<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-deactivate-form', function(event) {
 					event.preventDefault();
 					var reason = $(this).find('input[type="radio"][name="wpb-sdk_deactivation-frm-selected-reason"]:checked').val();
 					var reasonDetails = '';
@@ -260,34 +324,40 @@
 						return;
 					}
 
-					let returnURL = $("tr[data-slug='" + pluginSlug + "'] .deactivate a").attr('href');
+					if (!deactivateReturnUrl) {
+						return;
+					}
 
 					send_log(
 						'wpb_sdk_' + pluginSlug + '_deactivation',
 						reason,
 						reasonDetails,
 						loggerDeactiveNonce,
-						returnURL
+						deactivateReturnUrl
 					);
 				});
 
-				$('.<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-skip-feedback').on('click', function(e) {
+				$('.<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-skip-feedback').on('click', function(e) {
+					if (!deactivateReturnUrl) {
+						return;
+					}
 					send_log(
 						'wpb_sdk_' + pluginSlug + '_deactivation',
 						9,
 						'',
 						loggerDeactiveNonce,
-						$("tr[data-slug='" + pluginSlug + "'] .deactivate a").attr('href')
+						deactivateReturnUrl
 					);
 				});
 
 				function close_popup() {
-					$('.<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-overlay').removeClass('wpb-sdk_deactivation-frm-active');
-					$('.<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-deactivate-form').trigger("reset");
-					$(".<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-allow-deactivate").attr('disabled', 'disabled');
-					$(".<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-reason-input").hide();
+					$('.<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-overlay').removeClass('wpb-sdk_deactivation-frm-active');
+					$('.<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-deactivate-form').trigger("reset");
+					$(".<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-allow-deactivate").attr('disabled', 'disabled');
+					$(".<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-reason-input").hide();
 					$('body').removeClass('wpb-sdk_deactivation-frm-hidden');
 					$('.message.error-message').hide();
+					deactivateReturnUrl = '';
 				}
 
 				function send_log(_action, _reason, _reasonDetails, _nonce, returnURL) {
@@ -301,20 +371,19 @@
 							nonce: _nonce
 						},
 						beforeSend: function() {
-							$(".<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-spinner").show();
-							$(".<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-allow-deactivate").attr("disabled", "disabled");
-							$(".<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-skip-feedback").attr("disabled", "disabled");
+							$(".<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-spinner").show();
+							$(".<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-allow-deactivate").attr("disabled", "disabled");
+							$(".<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-skip-feedback").attr("disabled", "disabled");
 						}
 					}).done(function(res) {
-						$(".<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-spinner").hide();
-						$(".<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-allow-deactivate").removeAttr("disabled");
-						$(".<?php echo $product_slug; ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-skip-feedback").removeAttr("disabled");
+						$(".<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-spinner").hide();
+						$(".<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-allow-deactivate").removeAttr("disabled");
+						$(".<?php echo esc_attr( $product_slug ); ?>-deactivate-wrapper .wpb-sdk_deactivation-frm-popup-skip-feedback").removeAttr("disabled");
 						window.location.href = returnURL;
 					});
 				}
-			});
-		})(jQuery);
-	});
+		});
+	})();
 </script>
 
 
