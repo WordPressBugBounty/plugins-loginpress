@@ -45,6 +45,8 @@ $loginpress_uninstall_options = array(
 	'wpb_sdk_loginpress',
 	'wpb_sdk_loginpress_fallback_verify_token',
 	'wpb_sdk_loginpress_initial_log_sent',
+	'wpb_sdk_loginpress_legacy_upgrade_optin',
+	'wpb_sdk_loginpress_uninstall_manifest',
 	'wpb_sdk_module_slug',
 	'_transient_loginpress_pro_pop_up',
 );

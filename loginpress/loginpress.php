@@ -3,7 +3,7 @@
  * Plugin Name: LoginPress
  * Plugin URI: https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-header&utm_campaign=pro-upgrade&utm_content=plugin-uri
  * Description: LoginPress is the best <code>wp-login</code> Login Page Customizer plugin by <a href="https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=plugins&utm_campaign=wpbrigade-home&utm_content=WPBrigade-text-link">WPBrigade</a> which allows you to completely change the layout of login, register and forgot password forms.
- * Version: 6.2.3
+ * Version: 6.2.4
  * Author: LoginPress
  * Author URI: https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-header&utm_campaign=pro-upgrade&utm_content=author-uri
  * Text Domain: loginpress
@@ -24,6 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
 // Define constants for PHPStan.
 if ( ! defined( 'LOGINPRESS_PLUGIN_BASENAME' ) ) {
 	define( 'LOGINPRESS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -41,7 +42,7 @@ if ( ! defined( 'LOGINPRESS_ROOT_FILE' ) ) {
 	define( 'LOGINPRESS_ROOT_FILE', __FILE__ );
 }
 if ( ! defined( 'LOGINPRESS_VERSION' ) ) {
-	define( 'LOGINPRESS_VERSION', '6.2.3' );
+	define( 'LOGINPRESS_VERSION', '6.2.4' );
 }
 if ( ! defined( 'LOGINPRESS_FEEDBACK_SERVER' ) ) {
 	define( 'LOGINPRESS_FEEDBACK_SERVER', 'https://wpbrigade.com/' );
@@ -60,12 +61,6 @@ if ( ! function_exists( 'loginpress_wpb53407382' ) ) {
 		global $loginpress_wpb53407382;
 
 		if ( ! isset( $loginpress_wpb53407382 ) || ! is_array( $loginpress_wpb53407382 ) ) {
-			/**
-			 * Include Telemetry SDK.
-			 *
-			 * @var mixed $loginpress_wpb53407382
-			 * @phpstan-ignore-next-line
-			 */
 			require_once __DIR__ . '/lib/wpb-sdk/start.php';
 
 			/**
@@ -86,8 +81,8 @@ if ( ! function_exists( 'loginpress_wpb53407382' ) ) {
 					'has_addons'      => false,
 					'has_paid_plans'  => false,
 					'optin_user_meta' => array(
-						'token'    => '_loginpress_verification_token',
-						'verified' => '_loginpress_optin_verified',
+						'token'          => '_loginpress_verification_token',
+						'email_verified' => '_loginpress_email_verified',
 					),
 					'optin'           => array(
 						'verify_query_arg' => 'loginpress_optin_verify',
@@ -122,31 +117,8 @@ if ( ! function_exists( 'loginpress_wpb53407382' ) ) {
 		return $loginpress_wpb53407382;
 	}
 
-	add_action(
-		'plugins_loaded',
-		static function () {
-			require_once __DIR__ . '/lib/wpb-sdk/start.php';
-		},
-		-1
-	);
-
-	/**
-	 * Init telemetry after all plugins are loaded so every bundled SDK.
-	 * provider can register before runtime selection happens.
-	 */
-	add_action( 'plugins_loaded', 'loginpress_wpb53407382', 1 );
-	add_action(
-		'plugins_loaded',
-		static function () {
-			do_action( 'loginpress_wpb53407382_loaded' );
-		},
-		2
-	);
-
-}
-
-if ( function_exists( 'loginpress_wpb53407382' ) ) {
 	loginpress_wpb53407382();
+	do_action( 'loginpress_wpb53407382_loaded' );
 }
 
 if ( ! class_exists( 'LoginPress' ) ) :
@@ -160,7 +132,7 @@ if ( ! class_exists( 'LoginPress' ) ) :
 	 *
 	 * @package   LoginPress
 	 * @since 1.0.0
-	 * @version 6.2.3
+	 * @version 6.2.4
 	 */
 	final class LoginPress {
 		use LoginPress_Rest_Trait;
@@ -170,7 +142,7 @@ if ( ! class_exists( 'LoginPress' ) ) :
 		 *
 		 * @var string Current version of the LoginPress plugin.
 		 */
-		public $version = '6.2.3';
+		public $version = '6.2.4';
 
 		/**
 		 * The single instance of the LoginPress class.

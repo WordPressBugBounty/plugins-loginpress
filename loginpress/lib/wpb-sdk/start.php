@@ -138,10 +138,17 @@ if ( ! function_exists( 'wpb_sdk_register_provider' ) ) {
 			true === $GLOBALS['wpb_sdk_registry']['initialized_modules'][ $slug ]
 		) {
 			if ( class_exists( 'WPBRIGADE_Logger', false ) ) {
-				WPBRIGADE_Logger::wpb_sdk_store_module_if_missing( $module );
+				if ( function_exists( 'wpb_sdk_store_module_if_missing_compat' ) ) {
+					wpb_sdk_store_module_if_missing_compat( $module );
+				} elseif ( method_exists( 'WPBRIGADE_Logger', 'wpb_sdk_store_module_if_missing' ) ) {
+					WPBRIGADE_Logger::wpb_sdk_store_module_if_missing( $module );
+				}
 			}
 			if ( function_exists( 'wpb_sdk_register_opt_manager_for_module' ) ) {
 				wpb_sdk_register_opt_manager_for_module( $module );
+			}
+			if ( function_exists( 'wpb_sdk_enqueue_optin_initiator_backfill' ) ) {
+				wpb_sdk_enqueue_optin_initiator_backfill( $slug );
 			}
 			$logger = WPBRIGADE_Logger::instance( $module['id'], $slug, true );
 			return array(
@@ -156,6 +163,10 @@ if ( ! function_exists( 'wpb_sdk_register_provider' ) ) {
 
 		if ( function_exists( 'wpb_sdk_register_opt_manager_for_module' ) ) {
 			wpb_sdk_register_opt_manager_for_module( $module );
+		}
+
+		if ( function_exists( 'wpb_sdk_enqueue_optin_initiator_backfill' ) ) {
+			wpb_sdk_enqueue_optin_initiator_backfill( $slug );
 		}
 
 		$GLOBALS['wpb_sdk_registry']['initialized_modules'][ $slug ] = true;
@@ -240,3 +251,45 @@ if ( ! function_exists( 'wpb_dynamic_init' ) ) {
 		return wpb_sdk_dynamic_init( $module );
 	}
 }
+
+if ( ! function_exists( 'wpb_sdk_run_product_uninstall' ) ) {
+	/**
+	 * Parse-time uninstall entry (stored in uninstall_plugins; must exist before runtime loads).
+	 *
+	 * @return void
+	 */
+	function wpb_sdk_run_product_uninstall() {
+		if ( function_exists( 'wpb_sdk_ensure_runtime_loaded' ) ) {
+			wpb_sdk_ensure_runtime_loaded();
+		}
+		if ( function_exists( 'wpb_sdk_migrate_legacy_lifecycle_callbacks' ) ) {
+			wpb_sdk_migrate_legacy_lifecycle_callbacks();
+		}
+		if ( function_exists( 'wpb_sdk_invoke_product_uninstall' ) ) {
+			wpb_sdk_invoke_product_uninstall();
+			return;
+		}
+		if ( class_exists( 'WPBRIGADE_Logger', false ) && method_exists( 'WPBRIGADE_Logger', 'log_uninstallation' ) ) {
+			WPBRIGADE_Logger::log_uninstallation();
+		}
+	}
+}
+
+if ( ! function_exists( 'wpb_sdk_bootstrap_runtime_for_uninstall' ) ) {
+	/**
+	 * Load Logger before WordPress runs the stored uninstall_plugins callback.
+	 *
+	 * @return void
+	 */
+	function wpb_sdk_bootstrap_runtime_for_uninstall() {
+		if ( ! function_exists( 'wpb_sdk_ensure_runtime_loaded' ) ) {
+			return;
+		}
+		$should_bootstrap = ( defined( 'WP_UNINSTALL_PLUGIN' ) && WP_UNINSTALL_PLUGIN )
+			|| ( defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_REQUEST['action'] ) && 'delete-plugin' === $_REQUEST['action'] );
+		if ( $should_bootstrap ) {
+			wpb_sdk_ensure_runtime_loaded();
+		}
+	}
+}
+wpb_sdk_bootstrap_runtime_for_uninstall();

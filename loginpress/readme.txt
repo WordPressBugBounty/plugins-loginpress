@@ -5,7 +5,7 @@ Contributors: WPBrigade, hiddenpearls, AbdulWahab610
 Donate link: https://loginpress.pro/pricing/?utm_source=loginpress-lite
 Author URI: https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=author-url-link
 Tags: wp-login, login, login customizer, custom login, wordpress login,
-Stable tag: 6.2.3
+Stable tag: 6.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -237,7 +237,11 @@ Please report security bugs found in the source code of the LoginPress plugin th
 
 == Changelog ==
 
-= 6.2.3 – 2026-06-03 =
+= 6.2.4 – 2026-06-19 =
+* Enhancement: Improved internal notice handling and error logging.
+* Bugfix: Fixed plugin conflict and uninstall cleanup issues.
+
+= 6.2.3 – 2026-06-04 =
 * Bugfix: Fixed duplicate action links for LoginPress on the Plugins screen in wp-admin.
 * Enhancement: Improved layout and styling of the license reminder buttons for clearer actions.
 * Enhancement: The maximum allowed session expiration has been increased from 500 minutes to 43,200 minutes (30 days).
@@ -457,5 +461,5 @@ For more detail on changelog visit [LoginPress.Pro](https://loginpress.pro/chang
 
 == Upgrade Notice ==
 
-= 6.2.3 =
+= 6.2.4 =
 * Upgrade Carefully, LoginPress 6.2 is packed with major enhancements and performance improvements.
