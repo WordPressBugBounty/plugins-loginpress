@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'WPBRIGADE_SDK_VERSION' ) ) {
-	define( 'WPBRIGADE_SDK_VERSION', '3.3.0' );
+	define( 'WPBRIGADE_SDK_VERSION', '3.3.1' );
 }
 
 if ( ! defined( 'WPBRIGADE_SDK_DIR' ) ) {

@@ -150,6 +150,9 @@ if ( ! function_exists( 'wpb_sdk_register_provider' ) ) {
 			if ( function_exists( 'wpb_sdk_enqueue_optin_initiator_backfill' ) ) {
 				wpb_sdk_enqueue_optin_initiator_backfill( $slug );
 			}
+			if ( function_exists( 'wpb_sdk_maybe_normalize_legacy_sdk_sharing_option' ) ) {
+				wpb_sdk_maybe_normalize_legacy_sdk_sharing_option( $slug );
+			}
 			$logger = WPBRIGADE_Logger::instance( $module['id'], $slug, true );
 			return array(
 				'logger' => $logger,
@@ -167,6 +170,10 @@ if ( ! function_exists( 'wpb_sdk_register_provider' ) ) {
 
 		if ( function_exists( 'wpb_sdk_enqueue_optin_initiator_backfill' ) ) {
 			wpb_sdk_enqueue_optin_initiator_backfill( $slug );
+		}
+
+		if ( function_exists( 'wpb_sdk_maybe_normalize_legacy_sdk_sharing_option' ) ) {
+			wpb_sdk_maybe_normalize_legacy_sdk_sharing_option( $slug );
 		}
 
 		$GLOBALS['wpb_sdk_registry']['initialized_modules'][ $slug ] = true;

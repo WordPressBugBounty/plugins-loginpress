@@ -722,6 +722,45 @@ if ( ! function_exists( 'wpb_sdk_sdk_option_is_enabled' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wpb_sdk_maybe_normalize_legacy_sdk_sharing_option' ) ) {
+	/**
+	 * Persist canonical 1/0 sharing flags when legacy stores yes/on/true (e.g. Analytify 9.0.2).
+	 *
+	 * @param string $slug Product slug.
+	 * @return bool True when the option was updated.
+	 */
+	function wpb_sdk_maybe_normalize_legacy_sdk_sharing_option( $slug ) {
+		$slug = sanitize_key( (string) $slug );
+		if ( '' === $slug || ! wpb_sdk_legacy_optin_consent_is_active( $slug ) ) {
+			return false;
+		}
+
+		$raw = get_option( 'wpb_sdk_' . $slug, '' );
+		$sdk = is_string( $raw ) ? json_decode( $raw, true ) : array();
+		if ( ! is_array( $sdk ) ) {
+			$sdk = array();
+		}
+
+		$normalized = array( 'user_skip' => '0' );
+		$dirty      = (string) ( $sdk['user_skip'] ?? '' ) !== '0';
+
+		foreach ( array( 'communication', 'diagnostic_info', 'extensions' ) as $flag ) {
+			$normalized[ $flag ] = wpb_sdk_sdk_option_is_enabled( $sdk[ $flag ] ?? '0' ) ? '1' : '0';
+			if ( (string) ( $sdk[ $flag ] ?? '' ) !== $normalized[ $flag ] ) {
+				$dirty = true;
+			}
+		}
+
+		if ( ! $dirty ) {
+			return false;
+		}
+
+		update_option( 'wpb_sdk_' . $slug, wp_json_encode( $normalized ), false );
+
+		return true;
+	}
+}
+
 if ( ! function_exists( 'wpb_sdk_default_post_optin_redirect_url' ) ) {
 	/**
 	 * Safe fallback when a product has no registered settings admin screen.
@@ -2292,17 +2331,25 @@ if ( ! function_exists( 'wpb_sdk_legacy_optin_consent_is_active' ) ) {
 	 * @return bool
 	 */
 	function wpb_sdk_legacy_optin_consent_is_active( $slug ) {
-		if ( function_exists( 'wpb_sdk_get_optin_decision' ) && 'yes' === wpb_sdk_get_optin_decision( $slug ) ) {
-			return true;
+		if ( wpb_sdk_user_skipped_optin( $slug ) || 'skip' === wpb_sdk_get_optin_decision( $slug ) ) {
+			return false;
 		}
 
 		$slug    = sanitize_key( (string) $slug );
 		$sdk_raw = get_option( 'wpb_sdk_' . $slug, '' );
 		$sdk     = is_string( $sdk_raw ) ? json_decode( $sdk_raw, true ) : $sdk_raw;
 
-		return is_array( $sdk )
-			&& isset( $sdk['communication'] )
-			&& '1' === (string) $sdk['communication'];
+		if ( is_array( $sdk ) ) {
+			foreach ( array( 'communication', 'diagnostic_info', 'extensions' ) as $flag ) {
+				if ( wpb_sdk_sdk_option_is_enabled( $sdk[ $flag ] ?? '0' ) ) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		return 'yes' === wpb_sdk_get_optin_decision( $slug );
 	}
 }
 
@@ -2517,7 +2564,7 @@ if ( ! function_exists( 'wpb_sdk_resolve_telemetry_contact_fallback_user_id' ) )
 			return wpb_sdk_resolve_optin_admin_user_id( $slug, 0 );
 		}
 
-		// Fresh opt-ins (post-3.3.0 Allow/Skip): lowest-ID admin when initiator is gone.
+		// Fresh opt-ins (post-3.3.1 Allow/Skip): lowest-ID admin when initiator is gone.
 		if ( 'initiator_fresh' === wpb_sdk_get_telemetry_contact_cohort( $slug ) ) {
 			return wpb_sdk_resolve_optin_admin_user_id( $slug, 0 );
 		}
@@ -2602,7 +2649,7 @@ if ( ! function_exists( 'wpb_sdk_optin_initiator_backfill_option_key' ) ) {
 
 if ( ! function_exists( 'wpb_sdk_maybe_backfill_optin_initiator_for_legacy_site' ) ) {
 	/**
-	 * One-time backfill for sites opted in before SDK 3.3.0 initiator tracking.
+	 * One-time backfill for sites opted in before SDK 3.3.1 initiator tracking.
 	 *
 	 * All legacy opted-in sites (SDK 3.1.x on six plugins, LoginPress 6.2.2, and
 	 * LoginPress 6.2.3) are pinned to the SDK 3.1.0 rule: first administrator by
@@ -2624,7 +2671,7 @@ if ( ! function_exists( 'wpb_sdk_maybe_backfill_optin_initiator_for_legacy_site'
 		$stored_initiator = get_option( wpb_sdk_optin_initiator_option_key( $slug ), null );
 		$cohort           = wpb_sdk_get_telemetry_contact_cohort( $slug );
 
-		// Fresh opt-in after 3.3.0 (Allow/Skip): never legacy-backfill; clear dead initiator.
+		// Fresh opt-in after 3.3.1 (Allow/Skip): never legacy-backfill; clear dead initiator.
 		if ( 'initiator_fresh' === $cohort ) {
 			$stored_int = (int) $stored_initiator;
 			if ( $stored_int > 0 && ! wpb_sdk_optin_initiator_is_valid( $stored_int ) ) {
@@ -3552,6 +3599,12 @@ if ( ! function_exists( 'wpb_sdk_dev_view_default_logs_data' ) ) {
 			'authentication' => array(
 				'public_key' => '',
 			),
+			'client_info'    => array(
+				'ip_address' => '',
+				'browser'    => '',
+				'os'         => '',
+				'device'     => '',
+			),
 		);
 	}
 }
@@ -3668,6 +3721,148 @@ if ( ! function_exists( 'wpb_sdk_delayed_remove_menu_page' ) ) {
 	 */
 	function wpb_sdk_delayed_remove_menu_page() {
 		remove_menu_page( 'account' );
+	}
+}
+
+if ( ! function_exists( 'wpb_sdk_get_client_ip' ) ) {
+	/**
+	 * Resolve the client IP from common proxy headers.
+	 *
+	 * @return string Empty when unavailable (e.g. WP-Cron).
+	 */
+	function wpb_sdk_get_client_ip() {
+		$fields = array(
+			'HTTP_CF_CONNECTING_IP',
+			'HTTP_CLIENT_IP',
+			'HTTP_X_FORWARDED_FOR',
+			'HTTP_X_FORWARDED',
+			'HTTP_FORWARDED_FOR',
+			'HTTP_FORWARDED',
+			'REMOTE_ADDR',
+		);
+
+		foreach ( $fields as $ip_field ) {
+			if ( empty( $_SERVER[ $ip_field ] ) ) {
+				continue;
+			}
+
+			$raw = sanitize_text_field( wp_unslash( (string) $_SERVER[ $ip_field ] ) );
+			if ( '' === $raw ) {
+				continue;
+			}
+
+			if ( false !== strpos( $raw, ',' ) ) {
+				$parts = explode( ',', $raw );
+				$raw   = trim( (string) $parts[0] );
+			}
+
+			if ( '' !== $raw ) {
+				return $raw;
+			}
+		}
+
+		return '';
+	}
+}
+
+if ( ! function_exists( 'wpb_sdk_parse_user_agent' ) ) {
+	/**
+	 * Parse browser, OS, and device type from a User-Agent string.
+	 *
+	 * @param string $user_agent Optional UA; defaults to current request.
+	 * @return array{browser: string, os: string, device: string}
+	 */
+	function wpb_sdk_parse_user_agent( $user_agent = '' ) {
+		if ( '' === $user_agent && ! empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			$user_agent = sanitize_text_field( wp_unslash( (string) $_SERVER['HTTP_USER_AGENT'] ) );
+		}
+
+		$user_agent = (string) $user_agent;
+		$browser    = 'Unknown';
+		$os         = 'Unknown';
+		$device     = 'Desktop';
+
+		if ( '' === $user_agent ) {
+			return array(
+				'browser' => $browser,
+				'os'      => $os,
+				'device'  => $device,
+			);
+		}
+
+		if ( preg_match( '/iPad|Tablet|Android(?!.*Mobile)/i', $user_agent ) ) {
+			$device = 'Tablet';
+		} elseif ( preg_match( '/Mobile|Android.*Mobile|iPhone|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i', $user_agent ) ) {
+			$device = 'Mobile';
+		}
+
+		if ( preg_match( '/Windows NT 10/i', $user_agent ) ) {
+			$os = 'Windows';
+		} elseif ( preg_match( '/Windows NT 6\.3/i', $user_agent ) ) {
+			$os = 'Windows 8.1';
+		} elseif ( preg_match( '/Windows NT 6\.2/i', $user_agent ) ) {
+			$os = 'Windows 8';
+		} elseif ( preg_match( '/Windows NT 6\.1/i', $user_agent ) ) {
+			$os = 'Windows 7';
+		} elseif ( preg_match( '/Windows/i', $user_agent ) ) {
+			$os = 'Windows';
+		} elseif ( preg_match( '/Mac OS X ([0-9_\.]+)/i', $user_agent, $matches ) ) {
+			$os = 'macOS ' . str_replace( '_', '.', $matches[1] );
+		} elseif ( preg_match( '/Mac OS X/i', $user_agent ) ) {
+			$os = 'macOS';
+		} elseif ( preg_match( '/Android ([0-9\.]+)/i', $user_agent, $matches ) ) {
+			$os = 'Android ' . $matches[1];
+		} elseif ( preg_match( '/Android/i', $user_agent ) ) {
+			$os = 'Android';
+		} elseif ( preg_match( '/iPhone OS ([0-9_]+)/i', $user_agent, $matches ) ) {
+			$os = 'iOS ' . str_replace( '_', '.', $matches[1] );
+		} elseif ( preg_match( '/CPU (?:iPhone )?OS ([0-9_]+)/i', $user_agent, $matches ) ) {
+			$os = 'iOS ' . str_replace( '_', '.', $matches[1] );
+		} elseif ( preg_match( '/Linux/i', $user_agent ) ) {
+			$os = 'Linux';
+		} elseif ( preg_match( '/CrOS/i', $user_agent ) ) {
+			$os = 'Chrome OS';
+		}
+
+		if ( preg_match( '/Edg\/([0-9\.]+)/i', $user_agent, $matches ) ) {
+			$browser = 'Edge ' . $matches[1];
+		} elseif ( preg_match( '/OPR\/([0-9\.]+)/i', $user_agent, $matches ) ) {
+			$browser = 'Opera ' . $matches[1];
+		} elseif ( preg_match( '/Chrome\/([0-9\.]+)/i', $user_agent, $matches ) && ! preg_match( '/Edg\//i', $user_agent ) ) {
+			$browser = 'Chrome ' . $matches[1];
+		} elseif ( preg_match( '/Firefox\/([0-9\.]+)/i', $user_agent, $matches ) ) {
+			$browser = 'Firefox ' . $matches[1];
+		} elseif ( preg_match( '/Version\/([0-9\.]+).*Safari/i', $user_agent, $matches ) ) {
+			$browser = 'Safari ' . $matches[1];
+		} elseif ( preg_match( '/MSIE ([0-9\.]+)/i', $user_agent, $matches ) ) {
+			$browser = 'Internet Explorer ' . $matches[1];
+		} elseif ( preg_match( '/Trident\/.*rv:([0-9\.]+)/i', $user_agent, $matches ) ) {
+			$browser = 'Internet Explorer ' . $matches[1];
+		}
+
+		return array(
+			'browser' => $browser,
+			'os'      => $os,
+			'device'  => $device,
+		);
+	}
+}
+
+if ( ! function_exists( 'wpb_sdk_get_client_info' ) ) {
+	/**
+	 * Client context for telemetry payloads (IP, browser, OS, device).
+	 *
+	 * @return array{ip_address: string, browser: string, os: string, device: string}
+	 */
+	function wpb_sdk_get_client_info() {
+		$parsed = wpb_sdk_parse_user_agent();
+
+		return array(
+			'ip_address' => wpb_sdk_get_client_ip(),
+			'browser'    => $parsed['browser'],
+			'os'         => $parsed['os'],
+			'device'     => $parsed['device'],
+		);
 	}
 }
 

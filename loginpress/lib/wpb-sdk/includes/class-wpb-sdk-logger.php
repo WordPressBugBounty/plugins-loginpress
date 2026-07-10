@@ -1086,10 +1086,10 @@ class WPBRIGADE_Logger {
 		if ( ! is_array( $sdk_data ) ) {
 			$sdk_data = array();
 		}
-		$send_wpb_sdk_communication   = isset( $sdk_data['communication'] ) && '1' === (string) $sdk_data['communication'];
-		$send_wpb_sdk_diagnostic_info = isset( $sdk_data['diagnostic_info'] ) && '1' === (string) $sdk_data['diagnostic_info'];
-		$send_wpb_sdk_extensions      = isset( $sdk_data['extensions'] ) && '1' === (string) $sdk_data['extensions'];
-		$user_skipped                 = isset( $sdk_data['user_skip'] ) && '1' === (string) $sdk_data['user_skip'];
+		$send_wpb_sdk_communication   = isset( $sdk_data['communication'] ) && wpb_sdk_sdk_option_is_enabled( $sdk_data['communication'] );
+		$send_wpb_sdk_diagnostic_info = isset( $sdk_data['diagnostic_info'] ) && wpb_sdk_sdk_option_is_enabled( $sdk_data['diagnostic_info'] );
+		$send_wpb_sdk_extensions      = isset( $sdk_data['extensions'] ) && wpb_sdk_sdk_option_is_enabled( $sdk_data['extensions'] );
+		$user_skipped                 = isset( $sdk_data['user_skip'] ) && wpb_sdk_sdk_option_is_enabled( $sdk_data['user_skip'] );
 
 		if (
 			! $send_wpb_sdk_communication
@@ -1219,6 +1219,10 @@ class WPBRIGADE_Logger {
 		$data['product_info']                = $this->get_product_data( $slug );
 		$data['product_info']['sdk_version'] = WP_WPBRIGADE_SDK_VERSION;
 
+		if ( function_exists( 'wpb_sdk_get_client_info' ) ) {
+			$data['client_info'] = wpb_sdk_get_client_info();
+		}
+
 		if ( $send_wpb_sdk_diagnostic_info ) {
 			$data['product_info']['product_settings'] = $this->get_product_settings( $slug );
 
@@ -1303,6 +1307,11 @@ class WPBRIGADE_Logger {
 	 * @return string|null
 	 */
 	private function get_ip() {
+		if ( function_exists( 'wpb_sdk_get_client_ip' ) ) {
+			$ip = wpb_sdk_get_client_ip();
+			return '' !== $ip ? $ip : null;
+		}
+
 		$fields = array(
 			'HTTP_CF_CONNECTING_IP',
 			'HTTP_CLIENT_IP',
@@ -1354,13 +1363,12 @@ class WPBRIGADE_Logger {
 		}
 
 		try {
-			// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_init,WordPress.WP.AlternativeFunctions.curl_curl_setopt,WordPress.WP.AlternativeFunctions.curl_curl_exec,WordPress.WP.AlternativeFunctions.curl_curl_close -- Third-party geo API.
+			// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_init,WordPress.WP.AlternativeFunctions.curl_curl_setopt,WordPress.WP.AlternativeFunctions.curl_curl_exec -- Third-party geo API.
 			$ch = curl_init();
 			curl_setopt( $ch, CURLOPT_URL, "https://api.iplocation.net/?ip={$ip}" );
 			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
 			$execute = curl_exec( $ch );
-			curl_close( $ch );
-			// phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_init,WordPress.WP.AlternativeFunctions.curl_curl_setopt,WordPress.WP.AlternativeFunctions.curl_curl_exec,WordPress.WP.AlternativeFunctions.curl_curl_close
+			// phpcs:enable WordPress.WP.AlternativeFunctions.curl_curl_init,WordPress.WP.AlternativeFunctions.curl_curl_setopt,WordPress.WP.AlternativeFunctions.curl_curl_exec
 
 			$result = json_decode( $execute );
 

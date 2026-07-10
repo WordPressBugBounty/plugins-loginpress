@@ -5,7 +5,7 @@ Contributors: WPBrigade, hiddenpearls, AbdulWahab610
 Donate link: https://loginpress.pro/pricing/?utm_source=loginpress-lite
 Author URI: https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=author-url-link
 Tags: wp-login, login, login customizer, custom login, wordpress login,
-Stable tag: 6.2.4
+Stable tag: 6.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -237,6 +237,11 @@ Please report security bugs found in the source code of the LoginPress plugin th
 
 == Changelog ==
 
+= 6.2.5 – 2026-07-10 =
+* Enhancement: Refined admin notice handling so notifications appear only in the relevant context.
+* Enhancement: Minor internal improvements and code optimization.
+* Compatibility: Compatible with PHP 8.5.
+
 = 6.2.4 – 2026-06-19 =
 * Enhancement: Improved internal notice handling and error logging.
 * Bugfix: Fixed plugin conflict and uninstall cleanup issues.
@@ -461,5 +466,5 @@ For more detail on changelog visit [LoginPress.Pro](https://loginpress.pro/chang
 
 == Upgrade Notice ==
 
-= 6.2.4 =
+= 6.2.5 =
 * Upgrade Carefully, LoginPress 6.2 is packed with major enhancements and performance improvements.

@@ -3,7 +3,7 @@
  * Plugin Name: LoginPress
  * Plugin URI: https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-header&utm_campaign=pro-upgrade&utm_content=plugin-uri
  * Description: LoginPress is the best <code>wp-login</code> Login Page Customizer plugin by <a href="https://wpbrigade.com/?utm_source=loginpress-lite&utm_medium=plugins&utm_campaign=wpbrigade-home&utm_content=WPBrigade-text-link">WPBrigade</a> which allows you to completely change the layout of login, register and forgot password forms.
- * Version: 6.2.4
+ * Version: 6.2.5
  * Author: LoginPress
  * Author URI: https://loginpress.pro?utm_source=loginpress-lite&utm_medium=plugin-header&utm_campaign=pro-upgrade&utm_content=author-uri
  * Text Domain: loginpress
@@ -42,7 +42,7 @@ if ( ! defined( 'LOGINPRESS_ROOT_FILE' ) ) {
 	define( 'LOGINPRESS_ROOT_FILE', __FILE__ );
 }
 if ( ! defined( 'LOGINPRESS_VERSION' ) ) {
-	define( 'LOGINPRESS_VERSION', '6.2.4' );
+	define( 'LOGINPRESS_VERSION', '6.2.5' );
 }
 if ( ! defined( 'LOGINPRESS_FEEDBACK_SERVER' ) ) {
 	define( 'LOGINPRESS_FEEDBACK_SERVER', 'https://wpbrigade.com/' );
@@ -132,7 +132,7 @@ if ( ! class_exists( 'LoginPress' ) ) :
 	 *
 	 * @package   LoginPress
 	 * @since 1.0.0
-	 * @version 6.2.4
+	 * @version 6.2.5
 	 */
 	final class LoginPress {
 		use LoginPress_Rest_Trait;
@@ -142,7 +142,7 @@ if ( ! class_exists( 'LoginPress' ) ) :
 		 *
 		 * @var string Current version of the LoginPress plugin.
 		 */
-		public $version = '6.2.4';
+		public $version = '6.2.5';
 
 		/**
 		 * The single instance of the LoginPress class.

@@ -377,6 +377,13 @@ class WPBRIGADE_Opt_Manager {
 			wp_send_json_error( array( 'message' => __( 'Invalid product.', 'wpbrigade-sdk' ) ), 400 );
 		}
 
+		$verify_user_id = function_exists( 'wpb_sdk_resolve_optin_verification_user_id' )
+			? (int) wpb_sdk_resolve_optin_verification_user_id( $slug )
+			: 0;
+		if ( $verify_user_id > 0 && (int) get_current_user_id() !== $verify_user_id ) {
+			wp_die();
+		}
+
 		if (
 			! function_exists( 'wpb_sdk_dispatch_verification_email' )
 			|| ! wpb_sdk_dispatch_verification_email( $slug, 0, true )
@@ -641,6 +648,32 @@ class WPBRIGADE_Opt_Manager {
 	}
 
 	/**
+	 * Fresh Allow/Skip opt-in on this SDK (not a legacy upgraded site).
+	 *
+	 * @return bool
+	 */
+	private function is_fresh_optin_verification_flow() {
+		if (
+			function_exists( 'wpb_sdk_get_telemetry_contact_cohort' )
+			&& 'initiator_fresh' === wpb_sdk_get_telemetry_contact_cohort( $this->slug )
+		) {
+			return true;
+		}
+
+		return (bool) get_transient( 'wpb_sdk_' . $this->slug . '_pending_verify_notice' );
+	}
+
+	/**
+	 * Post–opt-in verification notice applies only to fresh installs.
+	 *
+	 * @return bool
+	 */
+	private function should_show_verification_admin_notice() {
+		return $this->is_pending_email_verification()
+			&& $this->is_fresh_optin_verification_flow();
+	}
+
+	/**
 	 * @return string
 	 */
 	private function get_settings_link() {
@@ -659,21 +692,18 @@ class WPBRIGADE_Opt_Manager {
 			|| $this->sdk_option_is_enabled( $diagnostic_info )
 			|| $this->sdk_option_is_enabled( $extensions );
 
-		if ( $this->is_pending_email_verification() ) {
+		if (
+			$has_sharing
+			&& $this->is_fresh_optin_verification_flow()
+			&& $this->is_pending_email_verification()
+		) {
 			return '';
 		}
-
-		$requires_verification = $this->requires_email_verification();
-		$is_verified           = ! $requires_verification
-			|| (
-				function_exists( 'wpb_sdk_is_user_verified' )
-				&& wpb_sdk_is_user_verified( $this->slug )
-			);
 
 		$settings_link = '';
 		$settings_url  = $this->settings_admin_url();
 		$optin_url     = $this->optin_admin_url();
-		if ( $has_sharing && $is_verified ) {
+		if ( $has_sharing ) {
 			$settings_link .= sprintf(
 				/* translators: 1: opening anchor, 2: closing anchor */
 				esc_html__( '%1$s Opt Out %2$s  ', 'wpbrigade-sdk' ),
@@ -702,7 +732,7 @@ class WPBRIGADE_Opt_Manager {
 			return;
 		}
 
-		if ( ! $this->is_pending_email_verification() ) {
+		if ( ! $this->should_show_verification_admin_notice() ) {
 			return;
 		}
 
@@ -713,6 +743,11 @@ class WPBRIGADE_Opt_Manager {
 		$verify_user_id = function_exists( 'wpb_sdk_resolve_optin_verification_user_id' )
 			? wpb_sdk_resolve_optin_verification_user_id( $this->slug )
 			: 0;
+
+		if ( $verify_user_id > 0 && (int) get_current_user_id() !== $verify_user_id ) {
+			return;
+		}
+
 		$email          = function_exists( 'wpb_sdk_get_optin_verification_user_email' )
 			? wpb_sdk_get_optin_verification_user_email( $this->slug )
 			: '';
@@ -724,7 +759,11 @@ class WPBRIGADE_Opt_Manager {
 		$email_issued = function_exists( 'wpb_sdk_verification_email_was_issued' )
 			&& wpb_sdk_verification_email_was_issued( $this->slug, $verify_user_id );
 
-		$this->optin_email_notice( $email, $email_issued );
+		if ( ! $email_issued ) {
+			return;
+		}
+
+		$this->optin_email_notice( $email, true );
 	}
 
 	/**

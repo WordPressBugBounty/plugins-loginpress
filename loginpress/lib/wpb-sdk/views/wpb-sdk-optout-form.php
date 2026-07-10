@@ -21,6 +21,12 @@ $wpb_sdk_communication   = isset( $wpb_sdk_sdk_data['communication'] ) ? $wpb_sd
 $wpb_sdk_diagnostic_info = isset( $wpb_sdk_sdk_data['diagnostic_info'] ) ? $wpb_sdk_sdk_data['diagnostic_info'] : '0';
 $wpb_sdk_extensions      = isset( $wpb_sdk_sdk_data['extensions'] ) ? $wpb_sdk_sdk_data['extensions'] : '0';
 
+if ( function_exists( 'wpb_sdk_sdk_option_is_enabled' ) ) {
+	$wpb_sdk_communication   = wpb_sdk_sdk_option_is_enabled( $wpb_sdk_communication ) ? '1' : '0';
+	$wpb_sdk_diagnostic_info = wpb_sdk_sdk_option_is_enabled( $wpb_sdk_diagnostic_info ) ? '1' : '0';
+	$wpb_sdk_extensions      = wpb_sdk_sdk_option_is_enabled( $wpb_sdk_extensions ) ? '1' : '0';
+}
+
 ?><input type="hidden" id="<?php echo esc_attr( $wpb_sdk_plugin_slug . '_communication' ); ?>"
 	value="<?php echo esc_attr( $wpb_sdk_communication ); ?>" />
 <input type="hidden" id="<?php echo esc_attr( $wpb_sdk_plugin_slug . '_diagnostic_info' ); ?>"
